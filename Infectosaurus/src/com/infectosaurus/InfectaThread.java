@@ -1,6 +1,7 @@
 package com.infectosaurus;
 
 import android.graphics.Canvas;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 
 public class InfectaThread extends Thread {
@@ -29,4 +30,8 @@ public class InfectaThread extends Thread {
             }
         }
     }
+
+	public void doTouchEvent(MotionEvent event) {
+		
+	}
 }
