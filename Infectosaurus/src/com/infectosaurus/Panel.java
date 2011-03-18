@@ -77,6 +77,7 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback{
     	Coordinates coor = infector.getCoordinates();
     	coor.setX((int) event.getX());
     	coor.setY((int) event.getY());
+    	mThread.doTouchEvent(event);
         return super.onTouchEvent(event);
     }
 }

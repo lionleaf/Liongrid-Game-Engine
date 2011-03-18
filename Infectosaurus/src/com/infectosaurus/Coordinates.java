@@ -41,4 +41,10 @@ public class Coordinates {
 	public void setY(int y) {
 		this.y = y - bitmap.getHeight() / 2;;
 	}
+	
+	public int distance(int x, int y){
+		int dx = x - getX();
+		int dy = y - getY();
+		return (int) Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+	}
 }

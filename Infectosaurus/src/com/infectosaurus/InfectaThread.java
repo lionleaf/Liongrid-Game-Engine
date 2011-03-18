@@ -32,6 +32,7 @@ public class InfectaThread extends Thread {
     }
 
 	public void doTouchEvent(MotionEvent event) {
+		Coordinates infector = mPanel.infector.getCoordinates();
 		
 	}
 }
