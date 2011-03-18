@@ -1,4 +1,4 @@
-package zombie.game;
+package infectosaurus.game;
 
 import android.app.Activity;
 import android.os.Bundle;

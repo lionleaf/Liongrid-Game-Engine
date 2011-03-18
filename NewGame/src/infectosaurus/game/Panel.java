@@ -1,5 +1,6 @@
-package zombie.game;
+package infectosaurus.game;
 
+import zombie.game.R;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
