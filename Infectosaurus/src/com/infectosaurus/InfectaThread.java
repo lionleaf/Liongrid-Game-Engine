@@ -1,6 +1,7 @@
 package com.infectosaurus;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 
@@ -33,6 +34,8 @@ public class InfectaThread extends Thread {
 
 	public void doTouchEvent(MotionEvent event) {
 		Coordinates infector = mPanel.infector.getCoordinates();
-		
+		if(infector.distance(mPanel.getWidth()/2, mPanel.getHeight()/2) < 10){
+			mPanel.color = Color.RED;
+		}
 	}
 }

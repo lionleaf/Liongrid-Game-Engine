@@ -16,12 +16,15 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback{
 	private InfectaThread mThread;
 	private Bitmap fBitmap;
 	public GraphicsObject infector;
+	public int color;
+	
 	
 	public Panel(Context context) {
 	    super(context);
 	    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.icon);
 	    infector = new GraphicsObject(bitmap);
 	    fBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.stonefloor);
+	    color = Color.BLUE;
 	    
 	    getHolder().addCallback(this);
 	    mThread = new InfectaThread(this);
@@ -46,7 +49,7 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback{
     					  coor.getY() - bitmap.getHeight()/2, null);
     	Paint mp = new Paint();
     	mp.setStrokeWidth(3);
-    	mp.setColor(0xFF097286);
+    	mp.setColor(color);
     	canvas.drawCircle(getWidth()/2, getHeight()/2, 10, mp);
 	}
 	 
