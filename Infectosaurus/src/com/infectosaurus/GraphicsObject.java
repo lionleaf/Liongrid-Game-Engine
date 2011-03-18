@@ -10,6 +10,13 @@ public class GraphicsObject {
 		this.bitmap = bitmap;
 		coordinates = new Coordinates(bitmap);
 	}
+	
+	/**
+	 * @param bitmap the bitmap to set
+	 */
+	public void setBitmap(Bitmap bitmap) {
+		this.bitmap = bitmap;
+	}
 
 	/**
 	 * @return the coordinates

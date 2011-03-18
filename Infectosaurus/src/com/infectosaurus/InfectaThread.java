@@ -30,6 +30,7 @@ public class InfectaThread extends Thread {
 	            canvas = mHolder.lockCanvas();
 	            if (canvas != null) {
 	            	mLastTime = System.currentTimeMillis() + 100;
+	            	updatePhysics();
 	                mPanel.doDraw(canvas);
 	            }
         	}finally {
