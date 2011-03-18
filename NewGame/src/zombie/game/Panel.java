@@ -11,7 +11,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 public class Panel extends SurfaceView implements SurfaceHolder.Callback{
-	private ViewThread mThread;
+	private InfectaThread mThread;
 	private int mX;
 	private int mY;
 	private Bitmap mBitmap;
@@ -32,7 +32,6 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback{
 	    	}
 	    }
 	    canvas.drawBitmap(mBitmap, mX, mY, null);
-	    
 	}
 	
 	public Panel(Context context) {
@@ -41,13 +40,13 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback{
 	    fBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.stonefloor);
 	    
 	    getHolder().addCallback(this);
-	    mThread = new ViewThread(this);
+	    mThread = new InfectaThread(this);
 	}
 	 
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
 	    if (!mThread.isAlive()) {
-	        mThread = new ViewThread(this);
+	        mThread = new InfectaThread(this);
 	        mThread.setRunning(true);
 	        mThread.start();
 	    }

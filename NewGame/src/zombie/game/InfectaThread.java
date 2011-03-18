@@ -3,12 +3,12 @@ package zombie.game;
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 
-public class ViewThread extends Thread {
+public class InfectaThread extends Thread {
     private Panel mPanel;
     private SurfaceHolder mHolder;
     private boolean mRun = false;
  
-    public ViewThread(Panel panel) {
+    public InfectaThread(Panel panel) {
         mPanel = panel;
         mHolder = mPanel.getHolder();
     }
