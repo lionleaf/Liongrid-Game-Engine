@@ -1,5 +1,7 @@
 package com.infectosaurus;
 
+import com.infectosaurus.interfaces.Creature;
+
 import android.graphics.Bitmap;
 
 public abstract class AbsCreature extends GraphicsObject implements Creature{

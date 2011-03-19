@@ -1,4 +1,5 @@
-package com.infectosaurus;
+package com.infectosaurus.interfaces;
+
 
 public interface Attack {
 	void useMeleeAttack(Creature creature);

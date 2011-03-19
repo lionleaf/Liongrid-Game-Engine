@@ -1,5 +1,8 @@
 package com.infectosaurus;
 
+import com.infectosaurus.interfaces.Attack;
+import com.infectosaurus.interfaces.Creature;
+
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 

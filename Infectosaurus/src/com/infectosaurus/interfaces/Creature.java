@@ -1,4 +1,4 @@
-package com.infectosaurus;
+package com.infectosaurus.interfaces;
 
 public interface Creature {
 	int 	getHealth();

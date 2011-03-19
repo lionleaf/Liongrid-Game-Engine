@@ -6,66 +6,51 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.opengl.GLSurfaceView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-public class Panel extends SurfaceView implements SurfaceHolder.Callback{
+public class Panel extends GLSurfaceView implements SurfaceHolder.Callback{
 	private static final String TAG = "MyActivity";
-	private InfectaThread mThread;
+	private RenderingThread rThread;
 	private Bitmap fBitmap;
 	public GraphicsObject infector;
 	public int color;
 	
 	
 	public Panel(Context context) {
-	    super(context);
+		super(context);
+	    init();
+	}
+	
+	private void init() {
 	    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.icon);
 	    infector = new GraphicsObject(bitmap);
 	    fBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.stonefloor);
 	    color = Color.BLUE;
 	    
+		// Install a SurfaceHolder.Callback so we get notified when the
+        // underlying surface is created and destroyed
 	    getHolder().addCallback(this);
-	    mThread = new InfectaThread(this);
-	}
-	
-	public void doDraw(Canvas canvas) {
-	    // Draws background
-	    int fWidth = fBitmap.getWidth();
-	    int fHeight = fBitmap.getHeight();
-	    int tilesX = getWidth()/fWidth;
-	    int tilesY = getHeight()/fHeight;
-    	for(int i = 0; i < tilesX; i++){
-	    	for(int j = 0; j < tilesY; j++){
-	    		canvas.drawBitmap(fBitmap, i*fWidth + 1, j*fHeight + 1, null);
-	    	}
-	    }
-    	// end
-    	Bitmap bitmap = infector.getBitmap();
-    	Coordinates coor = infector.getCoordinates();
-    	canvas.drawBitmap(bitmap, 
-    					  coor.getX() - bitmap.getWidth()/2, 
-    					  coor.getY() - bitmap.getHeight()/2, null);
-    	Paint mp = new Paint();
-    	mp.setStrokeWidth(3);
-    	mp.setColor(color);
-    	canvas.drawCircle(getWidth()/2, getHeight()/2, 10, mp);
+	    getHolder().setType(SurfaceHolder.SURFACE_TYPE_GPU);
+	    rThread = new RenderingThread(this);
 	}
 	 
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
-	    if (!mThread.isAlive()) {
-	        mThread = new InfectaThread(this);
-	        mThread.setRunning(true);
-	        mThread.start();
+	    if (!rThread.isAlive()) {
+	        rThread = new RenderingThread(this);
+	        rThread.setRunning(true);
+	        rThread.start();
 	    }
 	}
 	 
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
-	    if (mThread.isAlive()) {
-	        mThread.setRunning(false);
+	    if (rThread.isAlive()) {
+	        rThread.setRunning(false);
 	    }
 	}
 
@@ -80,7 +65,7 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback{
     	Coordinates coor = infector.getCoordinates();
     	coor.setX((int) event.getX());
     	coor.setY((int) event.getY());
-    	mThread.doTouchEvent(event);
+    	rThread.doTouchEvent(event);
         return super.onTouchEvent(event);
     }
 }
