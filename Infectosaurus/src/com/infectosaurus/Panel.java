@@ -15,9 +15,8 @@ import android.view.SurfaceView;
 public class Panel extends GLSurfaceView implements SurfaceHolder.Callback{
 	private static final String TAG = "MyActivity";
 	private RenderingThread rThread;
-	private Bitmap fBitmap;
-	public GraphicsObject infector;
-	public int color;
+	private GameThread gThread;
+	private GraphicHolder gHolder;
 	
 	
 	public Panel(Context context) {
@@ -26,16 +25,12 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback{
 	}
 	
 	private void init() {
-	    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.icon);
-	    infector = new GraphicsObject(bitmap);
-	    fBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.stonefloor);
-	    color = Color.BLUE;
-	    
 		// Install a SurfaceHolder.Callback so we get notified when the
         // underlying surface is created and destroyed
 	    getHolder().addCallback(this);
 	    getHolder().setType(SurfaceHolder.SURFACE_TYPE_GPU);
 	    rThread = new RenderingThread(this);
+	    gThread = new GameThread(gHolder);
 	}
 	 
 	@Override
@@ -62,10 +57,7 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback{
 	
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-    	Coordinates coor = infector.getCoordinates();
-    	coor.setX((int) event.getX());
-    	coor.setY((int) event.getY());
-    	rThread.doTouchEvent(event);
+    	gThread.doTouchEvent(event);
         return super.onTouchEvent(event);
     }
 }

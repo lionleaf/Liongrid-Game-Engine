@@ -7,13 +7,11 @@ import android.view.SurfaceHolder;
 
 public class GameThread extends Thread {
     
-    private Panel mPanel;
-    private SurfaceHolder mHolder;
     private boolean mRun = false;
+	private GraphicHolder gHolder;
  
-    public GameThread(Panel panel) {
-        mPanel = panel;
-        mHolder = mPanel.getHolder();
+    public GameThread(GraphicHolder gHolder) {
+    	this.gHolder = gHolder;
     }
  
     public void setRunning(boolean run) {
@@ -22,30 +20,10 @@ public class GameThread extends Thread {
  
     @Override
     public void run() {
-        while (mRun) {
-        	Canvas canvas = null;
-        	try{
-	            canvas = mHolder.lockCanvas();
-	            if (canvas != null) {
-	            	updatePhysics();
-	            }
-        	}finally {
-                // do this in a finally so that if an exception is thrown
-                // during the above, we don't leave the Surface in an
-                // inconsistent state
-                if (canvas != null) {
-                    mHolder.unlockCanvasAndPost(canvas);
-                }
-            }
-        }
-        
+    	
     }
 
 	public void doTouchEvent(MotionEvent event) {
-		Coordinates infector = mPanel.infector.getCoordinates();
-		if(infector.distance(mPanel.getWidth()/2, mPanel.getHeight()/2) < 10){
-			mPanel.color = Color.RED;
-		}
 	}
 	
 	private void updatePhysics(){

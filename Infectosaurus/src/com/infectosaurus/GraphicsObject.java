@@ -4,14 +4,14 @@ import android.graphics.Bitmap;
 
 public class GraphicsObject {
 	private Coordinates coordinates;
-	private Bitmap bitmap;
+	private final Bitmap bitmap;
+	private final int ID;
 	private static int IDcounter = 0;
-	private int ID;
 	
 	GraphicsObject(Bitmap bitmap){
 		this.bitmap = bitmap;
-		coordinates = new Coordinates(bitmap);
 		this.ID = IDcounter;
+		coordinates = new Coordinates(bitmap);
 		IDcounter++;
 	}
 	
@@ -19,8 +19,7 @@ public class GraphicsObject {
 		this.bitmap = bitmap;
 		//This is a problem if the id is less than instanceNumber
 		coordinates = new Coordinates(bitmap);
-		this.ID = ID;
-		
+		this.ID = ID;		
 	}
 	
 	/**
@@ -28,15 +27,6 @@ public class GraphicsObject {
 	 */
 	public int getID() {
 		return ID;
-	}
-
-	
-	
-	/**
-	 * @param bitmap the bitmap to set
-	 */
-	public void setBitmap(Bitmap bitmap) {
-		this.bitmap = bitmap;
 	}
 
 	/**

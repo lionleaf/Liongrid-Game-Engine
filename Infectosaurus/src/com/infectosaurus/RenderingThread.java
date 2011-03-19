@@ -27,6 +27,7 @@ public class RenderingThread extends Thread {
         	try{
 	            canvas = mHolder.lockCanvas();
 	            if (canvas != null) {
+	            	
 	            }
         	}finally {
                 // do this in a finally so that if an exception is thrown
@@ -37,13 +38,5 @@ public class RenderingThread extends Thread {
                 }
             }
         }
-        
     }
-
-	public void doTouchEvent(MotionEvent event) {
-		Coordinates infector = mPanel.infector.getCoordinates();
-		if(infector.distance(mPanel.getWidth()/2, mPanel.getHeight()/2) < 10){
-			mPanel.color = Color.RED;
-		}
-	}
 }
