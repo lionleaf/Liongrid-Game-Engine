@@ -16,7 +16,6 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback{
 	private static final String TAG = "MyActivity";
 	private RenderingThread rThread;
 	private GameThread gThread;
-	private GraphicHolder gHolder;
 	
 	
 	public Panel(Context context) {
@@ -30,7 +29,7 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback{
 	    getHolder().addCallback(this);
 	    getHolder().setType(SurfaceHolder.SURFACE_TYPE_GPU);
 	    rThread = new RenderingThread(this);
-	    gThread = new GameThread(gHolder);
+	    gThread = new GameThread();
 	}
 	 
 	@Override

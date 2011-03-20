@@ -10,8 +10,10 @@ public class RenderingThread extends Thread {
     private Panel mPanel;
     private SurfaceHolder mHolder;
     private boolean mRun = false;
+    private Infectosaurus infector; 
  
     public RenderingThread(Panel panel) {
+    	infector = new Infectosaurus(panel); 
         mPanel = panel;
         mHolder = mPanel.getHolder();
     }
