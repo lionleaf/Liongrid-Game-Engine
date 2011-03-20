@@ -20,6 +20,7 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback{
 	
 	public Panel(Context context) {
 		super(context);
+		Log.d(TAG, "In panel");
 	    init();
 	}
 	

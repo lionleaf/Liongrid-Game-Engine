@@ -14,10 +14,7 @@ public class Main extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "imhere");
-        Intent i = new Intent(Intent.ACTION_VIEW);
-        i.setClassName(this, GameBoard.class.getName());
-//        startActivityForResult(i, GAME_OUTCOME);
+        Intent i = new Intent(this, GameBoard.class);
         startActivity(i);
     }
 }

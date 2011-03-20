@@ -16,7 +16,6 @@ public class GameBoard extends Activity{
 	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "Hello");
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(new Panel(this));
     }
