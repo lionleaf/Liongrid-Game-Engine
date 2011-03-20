@@ -2,6 +2,7 @@ package com.infectosaurus;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 
 /**
@@ -11,8 +12,11 @@ import android.view.Window;
  *		a surface class to render the objects on the screen
  */
 public class GameBoard extends Activity{
+	private static final String TAG = "MyActivity";
+	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "Hello");
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(new Panel(this));
     }
