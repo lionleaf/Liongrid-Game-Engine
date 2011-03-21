@@ -10,7 +10,7 @@ public class RenderingThread implements Panel.Renderer {
     
     private static final String TAG = "My Activity";
 	private Panel mPanel;
-    static GameObjectHandler gameObjects;
+    GameObjectHandler gameObjects;
  
     public RenderingThread(Panel panel) {
     	Log.d(TAG,"In RThread");
