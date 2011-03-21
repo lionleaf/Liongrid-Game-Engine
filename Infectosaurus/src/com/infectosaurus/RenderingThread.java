@@ -1,44 +1,40 @@
 package com.infectosaurus;
 
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.opengles.GL10;
+
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 
-public class RenderingThread extends Thread {
+
+
+public class RenderingThread implements Panel.Renderer {
     
     private Panel mPanel;
-    private SurfaceHolder mHolder;
-    private boolean mRun = false;
-    private Infectosaurus infector; 
+    private SurfaceHolder mHolder; 
  
     public RenderingThread(Panel panel) {
-    	infector = new Infectosaurus(panel); 
         mPanel = panel;
         mHolder = mPanel.getHolder();
     }
- 
-    public void setRunning(boolean run) {
-        mRun = run;
-    }
- 
-    @Override
-    public void run() {
-        while (mRun) {
-        	Canvas canvas = null;
-        	try{
-	            canvas = mHolder.lockCanvas();
-	            if (canvas != null) {
-	            	
-	            }
-        	}finally {
-                // do this in a finally so that if an exception is thrown
-                // during the above, we don't leave the Surface in an
-                // inconsistent state
-                if (canvas != null) {
-                    mHolder.unlockCanvasAndPost(canvas);
-                }
-            }
-        }
-    }
+
+ 	@Override
+	public void onDrawFrame(GL10 gl) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onSurfaceChanged(GL10 gl, int width, int height) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+		// TODO Auto-generated method stub
+		
+	}
 }

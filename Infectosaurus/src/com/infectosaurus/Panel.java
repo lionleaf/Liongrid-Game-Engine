@@ -20,7 +20,6 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback{
 	
 	public Panel(Context context) {
 		super(context);
-		Log.d(TAG, "In panel");
 	    init();
 	}
 	
@@ -32,32 +31,4 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback{
 	    rThread = new RenderingThread(this);
 	    gThread = new GameThread();
 	}
-	 
-	@Override
-	public void surfaceCreated(SurfaceHolder holder) {
-	    if (!rThread.isAlive()) {
-	        rThread = new RenderingThread(this);
-	        rThread.setRunning(true);
-	        rThread.start();
-	    }
-	}
-	 
-	@Override
-	public void surfaceDestroyed(SurfaceHolder holder) {
-	    if (rThread.isAlive()) {
-	        rThread.setRunning(false);
-	    }
-	}
-
-	@Override
-	public void surfaceChanged(SurfaceHolder holder, int format, int width,
-			int height) {
-		// TODO Auto-generated method stub
-	}
-	
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-    	gThread.doTouchEvent(event);
-        return super.onTouchEvent(event);
-    }
 }
