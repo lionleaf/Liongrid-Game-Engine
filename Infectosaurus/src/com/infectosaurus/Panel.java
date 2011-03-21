@@ -32,6 +32,10 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback{
 	    rThread = new RenderingThread(this);
 	    gThread = new GameThread();
 	}
+	
+	
+	public void onDraw(Canvas canvas){
+	}
 	 
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {

@@ -14,7 +14,9 @@ public class Main extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent i = new Intent(this, GameBoard.class);
+        
+        Intent i;
+        i = new Intent(this, GameBoard.class);
         startActivity(i);
     }
 }
