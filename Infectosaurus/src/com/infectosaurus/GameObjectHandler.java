@@ -1,5 +1,7 @@
 package com.infectosaurus;
 
+import javax.microedition.khronos.opengles.GL10;
+
 import android.util.Log;
 
 /**
@@ -17,7 +19,7 @@ public class GameObjectHandler {
 		infector = new Infectosaurus(panel);
 	}
 
-	public void update4Renderer() {
-		infector.useComp4Game();
+	public void update4Renderer(GL10 gl) {
+		infector.useComp4Renderer(gl);
 	}
 }

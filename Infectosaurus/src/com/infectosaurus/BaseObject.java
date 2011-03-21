@@ -1,5 +1,7 @@
 package com.infectosaurus;
 
+import javax.microedition.khronos.opengles.GL10;
+
 import com.infectosaurus.components.Component;
 
 public abstract class BaseObject {
@@ -19,7 +21,7 @@ public abstract class BaseObject {
 		
 	}
 	
-	public void useComp4Renderer(){
+	public void useComp4Renderer(GL10 gl){
 		
 	}
 	

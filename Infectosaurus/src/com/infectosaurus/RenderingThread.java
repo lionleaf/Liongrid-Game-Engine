@@ -19,7 +19,7 @@ public class RenderingThread implements Panel.Renderer {
     }
 
 	public void onDrawFrame(GL10 gl) {
-		gameObjects.update4Renderer();
+		gameObjects.update4Renderer(gl);
 	}
 
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
