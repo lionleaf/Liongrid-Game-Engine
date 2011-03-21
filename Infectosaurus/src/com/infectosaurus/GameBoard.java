@@ -7,16 +7,28 @@ import android.view.Window;
 
 /**
  * @author Lastis
- *		This activity is the upper class for the whole gameplay
- *		It cointains a GameThread to do calculations on objects and
- *		a surface class to render the objects on the screen
+ *		This activity is the upper class for the whole game play
  */
 public class GameBoard extends Activity{
 	private static final String TAG = "MyActivity";
+	Panel panel;
 	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(new Panel(this));
+        panel = new Panel(this);
+        setContentView(panel);
     }
+	
+	@Override
+	protected void onPause(){
+		super.onPause();
+		panel.onPause();
+	}
+	
+	@Override
+	protected void onResume(){
+		super.onResume();
+		panel.onResume();
+	}
 }
