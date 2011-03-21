@@ -1,5 +1,7 @@
 package com.infectosaurus;
 
+import com.infectosaurus.components.MeleeAttackComponent;
+
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

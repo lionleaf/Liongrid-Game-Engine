@@ -1,5 +1,7 @@
 package com.infectosaurus;
 
+import com.infectosaurus.components.Component;
+
 public abstract class BaseObject {
 	FixedSizeArray<Component> gameComponents;
 	FixedSizeArray<Component> renderComponents;

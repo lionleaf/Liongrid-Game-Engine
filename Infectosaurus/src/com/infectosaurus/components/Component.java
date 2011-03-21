@@ -1,4 +1,6 @@
-package com.infectosaurus;
+package com.infectosaurus.components;
+
+import com.infectosaurus.BaseObject;
 
 public abstract class Component {
 	public void update4Game(BaseObject o){
