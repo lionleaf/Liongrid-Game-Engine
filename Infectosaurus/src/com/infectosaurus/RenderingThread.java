@@ -10,17 +10,16 @@ import android.view.SurfaceHolder;
 public class RenderingThread implements Panel.Renderer {
     
     private Panel mPanel;
-    private SurfaceHolder mHolder; 
+    GameObjectHandler gameObjects;
  
     public RenderingThread(Panel panel) {
         mPanel = panel;
-        mHolder = mPanel.getHolder();
+        gameObjects = new GameObjectHandler(panel);
     }
 
  	@Override
 	public void onDrawFrame(GL10 gl) {
-		// TODO Auto-generated method stub
-		
+		gameObjects.update4Renderer();
 	}
 
 	@Override
