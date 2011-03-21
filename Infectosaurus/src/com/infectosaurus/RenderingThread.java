@@ -3,9 +3,6 @@ package com.infectosaurus;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 
 
