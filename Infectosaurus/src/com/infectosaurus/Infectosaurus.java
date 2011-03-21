@@ -5,12 +5,12 @@ import com.infectosaurus.components.MeleeAttackComponent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 public class Infectosaurus extends GameObject{
-	static Resources res;
-	static final Bitmap bitmap = BitmapFactory.decodeResource(res, R.drawable.lumberinghulklo);;
+	private static final String TAG = "GameBoard";
 	Infectosaurus(Panel panel){
-		res = panel.getResources();
+		Log.d(TAG, "In Infectosaurus");
 		addGameComponent(new MeleeAttackComponent());
 	}
 }

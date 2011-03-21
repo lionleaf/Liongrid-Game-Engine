@@ -13,7 +13,7 @@ public class Main extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+        Log.d(TAG,"In Main");
         Intent i;
         i = new Intent(this, GameBoard.class);
         startActivity(i);

@@ -1,5 +1,7 @@
 package com.infectosaurus;
 
+import android.util.Log;
+
 /**
  * @author Lastis
  * This class needs to hold all the GameObjects and sort the 
@@ -7,9 +9,11 @@ package com.infectosaurus;
  */
 public class GameObjectHandler {
 	
+	private static final String TAG = "GameBoard";
 	private Infectosaurus infector;
 
 	GameObjectHandler(Panel panel){
+		Log.d(TAG,"In GameObjectHandler");
 		infector = new Infectosaurus(panel);
 	}
 
