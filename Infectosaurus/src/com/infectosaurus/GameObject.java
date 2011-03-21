@@ -1,8 +1,12 @@
 package com.infectosaurus;
 
 public class GameObject extends BaseObject{
-	Vector2D position;
-	Vector2D velocity;
+	int posX;
+	int posY;
+	
+	int velX;
+	int velY;
+	
 	float width;
 	float height;
 }
