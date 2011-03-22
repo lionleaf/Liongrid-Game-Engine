@@ -60,12 +60,19 @@ public class Infectosaurus extends GameObject{
 	public void useComp4Renderer(GL10 gl) {
 		Log.d(TAG, "Ready to go sir!");
 		
+		// Counter-clockwise winding.
+		gl.glFrontFace(GL10.GL_CCW);
+		// Enable face culling.
+		gl.glEnable(GL10.GL_CULL_FACE);
+		// What faces to remove with the face culling.
+		gl.glCullFace(GL10.GL_BACK);
 		// Enabled the vertices buffer for writing and to be used during
 		// rendering.
 		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
 		// Specifies the location and data format of an array of vertex
 		// coordinates to use when rendering.
 		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, mVerticesBuffer);
+		
 		
 		if(shoudlLoadTexture){
 			loadGLTextures(gl);
@@ -83,6 +90,7 @@ public class Infectosaurus extends GameObject{
 		}
 		
 		gl.glTranslatef(posX, posY, 0);
+		
 		// Point out the where the color buffer is.
 		gl.glDrawElements(GL10.GL_TRIANGLES, mNumOfIndices,
 				GL10.GL_UNSIGNED_SHORT, mIndicesBuffer);
@@ -93,7 +101,10 @@ public class Infectosaurus extends GameObject{
 		if (mTextureId != -1 && mTextureBuffer != null) {
 			gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
 		}
-		
+		// ... end new part.
+
+		// Disable face culling.
+		gl.glDisable(GL10.GL_CULL_FACE);
 	}
 	/**
 	 * Set the vertices.
