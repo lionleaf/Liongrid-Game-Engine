@@ -19,10 +19,7 @@ import android.util.Log;
 
 public class Infectosaurus extends GameObject{
 	private static final String TAG = "GameBoard";
-	private static final int FIXED_SIZE = 4;
 	private Bitmap bitmap;
-	private Buffer mVertexBuffer;
-	private int mVertBufferIndex;
 	private int mTextureID = -1;
 	private boolean shoudlLoadTexture = true;
 	private int mTextureId;
@@ -58,14 +55,7 @@ public class Infectosaurus extends GameObject{
 	
 	@Override
 	public void useComp4Renderer(GL10 gl) {
-		Log.d(TAG, "Ready to go sir!");
 		
-		// Counter-clockwise winding.
-		gl.glFrontFace(GL10.GL_CCW);
-		// Enable face culling.
-		gl.glEnable(GL10.GL_CULL_FACE);
-		// What faces to remove with the face culling.
-		gl.glCullFace(GL10.GL_BACK);
 		// Enabled the vertices buffer for writing and to be used during
 		// rendering.
 		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
@@ -75,6 +65,7 @@ public class Infectosaurus extends GameObject{
 		
 		
 		if(shoudlLoadTexture){
+			Log.d(TAG, "Ready to go sir!");
 			loadGLTextures(gl);
 			shoudlLoadTexture = false;
 		}
@@ -102,9 +93,6 @@ public class Infectosaurus extends GameObject{
 			gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
 		}
 		// ... end new part.
-
-		// Disable face culling.
-		gl.glDisable(GL10.GL_CULL_FACE);
 	}
 	/**
 	 * Set the vertices.
