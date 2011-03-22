@@ -19,6 +19,9 @@ public class RenderingThread implements Panel.Renderer {
     }
 
 	public void onDrawFrame(GL10 gl) {
+		gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		gl.glLoadIdentity();
+		gl.glTranslatef(0, 0, -4);
 		gameObjects.update4Renderer(gl);
 	}
 
@@ -28,7 +31,6 @@ public class RenderingThread implements Panel.Renderer {
 	}
 
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-		// TODO Auto-generated method stub
-		
+		gl.glClearColor(1.0f, 0.0f, 0.0f, 1f);
 	}
 }
