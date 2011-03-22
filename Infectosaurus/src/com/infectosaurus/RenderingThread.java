@@ -31,6 +31,6 @@ public class RenderingThread implements Panel.Renderer {
 	}
 
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-		gl.glClearColor(1.0f, 0.0f, 0.0f, 1f);
+		gl.glClearColor(1.0f, 0.0f, 0.0f, 0.5f);
 	}
 }
