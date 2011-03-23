@@ -29,8 +29,10 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback{
         // underlying surface is created and destroyed
 	    getHolder().addCallback(this);
 	    getHolder().setType(SurfaceHolder.SURFACE_TYPE_GPU);
-	    rThread = new RenderingThread(this);
-	    gThread = new GameThread();
+	    GameObjectHandler gameHandler = new GameObjectHandler(this);
+	    rThread = new RenderingThread(gameHandler);
+	    gThread = new GameThread(gameHandler);
+	    gThread.start();
 	    setRenderer(rThread);
 	}
 }

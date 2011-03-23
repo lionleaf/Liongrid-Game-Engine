@@ -11,13 +11,11 @@ import android.util.Log;
 public class RenderingThread implements Panel.Renderer {
     
     private static final String TAG = "My Activity";
-	private Panel mPanel;
-    private static GameObjectHandler gameObjects;
+    private static GameObjectHandler gameHandler;
  
-    public RenderingThread(Panel panel) {
+    public RenderingThread(GameObjectHandler gameHandler) {
     	Log.d(TAG,"In RThread");
-        mPanel = panel;
-        gameObjects = new GameObjectHandler(panel);
+        this.gameHandler = gameHandler;
     }
 
 	public void onDrawFrame(GL10 gl) {
@@ -28,7 +26,7 @@ public class RenderingThread implements Panel.Renderer {
 		// Translates 4 units into the screen.
 		gl.glTranslatef(0, 0, -4);
 		
-		gameObjects.update4Renderer(gl);
+		gameHandler.update4Renderer(gl);
 		
 		// Disable face culling.
 		gl.glDisable(GL10.GL_CULL_FACE); // OpenGL docs

@@ -1,15 +1,12 @@
 package com.infectosaurus;
 
-import android.graphics.Canvas;
-import android.graphics.Color;
 import android.view.MotionEvent;
-import android.view.SurfaceHolder;
 
 public class GameThread extends Thread {
     
     private boolean mRun = false;
  
-    public GameThread() {
+    public GameThread(GameObjectHandler gameHandler) {
     }
  
     public void setRunning(boolean run) {
@@ -18,6 +15,7 @@ public class GameThread extends Thread {
  
     @Override
     public void run() {
+    	if(!mRun) return;
     	
     }
 
