@@ -6,6 +6,7 @@ import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
+import javax.microedition.khronos.opengles.GL11;
 import javax.microedition.khronos.opengles.GL11Ext;
 
 import com.infectosaurus.components.MeleeAttackComponent;
@@ -24,10 +25,12 @@ public class Infectosaurus extends GameObject {
 	private FloatBuffer mVerticesBuffer;
 	private ShortBuffer mIndicesBuffer;
 	private int mNumOfIndices;
+	private Panel mPanel;
 
 	Infectosaurus(Panel panel) {
+		mPanel = panel;
 		bitmap = BitmapFactory.decodeResource(panel.getResources(),
-				R.drawable.lumberinghulklo);
+				R.drawable.sheeplo);
 		addGameComponent(new MeleeAttackComponent());
 
 		// Mapping coordinates for the vertices
@@ -41,16 +44,16 @@ public class Infectosaurus extends GameObject {
 
 		float[] vertices = new float[] { -0.5f, 0.5f, 0.0f, -0.5f, -0.5f, 0.0f,
 				0.5f, -0.5f, 0.0f, 0.5f, 0.5f, 0.0f };
-		setIndices(indices);
-		setVertices(vertices);
+//		setIndices(indices);
+//		setVertices(vertices);
 		setTextureCoordinates(textureCoordinates);
 
 	}
 
 	@Override
 	public void useComp4Renderer(GL10 gl) {
-		if(posX > 2) posX = -2f;
-		else posX += 0.1;
+//		if(posX > 2) posX = -2f;
+//		else posX += 0.1;
 		// Enabled the vertices buffer for writing and to be used during
 		// rendering.
 		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
@@ -73,13 +76,12 @@ public class Infectosaurus extends GameObject {
 			gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, mTextureBuffer);
 			gl.glBindTexture(GL10.GL_TEXTURE_2D, mTextureID);
 		}
-		
 		gl.glTranslatef(posX, posY, 0);
 		
 		// Point out the where the color buffer is.
 //		gl.glDrawElements(GL10.GL_TRIANGLES, mNumOfIndices,
 //				GL10.GL_UNSIGNED_SHORT, mIndicesBuffer);
-		((GL11Ext) gl).glDrawTexfOES(posX, posY, 0, bitmap.getWidth(), bitmap.getHeight()); 
+		((GL11Ext) gl).glDrawTexfOES(1, 1, 0, 300, 300); 
 		// Disable the vertices buffer.
 		gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
 
@@ -157,5 +159,16 @@ public class Infectosaurus extends GameObject {
 				GL10.GL_REPLACE);
 
 		GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bitmap, 0);
+		int[] mCropWorkspace = new int[4];
+		mCropWorkspace [0] = 0;
+        mCropWorkspace[1] = bitmap.getHeight();
+        mCropWorkspace[2] = bitmap.getWidth();
+        mCropWorkspace[3] = -bitmap.getHeight();
+		((GL11) gl).glTexParameteriv(GL10.GL_TEXTURE_2D, 
+						   GL11Ext.GL_TEXTURE_CROP_RECT_OES, 
+						   mCropWorkspace,
+						   0);
+		
+		bitmap.recycle();
 	}
 }

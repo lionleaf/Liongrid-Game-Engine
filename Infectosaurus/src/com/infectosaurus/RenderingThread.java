@@ -2,6 +2,7 @@ package com.infectosaurus;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
+import javax.microedition.khronos.opengles.GL11Ext;
 
 import android.opengl.GLU;
 import android.util.Log;
@@ -37,6 +38,8 @@ public class RenderingThread implements Panel.Renderer {
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
 		// Sets the current view port to the new size.
 		gl.glViewport(0, 0, width, height);
+		// Textures are not rendered outside the view
+		gl.glOrthof(-width/2, width/2, -height/2, height/2, 1, 10);
 		// Select the projection matrix
 		gl.glMatrixMode(GL10.GL_PROJECTION);
 		// Reset the projection matrix
