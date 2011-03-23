@@ -15,8 +15,8 @@ public class AnimationComponent extends Component {
 	private Bitmap mBitmap;
 	private GameObject gameObject;
 
-	public AnimationComponent(GameObject o, Bitmap bitmap) {
-		this.gameObject = o;
+	public AnimationComponent(GameObject gameObject, Bitmap bitmap) {
+		this.gameObject = gameObject;
 		mBitmap = bitmap;
 	}
 	@Override
@@ -25,9 +25,6 @@ public class AnimationComponent extends Component {
 	}
 	@Override
 	public void update4Renderer(GL10 gl) {
-//		if(gameObject.posX > 100) gameObject.posX = -2f;
-//				else gameObject.posX += 1;
-			
 		if(shoudlLoadTexture){
 			loadGLTextures(gl);
 			shoudlLoadTexture = false;
@@ -41,7 +38,7 @@ public class AnimationComponent extends Component {
 		}
 		gl.glTranslatef(gameObject.posX, gameObject.posY, 0);
 		
-		((GL11Ext) gl).glDrawTexfOES(gameObject.posX, gameObject.posY, 0, 300, 300); 
+		((GL11Ext) gl).glDrawTexfOES(gameObject.posX, gameObject.posY, 0, 100, 100); 
 
 		if (mTextureID != -1) {
 			gl.glDisable(GL10.GL_TEXTURE_2D);

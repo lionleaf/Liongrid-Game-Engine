@@ -10,7 +10,6 @@ public class Infectosaurus extends GameObject {
 	private static final String TAG = "GameBoard";
 
 	Infectosaurus(Panel panel) {
-		Log.d("GameBoard", "In Infectosaurus");
 		Bitmap mBitmap = BitmapFactory.decodeResource(panel.getResources(),
 				R.drawable.lumberinghulklo);
 		addGameComponent(new MeleeAttackComponent());

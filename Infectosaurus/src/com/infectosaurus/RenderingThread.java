@@ -12,7 +12,7 @@ public class RenderingThread implements Panel.Renderer {
     
     private static final String TAG = "My Activity";
 	private Panel mPanel;
-    GameObjectHandler gameObjects;
+    private static GameObjectHandler gameObjects;
  
     public RenderingThread(Panel panel) {
     	Log.d(TAG,"In RThread");
@@ -50,7 +50,6 @@ public class RenderingThread implements Panel.Renderer {
 		gl.glMatrixMode(GL10.GL_MODELVIEW);
 		// Reset the modelview matrix
 		gl.glLoadIdentity();
-		
 	}
 
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
@@ -62,5 +61,7 @@ public class RenderingThread implements Panel.Renderer {
 		gl.glCullFace(GL10.GL_BACK); // OpenGL docs
 		// Set the background color to black ( rgba ).
 		gl.glClearColor(1.0f, 0.0f, 0.0f, 0.5f);
+		gl.glEnable(GL10.GL_BLEND);
+		gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 	}
 }
