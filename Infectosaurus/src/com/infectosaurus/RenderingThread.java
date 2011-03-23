@@ -61,6 +61,4 @@ public class RenderingThread implements Panel.Renderer {
 		// Set the background color to black ( rgba ).
 		gl.glClearColor(1.0f, 0.0f, 0.0f, 0.5f);
 	}
-	
-	
 }

@@ -6,7 +6,4 @@ public class GameObject extends BaseObject{
 	
 	float velX;
 	float velY;
-	
-	float width;
-	float height;
 }

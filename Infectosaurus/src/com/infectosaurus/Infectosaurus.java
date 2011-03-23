@@ -6,6 +6,7 @@ import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
+import javax.microedition.khronos.opengles.GL11Ext;
 
 import com.infectosaurus.components.MeleeAttackComponent;
 
@@ -14,7 +15,7 @@ import android.graphics.BitmapFactory;
 import android.opengl.GLUtils;
 import android.util.Log;
 
-public class Infectosaurus extends GameObject{
+public class Infectosaurus extends GameObject {
 	private static final String TAG = "GameBoard";
 	private Bitmap bitmap;
 	private int mTextureID = -1;
@@ -23,31 +24,29 @@ public class Infectosaurus extends GameObject{
 	private FloatBuffer mVerticesBuffer;
 	private ShortBuffer mIndicesBuffer;
 	private int mNumOfIndices;
-	
-	Infectosaurus(Panel panel){
-		bitmap = BitmapFactory.decodeResource(panel.getResources(), 
+
+	Infectosaurus(Panel panel) {
+		bitmap = BitmapFactory.decodeResource(panel.getResources(),
 				R.drawable.lumberinghulklo);
 		addGameComponent(new MeleeAttackComponent());
-		
+
 		// Mapping coordinates for the vertices
 		float textureCoordinates[] = { 0.0f, 1.0f, //
 				0.0f, 0.0f, //
 				1.0f, 0.0f, //
 				1.0f, 1.0f, //
 		};
- 
-		short[] indices = new short[] { 0, 1, 2, 0, 2, 3};
- 
-        float[] vertices = new float[] { -0.5f,  0.5f, 0.0f,
-                                         -0.5f, -0.5f, 0.0f,
-                                          0.5f, -0.5f, 0.0f,
-                                          0.5f,  0.5f, 0.0f };
+
+		short[] indices = new short[] { 0, 1, 2, 0, 2, 3 };
+
+		float[] vertices = new float[] { -0.5f, 0.5f, 0.0f, -0.5f, -0.5f, 0.0f,
+				0.5f, -0.5f, 0.0f, 0.5f, 0.5f, 0.0f };
 		setIndices(indices);
 		setVertices(vertices);
 		setTextureCoordinates(textureCoordinates);
-		
+
 	}
-	
+
 	@Override
 	public void useComp4Renderer(GL10 gl) {
 		if(posX > 2) posX = -2f;
@@ -78,8 +77,9 @@ public class Infectosaurus extends GameObject{
 		gl.glTranslatef(posX, posY, 0);
 		
 		// Point out the where the color buffer is.
-		gl.glDrawElements(GL10.GL_TRIANGLES, mNumOfIndices,
-				GL10.GL_UNSIGNED_SHORT, mIndicesBuffer);
+//		gl.glDrawElements(GL10.GL_TRIANGLES, mNumOfIndices,
+//				GL10.GL_UNSIGNED_SHORT, mIndicesBuffer);
+		((GL11Ext) gl).glDrawTexfOES(posX, posY, 0, bitmap.getWidth(), bitmap.getHeight()); 
 		// Disable the vertices buffer.
 		gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
 
@@ -88,6 +88,7 @@ public class Infectosaurus extends GameObject{
 			gl.glDisable(GL10.GL_TEXTURE_2D);
 		}
 	}
+
 	/**
 	 * Set the vertices.
 	 * 
@@ -135,21 +136,26 @@ public class Infectosaurus extends GameObject{
 		mTextureBuffer.put(textureCoords);
 		mTextureBuffer.position(0);
 	}
-	
+
 	private void loadGLTextures(GL10 gl) {
 		int[] textures = new int[1];
 		gl.glGenTextures(1, textures, 0);
 		mTextureID = textures[0];
-		
+
 		gl.glBindTexture(GL10.GL_TEXTURE_2D, mTextureID);
-		
-		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_LINEAR);
-		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_LINEAR);
-		
-		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_WRAP_S, GL10.GL_CLAMP_TO_EDGE);
-	    gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_WRAP_T, GL10.GL_CLAMP_TO_EDGE);
-	    gl.glTexEnvf(GL10.GL_TEXTURE_ENV, GL10.GL_TEXTURE_ENV_MODE, GL10.GL_REPLACE);
-		
+
+		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER,
+				GL10.GL_LINEAR);
+		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER,
+				GL10.GL_LINEAR);
+
+		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_WRAP_S,
+				GL10.GL_CLAMP_TO_EDGE);
+		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_WRAP_T,
+				GL10.GL_CLAMP_TO_EDGE);
+		gl.glTexEnvf(GL10.GL_TEXTURE_ENV, GL10.GL_TEXTURE_ENV_MODE,
+				GL10.GL_REPLACE);
+
 		GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bitmap, 0);
 	}
 }
