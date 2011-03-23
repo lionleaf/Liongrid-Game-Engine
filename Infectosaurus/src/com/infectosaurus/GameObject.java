@@ -1,11 +1,11 @@
 package com.infectosaurus;
 
 public class GameObject extends BaseObject{
-	int posX = 0;
-	int posY = 0;
+	float posX = 0;
+	float posY = 0;
 	
-	int velX;
-	int velY;
+	float velX;
+	float velY;
 	
 	float width;
 	float height;

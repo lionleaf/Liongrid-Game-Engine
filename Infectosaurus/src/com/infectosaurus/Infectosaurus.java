@@ -50,7 +50,8 @@ public class Infectosaurus extends GameObject{
 	
 	@Override
 	public void useComp4Renderer(GL10 gl) {
-		
+		if(posX > 2) posX = -2f;
+		else posX += 0.1;
 		// Enabled the vertices buffer for writing and to be used during
 		// rendering.
 		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
@@ -60,7 +61,6 @@ public class Infectosaurus extends GameObject{
 		
 		
 		if(shoudlLoadTexture){
-			Log.d(TAG, "Ready to go sir!");
 			loadGLTextures(gl);
 			shoudlLoadTexture = false;
 		}
