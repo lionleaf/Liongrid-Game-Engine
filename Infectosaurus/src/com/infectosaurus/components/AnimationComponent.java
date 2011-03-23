@@ -25,9 +25,8 @@ public class AnimationComponent extends Component {
 	}
 	@Override
 	public void update4Renderer(GL10 gl) {
-		Log.d("GameBoard", "In AnimationComponent");
-		//if(posX > 2) posX = -2f;
-		//		else posX += 0.1;
+//		if(gameObject.posX > 100) gameObject.posX = -2f;
+//				else gameObject.posX += 1;
 			
 		if(shoudlLoadTexture){
 			loadGLTextures(gl);
@@ -42,7 +41,7 @@ public class AnimationComponent extends Component {
 		}
 		gl.glTranslatef(gameObject.posX, gameObject.posY, 0);
 		
-		((GL11Ext) gl).glDrawTexfOES(1, 1, 0, 300, 300); 
+		((GL11Ext) gl).glDrawTexfOES(gameObject.posX, gameObject.posY, 0, 300, 300); 
 
 		if (mTextureID != -1) {
 			gl.glDisable(GL10.GL_TEXTURE_2D);

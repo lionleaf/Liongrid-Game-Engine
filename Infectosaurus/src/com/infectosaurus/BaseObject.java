@@ -29,7 +29,6 @@ public abstract class BaseObject {
 	}
 	
 	public void useComp4Renderer(GL10 gl){
-		Log.d("GameBoard", "In BaseObject");
 		for(Component c: renderComponents) c.update4Renderer(gl);
 	}
 	
