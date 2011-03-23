@@ -1,13 +1,8 @@
 package com.infectosaurus.components;
 
-import com.infectosaurus.BaseObject;
+import javax.microedition.khronos.opengles.GL10;
 
-public abstract class Component {
-	public void update4Game(BaseObject o){
-		
-	}
-	
-	public void update4Render(BaseObject o){
-		
-	}
+public abstract class Component{
+	abstract public void update4Game();
+	abstract public void update4Renderer(GL10 gl);
 }

@@ -1,35 +1,39 @@
 package com.infectosaurus;
 
+import java.util.ArrayList;
+
 import javax.microedition.khronos.opengles.GL10;
 
 import com.infectosaurus.components.Component;
 
 public abstract class BaseObject {
-	FixedSizeArray<Component> gameComponents;
-	FixedSizeArray<Component> renderComponents;
+	private static final int DEFAULT_SIZE = 10;
+	private ArrayList<Component> gameComponents;
+	private ArrayList<Component> renderComponents;
+	
 	BaseObject(){
-		gameComponents = new FixedSizeArray<Component>();
-		renderComponents = new FixedSizeArray<Component>();
+		gameComponents = new ArrayList<Component>(DEFAULT_SIZE);
+		renderComponents = new ArrayList<Component>(DEFAULT_SIZE);
 	}
 	
 	BaseObject(int size){
-		gameComponents = new FixedSizeArray<Component>(size);
-		renderComponents = new FixedSizeArray<Component>(size);
+		gameComponents = new ArrayList<Component>(size);
+		renderComponents = new ArrayList<Component>(size);
 	}
 	
 	public void useComp4Game(){
-		
+		for(Component c: gameComponents) c.update4Game();
 	}
 	
 	public void useComp4Renderer(GL10 gl){
-		
+		for(Component c: renderComponents) c.update4Renderer(gl);
 	}
 	
-	public void addGameComponent(Component c){
-		gameComponents.add(c);
+	public void addGameComponent(Component component){
+		gameComponents.add(component);
 	}
 
-	public void addRenderComponent(Component c){
-		renderComponents.add(c);
+	public void addRenderComponent(Component component){
+		renderComponents.add(component);
 	}
 }

@@ -27,7 +27,6 @@ public class RenderingThread implements Panel.Renderer {
 		gl.glLoadIdentity();
 		// Translates 4 units into the screen.
 		gl.glTranslatef(0, 0, -4);
-		gl.glScalef(0.5f, 0.5f, 0f);
 		
 		gameObjects.update4Renderer(gl);
 		
@@ -38,7 +37,7 @@ public class RenderingThread implements Panel.Renderer {
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
 		// Sets the current view port to the new size.
 		gl.glViewport(0, 0, width, height);
-		// Textures are not rendered outside the view
+		// Textures are not rendered outside the view... i think
 		gl.glOrthof(-width/2, width/2, -height/2, height/2, 1, 10);
 		// Select the projection matrix
 		gl.glMatrixMode(GL10.GL_PROJECTION);

@@ -1,9 +1,9 @@
 package com.infectosaurus;
 
-public class GameObject extends BaseObject{
-	float posX = 0;
-	float posY = 0;
+public abstract class GameObject extends BaseObject{
+	public float posX = 0;
+	public float posY = 0;
 	
-	float velX;
-	float velY;
+	public float velX;
+	public float velY;
 }
