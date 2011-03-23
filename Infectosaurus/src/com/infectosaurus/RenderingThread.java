@@ -21,7 +21,7 @@ public class RenderingThread implements Panel.Renderer {
 
 	public void onDrawFrame(GL10 gl) {
 		// Clears the screen and depth buffer.
-		gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		gl.glClear(gl.GL_COLOR_BUFFER_BIT | gl.GL_DEPTH_BUFFER_BIT);
 		// Replace the current matrix with the identity matrix
 		gl.glLoadIdentity();
 		// Translates 4 units into the screen.
@@ -29,6 +29,9 @@ public class RenderingThread implements Panel.Renderer {
 		gl.glScalef(0.5f, 0.5f, 0f);
 		
 		gameObjects.update4Renderer(gl);
+		
+		// Disable face culling.
+		gl.glDisable(GL10.GL_CULL_FACE); // OpenGL docs
 	}
 
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
@@ -49,7 +52,15 @@ public class RenderingThread implements Panel.Renderer {
 	}
 
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+		// Counter-clockwise winding.
+		gl.glFrontFace(GL10.GL_CCW); // OpenGL docs
+		// Enable face culling.
+		gl.glEnable(GL10.GL_CULL_FACE); // OpenGL docs
+		// What faces to remove with the face culling.
+		gl.glCullFace(GL10.GL_BACK); // OpenGL docs
 		// Set the background color to black ( rgba ).
 		gl.glClearColor(1.0f, 0.0f, 0.0f, 0.5f);
 	}
+	
+	
 }

@@ -22,7 +22,6 @@ public class Infectosaurus extends GameObject{
 	private Bitmap bitmap;
 	private int mTextureID = -1;
 	private boolean shoudlLoadTexture = true;
-	private int mTextureId;
 	private FloatBuffer mTextureBuffer;
 	private FloatBuffer mVerticesBuffer;
 	private ShortBuffer mIndicesBuffer;
@@ -33,20 +32,30 @@ public class Infectosaurus extends GameObject{
 				R.drawable.lumberinghulklo);
 		addGameComponent(new MeleeAttackComponent());
 		
-		// Mapping coordinates for the vertices
-		float textureCoordinates[] = { 0.0f, 2.0f, //
-				2.0f, 2.0f, //
+//		// Mapping coordinates for the vertices
+//		float textureCoordinates[] = { 0.0f, 1.0f, //
+//				0.0f, 0.0f, //
+//				1.0f, 0.0f, //
+//				1.0f, 1.0f, //
+//		};
+// 
+//		short[] indices = new short[] { 0, 1, 2, 0, 2, 3};
+// 
+//        float[] vertices = new float[] { -0.5f,  0.5f, 0.0f,
+//                                         -0.5f, -0.5f, 0.0f,
+//                                          0.5f, -0.5f, 0.0f,
+//                                          0.5f,  0.5f, 0.0f };
+     // Mapping coordinates for the vertices
+		float textureCoordinates[] = { 0.0f, 1.0f, //
+				1.0f, 1.0f, //
 				0.0f, 0.0f, //
-				2.0f, 0.0f, //
+				1.0f, 0.0f, //
 		};
- 
+
 		short[] indices = new short[] { 0, 1, 2, 1, 3, 2 };
- 
-        float[] vertices = new float[] { -0.5f, -0.5f, 0.0f,
-                                          0.5f, -0.5f, 0.0f,
-                                         -0.5f,  0.5f, 0.0f,
-                                          0.5f, 0.5f, 0.0f };
- 
+
+		float[] vertices = new float[] { -0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f,
+				-0.5f, 0.5f, 0.0f, 0.5f, 0.5f, 0.0f };
 		setIndices(indices);
 		setVertices(vertices);
 		setTextureCoordinates(textureCoordinates);
@@ -70,14 +79,18 @@ public class Infectosaurus extends GameObject{
 			shoudlLoadTexture = false;
 		}
 		
-		if (mTextureId != -1 && mTextureBuffer != null) {
+		if (mTextureID != -1 && mTextureBuffer != null) {
 			gl.glEnable(GL10.GL_TEXTURE_2D);
+			gl.glEnable(GL10.GL_BLEND);
+			gl.glEnable(GL10.GL_ONE);
+			gl.glEnable(GL10.GL_SRC_COLOR);
+			gl.glEnableClientState(GL10.GL_NORMAL_ARRAY);
 			// Enable the texture state
 			gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
 
 			// Point to our buffers
 			gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, mTextureBuffer);
-			gl.glBindTexture(GL10.GL_TEXTURE_2D, mTextureId);
+			gl.glBindTexture(GL10.GL_TEXTURE_2D, mTextureID);
 		}
 		
 		gl.glTranslatef(posX, posY, 0);
@@ -87,10 +100,12 @@ public class Infectosaurus extends GameObject{
 				GL10.GL_UNSIGNED_SHORT, mIndicesBuffer);
 		// Disable the vertices buffer.
 		gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
+		gl.glDisableClientState(GL10.GL_NORMAL_ARRAY);
 
 		// New part...
-		if (mTextureId != -1 && mTextureBuffer != null) {
+		if (mTextureID != -1 && mTextureBuffer != null) {
 			gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
+			gl.glDisable(GL10.GL_TEXTURE_2D);
 		}
 		// ... end new part.
 	}
