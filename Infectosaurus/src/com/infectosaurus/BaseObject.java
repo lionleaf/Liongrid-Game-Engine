@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import android.util.Log;
+
 import com.infectosaurus.components.Component;
 
 public abstract class BaseObject {
@@ -12,6 +14,7 @@ public abstract class BaseObject {
 	private ArrayList<Component> renderComponents;
 	
 	BaseObject(){
+		Log.d("GameBoard", "In BaseObject");
 		gameComponents = new ArrayList<Component>(DEFAULT_SIZE);
 		renderComponents = new ArrayList<Component>(DEFAULT_SIZE);
 	}
@@ -26,6 +29,7 @@ public abstract class BaseObject {
 	}
 	
 	public void useComp4Renderer(GL10 gl){
+		Log.d("GameBoard", "In BaseObject");
 		for(Component c: renderComponents) c.update4Renderer(gl);
 	}
 	

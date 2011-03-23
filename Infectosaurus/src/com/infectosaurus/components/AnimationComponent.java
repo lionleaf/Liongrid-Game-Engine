@@ -1,29 +1,23 @@
 package com.infectosaurus.components;
 
-import java.net.Inet4Address;
-import java.nio.FloatBuffer;
-import java.nio.ShortBuffer;
-
 import javax.microedition.khronos.opengles.GL10;
 import javax.microedition.khronos.opengles.GL11;
 import javax.microedition.khronos.opengles.GL11Ext;
-
 import android.graphics.Bitmap;
 import android.opengl.GLUtils;
+import android.util.Log;
 
-import com.infectosaurus.BaseObject;
-import com.infectosaurus.Infectosaurus;
-import com.infectosaurus.Panel;
+import com.infectosaurus.GameObject;
 
 public class AnimationComponent extends Component {
 	private int mTextureID = -1;
 	private boolean shoudlLoadTexture = true;
 	private Bitmap mBitmap;
-	private Infectosaurus infectosaurus;
+	private GameObject gameObject;
 
-	public AnimationComponent(Infectosaurus infectosaurus) {
-		this.infectosaurus = infectosaurus;
-		mBitmap = infectosaurus.getBitmap();
+	public AnimationComponent(GameObject o, Bitmap bitmap) {
+		this.gameObject = o;
+		mBitmap = bitmap;
 	}
 	@Override
 	public void update4Game() {
@@ -31,6 +25,7 @@ public class AnimationComponent extends Component {
 	}
 	@Override
 	public void update4Renderer(GL10 gl) {
+		Log.d("GameBoard", "In AnimationComponent");
 		//if(posX > 2) posX = -2f;
 		//		else posX += 0.1;
 			
@@ -45,11 +40,9 @@ public class AnimationComponent extends Component {
 			// Point to our buffers
 			gl.glBindTexture(GL10.GL_TEXTURE_2D, mTextureID);
 		}
-		gl.glTranslatef(infectosaurus.posX, infectosaurus.posY, 0);
+		gl.glTranslatef(gameObject.posX, gameObject.posY, 0);
 		
 		((GL11Ext) gl).glDrawTexfOES(1, 1, 0, 300, 300); 
-		// Disable the vertices buffer.
-		gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
 
 		if (mTextureID != -1) {
 			gl.glDisable(GL10.GL_TEXTURE_2D);
