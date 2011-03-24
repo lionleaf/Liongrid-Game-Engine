@@ -12,8 +12,8 @@ public class TestComponent extends Component {
 	GameObject gameObject;
 	private long lastTime = -1;
 	Random random;
-	int width = 400; //Screw real data, let`s guess
-	int height = 700;
+	int width = 250; //Screw real data, let`s guess
+	int height = 400;
 	
 	
 	public TestComponent(GameObject gameObject) {
