@@ -15,6 +15,7 @@ public class GameObjectHandler {
 	private static ArrayList<GameObject> gameObjects;
 
 	GameObjectHandler(Panel panel){
+		gameObjects = new ArrayList<GameObject>(10);
 		gameObjects.add(new Infectosaurus(panel));
 		gameObjects.add(new Human(panel));
 	}
@@ -25,5 +26,9 @@ public class GameObjectHandler {
 	
 	public void update4Game(){
 		for(GameObject o: gameObjects) o.useComp4Game();
+	}
+	
+	public ArrayList<GameObject> getAll(){
+		return gameObjects;
 	}
 }

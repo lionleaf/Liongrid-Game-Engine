@@ -11,7 +11,7 @@ import android.util.Log;
 public class RenderingThread implements Panel.Renderer {
     
     private static final String TAG = "My Activity";
-    private static GameObjectHandler gameHandler;
+    private GameObjectHandler gameHandler;
  
     public RenderingThread(GameObjectHandler gameHandler) {
     	Log.d(TAG,"In RThread");

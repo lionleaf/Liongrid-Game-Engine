@@ -30,9 +30,9 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback{
 	    getHolder().addCallback(this);
 	    getHolder().setType(SurfaceHolder.SURFACE_TYPE_GPU);
 	    GameObjectHandler gameHandler = new GameObjectHandler(this);
-	    rThread = new RenderingThread(gameHandler);
 	    gThread = new GameThread(gameHandler);
 	    gThread.start();
+	    rThread = new RenderingThread(gameHandler);
 	    setRenderer(rThread);
 	}
 }
