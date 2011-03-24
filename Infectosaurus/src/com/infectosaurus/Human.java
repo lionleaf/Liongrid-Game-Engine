@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 
 import com.infectosaurus.components.AnimationComponent;
 import com.infectosaurus.components.RandomWalkerComponent;
+import com.infectosaurus.components.TestComponent;
 
 public class Human extends GameObject{
 
@@ -12,8 +13,6 @@ public class Human extends GameObject{
 		Bitmap mBitmap = BitmapFactory.decodeResource(panel.getResources(),
 				R.drawable.sheeplo);
 		addRenderComponent(new AnimationComponent(this, mBitmap));
-		addGameComponent(new RandomWalkerComponent(this));
-		posX = 110;
-		posY = 120;
+		addGameComponent(new TestComponent(this));
 	}
 }

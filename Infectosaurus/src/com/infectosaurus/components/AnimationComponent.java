@@ -14,27 +14,18 @@ public class AnimationComponent extends Component {
 	private boolean shoudlLoadTexture = true;
 	private Bitmap mBitmap;
 	private GameObject gameObject;
-	private long lastTime = -1;
-	private long dt = -1;
+	
 	public AnimationComponent(GameObject gameObject, Bitmap bitmap) {
 		this.gameObject = gameObject;
 		mBitmap = bitmap;
 	}
 	@Override
 	public void update4Game(float dt) {
-		if(lastTime == -1){
-			lastTime = System.nanoTime();
-			return;
-		}
-		long cTime = System.nanoTime();
-		dt = cTime - lastTime;
-		lastTime = cTime;
-		gameObject.posX = gameObject.posX + gameObject.velX * dt/(10^9); 
+		
+		
 	}
 	@Override
 	public void update4Renderer(GL10 gl) {
-		Log.d("Renderer","Putting creature at x: " + gameObject.posX +
-				" y: " + gameObject.posY);
 		if(shoudlLoadTexture){
 			loadGLTextures(gl);
 			shoudlLoadTexture = false;
