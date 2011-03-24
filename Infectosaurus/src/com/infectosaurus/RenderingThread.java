@@ -25,9 +25,7 @@ public class RenderingThread implements Panel.Renderer {
 		gl.glLoadIdentity();
 		// Translates 4 units into the screen.
 		gl.glTranslatef(0, 0, -4);
-		
 		gameHandler.update4Renderer(gl);
-		
 		// Disable face culling.
 		gl.glDisable(GL10.GL_CULL_FACE); // OpenGL docs
 	}
