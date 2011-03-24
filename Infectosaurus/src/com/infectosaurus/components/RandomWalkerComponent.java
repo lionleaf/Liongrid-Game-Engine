@@ -8,23 +8,22 @@ import com.infectosaurus.GameObject;
 
 public class RandomWalkerComponent extends Component{
 	private GameObject gameObject;
-
+	Random random;
 	public RandomWalkerComponent(GameObject gameObject) {
 		this.gameObject = gameObject;
+		random = new Random();
 	}
 
 	@Override
-	public void update4Game() {
-		Random random = new Random();
-		int i;
-		int n = 10;
-		i = random.nextInt(n);
-		i -= n/2;
+	public void update4Game(float dt) {
+		float i;
+		float n = 0.01f;
+		i = random.nextFloat();
+		i -= 0.5f;
 		gameObject.posX += i;
-		i = random.nextInt(n);
-		i -= n/2;
+		i = random.nextFloat();
+		i -= 0.5f;
 		gameObject.posY += i;
-		
 	}
 
 	@Override

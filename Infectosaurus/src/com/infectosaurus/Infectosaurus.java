@@ -17,5 +17,6 @@ public class Infectosaurus extends GameObject {
 		addGameComponent(new MeleeAttackComponent());
 		addRenderComponent(new AnimationComponent(this, mBitmap));
 		addGameComponent(new RandomWalkerComponent(this));
+		velX = 1;
 	}
 }

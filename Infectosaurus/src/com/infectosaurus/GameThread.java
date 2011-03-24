@@ -12,12 +12,12 @@ public class GameThread extends Thread {
     public GameThread(GameObjectHandler gameHandler) {
     	objectHandler = gameHandler;
     	setName("GameThread");
-    	Log.d(TAG, "Starting GameThread");
+    	
     }
  
     @Override
     public void run() {
-    	Log.d("GameBoard", "In gameThread  :D");
+    	Log.d(TAG, "Starting GameThread");
     	while(running){
     		updatePhysics();
     	}

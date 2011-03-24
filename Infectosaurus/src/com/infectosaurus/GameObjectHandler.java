@@ -13,9 +13,9 @@ import android.util.Log;
  */
 public class GameObjectHandler {
 	private static ArrayList<GameObject> gameObjects;
-
+	private static final int capacity = 10;
 	GameObjectHandler(Panel panel){
-		gameObjects = new ArrayList<GameObject>(10);
+		gameObjects = new ArrayList<GameObject>(capacity);
 		gameObjects.add(new Infectosaurus(panel));
 		gameObjects.add(new Human(panel));
 	}

@@ -13,5 +13,7 @@ public class Human extends GameObject{
 				R.drawable.sheeplo);
 		addRenderComponent(new AnimationComponent(this, mBitmap));
 		addGameComponent(new RandomWalkerComponent(this));
+		posX = 110;
+		posY = 120;
 	}
 }

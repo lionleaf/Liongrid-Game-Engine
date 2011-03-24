@@ -21,7 +21,7 @@ public class AnimationComponent extends Component {
 		mBitmap = bitmap;
 	}
 	@Override
-	public void update4Game() {
+	public void update4Game(float dt) {
 		if(lastTime == -1){
 			lastTime = System.nanoTime();
 			return;
@@ -29,10 +29,12 @@ public class AnimationComponent extends Component {
 		long cTime = System.nanoTime();
 		dt = cTime - lastTime;
 		lastTime = cTime;
-		gameObject.posX = gameObject.velX * dt/(10^9); 
+		gameObject.posX = gameObject.posX + gameObject.velX * dt/(10^9); 
 	}
 	@Override
 	public void update4Renderer(GL10 gl) {
+		Log.d("Renderer","Putting creature at x: " + gameObject.posX +
+				" y: " + gameObject.posY);
 		if(shoudlLoadTexture){
 			loadGLTextures(gl);
 			shoudlLoadTexture = false;

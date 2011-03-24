@@ -25,7 +25,7 @@ public abstract class BaseObject {
 	}
 	
 	public void useComp4Game(){
-		for(Component c: gameComponents) c.update4Game();
+		for(Component c: gameComponents) c.update4Game(0);
 	}
 	
 	public void useComp4Renderer(GL10 gl){
