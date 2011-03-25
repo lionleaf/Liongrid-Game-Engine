@@ -43,8 +43,16 @@ public class Tile {
 		mBitmap.recycle();
 	}
 
-	public void clearTile(int x, int y){
-		setTileTexture(x, y);
+	public void clearTile(int tileX, int tileY){
+		setTileTexture(tileX, tileY);
+		gl.glEnable(GL10.GL_TEXTURE_2D);
+		// Point to our buffers
+		gl.glBindTexture(GL10.GL_TEXTURE_2D, mTextureID);
+		int[] i = getAbsTilePos(tileX, tileY);
+		int X = i[0];
+		int Y = i[1];
+		((GL11Ext) gl).glDrawTexfOES(X, Y, 0, tileSize, tileSize); 
+		gl.glDisable(GL10.GL_TEXTURE_2D);
 	}
 	
 	private void setTileTexture(int x, int y) {
@@ -53,6 +61,14 @@ public class Tile {
 		mTextureID = textures[0];
 		gl.glBindTexture(GL10.GL_TEXTURE_2D, mTextureID);
 		GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, mBitmap, 0);
+	}
+
+	private int[] getAbsTilePos(int x, int y) {
+		int X = x*tileSize;
+		int Y = y*tileSize;
+		int[] i = {X,Y};
+		return i;
+		
 	}
 
 	public int[] getTile(int x, int y){
@@ -65,15 +81,10 @@ public class Tile {
 	public void update4Renderer(GL10 gl) {
 		
 		if (mTextureID != -1) {
-			gl.glEnable(GL10.GL_TEXTURE_2D);
-			// Point to our buffers
-			gl.glBindTexture(GL10.GL_TEXTURE_2D, mTextureID);
 		}
 		
-		((GL11Ext) gl).glDrawTexfOES(gameObject.posX, gameObject.posY, 0, 100, 100); 
 
 		if (mTextureID != -1) {
-			gl.glDisable(GL10.GL_TEXTURE_2D);
 		}
 	}
 	
