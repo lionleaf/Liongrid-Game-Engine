@@ -12,7 +12,6 @@ public class GameThread extends Thread {
     public GameThread(GameObjectHandler gameHandler) {
     	objectHandler = gameHandler;
     	setName("GameThread");
-    	
     }
  
     @Override

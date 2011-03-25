@@ -23,8 +23,6 @@ public class RenderingThread implements Panel.Renderer {
 		gl.glClear(gl.GL_COLOR_BUFFER_BIT | gl.GL_DEPTH_BUFFER_BIT);
 		// Replace the current matrix with the identity matrix
 		gl.glLoadIdentity();
-		// Translates 4 units into the screen.
-		gl.glTranslatef(0, 0, -4);
 		gameHandler.update4Renderer(gl);
 		// Disable face culling.
 		gl.glDisable(GL10.GL_CULL_FACE); // OpenGL docs
