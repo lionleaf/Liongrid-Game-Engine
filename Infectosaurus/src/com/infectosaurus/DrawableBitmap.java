@@ -42,29 +42,11 @@ public class DrawableBitmap implements Drawable {
 	}
 	
     public static void beginDrawing(GL10 gl, float viewWidth, float viewHeight) {
-       // gl.glEnable(GL10.GL_BLEND);
-       // gl.glBlendFunc(GL10.GL_ONE, GL10.GL_ONE_MINUS_SRC_ALPHA);
-        //gl.glColor4x(0x10000, 0x10000, 0x10000, 0x10000);
-
-        //gl.glMatrixMode(GL10.GL_PROJECTION);
-        //gl.glPushMatrix();
-        //gl.glLoadIdentity();
-        //gl.glOrthof(0.0f, viewWidth, 0.0f, viewHeight, 0.0f, 1.0f);
-        //gl.glMatrixMode(GL10.GL_MODELVIEW);
-      // gl.glPushMatrix();
-        //gl.glLoadIdentity();
-
         gl.glEnable(GL10.GL_TEXTURE_2D);
 
     }
 	
     public static void endDrawing(GL10 gl) {
-        //gl.glDisable(GL10.GL_BLEND);
-        //gl.glMatrixMode(GL10.GL_PROJECTION);
-        //gl.glPopMatrix();
-        //gl.glMatrixMode(GL10.GL_MODELVIEW);
-        //gl.glPopMatrix();
-        
         gl.glDisable(GL10.GL_TEXTURE_2D);
     }
 
@@ -78,7 +60,7 @@ public class DrawableBitmap implements Drawable {
 	
 			// Point to our buffers
 			gl.glBindTexture(GL10.GL_TEXTURE_2D, textureID);
-			((GL11Ext) gl).glDrawTexfOES(200,200, 0, 200,200); 
+			((GL11Ext) gl).glDrawTexfOES(x,y, 0, mWidth, mHeight); 
 		}
 	}
 
