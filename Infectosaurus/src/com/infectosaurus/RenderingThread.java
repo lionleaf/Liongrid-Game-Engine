@@ -47,7 +47,7 @@ public class RenderingThread implements Panel.Renderer {
 				for (int i = 0; i< count; i++){
 					
 					RenderElement elem = (RenderElement) objects.get(i);
-					if(elem == null){
+					if(elem == null){ 
 						Log.d("RENDER", "elem " + elem );
 						continue;
 					}
@@ -102,5 +102,14 @@ public class RenderingThread implements Panel.Renderer {
             drawQueueChanged = true;
             drawLock.notify();
 		}
+	}
+	
+	/**
+     * This function blocks while drawFrame() is in progress, and may be used by other threads to
+     * determine when drawing is occurring.
+     */
+
+	public synchronized void waitDrawingComplete() {
+		
 	}
 }

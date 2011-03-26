@@ -23,6 +23,7 @@ public class GameThread extends Thread {
     	renderThread = BaseObject.gamePointers.renderThread;
     	Log.d(TAG, "Starting GameThread");
     	while(running){
+    		renderThread.waitDrawingComplete();
     		renderSystem.swap(renderThread);
     		dt = 0;
     		root.update(dt, null);
