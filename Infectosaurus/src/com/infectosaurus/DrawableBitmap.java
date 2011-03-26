@@ -21,7 +21,7 @@ public class DrawableBitmap implements Drawable {
 
 	private Bitmap bitmap;
 	
-	DrawableBitmap(Texture texture, int width, int height, Bitmap bitmap) {
+	DrawableBitmap(Bitmap bitmap, int width, int height) {
 
 		//TODO remove
 		mWidth = width;

@@ -20,7 +20,7 @@ public class Infectosaurus extends GameObject {
 		Bitmap mBitmap = BitmapFactory.decodeResource(panel.getResources(),
 				R.drawable.lumberinghulklo);
 		addComponent(new MeleeAttackComponent());
-		addComponent(new SpriteComponent(new DrawableBitmap(null, 200, 200, mBitmap)));
+		addComponent(new SpriteComponent(new DrawableBitmap(mBitmap,100,100)));
 		addComponent(new TestComponent());
 		velX = 100;
 	}

@@ -15,7 +15,7 @@ public class Human extends GameObject{
 		
 		Bitmap mBitmap = BitmapFactory.decodeResource(panel.getResources(),
 				R.drawable.sheeplo);
-		addComponent(new SpriteComponent(new DrawableBitmap(null,200,200,mBitmap)));
+		addComponent(new SpriteComponent(new DrawableBitmap(mBitmap,200,200)));
 		addComponent(new TestComponent());
 	}
 }
