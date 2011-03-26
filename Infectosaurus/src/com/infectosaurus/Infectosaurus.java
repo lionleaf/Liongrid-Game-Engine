@@ -1,6 +1,5 @@
 package com.infectosaurus;
 
-import com.infectosaurus.components.AnimationComponent;
 import com.infectosaurus.components.MeleeAttackComponent;
 import com.infectosaurus.components.RandomWalkerComponent;
 import com.infectosaurus.components.SpriteComponent;

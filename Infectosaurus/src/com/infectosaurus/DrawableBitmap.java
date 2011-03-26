@@ -95,7 +95,7 @@ public class DrawableBitmap implements Drawable {
 				mCropWorkspace,
 				0);
 		mCrop = mCropWorkspace;
-		//mBitmap.recycle();
+		bitmap.recycle();
 	}
 
 
