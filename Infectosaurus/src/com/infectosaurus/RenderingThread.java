@@ -83,13 +83,11 @@ public class RenderingThread implements Panel.Renderer {
 	}
 
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-		// Counter-clockwise winding.
-		gl.glFrontFace(GL10.GL_CCW); // OpenGL docs
 		// Enable face culling.
-		gl.glEnable(GL10.GL_CULL_FACE); // OpenGL docs
+		gl.glEnable(GL10.GL_CULL_FACE);
 		// What faces to remove with the face culling.
-		gl.glCullFace(GL10.GL_BACK); // OpenGL docs
-		// Set the background color to black ( rgba ).
+		gl.glCullFace(GL10.GL_BACK);
+		// Set the background color to red ( rgba ).
 		gl.glClearColor(1.0f, 0.0f, 0.0f, 0.5f);
 		// Enable transparency
 		gl.glEnable(GL10.GL_BLEND);

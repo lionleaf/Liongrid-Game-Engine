@@ -9,8 +9,7 @@ import android.graphics.BitmapFactory;
 import android.opengl.GLUtils;
 
 public class Tile extends BaseObject {
-	private int mTextureID = -1;
-	private boolean shoudlLoadTexture = true;
+	
 	private Bitmap mBitmap;
 	private int cameraPosX = 0;
 	private int cameraPosY = 0;
@@ -77,30 +76,6 @@ public class Tile extends BaseObject {
 		int[] rValue = {tileX, tileY};
 		return rValue;
 	}
-	private void loadGLTextures(GL10 gl) {
-		int[] textures = new int[1];
-		gl.glGenTextures(1, textures, 0);
-		mTextureID = textures[0];
-
-		gl.glBindTexture(GL10.GL_TEXTURE_2D, mTextureID);
-		gl.glTexEnvf(GL10.GL_TEXTURE_ENV, GL10.GL_TEXTURE_ENV_MODE,
-				GL10.GL_REPLACE);
-
-
-		GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, mBitmap, 0);
-		int[] mCropWorkspace = new int[4];
-		mCropWorkspace [0] = 0;
-		mCropWorkspace[1] = mBitmap.getHeight();
-		mCropWorkspace[2] = mBitmap.getWidth();
-		mCropWorkspace[3] = -mBitmap.getHeight();
-		((GL11) gl).glTexParameteriv(GL10.GL_TEXTURE_2D, 
-				GL11Ext.GL_TEXTURE_CROP_RECT_OES, 
-				mCropWorkspace,
-				0);
-
-		mBitmap.recycle();
-	}
-
 
 	@Override
 	public void reset() {
