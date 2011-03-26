@@ -9,24 +9,21 @@ import android.opengl.GLUtils;
 import android.util.Log;
 
 public class DrawableBitmap implements Drawable {
-	private Texture mTexture;
+//	private Texture mTexture;
 	private int mWidth;
 	private int mHeight;
 	private int mCrop[];
 	private int mViewWidth;
 	private int mViewHeight;
 	private float mOpacity;
+	private boolean loaded = false;
+	private int textureID = -1;
 
 	private Bitmap bitmap;
 	
 	DrawableBitmap(Texture texture, int width, int height, Bitmap bitmap) {
-		mTexture = texture;
+
 		//TODO remove
-		if(mTexture == null){
-			mTexture = new Texture();
-			mTexture.height = height;
-			mTexture.width = width;
-		}
 		mWidth = width;
 		mHeight = height;
 		mCrop = new int[4];
@@ -38,7 +35,6 @@ public class DrawableBitmap implements Drawable {
 	}
 
 	public void reset() {
-		mTexture = null;
 		mViewWidth = 0;
 		mViewHeight = 0;
 		mOpacity = 1.0f;
@@ -73,17 +69,15 @@ public class DrawableBitmap implements Drawable {
     }
 
 	public void draw(float x, float y, float scaleX, float scaleY) {
-		final Texture texture = mTexture;
 		GL10 gl = OpenGLSystem.getGL();
-		assert (texture != null) : "Texture should not be null";
-		if(!texture.loaded ){
+		if(!loaded ){
 			loadGLTextures(gl);
-			texture.loaded = true;
+			loaded = true;
 		}
-		if (gl != null && texture != null) {
+		if (gl != null && textureID > 0) {
 	
 			// Point to our buffers
-			gl.glBindTexture(GL10.GL_TEXTURE_2D, texture.resource);
+			gl.glBindTexture(GL10.GL_TEXTURE_2D, textureID);
 			((GL11Ext) gl).glDrawTexfOES(200,200, 0, 200,200); 
 		}
 	}
@@ -92,9 +86,9 @@ public class DrawableBitmap implements Drawable {
 	private void loadGLTextures(GL10 gl) {
 		int[] textures = new int[1];
 		gl.glGenTextures(1, textures, 0);
-		mTexture.resource = textures[0];
+		textureID = textures[0];
 
-		gl.glBindTexture(GL10.GL_TEXTURE_2D, mTexture.resource);
+		gl.glBindTexture(GL10.GL_TEXTURE_2D, textureID);
 
 		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER,
 				GL10.GL_LINEAR);
@@ -172,25 +166,6 @@ public class DrawableBitmap implements Drawable {
 		mCrop[1] = bottom;
 		mCrop[2] = width;
 		mCrop[3] = -height;
-	}
-
-	public int[] getCrop() {
-		return mCrop;
-	}
-
-	public void setTexture(Texture texture) {
-		mTexture = texture;
-	}
-
-	public Texture getTexture() {
-		return mTexture;
-	}
-
-	protected final void setFlip(boolean horzFlip, boolean vertFlip) {
-		setCrop(horzFlip ? mWidth : 0,
-				vertFlip ? 0 : mHeight,
-						horzFlip ? -mWidth : mWidth,
-								vertFlip ? -mHeight : mHeight);
 	}
 
 }
