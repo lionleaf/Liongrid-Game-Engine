@@ -8,50 +8,67 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.opengl.GLUtils;
 
-public class Tile {
+public class Tile extends BaseObject {
 	private int mTextureID = -1;
 	private boolean shoudlLoadTexture = true;
 	private Bitmap mBitmap;
 	private int cameraPosX = 0;
 	private int cameraPosY = 0;
 	private static int tileSize = 64;
-	
-	Tile(Panel panel){
-		//mBitmap = BitmapFactory.decodeResource(panel.getResources(),
-		//		R.drawable.scrub);
+	Vector2 pos;
+	DrawableBitmap drawBitmap;
+	RenderSystem rSys;
+
+	private Vector2 mapSize = new Vector2();
+
+	private int refreshTime = 60;
+	int rcounter = 0;
+
+
+	Tile(){
+		Panel panel = BaseObject.gamePointers.panel;
+		mBitmap = BitmapFactory.decodeResource(panel.getResources(),
+				R.drawable.scrub);
+		drawBitmap = new DrawableBitmap(mBitmap, tileSize, tileSize);
+		pos = new Vector2();
+		rSys = BaseObject.gamePointers.renderSystem;
+		mapSize.x = 10;
+		mapSize.y = 10;
 	}
-	
 
-	public void clearTile(GL10 gl, int tileX, int tileY){
-		if(shoudlLoadTexture){
-			loadGLTextures(gl);
-			shoudlLoadTexture = false;
+	@Override
+	public void update(float dt, BaseObject parent){
+		if(rcounter >= refreshTime){
+			refreshMap();
+			rcounter = 0;
+		}else{
+			rcounter++;
 		}
-		
-		if (mTextureID != -1) {
-			gl.glEnable(GL10.GL_TEXTURE_2D);
+	}
 
-			// Point to our buffers
-			gl.glBindTexture(GL10.GL_TEXTURE_2D, mTextureID);
-		}
+	public void clearTile(int tileX, int tileY){
+
 		int[] i = getAbsTilePos(tileX, tileY);
-		int x = i[0];
-		int y = i[1];
-		
-		((GL11Ext) gl).glDrawTexfOES(x, y, 0, tileSize, tileSize); 
+		pos.x = i[0];
+		pos.y = i[1];
+		rSys.scheduleForDraw(drawBitmap, pos);
+	}
 
-		if (mTextureID != -1) {
-			gl.glDisable(GL10.GL_TEXTURE_2D);
+	public void refreshMap(){
+		for(int x = 0; x < mapSize.x ; x++){
+			for(int y = 0 ; y < mapSize.y ; y++){
+				clearTile(x,y);
+			}
 		}
 	}
-	
+
 
 	private int[] getAbsTilePos(int x, int y) {
 		int X = x*tileSize - cameraPosX;
 		int Y = y*tileSize - cameraPosY;
 		int[] i = {X,Y};
 		return i;
-		
+
 	}
 
 	public int[] getTile(int x, int y){
@@ -68,19 +85,26 @@ public class Tile {
 		gl.glBindTexture(GL10.GL_TEXTURE_2D, mTextureID);
 		gl.glTexEnvf(GL10.GL_TEXTURE_ENV, GL10.GL_TEXTURE_ENV_MODE,
 				GL10.GL_REPLACE);
-		
+
 
 		GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, mBitmap, 0);
 		int[] mCropWorkspace = new int[4];
 		mCropWorkspace [0] = 0;
-        mCropWorkspace[1] = mBitmap.getHeight();
-        mCropWorkspace[2] = mBitmap.getWidth();
-        mCropWorkspace[3] = -mBitmap.getHeight();
+		mCropWorkspace[1] = mBitmap.getHeight();
+		mCropWorkspace[2] = mBitmap.getWidth();
+		mCropWorkspace[3] = -mBitmap.getHeight();
 		((GL11) gl).glTexParameteriv(GL10.GL_TEXTURE_2D, 
-						   GL11Ext.GL_TEXTURE_CROP_RECT_OES, 
-						   mCropWorkspace,
-						   0);
-		
+				GL11Ext.GL_TEXTURE_CROP_RECT_OES, 
+				mCropWorkspace,
+				0);
+
 		mBitmap.recycle();
+	}
+
+
+	@Override
+	public void reset() {
+		// TODO Auto-generated method stub
+
 	}
 }
