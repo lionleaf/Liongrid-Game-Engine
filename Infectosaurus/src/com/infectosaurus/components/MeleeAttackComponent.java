@@ -8,13 +8,7 @@ import com.infectosaurus.BaseObject;
 public class MeleeAttackComponent extends Component {
 
 	@Override
-	public void update4Game(float dt) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void update4Renderer(GL10 gl) {
+	public void update(float dt, BaseObject parent) {
 		// TODO Auto-generated method stub
 		
 	}

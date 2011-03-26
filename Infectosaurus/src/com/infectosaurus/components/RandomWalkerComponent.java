@@ -4,6 +4,7 @@ import java.util.Random;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import com.infectosaurus.BaseObject;
 import com.infectosaurus.GameObject;
 
 public class RandomWalkerComponent extends Component{
@@ -13,9 +14,8 @@ public class RandomWalkerComponent extends Component{
 		this.gameObject = gameObject;
 		random = new Random();
 	}
-
 	@Override
-	public void update4Game(float dt) {
+	public void update(float dt, BaseObject parent) {
 		float i;
 		float n = 0.01f;
 		i = random.nextFloat();
@@ -24,11 +24,6 @@ public class RandomWalkerComponent extends Component{
 		i = random.nextFloat();
 		i -= 0.5f;
 		gameObject.posY += i;
-	}
-
-	@Override
-	public void update4Renderer(GL10 gl) {
-		// TODO Auto-generated method stub
 		
 	}
 

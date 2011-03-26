@@ -17,8 +17,8 @@ public class Tile {
 	private static int tileSize = 64;
 	
 	Tile(Panel panel){
-		mBitmap = BitmapFactory.decodeResource(panel.getResources(),
-				R.drawable.scrub);
+		//mBitmap = BitmapFactory.decodeResource(panel.getResources(),
+		//		R.drawable.scrub);
 	}
 	
 

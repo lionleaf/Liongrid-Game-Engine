@@ -6,28 +6,25 @@ import javax.microedition.khronos.opengles.GL10;
 
 import android.util.Log;
 
+import com.infectosaurus.BaseObject;
 import com.infectosaurus.GameObject;
 
 public class TestComponent extends Component {
-	GameObject gameObject;
 	private long lastTime = -1;
 	Random random;
 	int width = 250; //Screw real data, let`s guess
 	int height = 400;
 	
 	
-	public TestComponent(GameObject gameObject) {
-		this.gameObject = gameObject;
+	public TestComponent() {
 		random = new Random();
 	}
-	
-	
+
 	@Override
-	public void update4Game(float dt) {
-	//Test Movement:	
+	public void update(float dt, BaseObject parent) {
 		int randomSpeedX = random.nextInt(200)+35;
 		int randomSpeedY = random.nextInt(200)+35;
-		
+		GameObject gameObject = (GameObject) parent;
 		if(gameObject.velX == 0 ||
 				gameObject.velY == 0){
 			gameObject.velX = randomSpeedX;
@@ -56,11 +53,6 @@ public class TestComponent extends Component {
 		gameObject.posX = gameObject.posX + gameObject.velX * dt;
 		gameObject.posY = gameObject.posY + gameObject.velY * dt;
 		
-	}
-
-	@Override
-	public void update4Renderer(GL10 gl) {
-		// TODO Auto-generated method stub
 		
 	}
 

@@ -11,21 +11,57 @@ import android.util.Log;
 public class RenderingThread implements Panel.Renderer {
     
     private static final String TAG = "My Activity";
-    private GameObjectHandler gameHandler;
+    private ObjectHandler drawQueue;
+	private Object drawLock;
+	private boolean drawQueueChanged;
+    
  
-    public RenderingThread(GameObjectHandler gameHandler) {
+    public RenderingThread() {
     	Log.d(TAG,"In RThread");
-        this.gameHandler = gameHandler;
+    	drawLock = new Object();
     }
 
 	public void onDrawFrame(GL10 gl) {
+		if(OpenGLSystem.gl == null) OpenGLSystem.gl = gl;
+		
+		//Avoid drawing same scene twice
+		synchronized(drawLock) {
+            if (!drawQueueChanged) {
+                while (!drawQueueChanged) {
+                    try {
+                        drawLock.wait();
+                    } catch (InterruptedException e) {
+                        // No big deal if this wait is interrupted.
+                    }
+                }
+            }
+            drawQueueChanged = false;
+        }
+		
+		synchronized (this) {
+			
+			DrawableBitmap.beginDrawing(gl, 500, 500);
+			if (drawQueue != null && drawQueue.getObjects().getCount() > 0){
+				FixedSizeArray<BaseObject> objects = drawQueue.getObjects();
+				final int count = objects.getCount();
+				for (int i = 0; i< count; i++){
+					
+					RenderElement elem = (RenderElement) objects.get(i);
+					if(elem == null){
+						Log.d("RENDER", "elem " + elem );
+						continue;
+					}
+					elem.drawable.draw(elem.x, elem.y, 1, 1);
+				}
+				DrawableBitmap.endDrawing(gl);
+			}
+		}
 		// Clears the screen and depth buffer.
-		gl.glClear(gl.GL_COLOR_BUFFER_BIT | gl.GL_DEPTH_BUFFER_BIT);
 		// Replace the current matrix with the identity matrix
-		gl.glLoadIdentity();
-		gameHandler.update4Renderer(gl);
+		//
+		//gameHandler.update4Renderer(gl);
 		// Disable face culling.
-		gl.glDisable(GL10.GL_CULL_FACE); // OpenGL docs
+		gl.glDisable(GL10.GL_CULL_FACE); 
 	}
 
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
@@ -58,5 +94,13 @@ public class RenderingThread implements Panel.Renderer {
 		// Enable transparency
 		gl.glEnable(GL10.GL_BLEND);
 		gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
+	}
+
+	public void setDrawQueue(ObjectHandler drawQueue) {
+		this.drawQueue = drawQueue;
+		synchronized(drawLock) {
+            drawQueueChanged = true;
+            drawLock.notify();
+		}
 	}
 }

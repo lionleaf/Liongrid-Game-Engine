@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.opengl.GLUtils;
 import android.util.Log;
 
+import com.infectosaurus.BaseObject;
 import com.infectosaurus.GameObject;
 
 public class AnimationComponent extends Component {
@@ -19,14 +20,9 @@ public class AnimationComponent extends Component {
 		this.gameObject = gameObject;
 		mBitmap = bitmap;
 	}
-	@Override
-	public void update4Game(float dt) {
-		
-		
-	}
-	@Override
-	public void update4Renderer(GL10 gl) {
-		if(shoudlLoadTexture){
+	
+	public void update(float dt, BaseObject parent) {
+	/*	if(shoudlLoadTexture){
 			loadGLTextures(gl);
 			shoudlLoadTexture = false;
 		}
@@ -43,9 +39,9 @@ public class AnimationComponent extends Component {
 
 		if (mTextureID != -1) {
 			gl.glDisable(GL10.GL_TEXTURE_2D);
-		}
+		}*/
 	}
-	
+	/*
 	private void loadGLTextures(GL10 gl) {
 		int[] textures = new int[1];
 		gl.glGenTextures(1, textures, 0);
@@ -79,4 +75,5 @@ public class AnimationComponent extends Component {
 		mBitmap.recycle();
 	}
 
+*/
 }
