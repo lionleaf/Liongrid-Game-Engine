@@ -53,22 +53,17 @@ public class RenderingThread implements Panel.Renderer {
 					}
 					elem.drawable.draw(elem.x, elem.y, 1, 1);
 				}
-				DrawableBitmap.endDrawing(gl);
 			}
+			DrawableBitmap.endDrawing(gl);
 		}
-		// Clears the screen and depth buffer.
-		// Replace the current matrix with the identity matrix
-		//
-		//gameHandler.update4Renderer(gl);
-		// Disable face culling.
-		gl.glDisable(GL10.GL_CULL_FACE); 
 	}
 
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
+		gl.glClear(gl.GL_COLOR_BUFFER_BIT);
 		// Sets the current view port to the new size.
 		gl.glViewport(0, 0, width, height);
 		// Textures are not rendered outside the view... i think
-		gl.glOrthof(-width/2, width/2, -height/2, height/2, 1, 10);
+		gl.glOrthof(0, width, 0, height, -2, 4);
 		// Select the projection matrix
 		gl.glMatrixMode(GL10.GL_PROJECTION);
 		// Reset the projection matrix
@@ -83,15 +78,11 @@ public class RenderingThread implements Panel.Renderer {
 	}
 
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-		// Enable face culling.
-		gl.glEnable(GL10.GL_CULL_FACE);
-		// What faces to remove with the face culling.
-		gl.glCullFace(GL10.GL_BACK);
-		// Set the background color to red ( rgba ).
-		gl.glClearColor(1.0f, 0.0f, 0.0f, 0.5f);
+		gl.glDisable(gl.GL_DEPTH_TEST);
 		// Enable transparency
 		gl.glEnable(GL10.GL_BLEND);
 		gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
+		gl.glClear(gl.GL_COLOR_BUFFER_BIT);
 	}
 
 	public void setDrawQueue(ObjectHandler drawQueue) {

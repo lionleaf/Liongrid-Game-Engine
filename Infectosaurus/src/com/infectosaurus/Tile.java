@@ -19,8 +19,6 @@ public class Tile extends BaseObject {
 	RenderSystem rSys;
 
 	private Vector2 mapSize = new Vector2();
-
-	private int refreshTime = 60;
 	int rcounter = 0;
 
 
@@ -37,12 +35,7 @@ public class Tile extends BaseObject {
 
 	@Override
 	public void update(float dt, BaseObject parent){
-		if(rcounter >= refreshTime){
-			refreshMap();
-			rcounter = 0;
-		}else{
-			rcounter++;
-		}
+		clearTile(1,1);
 	}
 
 	public void clearTile(int tileX, int tileY){

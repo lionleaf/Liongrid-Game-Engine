@@ -48,6 +48,7 @@ public class DrawableBitmap implements Drawable {
 	
     public static void endDrawing(GL10 gl) {
         gl.glDisable(GL10.GL_TEXTURE_2D);
+		gl.glDisable(GL10.GL_CULL_FACE); 
     }
 
 	public void draw(float x, float y, float scaleX, float scaleY) {
@@ -57,7 +58,7 @@ public class DrawableBitmap implements Drawable {
 			loaded = true;
 		}
 		if (gl != null && textureID > 0) {
-	
+			Log.d("Drawing", "Drawing here");
 			// Point to our buffers
 			gl.glBindTexture(GL10.GL_TEXTURE_2D, textureID);
 			((GL11Ext) gl).glDrawTexfOES(x, y, 0, mWidth, mHeight); 
@@ -78,17 +79,17 @@ public class DrawableBitmap implements Drawable {
 				GL10.GL_LINEAR);
 
 		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_WRAP_S,
-				GL10.GL_CLAMP_TO_EDGE);
+				GL10.GL_REPEAT);
 		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_WRAP_T,
 				GL10.GL_CLAMP_TO_EDGE);
 		gl.glTexEnvf(GL10.GL_TEXTURE_ENV, GL10.GL_TEXTURE_ENV_MODE,
-				GL10.GL_REPLACE);
+				GL10.GL_DECAL);
 
 		GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bitmap, 0);
 		int[] mCropWorkspace = new int[4];
-		mCropWorkspace [0] = 0;
+		mCropWorkspace[0] = 0;
 		mCropWorkspace[1] = 0;//bitmap.getHeight();
-		mCropWorkspace[2] = bitmap.getHeight();//bitmap.getWidth();
+		mCropWorkspace[2] = bitmap.getWidth();//bitmap.getWidth();
 		mCropWorkspace[3] = bitmap.getHeight();//-bitmap.getHeight();
 		((GL11) gl).glTexParameteriv(GL10.GL_TEXTURE_2D, 
 				GL11Ext.GL_TEXTURE_CROP_RECT_OES, 
