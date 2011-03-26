@@ -12,6 +12,10 @@ public abstract class BaseObject {
 	private static final int DEFAULT_SIZE = 10;
 	private ArrayList<Component> gameComponents;
 	private ArrayList<Component> renderComponents;
+	private int GSize;
+	private int GCounter = 0;
+	private int RCounter;
+	private int RSize;
 	
 	BaseObject(){
 		Log.d("GameBoard", "In BaseObject");
@@ -25,11 +29,20 @@ public abstract class BaseObject {
 	}
 	
 	public void useComp4Game(){
-		for(Component c: gameComponents) c.update4Game(0);
+		GSize = gameComponents.size();
+		while(GCounter < GSize){
+			gameComponents.get(GCounter++).update4Game(0);
+		}
+		GCounter = 0;
+		
 	}
 	
 	public void useComp4Renderer(GL10 gl){
-		for(Component c: renderComponents) c.update4Renderer(gl);
+		RSize = renderComponents.size();
+		while(RCounter < RSize){
+			renderComponents.get(RCounter++).update4Renderer(gl);
+		}
+		RCounter = 0;
 	}
 	
 	public void addGameComponent(Component component){

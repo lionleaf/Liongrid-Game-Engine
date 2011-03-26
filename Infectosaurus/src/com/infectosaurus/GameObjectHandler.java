@@ -12,6 +12,10 @@ import android.util.Log;
  * components in a way that they can be done in the right order 
  */
 public class GameObjectHandler {
+	private static int RCounter = 0;
+	private static int RSize = -1;
+	private static int GCounter = 0;
+	private static int GSize = -1;
 	private static ArrayList<GameObject> gameObjects;
 	private static final int capacity = 10;
 	GameObjectHandler(Panel panel){
@@ -21,11 +25,19 @@ public class GameObjectHandler {
 	}
 
 	public void update4Renderer(GL10 gl) {
-		for(GameObject o: gameObjects) o.useComp4Renderer(gl);
+		RSize = gameObjects.size();
+		while(RCounter < RSize){
+			gameObjects.get(RCounter++).useComp4Renderer(gl);
+		}
+		RCounter = 0;
 	}
 	
 	public void update4Game(){
-		for(GameObject o: gameObjects) o.useComp4Game();
+		GSize = gameObjects.size();
+		while(GCounter < GSize){
+			gameObjects.get(GCounter++).useComp4Game();
+		}
+		GCounter = 0;
 	}
 	
 	public ArrayList<GameObject> getAll(){
