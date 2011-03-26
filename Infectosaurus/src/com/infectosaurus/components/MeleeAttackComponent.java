@@ -1,7 +1,5 @@
 package com.infectosaurus.components;
 
-import javax.microedition.khronos.opengles.GL10;
-
 import com.infectosaurus.BaseObject;
 
 

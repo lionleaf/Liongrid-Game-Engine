@@ -1,12 +1,7 @@
 package com.infectosaurus;
 
-import javax.microedition.khronos.opengles.GL10;
-import javax.microedition.khronos.opengles.GL11;
-import javax.microedition.khronos.opengles.GL11Ext;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.opengl.GLUtils;
 
 public class Tile extends BaseObject {
 	

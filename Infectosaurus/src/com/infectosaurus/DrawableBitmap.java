@@ -6,7 +6,6 @@ import javax.microedition.khronos.opengles.GL11Ext;
 
 import android.graphics.Bitmap;
 import android.opengl.GLUtils;
-import android.util.Log;
 
 public class DrawableBitmap implements Drawable {
 //	private Texture mTexture;
@@ -42,25 +41,40 @@ public class DrawableBitmap implements Drawable {
 	}
 	
     public static void beginDrawing(GL10 gl, float viewWidth, float viewHeight) {
-        gl.glEnable(GL10.GL_TEXTURE_2D);
+    	gl.glShadeModel(GL10.GL_FLAT);
+        gl.glEnable(GL10.GL_BLEND);
+        gl.glBlendFunc(GL10.GL_ONE, GL10.GL_ONE_MINUS_SRC_ALPHA);
+        gl.glColor4x(0x10000, 0x10000, 0x10000, 0x10000);
 
+        gl.glMatrixMode(GL10.GL_PROJECTION);
+        gl.glPushMatrix();
+        gl.glLoadIdentity();
+        gl.glOrthof(0.0f, viewWidth, 0.0f, viewHeight, 0.0f, 1.0f);
+        gl.glMatrixMode(GL10.GL_MODELVIEW);
+        gl.glPushMatrix();
+        gl.glLoadIdentity();
+       
+        gl.glEnable(GL10.GL_TEXTURE_2D);
     }
 	
     public static void endDrawing(GL10 gl) {
-        gl.glDisable(GL10.GL_TEXTURE_2D);
-		gl.glDisable(GL10.GL_CULL_FACE); 
+    	gl.glDisable(GL10.GL_BLEND);
+        gl.glMatrixMode(GL10.GL_PROJECTION);
+        gl.glPopMatrix();
+        gl.glMatrixMode(GL10.GL_MODELVIEW);
+        gl.glPopMatrix();
     }
 
-	public void draw(float x, float y, float scaleX, float scaleY) {
-		GL10 gl = OpenGLSystem.getGL();
+	@Override
+	public void draw(GL10 gl, float x, float y, float scaleX, float scaleY) {
+		//GL10 gl = OpenGLSystem.getGL();
 		if(!loaded ){
 			loadGLTextures(gl);
 			loaded = true;
 		}
 		if (gl != null && textureID > 0) {
-			Log.d("Drawing", "Drawing here");
 			// Point to our buffers
-			gl.glBindTexture(GL10.GL_TEXTURE_2D, textureID);
+			 gl.glBindTexture(GL10.GL_TEXTURE_2D, textureID);
 			((GL11Ext) gl).glDrawTexfOES(x, y, 0, mWidth, mHeight); 
 		}
 	}
@@ -79,11 +93,11 @@ public class DrawableBitmap implements Drawable {
 				GL10.GL_LINEAR);
 
 		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_WRAP_S,
-				GL10.GL_REPEAT);
+				GL10.GL_CLAMP_TO_EDGE);
 		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_WRAP_T,
 				GL10.GL_CLAMP_TO_EDGE);
 		gl.glTexEnvf(GL10.GL_TEXTURE_ENV, GL10.GL_TEXTURE_ENV_MODE,
-				GL10.GL_DECAL);
+				GL10.GL_REPEAT);
 
 		GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bitmap, 0);
 		int[] mCropWorkspace = new int[4];
@@ -96,16 +110,18 @@ public class DrawableBitmap implements Drawable {
 				mCropWorkspace,
 				0);
 		mCrop = mCropWorkspace;
-		bitmap.recycle();
+//		bitmap.recycle();
 	}
 
 
 
+	@Override
 	public void setPriority(float f) {
 		// TODO Auto-generated method stub
 
 	}
 
+	@Override
 	public void getPriority(float f) {
 		// TODO Auto-generated method stub
 

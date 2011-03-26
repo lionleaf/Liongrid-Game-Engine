@@ -1,7 +1,5 @@
 package com.infectosaurus.components;
 
-import android.util.Log;
-
 import com.infectosaurus.BaseObject;
 import com.infectosaurus.Drawable;
 import com.infectosaurus.GameObject;

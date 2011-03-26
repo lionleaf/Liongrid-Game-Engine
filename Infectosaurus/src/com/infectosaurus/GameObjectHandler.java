@@ -1,11 +1,5 @@
 package com.infectosaurus;
 
-import java.util.ArrayList;
-
-import javax.microedition.khronos.opengles.GL10;
-
-import android.util.Log;
-
 /**
  * @author Lastis
  * This class needs to hold all the GameObjects and sort the 
@@ -15,6 +9,6 @@ public class GameObjectHandler extends ObjectHandler {
 	private static final int DEFAULT_CAPACITY = 64;
 	GameObjectHandler(){
 		objects.add(new Infectosaurus());
-//		objects.add(new Human());
+		objects.add(new Human());
 	}
 }

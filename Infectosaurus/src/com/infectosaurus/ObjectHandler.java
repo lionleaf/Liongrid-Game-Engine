@@ -1,9 +1,5 @@
 package com.infectosaurus;
 
-import java.util.ArrayList;
-
-import android.util.Log;
-
 public class ObjectHandler extends BaseObject {
 	protected FixedSizeArray<BaseObject> objects;
 	private static final int DEFAULT_CAPACITY = 64;

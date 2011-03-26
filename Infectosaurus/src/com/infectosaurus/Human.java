@@ -2,7 +2,6 @@ package com.infectosaurus;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import com.infectosaurus.components.RandomWalkerComponent;
 import com.infectosaurus.components.SpriteComponent;
 import com.infectosaurus.components.TestComponent;
 

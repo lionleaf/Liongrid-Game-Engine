@@ -2,8 +2,6 @@ package com.infectosaurus;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
-import javax.microedition.khronos.opengles.GL11Ext;
-
 import android.opengl.GLU;
 import android.util.Log;
 
@@ -21,8 +19,10 @@ public class RenderingThread implements Panel.Renderer {
     	drawLock = new Object();
     }
 
+	@Override
 	public void onDrawFrame(GL10 gl) {
-		if(OpenGLSystem.gl == null) OpenGLSystem.gl = gl;
+		//if(OpenGLSystem.gl == null)
+		//OpenGLSystem.gl = gl;
 		
 		//Avoid drawing same scene twice
 		synchronized(drawLock) {
@@ -39,8 +39,9 @@ public class RenderingThread implements Panel.Renderer {
         }
 		
 		synchronized (this) {
-			
-			DrawableBitmap.beginDrawing(gl, 500, 500);
+			int mWidth = BaseObject.gamePointers.panel.getWidth();
+			int mHeight= BaseObject.gamePointers.panel.getHeight();
+			DrawableBitmap.beginDrawing(gl, mWidth, mHeight);
 			if (drawQueue != null && drawQueue.getObjects().getCount() > 0){
 				FixedSizeArray<BaseObject> objects = drawQueue.getObjects();
 				final int count = objects.getCount();
@@ -51,38 +52,51 @@ public class RenderingThread implements Panel.Renderer {
 						Log.d("RENDER", "elem " + elem );
 						continue;
 					}
-					elem.drawable.draw(elem.x, elem.y, 1, 1);
+					elem.drawable.draw(gl, elem.x, elem.y, 1, 1);
 				}
 			}
 			DrawableBitmap.endDrawing(gl);
 		}
 	}
 
+	@Override
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
-		gl.glClear(gl.GL_COLOR_BUFFER_BIT);
-		// Sets the current view port to the new size.
 		gl.glViewport(0, 0, width, height);
-		// Textures are not rendered outside the view... i think
-		gl.glOrthof(0, width, 0, height, -2, 4);
-		// Select the projection matrix
-		gl.glMatrixMode(GL10.GL_PROJECTION);
-		// Reset the projection matrix
-		gl.glLoadIdentity();
-		// Calculate the aspect ratio of the window
-		GLU.gluPerspective(gl, 45.0f, (float) width / (float) height, 0.1f,
-				100.0f);
-		// Select the modelview matrix
-		gl.glMatrixMode(GL10.GL_MODELVIEW);
-		// Reset the modelview matrix
-		gl.glLoadIdentity();
+        
+        /*
+         * Set our projection matrix. This doesn't have to be done each time we
+         * draw, but usually a new projection needs to be set when the viewport
+         * is resized.
+         */
+        gl.glMatrixMode(GL10.GL_PROJECTION);
+        gl.glLoadIdentity();
+        float ratio = (float)width/height;
+        gl.glFrustumf(-ratio, ratio, -1, 1, 1, 10);
 	}
 
+	@Override
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-		gl.glDisable(gl.GL_DEPTH_TEST);
-		// Enable transparency
-		gl.glEnable(GL10.GL_BLEND);
-		gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
-		gl.glClear(gl.GL_COLOR_BUFFER_BIT);
+		 /*
+         * Some one-time OpenGL initialization can be made here probably based
+         * on features of this particular context
+         */
+        gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_FASTEST);
+
+        gl.glClearColor(0.0f, 0.0f, 0.0f, 1);
+        gl.glShadeModel(GL10.GL_FLAT);
+        gl.glDisable(GL10.GL_DEPTH_TEST);
+        gl.glEnable(GL10.GL_TEXTURE_2D);
+        /*
+         * By default, OpenGL enables features that improve quality but reduce
+         * performance. One might want to tweak that especially on software
+         * renderer.
+         */
+        gl.glDisable(GL10.GL_DITHER);
+        gl.glDisable(GL10.GL_LIGHTING);
+
+        gl.glTexEnvx(GL10.GL_TEXTURE_ENV, GL10.GL_TEXTURE_ENV_MODE, GL10.GL_MODULATE);
+
+        gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 	}
 
 	public void setDrawQueue(ObjectHandler drawQueue) {

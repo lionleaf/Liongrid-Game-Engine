@@ -41,6 +41,7 @@ public abstract class GameObject extends BaseObject{
 		components.add(component);
 	}
 	
+	@Override
 	public void reset(){
 		//TODO!
 	}

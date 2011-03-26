@@ -2,10 +2,6 @@ package com.infectosaurus.components;
 
 import java.util.Random;
 
-import javax.microedition.khronos.opengles.GL10;
-
-import android.util.Log;
-
 import com.infectosaurus.BaseObject;
 import com.infectosaurus.GameObject;
 
