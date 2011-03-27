@@ -65,7 +65,6 @@ public class DrawableBitmap implements Drawable {
         gl.glPopMatrix();
     }
 
-	@Override
 	public void draw(GL10 gl, float x, float y, float scaleX, float scaleY) {
 		//GL10 gl = OpenGLSystem.getGL();
 		if(!loaded ){
@@ -119,7 +118,6 @@ public class DrawableBitmap implements Drawable {
 		setCrop(0, height, width, height);
 	}
 
-	@Override
 	public int getWidth() {
 		return mWidth;
 	}
@@ -128,7 +126,7 @@ public class DrawableBitmap implements Drawable {
 		mWidth = width;
 	}
 
-	@Override
+
 	public int getHeight() {
 		return mHeight;
 	}

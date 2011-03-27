@@ -20,7 +20,6 @@ public class RenderingThread implements Panel.Renderer {
     	drawLock = new Object();
     }
 
-	@Override
 	public void onDrawFrame(GL10 gl) {
 		OpenGLSystem.gl = gl;
 		//Avoid drawing same scene twice
@@ -72,7 +71,7 @@ public class RenderingThread implements Panel.Renderer {
 		}
 	}
 
-	@Override
+
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
 		gl.glViewport(0, 0, width, height);
         
@@ -87,7 +86,7 @@ public class RenderingThread implements Panel.Renderer {
         gl.glFrustumf(-ratio, ratio, -1, 1, 1, 10);
 	}
 
-	@Override
+
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 		 /*
          * Some one-time OpenGL initialization can be made here probably based
