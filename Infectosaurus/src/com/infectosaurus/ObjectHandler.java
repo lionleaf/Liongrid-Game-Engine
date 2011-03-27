@@ -10,6 +10,11 @@ public class ObjectHandler extends BaseObject {
 		objects = new FixedSizeArray<BaseObject>(DEFAULT_CAPACITY);
 	}
 	
+	public ObjectHandler(int size) {
+		super();
+		objects = new FixedSizeArray<BaseObject>(size);
+	}
+
 	public void add(BaseObject object){
 		objects.add(object);
 	}

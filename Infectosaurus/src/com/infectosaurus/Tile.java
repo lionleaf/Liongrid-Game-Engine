@@ -24,43 +24,40 @@ public class Tile extends BaseObject {
 		drawBitmap = new DrawableBitmap(mBitmap, tileSize, tileSize);
 		pos = new Vector2();
 		rSys = BaseObject.gamePointers.renderSystem;
-		mapSize.x = 10;
-		mapSize.y = 10;
+		mapSize.x = 8;
+		mapSize.y = 12;
 	}
 
 	@Override
 	public void update(float dt, BaseObject parent){
-		clearTile(1,1);
+//		refreshMap();
 	}
 
-	public void clearTile(int tileX, int tileY){
-
-		int[] i = getAbsTilePos(tileX, tileY);
-		pos.x = i[0];
-		pos.y = i[1];
-		rSys.scheduleForDraw(drawBitmap, pos);
+	public void clearTile(int x, int y){
+		int[] i = getAbsTilePos(x, y);
+		rSys.scheduleForBGDraw(drawBitmap, i[0],i[1]);
 	}
 
 	public void refreshMap(){
 		for(int x = 0; x < mapSize.x ; x++){
 			for(int y = 0 ; y < mapSize.y ; y++){
-				clearTile(x,y);
+				clearTile(x, y);
 			}
 		}
 	}
 
 
-	private int[] getAbsTilePos(int x, int y) {
-		int X = x*tileSize - cameraPosX;
-		int Y = y*tileSize - cameraPosY;
+	private int[] getAbsTilePos(int tileX, int tileY) {
+		int X = tileX*tileSize - cameraPosX;
+		int Y = tileY*tileSize - cameraPosY;
 		int[] i = {X,Y};
 		return i;
 
 	}
 
 	public int[] getTile(int x, int y){
-		int tileX = (cameraPosX + x)/tileSize;
-		int tileY = (cameraPosY + y)/tileSize;
+		int tileX = ((cameraPosX + x)/tileSize);
+		int tileY = ((cameraPosY + y)/tileSize);
 		int[] rValue = {tileX, tileY};
 		return rValue;
 	}
@@ -69,5 +66,15 @@ public class Tile extends BaseObject {
 	public void reset() {
 		// TODO Auto-generated method stub
 
+	}
+
+	public void clearArea(int x, int y, int width, int height) {
+		int[] LowerLeft = getTile(x, y);
+		int[] UpperRight = getTile(x + width, y + height);
+		for(int tileX = LowerLeft[0]; tileX <= UpperRight[0]; tileX++){
+			for(int tileY = LowerLeft[1]; tileY <= UpperRight[1]; tileY++){
+				clearTile(tileX, tileY);
+			}
+		}
 	}
 }

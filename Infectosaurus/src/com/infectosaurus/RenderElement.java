@@ -12,6 +12,12 @@ public class RenderElement extends BaseObject{
 		y = pos.y;
 	}
 
+	public RenderElement(DrawableBitmap drawBitmap, int x, int y) {
+		this.drawable = drawBitmap;
+		this.x = x;
+		this.y = y;
+	}
+		
 	@Override
 	public void reset() {
 		// TODO Auto-generated method stub

@@ -110,28 +110,16 @@ public class DrawableBitmap implements Drawable {
 				mCropWorkspace,
 				0);
 		mCrop = mCropWorkspace;
-//		bitmap.recycle();
+		bitmap.recycle();
 	}
 
-
-
-	@Override
-	public void setPriority(float f) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void getPriority(float f) {
-		// TODO Auto-generated method stub
-
-	}
 	public void resize(int width, int height) {
 		mWidth = width;
 		mHeight = height;
 		setCrop(0, height, width, height);
 	}
 
+	@Override
 	public int getWidth() {
 		return mWidth;
 	}
@@ -140,6 +128,7 @@ public class DrawableBitmap implements Drawable {
 		mWidth = width;
 	}
 
+	@Override
 	public int getHeight() {
 		return mHeight;
 	}
@@ -166,5 +155,4 @@ public class DrawableBitmap implements Drawable {
 		mCrop[2] = width;
 		mCrop[3] = -height;
 	}
-
 }

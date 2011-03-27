@@ -12,6 +12,7 @@ public class RenderingThread implements Panel.Renderer {
     private ObjectHandler drawQueue;
 	private Object drawLock;
 	private boolean drawQueueChanged;
+	private ObjectHandler drawBGQueue;
     
  
     public RenderingThread() {
@@ -21,9 +22,7 @@ public class RenderingThread implements Panel.Renderer {
 
 	@Override
 	public void onDrawFrame(GL10 gl) {
-		//if(OpenGLSystem.gl == null)
-		//OpenGLSystem.gl = gl;
-		
+		OpenGLSystem.gl = gl;
 		//Avoid drawing same scene twice
 		synchronized(drawLock) {
             if (!drawQueueChanged) {
@@ -42,14 +41,28 @@ public class RenderingThread implements Panel.Renderer {
 			int mWidth = BaseObject.gamePointers.panel.getWidth();
 			int mHeight= BaseObject.gamePointers.panel.getHeight();
 			DrawableBitmap.beginDrawing(gl, mWidth, mHeight);
-			if (drawQueue != null && drawQueue.getObjects().getCount() > 0){
+			if(drawBGQueue != null && drawBGQueue.getObjects().getCount() > 0){
+				FixedSizeArray<BaseObject> objects = drawBGQueue.getObjects();
+				final int count = objects.getCount();
+				for (int i = 0; i< count; i++){
+					
+					RenderElement elem = (RenderElement) objects.get(i);
+					if(elem == null){ 
+						Log.d("RENDER", "elem in drawBGQueue is " + elem );
+						continue;
+					}
+					elem.drawable.draw(gl, elem.x, elem.y, 1, 1);
+				}
+			}
+			
+			if (drawQueue != null && drawQueue.getObjects().getCount() > 0 ){
 				FixedSizeArray<BaseObject> objects = drawQueue.getObjects();
 				final int count = objects.getCount();
 				for (int i = 0; i< count; i++){
 					
 					RenderElement elem = (RenderElement) objects.get(i);
 					if(elem == null){ 
-						Log.d("RENDER", "elem " + elem );
+						Log.d("RENDER", "elem in drawQueue is " + elem );
 						continue;
 					}
 					elem.drawable.draw(gl, elem.x, elem.y, 1, 1);
@@ -99,8 +112,9 @@ public class RenderingThread implements Panel.Renderer {
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 	}
 
-	public void setDrawQueue(ObjectHandler drawQueue) {
+	public void setDrawQueues(ObjectHandler drawQueue, ObjectHandler renderBGQueues) {
 		this.drawQueue = drawQueue;
+		this.drawBGQueue = renderBGQueues;
 		synchronized(drawLock) {
             drawQueueChanged = true;
             drawLock.notify();
