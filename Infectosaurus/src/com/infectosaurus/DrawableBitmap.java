@@ -72,9 +72,11 @@ public class DrawableBitmap implements Drawable {
 			loaded = true;
 		}
 		if (gl != null && textureID > 0) {
-			// Point to our buffers
-			 gl.glBindTexture(GL10.GL_TEXTURE_2D, textureID);
-			((GL11Ext) gl).glDrawTexfOES(x, y, 0, mWidth, mHeight); 
+			// Point to our buffers, bind texture is also done in loadGLTextures, but
+			// we need to do it again so the saved textureID will be loaded a second time
+			// the bitmap is drawn.
+			gl.glBindTexture(GL10.GL_TEXTURE_2D, textureID);
+			((GL11Ext) gl).glDrawTexfOES(x, y, 0, (float) mWidth, (float) mHeight); 
 		}
 	}
 
@@ -101,9 +103,9 @@ public class DrawableBitmap implements Drawable {
 		GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bitmap, 0);
 		int[] mCropWorkspace = new int[4];
 		mCropWorkspace[0] = 0;
-		mCropWorkspace[1] = 0;//bitmap.getHeight();
-		mCropWorkspace[2] = bitmap.getWidth();//bitmap.getWidth();
-		mCropWorkspace[3] = bitmap.getHeight();//-bitmap.getHeight();
+		mCropWorkspace[1] = bitmap.getHeight();
+		mCropWorkspace[2] = bitmap.getWidth();
+		mCropWorkspace[3] = -bitmap.getHeight();
 		((GL11) gl).glTexParameteriv(GL10.GL_TEXTURE_2D, 
 				GL11Ext.GL_TEXTURE_CROP_RECT_OES, 
 				mCropWorkspace,

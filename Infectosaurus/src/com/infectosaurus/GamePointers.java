@@ -7,5 +7,5 @@ public class GamePointers {
 	public RenderSystem renderSystem;
 	public RenderingThread renderThread;
 	public Panel panel;
-	public Tile tileSystem;
+	public LevelBuilder tileSystem;
 }

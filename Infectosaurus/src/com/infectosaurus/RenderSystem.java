@@ -51,10 +51,9 @@ public class RenderSystem {
     }
 
 	private void clearQueue(FixedSizeArray<BaseObject> objects) {
-		 final int count = objects.getCount();
-	     for (int i = count - 1; i >= 0; i--) {
-	            objects.removeLast();
-	        }
-		
+		final int count = objects.getCount();
+		for (int i = count - 1; i >= 0; i--) {
+			objects.removeLast();
+		}
 	}
 }
