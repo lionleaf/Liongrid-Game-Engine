@@ -29,7 +29,7 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback{
 	    gamePointers.panel = this;
 	    ObjectHandler root = new ObjectHandler();
 	    gamePointers.root = root;
-	    LevelBuilder tile = new LevelBuilder();
+	    TileManager tile = new TileManager();
 	    gamePointers.tileSystem = tile;
 	    GameObjectHandler gOHandler = new GameObjectHandler();
 	    gamePointers.gameObjectHandler = gOHandler;

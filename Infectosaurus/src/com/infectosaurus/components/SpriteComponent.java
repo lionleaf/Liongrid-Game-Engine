@@ -3,14 +3,14 @@ package com.infectosaurus.components;
 import com.infectosaurus.BaseObject;
 import com.infectosaurus.Drawable;
 import com.infectosaurus.GameObject;
-import com.infectosaurus.LevelBuilder;
+import com.infectosaurus.TileManager;
 import com.infectosaurus.Vector2;
 
 public class SpriteComponent extends Component {
 	Drawable drawing;
 	Vector2 pos;
 	Vector2 lastPos;
-	LevelBuilder tile;
+	TileManager tile;
 	
 	public SpriteComponent(Drawable drawing){
 		this.drawing = drawing;

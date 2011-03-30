@@ -3,12 +3,13 @@ package com.infectosaurus;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-public class LevelBuilder extends BaseObject {
+public class TileManager extends BaseObject {
 	
 	private Bitmap mBitmap;
 	private int cameraPosX = 0;
 	private int cameraPosY = 0;
-	private static int tileSize = 64;
+	private static int TILE_SIZE = 64;
+	private TileType[] tileTypes;
 	Vector2 pos;
 	DrawableBitmap drawBitmap;
 	RenderSystem rSys;
@@ -17,11 +18,12 @@ public class LevelBuilder extends BaseObject {
 	int rcounter = 0;
 
 
-	LevelBuilder(){
+	TileManager(){
 		Panel panel = BaseObject.gamePointers.panel;
+		initTileTypes();
 		mBitmap = BitmapFactory.decodeResource(panel.getResources(),
 				R.drawable.scrub);
-		drawBitmap = new DrawableBitmap(mBitmap, tileSize, tileSize);
+		drawBitmap = new DrawableBitmap(mBitmap, TILE_SIZE, TILE_SIZE);
 		pos = new Vector2();
 		rSys = BaseObject.gamePointers.renderSystem;
 		mapSize.x = 8;
@@ -48,16 +50,16 @@ public class LevelBuilder extends BaseObject {
 
 
 	private int[] getAbsTilePos(int tileX, int tileY) {
-		int X = tileX*tileSize - cameraPosX;
-		int Y = tileY*tileSize - cameraPosY;
+		int X = tileX*TILE_SIZE - cameraPosX;
+		int Y = tileY*TILE_SIZE - cameraPosY;
 		int[] i = {X,Y};
 		return i;
 
 	}
 
-	public int[] getTile(int x, int y){
-		int tileX = ((cameraPosX + x)/tileSize);
-		int tileY = ((cameraPosY + y)/tileSize);
+	public int[] getTilePos(int x, int y){
+		int tileX = ((cameraPosX + x)/TILE_SIZE);
+		int tileY = ((cameraPosY + y)/TILE_SIZE);
 		int[] rValue = {tileX, tileY};
 		return rValue;
 	}
@@ -69,12 +71,25 @@ public class LevelBuilder extends BaseObject {
 	}
 
 	public void clearArea(int x, int y, int width, int height) {
-		int[] LowerLeft = getTile(x, y);
-		int[] UpperRight = getTile(x + width, y + height);
+		int[] LowerLeft = getTilePos(x, y);
+		int[] UpperRight = getTilePos(x + width, y + height);
 		for(int tileX = LowerLeft[0]; tileX <= UpperRight[0]; tileX++){
 			for(int tileY = LowerLeft[1]; tileY <= UpperRight[1]; tileY++){
 				clearTile(tileX, tileY);
 			}
+		}
+	}
+	
+	public void initTileTypes(){
+		Panel panel = BaseObject.gamePointers.panel;
+		Bitmap tile1 = BitmapFactory.decodeResource(panel.getResources(),
+				R.drawable.scrub);
+		
+		Bitmap[] bitmaps = {tile1};
+		tileTypes = new TileType[bitmaps.length];
+		for(int i = 0; i < tileTypes.length; i++){
+			tileTypes[i] = 
+				new TileType(tile1, new boolean[2][2][MovementType.values().length], TILE_SIZE);
 		}
 	}
 }
