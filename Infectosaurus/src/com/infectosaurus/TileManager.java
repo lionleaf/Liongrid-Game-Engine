@@ -5,6 +5,8 @@ import android.graphics.BitmapFactory;
 
 public class TileManager extends BaseObject {
 	
+	private static final boolean REDRAW_ALL = false;
+	
 	private Bitmap mBitmap;
 	private int cameraPosX = 0;
 	private int cameraPosY = 0;
@@ -14,6 +16,7 @@ public class TileManager extends BaseObject {
 	DrawableBitmap drawBitmap;
 	RenderSystem rSys;
 
+	
 	private Vector2 mapSize = new Vector2();
 	int rcounter = 0;
 
@@ -32,12 +35,15 @@ public class TileManager extends BaseObject {
 
 	@Override
 	public void update(float dt, BaseObject parent){
-//		refreshMap();
+		if(REDRAW_ALL){
+			refreshMap();
+		}
 	}
 
 	public void clearTile(int x, int y){
-		int[] i = getAbsTilePos(x, y);
-		rSys.scheduleForBGDraw(drawBitmap, i[0], i[1]);
+		//We calculate the values here instead of calling a method for speed!
+		rSys.scheduleForBGDraw(drawBitmap, 
+				x*TILE_SIZE - cameraPosX, y*TILE_SIZE - cameraPosY);
 	}
 
 	public void refreshMap(){
@@ -48,22 +54,6 @@ public class TileManager extends BaseObject {
 		}
 	}
 
-
-	private int[] getAbsTilePos(int tileX, int tileY) {
-		int X = tileX*TILE_SIZE - cameraPosX;
-		int Y = tileY*TILE_SIZE - cameraPosY;
-		int[] i = {X,Y};
-		return i;
-
-	}
-
-	public int[] getTilePos(int x, int y){
-		int tileX = ((cameraPosX + x)/TILE_SIZE);
-		int tileY = ((cameraPosY + y)/TILE_SIZE);
-		int[] rValue = {tileX, tileY};
-		return rValue;
-	}
-
 	@Override
 	public void reset() {
 		// TODO Auto-generated method stub
@@ -71,10 +61,16 @@ public class TileManager extends BaseObject {
 	}
 
 	public void clearArea(int x, int y, int width, int height) {
-		int[] LowerLeft = getTilePos(x, y);
-		int[] UpperRight = getTilePos(x + width, y + height);
-		for(int tileX = LowerLeft[0]; tileX <= UpperRight[0]; tileX++){
-			for(int tileY = LowerLeft[1]; tileY <= UpperRight[1]; tileY++){
+		if(REDRAW_ALL) return;
+		
+		//Most efficient way to do the math. Instead of making a method
+		final int  lowerLeftX = ((cameraPosX + x)/TILE_SIZE);
+		final int lowerLeftY = ((cameraPosY + y)/TILE_SIZE);
+		final int upperRightX = ((cameraPosX + x + width)/TILE_SIZE);
+		final int upperRightY = ((cameraPosY + y + height)/TILE_SIZE);
+		
+		for(int tileX = lowerLeftX; tileX <= upperRightX; tileX++){
+			for(int tileY = lowerLeftY; tileY <= upperRightY; tileY++){
 				clearTile(tileX, tileY);
 			}
 		}

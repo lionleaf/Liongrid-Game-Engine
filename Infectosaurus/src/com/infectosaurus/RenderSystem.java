@@ -1,12 +1,14 @@
 package com.infectosaurus;
 
-import android.util.Log;
 
 public class RenderSystem {
 	private ObjectHandler[] renderQueues;
 	private int queueIndex;
 	private ObjectHandler[] renderBGQueues;
+	private ObjectPool<RenderElement> rElementPool;
 	
+	
+	private final static int QUEUE_SIZE = 64;
 	private final static int DRAW_QUEUE_COUNT = 2;
     private final static int MAX_BG_TILES = 128;
 	
@@ -14,21 +16,36 @@ public class RenderSystem {
         renderQueues = new ObjectHandler[DRAW_QUEUE_COUNT];
         renderBGQueues = new ObjectHandler[DRAW_QUEUE_COUNT];
         for (int i = 0; i < DRAW_QUEUE_COUNT; i++) {
-            renderQueues[i] = new ObjectHandler();
+            renderQueues[i] = new ObjectHandler(QUEUE_SIZE);
             renderBGQueues[i] = new ObjectHandler(MAX_BG_TILES);
         }
+        
+        int poolSize = (QUEUE_SIZE+MAX_BG_TILES) * 2;
+        rElementPool = new ObjectPool<RenderElement>(poolSize, RenderElement.class);
+        
         queueIndex = 0;
     }
     
     public void scheduleForDraw(Drawable object, Vector2 pos) {
-        RenderElement element = new RenderElement(object, pos);
-        //TODO POOL THIS SHIT!    	
+        RenderElement element = rElementPool.allocate();
+        
+        //Since this is done a lot, we want max speed, so we change
+        //the public variables instead of calling set
+        element.drawable = object;
+        element.x = pos.x;
+        element.y = pos.y;   	
     	renderQueues[queueIndex].add(element);
     }
     
-    public void scheduleForBGDraw(DrawableBitmap drawBitmap, int x, int y) {
-		RenderElement element = new RenderElement(drawBitmap, x, y);
-        //TODO POOL THIS SHIT!    	
+    public void scheduleForBGDraw(Drawable object, int x, int y) {
+    	RenderElement element = rElementPool.allocate();
+        
+    	//Since this is done a lot, we want max speed, so we change
+        //the public variables instead of calling set
+        element.drawable = object;
+        element.x = x;
+        element.y = y;  
+    	
     	renderBGQueues[queueIndex].add(element);
 	}
     
@@ -52,8 +69,10 @@ public class RenderSystem {
 
 	private void clearQueue(FixedSizeArray<BaseObject> objects) {
 		final int count = objects.getCount();
+		RenderElement rElement;
 		for (int i = count - 1; i >= 0; i--) {
-			objects.removeLast();
+			rElement = (RenderElement) objects.removeLast();
+			rElementPool.release(rElement);
 		}
 	}
 }
