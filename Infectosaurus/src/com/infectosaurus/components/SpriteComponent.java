@@ -29,6 +29,6 @@ public class SpriteComponent extends Component {
 	}
 	
 	private void clearPreviousTile(Vector2 vec){
-		tile.clearArea((int)vec.x,(int)vec.y,drawing.getWidth(),drawing.getHeight());
+		tile.clearArea((int)vec.x,(int)vec.y, drawing.getWidth(), drawing.getHeight());
 	}
 }

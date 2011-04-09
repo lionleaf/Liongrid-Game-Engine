@@ -4,6 +4,10 @@ import android.util.Log;
 
 import com.infectosaurus.components.Component;
 
+/**
+ * @author Lionleaf
+ *
+ */
 public abstract class GameObject extends BaseObject{
 	public float posX = 100;
 	public float posY = 100;
@@ -37,13 +41,17 @@ public abstract class GameObject extends BaseObject{
 	}
 	
 	
+	/**
+	 * Adds a component that will be updated every time this object is
+	 * @param component - The component object
+	 */
 	public void addComponent(Component component){
 		components.add(component);
 	}
 	
 	@Override
 	public void reset(){
-		//TODO!
+		
 	}
 
 }

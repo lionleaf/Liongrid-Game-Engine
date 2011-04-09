@@ -7,7 +7,11 @@ import javax.microedition.khronos.opengles.GL11Ext;
 import android.graphics.Bitmap;
 import android.opengl.GLUtils;
 
-public class DrawableBitmap implements Drawable {
+/**
+ * @author Lionleaf
+ *
+ */
+public class DrawableBitmap extends BaseObject implements Drawable {
 //	private Texture mTexture;
 	private int mWidth;
 	private int mHeight;
@@ -40,6 +44,12 @@ public class DrawableBitmap implements Drawable {
 
 	}
 	
+    /**
+     * Set up the OpenGL for drawing, should be called once before every frame
+     * @param gl - The GL10 pointer
+     * @param viewWidth - Width
+     * @param viewHeight - Height
+     */
     public static void beginDrawing(GL10 gl, float viewWidth, float viewHeight) {
     	gl.glShadeModel(GL10.GL_FLAT);
         gl.glEnable(GL10.GL_BLEND);
@@ -57,6 +67,11 @@ public class DrawableBitmap implements Drawable {
         gl.glEnable(GL10.GL_TEXTURE_2D);
     }
 	
+    
+    /**
+     * OpenGL code to be executed after every frame is drawn
+     * @param gl
+     */
     public static void endDrawing(GL10 gl) {
     	gl.glDisable(GL10.GL_BLEND);
         gl.glMatrixMode(GL10.GL_PROJECTION);
@@ -65,6 +80,7 @@ public class DrawableBitmap implements Drawable {
         gl.glPopMatrix();
     }
 
+    
 	public void draw(GL10 gl, float x, float y, float scaleX, float scaleY) {
 		//GL10 gl = OpenGLSystem.getGL();
 		if(!loaded ){
@@ -79,6 +95,7 @@ public class DrawableBitmap implements Drawable {
 			((GL11Ext) gl).glDrawTexfOES(x, y, 0, (float) mWidth, (float) mHeight); 
 		}
 	}
+
 
 
 	private void loadGLTextures(GL10 gl) {
@@ -114,27 +131,13 @@ public class DrawableBitmap implements Drawable {
 		bitmap.recycle();
 	}
 
-	public void resize(int width, int height) {
-		mWidth = width;
-		mHeight = height;
-		setCrop(0, height, width, height);
-	}
-
 	public int getWidth() {
 		return mWidth;
-	}
-
-	public void setWidth(int width) {
-		mWidth = width;
 	}
 
 
 	public int getHeight() {
 		return mHeight;
-	}
-
-	public void setHeight(int height) {
-		mHeight = height;
 	}
 
 	/**
