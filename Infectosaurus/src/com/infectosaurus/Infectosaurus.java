@@ -1,8 +1,9 @@
 package com.infectosaurus;
 
 import com.infectosaurus.components.MeleeAttackComponent;
+import com.infectosaurus.components.RandomWalkerComponent;
 import com.infectosaurus.components.SpriteComponent;
-import com.infectosaurus.components.TestComponent;
+
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,7 +20,7 @@ public class Infectosaurus extends GameObject {
 				R.drawable.lumberinghulklo);
 		addComponent(new MeleeAttackComponent());
 		addComponent(new SpriteComponent(new DrawableBitmap(mBitmap,100,100)));
-		addComponent(new TestComponent());
+		addComponent(new RandomWalkerComponent());
 		velX = 100;
 	}
 }

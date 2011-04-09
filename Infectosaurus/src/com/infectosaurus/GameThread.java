@@ -1,5 +1,6 @@
 package com.infectosaurus;
 
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.MotionEvent;
 
@@ -13,11 +14,21 @@ import android.view.MotionEvent;
 public class GameThread extends Thread { 
 	private ObjectHandler root;
  
-	private float dt;
+	private long dt;
+	private long currentTime;
+	private long lastTime = -1;
+	
 	private boolean running = true;
 	private final static String TAG = "GameThread";
 	RenderSystem renderSystem;
 	RenderingThread renderThread;
+	
+	private static final int MIN_REFRESH_TIME = 16; //ms, 16 gives 60fps
+	//ms, if the dt is lower than this, don't update this cycle
+	private static final int MIN_UPDATE_MS = 12; 
+	
+	private static final float MAX_TIMESTEP = 0.1f; //seconds
+	
     public GameThread() {
     	root = BaseObject.gamePointers.root;
     	setName("GameThread");
@@ -36,11 +47,39 @@ public class GameThread extends Thread {
     		//to the renderer, and gets a new empty one
     		renderSystem.swap(renderThread);
     		
-    		//TODO calculate dt
-    		dt = 0;
+    		currentTime = SystemClock.uptimeMillis();
     		
-    		//Update all game logic
-    		root.update(dt, null);
+    		dt = currentTime - lastTime;
+    		   		
+    		if(lastTime == -1){
+    			lastTime = System.nanoTime();
+    			dt = 0; //Take no timestep if this is the first iteration
+    		}
+    		  		
+    		long dtfinal = dt; 
+    		
+    		if(dt > MIN_UPDATE_MS){
+    			float dtsec = currentTime - lastTime * 0.001f;
+    			//We never want to take too big timesteps!
+    			if(dtsec > MAX_TIMESTEP){
+    				dtsec = MAX_TIMESTEP;
+    			}
+    			lastTime = currentTime;
+    			
+    			//Update all game logic
+    			root.update(dtsec, null);
+    			
+    			dtfinal = SystemClock.uptimeMillis() - currentTime;
+    			
+    		}
+    		
+    		if(dtfinal < MIN_REFRESH_TIME){
+    			try {
+					Thread.sleep(MIN_UPDATE_MS - dtfinal);
+				} catch (InterruptedException e) {
+					//Doesn`t matter
+				}
+    		}
     	}
     }
 

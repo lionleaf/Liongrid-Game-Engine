@@ -5,7 +5,7 @@ import android.graphics.BitmapFactory;
 
 public class TileManager extends BaseObject {
 	
-	private static final boolean REDRAW_ALL = false;
+	private static final boolean REDRAW_ALL = true;
 	
 	private Bitmap mBitmap;
 	private int cameraPosX = 0;

@@ -6,22 +6,39 @@ import com.infectosaurus.BaseObject;
 import com.infectosaurus.GameObject;
 
 public class RandomWalkerComponent extends Component{
-	private GameObject gameObject;
 	Random random;
-	public RandomWalkerComponent(GameObject gameObject) {
-		this.gameObject = gameObject;
+	int width = 250; //Screw real data, let`s guess
+	int height = 400;
+	
+	
+	public RandomWalkerComponent(){
 		random = new Random();
 	}
+
 	@Override
 	public void update(float dt, BaseObject parent) {
-		float i;
-		float n = 0.01f;
-		i = random.nextFloat();
-		i -= 0.5f;
-		gameObject.posX += i;
-		i = random.nextFloat();
-		i -= 0.5f;
-		gameObject.posY += i;
+		int randomSpeedX = random.nextInt(200)+35;
+		int randomSpeedY = random.nextInt(200)+35;
+		GameObject gameObject = (GameObject) parent;
+		if(gameObject.velX == 0 ||
+				gameObject.velY == 0){
+			gameObject.velX = randomSpeedX;
+			gameObject.velY = randomSpeedY;
+		}
+		
+		if(gameObject.posX < 0)
+			gameObject.velX = randomSpeedX;
+		if(gameObject.posY < 0)
+			gameObject.velY = randomSpeedY;
+		if(gameObject.posX > width)
+			gameObject.velX = -randomSpeedX;
+		if(gameObject.posY > height)
+			gameObject.velY = -randomSpeedY;
+		
+		
+		gameObject.posX = gameObject.posX + gameObject.velX * dt;
+		gameObject.posY = gameObject.posY + gameObject.velY * dt;
+		
 		
 	}
 
