@@ -6,6 +6,7 @@ import javax.microedition.khronos.opengles.GL11Ext;
 
 import android.graphics.Bitmap;
 import android.opengl.GLUtils;
+import android.util.Log;
 
 /**
  * @author Lionleaf
@@ -82,6 +83,7 @@ public class DrawableBitmap extends BaseObject implements Drawable {
 
     
 	public void draw(GL10 gl, float x, float y, float scaleX, float scaleY) {
+		
 		//GL10 gl = OpenGLSystem.getGL();
 		if(!loaded ){
 			loadGLTextures(gl);

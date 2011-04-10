@@ -13,17 +13,18 @@ public class SpriteComponent extends Component {
 	TileManager tile;
 	
 	public SpriteComponent(Drawable drawing){
+		
 		this.drawing = drawing;
-		pos = new Vector2();
+		lastPos = new Vector2();
 		tile = BaseObject.gamePointers.tileSystem;
 	}
 	
 	@Override
 	public void update(float dt, BaseObject parent){
 		GameObject gameObject = (GameObject) parent;
-		lastPos = pos;
-		pos.x = gameObject.posX;
-		pos.y = gameObject.posY;
+		pos = gameObject.pos;
+		lastPos.set(pos);
+		
 		BaseObject.gamePointers.renderSystem.scheduleForDraw(drawing, pos);
 		clearPreviousTile(lastPos);
 	}

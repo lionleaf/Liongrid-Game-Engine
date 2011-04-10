@@ -9,11 +9,11 @@ import com.infectosaurus.components.Component;
  *
  */
 public abstract class GameObject extends BaseObject{
-	public float posX = 100;
-	public float posY = 100;
+	public Vector2 pos = new Vector2(0,0);
 	
-	public float velX;
-	public float velY;
+	public Vector2 vel = new Vector2(0,0);
+	
+	public float speed = 100;
 	
 	private static final int DEFAULT_SIZE = 64;
 	private FixedSizeArray<Component> components;
@@ -35,7 +35,7 @@ public abstract class GameObject extends BaseObject{
 	public void update(float dt, BaseObject parent){
 		Size = components.getCount();
 		while(Counter < Size){
-			components.get(Counter++).update(0, this);
+			components.get(Counter++).update(dt, this);
 		}
 		Counter = 0;
 	}

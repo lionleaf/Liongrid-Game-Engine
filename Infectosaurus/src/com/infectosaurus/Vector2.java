@@ -39,7 +39,11 @@ public final class Vector2 {
     public Vector2(Vector2 other) {
         set(other);
     }
-
+    
+    public String toString(){
+    	return "("+x+","+y+")";
+    }
+    
     public final void add(Vector2 other) {
         x += other.x;
         y += other.y;

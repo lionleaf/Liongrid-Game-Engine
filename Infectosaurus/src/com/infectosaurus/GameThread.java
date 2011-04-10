@@ -52,14 +52,14 @@ public class GameThread extends Thread {
     		dt = currentTime - lastTime;
     		   		
     		if(lastTime == -1){
-    			lastTime = System.nanoTime();
+    			lastTime = SystemClock.uptimeMillis();
     			dt = 0; //Take no timestep if this is the first iteration
     		}
     		  		
     		long dtfinal = dt; 
     		
     		if(dt > MIN_UPDATE_MS){
-    			float dtsec = currentTime - lastTime * 0.001f;
+    			float dtsec = (currentTime - lastTime) * 0.001f;
     			//We never want to take too big timesteps!
     			if(dtsec > MAX_TIMESTEP){
     				dtsec = MAX_TIMESTEP;
@@ -73,13 +73,13 @@ public class GameThread extends Thread {
     			
     		}
     		
-    		if(dtfinal < MIN_REFRESH_TIME){
+    		/*if(dtfinal < MIN_REFRESH_TIME){
     			try {
 					Thread.sleep(MIN_UPDATE_MS - dtfinal);
 				} catch (InterruptedException e) {
 					//Doesn`t matter
 				}
-    		}
+    		}*/
     	}
     }
 
