@@ -22,6 +22,8 @@ public class GameThread extends Thread {
 	private final static String TAG = "GameThread";
 	RenderSystem renderSystem;
 	RenderingThread renderThread;
+
+	private Object updateLock;
 	
 	private static final int MIN_REFRESH_TIME = 16; //ms, 16 gives 60fps
 	//ms, if the dt is lower than this, don't update this cycle
@@ -30,6 +32,7 @@ public class GameThread extends Thread {
 	private static final float MAX_TIMESTEP = 0.1f; //seconds
 	
     public GameThread() {
+    	updateLock = new Object();
     	root = BaseObject.gamePointers.root;
     	setName("GameThread");
     }
@@ -67,7 +70,9 @@ public class GameThread extends Thread {
     			
     			
     			//Update all game logic
-    			root.update(dtsec, null);
+    			synchronized(updateLock){
+    				root.update(dtsec, null);
+    			}
     			//Sends the previously completed renderQueue 
         		//to the renderer, and gets a new empty one
         		renderSystem.swap(renderThread);
@@ -76,16 +81,26 @@ public class GameThread extends Thread {
     			
     		}
     		
-    		if(dtfinal < MIN_REFRESH_TIME){
+    		//if(dtfinal < MIN_REFRESH_TIME){
+    		//Take a small nap to get those touch events!
     			try {
-					Thread.sleep(Math.max(0,MIN_UPDATE_MS - dtfinal));
+					Thread.sleep(Math.max(2,MIN_UPDATE_MS - dtfinal));
 				} catch (InterruptedException e) {
 					//Doesn`t matter
 				}
-    		}
+    		//}
     	}
     }
 
 	public void doTouchEvent(MotionEvent event) {
+	}
+
+	public void registerScreenTouch(MotionEvent event) {
+		synchronized(updateLock){
+			Infectosaurus inf = new Infectosaurus();
+			inf.pos.set(event.getX(), -event.getY());
+			BaseObject.gamePointers.gameObjectHandler.add(inf);
+		}
+		
 	}
 }

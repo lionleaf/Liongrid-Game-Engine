@@ -3,6 +3,7 @@ package com.infectosaurus;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.Window;
 
 /**
@@ -33,4 +34,7 @@ public class GameBoard extends Activity{
 		super.onResume();
 		panel.onResume();
 	}
+
+	
+	
 }

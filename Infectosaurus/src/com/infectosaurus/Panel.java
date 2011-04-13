@@ -3,6 +3,7 @@ package com.infectosaurus;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 
 public class Panel extends GLSurfaceView implements SurfaceHolder.Callback{
@@ -44,5 +45,11 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback{
 	    BaseObject.gamePointers.renderThread = rThread;
 	    gThread.start();
 	    setRenderer(rThread);
+	}
+	
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		gThread.registerScreenTouch(event);
+		return false;
 	}
 }

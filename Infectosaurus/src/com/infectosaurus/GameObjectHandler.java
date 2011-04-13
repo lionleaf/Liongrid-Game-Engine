@@ -20,6 +20,5 @@ public class GameObjectHandler extends ObjectHandler {
 		objects.add(new Human());
 		objects.add(new Human());
 		objects.add(new Human());
-		objects.add(new Infectosaurus());
 	}
 }

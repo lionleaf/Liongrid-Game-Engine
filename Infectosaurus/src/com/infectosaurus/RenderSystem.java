@@ -28,7 +28,7 @@ public class RenderSystem {
     
     public void scheduleForDraw(Drawable object, Vector2 pos) {
         RenderElement element = rElementPool.allocate();
-        
+        if(element == null) return;
         //Since this is done a lot, we want max speed, so we change
         //the public variables instead of calling set
         element.drawable = object;

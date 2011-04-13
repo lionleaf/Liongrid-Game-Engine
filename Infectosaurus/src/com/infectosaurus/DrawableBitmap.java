@@ -31,8 +31,6 @@ public class DrawableBitmap extends BaseObject implements Drawable {
 		//TODO remove
 		mWidth = width;
 		mHeight = height;
-		//mCrop = new int[4];
-		//setCrop(0, height, width, height);
 		this.context = context;
 		this.resource = resource;
 	}
@@ -97,9 +95,9 @@ public class DrawableBitmap extends BaseObject implements Drawable {
 
 
 	private void loadGLTextures(GL10 gl) {
-		Log.d(TAG, "Loading texture");
-		//http://blog.poweredbytoast.com/loading-opengl-textures-in-android  :
-		
+//		Log.d(TAG, "Loading texture");
+//		//http://blog.poweredbytoast.com/loading-opengl-textures-in-android  :
+//		
 //		int[] tempArr = new int[1];
 //	    gl.glGenTextures(1, tempArr, 0);
 //		
@@ -126,17 +124,12 @@ public class DrawableBitmap extends BaseObject implements Drawable {
 //	    gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_WRAP_S, GL10.GL_CLAMP_TO_EDGE);
 //	    gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_WRAP_T, GL10.GL_CLAMP_TO_EDGE);
 //	    
-//	    /*
-//	    int[] crop = {0, bmp.getWidth(), bmp.getHeight(), -bmp.getHeight()};
-//
-//	    ((GL11) gl).glTexParameteriv(GL10.GL_TEXTURE_2D, 
-//	    GL11Ext.GL_TEXTURE_CROP_RECT_OES, crop, 0);
-//	    */
 //	    
 //	    int[] crop = {0, bmp.getWidth(), bmp.getHeight(), -bmp.getHeight()};
 //
 //	    ((GL11) gl).glTexParameteriv(GL10.GL_TEXTURE_2D, 
 //	    GL11Ext.GL_TEXTURE_CROP_RECT_OES, crop, 0);
+//	    
 //	    
 //	    // Generate, and load up all of the mipmaps:
 //	    for(int level=0, height = bmp.getHeight(), width = bmp.getWidth(); true; level++) {
@@ -157,8 +150,8 @@ public class DrawableBitmap extends BaseObject implements Drawable {
 //	    }
 //	    
 //	    bmp.recycle();
+//	    gl.glEnable(GL10.GL_TEXTURE_2D);
 //	    
-	    
 		/* Code from replica island*/
 		int[] textures = new int[1];
 		gl.glGenTextures(1, textures, 0);
