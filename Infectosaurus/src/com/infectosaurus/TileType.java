@@ -1,13 +1,14 @@
 package com.infectosaurus;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 
 public class TileType extends DrawableBitmap{
 	private boolean[][][] blocked;
 	
 	
-	TileType(Bitmap bitmap, boolean[][][] blocked, int size){
-		super(bitmap, size, size);
+	TileType(int resource, boolean[][][] blocked, int size, Context context){
+		super(resource, size, size, context);
 		this.blocked = blocked;
 	}
 	

@@ -13,7 +13,7 @@ public abstract class GameObject extends BaseObject{
 	
 	public Vector2 vel = new Vector2(0,0);
 	
-	public float speed = 100;
+	public float speed = 10;
 	
 	private static final int DEFAULT_SIZE = 64;
 	private FixedSizeArray<Component> components;

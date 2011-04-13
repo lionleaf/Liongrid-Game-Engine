@@ -8,7 +8,18 @@ package com.infectosaurus;
 public class GameObjectHandler extends ObjectHandler {
 	private static final int DEFAULT_CAPACITY = 64;
 	GameObjectHandler(){
+		
+		objects.add(new Human());
+		objects.add(new Human());
+		objects.add(new Human());
+		objects.add(new Human());
+		objects.add(new Human());
+		objects.add(new Human());
+		objects.add(new Human());
+		objects.add(new Human());
+		objects.add(new Human());
+		objects.add(new Human());
+		objects.add(new Human());
 		objects.add(new Infectosaurus());
-//		objects.add(new Human());
 	}
 }

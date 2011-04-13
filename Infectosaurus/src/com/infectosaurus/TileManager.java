@@ -24,9 +24,8 @@ public class TileManager extends BaseObject {
 	TileManager(){
 		Panel panel = BaseObject.gamePointers.panel;
 		initTileTypes();
-		mBitmap = BitmapFactory.decodeResource(panel.getResources(),
-				R.drawable.scrub);
-		drawBitmap = new DrawableBitmap(mBitmap, TILE_SIZE, TILE_SIZE);
+		drawBitmap = new DrawableBitmap(
+				R.drawable.scrub, TILE_SIZE, TILE_SIZE, panel.getContext());
 		pos = new Vector2();
 		rSys = BaseObject.gamePointers.renderSystem;
 		mapSize.x = 8;
@@ -78,14 +77,14 @@ public class TileManager extends BaseObject {
 	
 	public void initTileTypes(){
 		Panel panel = BaseObject.gamePointers.panel;
-		Bitmap tile1 = BitmapFactory.decodeResource(panel.getResources(),
-				R.drawable.scrub);
+		int tile1 = R.drawable.scrub;
 		
-		Bitmap[] bitmaps = {tile1};
+		int[] bitmaps = {tile1};
 		tileTypes = new TileType[bitmaps.length];
 		for(int i = 0; i < tileTypes.length; i++){
 			tileTypes[i] = 
-				new TileType(tile1, new boolean[2][2][MovementType.values().length], TILE_SIZE);
+				new TileType(tile1, new boolean[2][2][MovementType.values().length], 
+						TILE_SIZE, panel.getContext());
 		}
 	}
 }

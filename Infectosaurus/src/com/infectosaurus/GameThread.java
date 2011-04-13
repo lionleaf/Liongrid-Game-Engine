@@ -58,7 +58,7 @@ public class GameThread extends Thread {
     		  		
     		long dtfinal = dt; 
     		
-    		if(dt > MIN_UPDATE_MS){
+    		//if(dt > MIN_UPDATE_MS){
     			float dtsec = (currentTime - lastTime) * 0.001f;
     			//We never want to take too big timesteps!
     			if(dtsec > MAX_TIMESTEP){
@@ -71,7 +71,7 @@ public class GameThread extends Thread {
     			
     			dtfinal = SystemClock.uptimeMillis() - currentTime;
     			
-    		}
+    		//}
     		
     		/*if(dtfinal < MIN_REFRESH_TIME){
     			try {

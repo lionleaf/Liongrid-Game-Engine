@@ -12,7 +12,6 @@ public class RandomWalkerComponent extends Component{
 	Random random;
 	int width = 250; //Screw real data, let`s guess
 	int height = 400;
-	float epsilon = 1f;
 	boolean recalculate = true;
 	
 	Vector2 vel;
@@ -20,9 +19,9 @@ public class RandomWalkerComponent extends Component{
 	Vector2 goal = new Vector2();
 	Vector2 temp = new Vector2();
 	
+	float lastDistance = Integer.MAX_VALUE;
 	
 	public RandomWalkerComponent(){
-		
 		random = new Random();
 		goal.x = random.nextInt(width);
 		goal.y = random.nextInt(height);
@@ -34,12 +33,17 @@ public class RandomWalkerComponent extends Component{
 		vel = gameObject.vel;
 		pos = gameObject.pos;
 		
-		if(pos.distance2(goal) < epsilon){
+		float newDistance = pos.distance2(goal);
+		
+		
+		if(newDistance > lastDistance){
 			goal.x = random.nextInt(width);
 			goal.y = random.nextInt(height);
 			recalculate = true;
 			
 		}
+		
+		lastDistance = newDistance;
 		
 		if(recalculate){
 			//Drunk and late. Is this math correct?
@@ -48,7 +52,6 @@ public class RandomWalkerComponent extends Component{
 			vel.normalize();
 			vel.multiply(gameObject.speed);
 			recalculate = false;
-			Log.d(BaseObject.TAG, "New velocity: " + vel);
 		}
 		
 	}

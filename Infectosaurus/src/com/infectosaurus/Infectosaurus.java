@@ -6,25 +6,23 @@ import com.infectosaurus.components.RandomWalkerComponent;
 import com.infectosaurus.components.SpriteComponent;
 
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
 public class Infectosaurus extends GameObject {
-	private static final String TAG = "GameBoard";
-
 	Infectosaurus() {
 		Log.d("Place", "Infectosaurus construct");
 		Panel panel = BaseObject.gamePointers.panel;
 		
-		Bitmap mBitmap = BitmapFactory.decodeResource(panel.getResources(),
-				R.drawable.lumberinghulklo);
 		addComponent(new MeleeAttackComponent());
-		addComponent(new SpriteComponent(new DrawableBitmap(mBitmap,100,100)));
-		//addComponent(new RandomWalkerComponent());
+		
+		DrawableBitmap db = new DrawableBitmap(
+				R.drawable.lumberinghulklo,100,100,panel.getContext());
+		addComponent(new RandomWalkerComponent());
+		addComponent(new SpriteComponent(db));
 		addComponent(new MoveComponent());
-		speed = 20 ;
-		vel.x = 5;
-		vel.y = 10;
+		speed = 100;
 	}
 }
