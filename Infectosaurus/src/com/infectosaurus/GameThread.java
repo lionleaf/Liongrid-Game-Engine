@@ -43,9 +43,7 @@ public class GameThread extends Thread {
     		//Make sure we don`t swap queues while renderer is rendering
     		renderThread.waitDrawingComplete();
     		
-    		//Sends the previously completed renderQueue 
-    		//to the renderer, and gets a new empty one
-    		renderSystem.swap(renderThread);
+    		
     		
     		currentTime = SystemClock.uptimeMillis();
     		
@@ -58,28 +56,33 @@ public class GameThread extends Thread {
     		  		
     		long dtfinal = dt; 
     		
-    		//if(dt > MIN_UPDATE_MS){
+    		if(dt > MIN_UPDATE_MS){
     			float dtsec = (currentTime - lastTime) * 0.001f;
     			//We never want to take too big timesteps!
     			if(dtsec > MAX_TIMESTEP){
     				dtsec = MAX_TIMESTEP;
     			}
-    			lastTime = currentTime;
+    			lastTime = currentTime; 
+    			
+    			
     			
     			//Update all game logic
     			root.update(dtsec, null);
-    			
+    			//Sends the previously completed renderQueue 
+        		//to the renderer, and gets a new empty one
+        		renderSystem.swap(renderThread);
+        		
     			dtfinal = SystemClock.uptimeMillis() - currentTime;
     			
-    		//}
+    		}
     		
-    		/*if(dtfinal < MIN_REFRESH_TIME){
+    		if(dtfinal < MIN_REFRESH_TIME){
     			try {
-					Thread.sleep(MIN_UPDATE_MS - dtfinal);
+					Thread.sleep(Math.max(0,MIN_UPDATE_MS - dtfinal));
 				} catch (InterruptedException e) {
 					//Doesn`t matter
 				}
-    		}*/
+    		}
     	}
     }
 
