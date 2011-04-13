@@ -20,7 +20,7 @@ public class RenderSystem {
             renderBGQueues[i] = new ObjectHandler(MAX_BG_TILES);
         }
         
-        int poolSize = (QUEUE_SIZE+MAX_BG_TILES) * 2;
+        int poolSize = (QUEUE_SIZE+MAX_BG_TILES) * 6;
         rElementPool = new ObjectPool<RenderElement>(poolSize, RenderElement.class);
         
         queueIndex = 0;
@@ -50,7 +50,8 @@ public class RenderSystem {
 	}
     
     public void swap(RenderingThread renderer) {
-       //renderQueues[queueIndex].commitUpdates();
+        renderQueues[queueIndex].commitUpdates();
+        renderBGQueues[queueIndex].commitUpdates();
 
         // This code will block if the previous queue is still being executed.
         renderer.setDrawQueues(renderQueues[queueIndex], renderBGQueues[queueIndex]);
@@ -60,14 +61,14 @@ public class RenderSystem {
         // Clear the old queues.
         FixedSizeArray<BaseObject> objects;
         objects = renderQueues[lastQueue].getObjects();
-        clearQueue(objects);
+        clearQueue(objects, renderQueues);
         objects = renderBGQueues[lastQueue].getObjects();
-        clearQueue(objects);
+        clearQueue(objects,renderBGQueues);
 
         queueIndex = (queueIndex + 1) % DRAW_QUEUE_COUNT;
     }
 
-	private void clearQueue(FixedSizeArray<BaseObject> objects) {
+	private void clearQueue(FixedSizeArray<BaseObject> objects, ObjectHandler[] queue) {
 		final int count = objects.getCount();
 		RenderElement rElement;
 		for (int i = count - 1; i >= 0; i--) {

@@ -98,7 +98,9 @@ public class GameThread extends Thread {
 	public void registerScreenTouch(MotionEvent event) {
 		synchronized(updateLock){
 			Infectosaurus inf = new Infectosaurus();
-			inf.pos.set(event.getX(), -event.getY());
+			//The coordinate systems of OpenGL and MotionEvent are different
+			float y = BaseObject.gamePointers.panel.getHeight()-event.getY();
+			inf.pos.set(event.getX(), y);
 			BaseObject.gamePointers.gameObjectHandler.add(inf);
 		}
 		

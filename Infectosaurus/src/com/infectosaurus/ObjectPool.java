@@ -52,7 +52,7 @@ public class ObjectPool<E extends BaseObject> {
 	public E allocate(){
 		if(objects.getCount() == 0){
 			Log.e(BaseObject.TAG+" Pool error", 
-					"EXHAUSTED "+objectClass.getSimpleName()+ " pool!" );
+					"EXHAUSTED "+objectClass.getSimpleName()+ " pool! "+objects.getCapacity());
 			return null;
 		}
 		

@@ -9,6 +9,13 @@ import com.infectosaurus.components.Component;
  *
  */
 public abstract class GameObject extends BaseObject{
+	
+	enum Team{ Human, Alien };
+	
+	public Team team = Team.Human; //Default team
+	
+	public boolean alive = true;
+	
 	public Vector2 pos = new Vector2(0,0);
 	
 	public Vector2 vel = new Vector2(0,0);
