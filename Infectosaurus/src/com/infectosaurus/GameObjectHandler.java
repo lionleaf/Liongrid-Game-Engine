@@ -62,16 +62,13 @@ public class GameObjectHandler extends ObjectHandler {
 		
 		final int length = objects.getCount();
 		
-		
 		Object[] objectArr = objects.getArray();
-		
-		//TODO pool object arrays?!
-		FixedSizeArray<GameObject> returnObjects 
-			= new FixedSizeArray<GameObject>(length);
 		
 		for (int i = 0; i < length; i++) {
 			GameObject currentObject = (GameObject) objectArr[i];
-			if(currentObject.team != team) break;
+			
+			if(currentObject.team != team) continue;
+			
 			currentDistance = currentObject.pos.distance2(gObject.pos);
 			
 			if(currentDistance < closestDistance && objectArr[i] != gObject){
