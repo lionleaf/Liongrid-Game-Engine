@@ -1,5 +1,7 @@
 package com.infectosaurus;
 
+import com.infectosaurus.GameObject.Team;
+
 /**
  * @author Lastis
  * This class needs to hold all the GameObjects and sort the 
@@ -52,7 +54,7 @@ public class GameObjectHandler extends ObjectHandler {
 		
 	}
 	
-	public GameObject getClosest(GameObject gObject){
+	public GameObject getClosest(GameObject gObject, Team team){
 		
 		GameObject closest = null;
 		float closestDistance = Float.MAX_VALUE;
@@ -64,10 +66,12 @@ public class GameObjectHandler extends ObjectHandler {
 		Object[] objectArr = objects.getArray();
 		
 		//TODO pool object arrays?!
-		FixedSizeArray<GameObject> returnObjects = new FixedSizeArray<GameObject>(length);
+		FixedSizeArray<GameObject> returnObjects 
+			= new FixedSizeArray<GameObject>(length);
 		
 		for (int i = 0; i < length; i++) {
 			GameObject currentObject = (GameObject) objectArr[i];
+			if(currentObject.team != team) break;
 			currentDistance = currentObject.pos.distance2(gObject.pos);
 			
 			if(currentDistance < closestDistance && objectArr[i] != gObject){

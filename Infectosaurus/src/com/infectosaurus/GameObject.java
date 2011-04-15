@@ -11,7 +11,7 @@ import com.infectosaurus.effects.Effect;
  */
 public abstract class GameObject extends BaseObject{
 	
-	enum Team{ Human, Alien };
+	public enum Team{ Human, Alien };
 	
 	public Team team = Team.Human; //Default team
 	public boolean alive = true;

@@ -1,5 +1,6 @@
 package com.infectosaurus;
 
+import com.infectosaurus.components.AggressivMoveComponent;
 import com.infectosaurus.components.MeleeAttackComponent;
 import com.infectosaurus.components.MoveComponent;
 import com.infectosaurus.components.RandomWalkerComponent;
@@ -19,8 +20,8 @@ public class Infectosaurus extends GameObject {
 		addComponent(new MeleeAttackComponent());
 		
 		DrawableBitmap db = new DrawableBitmap(
-				R.drawable.lumberinghulklo,100,100,panel.getContext());
-		addComponent(new RandomWalkerComponent());
+				R.drawable.lumberinghulklo,50,50,panel.getContext());
+		addComponent(new AggressivMoveComponent());
 		addComponent(new SpriteComponent(db));
 		addComponent(new MoveComponent());
 		speed = 100;

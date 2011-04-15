@@ -15,7 +15,7 @@ public class Human extends GameObject{
 		Panel panel = BaseObject.gamePointers.panel;
 		
 		DrawableBitmap db = new DrawableBitmap(
-				R.drawable.sheeplo,100,100,panel.getContext());
+				R.drawable.sheeplo, 25, 25,panel.getContext());
 		addComponent(new SpriteComponent(db)); 
 		addComponent(new RandomWalkerComponent());
 		addComponent(new MoveComponent());

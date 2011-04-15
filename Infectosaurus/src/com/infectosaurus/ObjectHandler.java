@@ -73,7 +73,6 @@ public class ObjectHandler extends BaseObject {
 			((BaseObject)objectArray[i]).update(dt, this);
 		}
 		
-		
 	}
 
 	@Override
@@ -85,6 +84,5 @@ public class ObjectHandler extends BaseObject {
 	public FixedSizeArray<BaseObject> getObjects() {
 		return objects;
 	}
-	
 
 }

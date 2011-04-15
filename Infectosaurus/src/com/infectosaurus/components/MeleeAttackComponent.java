@@ -36,7 +36,8 @@ public class MeleeAttackComponent extends Component {
 		
 		
 		GameObject gObject = (GameObject) parent;
-		FixedSizeArray<GameObject> targets = gameObjHandler.getClose(gObject, reach);
+		FixedSizeArray<GameObject> targets = 
+			gameObjHandler.getClose(gObject, reach);
 		if(targets == null) return;
 		
 		Log.d("MeleeAttack","Objects nearby!");

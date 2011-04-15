@@ -7,7 +7,9 @@ public abstract class Effect extends BaseObject{
 	float duration = 0; // 0 means one-time effect
 	
 	
-	public abstract void update(float dt, GameObject target, GameObject afflictor);
+	public abstract void update(float dt, 
+							    GameObject target, 
+							    GameObject afflictor);
 	
 	public void update(float dt, BaseObject parent){
 		update(dt, (GameObject) parent, null);
