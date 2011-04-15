@@ -214,4 +214,9 @@ public class DrawableBitmap extends BaseObject implements Drawable {
 		mCrop[2] = width;
 		mCrop[3] = -height;
 	}
+
+	@Override
+	public void update(float dt, BaseObject parent) {
+		// This is just here so to make it a base object
+	}
 }

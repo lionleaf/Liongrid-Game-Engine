@@ -31,4 +31,10 @@ public class RenderElement extends BaseObject{
 		this.x = x;
 		this.y = y;
 	}
+
+	@Override
+	public void update(float dt, BaseObject parent) {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -22,9 +22,7 @@ public abstract class BaseObject {
 	 * @param dt - The timestep to be taken.
 	 * @param parent - The object that called this update
 	 */
-	public void update(float dt, BaseObject parent){
-		Log.d("Infectosaurus", this.getClass().getSimpleName()+ " has not overriden update!");
-	}
+	public abstract void update(float dt, BaseObject parent);
 	
 	/**
 	 * Resets the Object for reuse

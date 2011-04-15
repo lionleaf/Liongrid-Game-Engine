@@ -14,7 +14,7 @@
             </intent-filter>
             
         </activity>
-			<activity android:name=".GameBoard" android:label="@string/app_name">
+			<activity android:name="GameBoard" android:label="@string/app_name">
 		</activity>
     </application>
 </manifest>

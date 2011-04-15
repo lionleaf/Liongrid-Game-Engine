@@ -1,4 +1,4 @@
-package com.infectosaurus.behaviors;
+package com.infectosaurus.behaviorfunctions;
 
 import com.infectosaurus.BaseObject;
 
