@@ -22,7 +22,7 @@ public abstract class BaseObject {
 	 * @param parent - The object that called this update
 	 */
 	public void update(float dt, BaseObject parent){
-		Log.d("Infectosaurus", "Someone has not overriden update!");
+		Log.d("Infectosaurus", this.getClass().getSimpleName()+ " has not overriden update!");
 	}
 	
 	/**

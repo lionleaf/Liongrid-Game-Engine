@@ -43,7 +43,7 @@ public class RenderingThread implements Panel.Renderer {
 			if(drawBGQueue != null && drawBGQueue.getObjects().getCount() > 0){
 				FixedSizeArray<BaseObject> objects = drawBGQueue.getObjects();
 				final int count = objects.getCount();
-				for (int i = 0; i< count; i++){
+				for (int i = 0; i < count; i++){
 					
 					RenderElement elem = (RenderElement) objects.get(i);
 					if(elem == null){ 

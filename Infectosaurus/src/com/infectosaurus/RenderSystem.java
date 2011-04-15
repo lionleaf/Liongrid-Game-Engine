@@ -39,7 +39,7 @@ public class RenderSystem {
     
     public void scheduleForBGDraw(Drawable object, int x, int y) {
     	RenderElement element = rElementPool.allocate();
-        
+        if(element == null) return;
     	//Since this is done a lot, we want max speed, so we change
         //the public variables instead of calling set
         element.drawable = object;
