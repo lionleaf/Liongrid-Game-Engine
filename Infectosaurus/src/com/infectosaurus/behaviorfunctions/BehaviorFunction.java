@@ -16,17 +16,8 @@ public abstract class BehaviorFunction extends BaseObject{
 		float x;
 		for(i = 0; i < prob.length; i++){
 			x = evaluate(s[i]);
-			prob[i] = sigmoid(x); 
+			prob[i] = (float) Math.signum(x*alpha); 
 		}
-	}
-
-	/**
-	 * A function to normalize any given x value to a number between 0 and 1
-	 * @param x
-	 * @return float between 0 and 1
-	 */
-	private float sigmoid(float x) {
-			return (float) (1/(1+Math.exp(-alpha*x)));
 	}
 
 	/**
