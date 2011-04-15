@@ -4,9 +4,10 @@ import android.util.Log;
 
 
 /**
- * @author Lionleaf
  * An abstract class from which everything that is updateable 
  * and reusable should extend!
+ * @author Lionleaf
+ * 
  */
 public abstract class BaseObject {
 	public static final String TAG = "Infectosaurus";

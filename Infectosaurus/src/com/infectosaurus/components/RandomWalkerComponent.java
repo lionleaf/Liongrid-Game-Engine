@@ -10,8 +10,8 @@ import com.infectosaurus.Vector2;
 
 public class RandomWalkerComponent extends Component{
 	Random random;
-	int width = 250; //Screw real data, let`s guess
-	int height = 400;
+	int width; //Screw real data, let`s guess
+	int height;
 	boolean recalculate = true;
 	
 	Vector2 vel;
@@ -21,29 +21,39 @@ public class RandomWalkerComponent extends Component{
 	
 	float lastDistance = Integer.MAX_VALUE;
 	
+	private boolean findFirstGoal = true;
+	
 	public RandomWalkerComponent(){
 		random = new Random();
-		goal.x = random.nextInt(width);
-		goal.y = random.nextInt(height);
+		
 	}
 
 	@Override
 	public void update(float dt, BaseObject parent) {
+		width = BaseObject.gamePointers.panel.getWidth();
+		height = BaseObject.gamePointers.panel.getHeight();
+		if(width <= 0 || height <= 0) return;
+		
 		GameObject gameObject = (GameObject) parent;
 		vel = gameObject.vel;
 		pos = gameObject.pos;
 		
-		float newDistance = pos.distance2(goal);
+		float newDistance = 0f;
+		if(!findFirstGoal){
+			newDistance = pos.distance2(goal);
+		}
 		
-		
-		if(newDistance > lastDistance){
+		if(findFirstGoal || newDistance > lastDistance){
 			goal.x = random.nextInt(width);
 			goal.y = random.nextInt(height);
 			recalculate = true;
-			
+		}
+		if(!findFirstGoal){
+			lastDistance = newDistance;
+		}else{
+			findFirstGoal = false;
 		}
 		
-		lastDistance = newDistance;
 		
 		if(recalculate){
 			//Drunk and late. Is this math correct?

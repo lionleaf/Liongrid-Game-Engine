@@ -20,7 +20,16 @@ public class Human extends GameObject{
 		addComponent(new RandomWalkerComponent());
 		addComponent(new MoveComponent());
 		
-		speed = rand.nextInt(200)+30;
+		
+		speed = rand.nextInt(100)+10;
+		
+		int width = BaseObject.gamePointers.panel.getWidth();
+		int height = BaseObject.gamePointers.panel.getHeight();
+		if(width <= 0 || height <= 0) return;
+		
+		pos.x = rand.nextInt(width);
+		pos.y = rand.nextInt(height);
+		
 	}
 	
 	//TODO remove! This is only for testing
