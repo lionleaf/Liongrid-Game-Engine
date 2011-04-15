@@ -14,7 +14,7 @@ public class MeleeAttackComponent extends Component {
 	GameObjectHandler gameObjHandler;
 	static final int CLOSE_CAPACITY = 20;
 	FixedSizeArray<GameObject> close;
-	int reach = 200;
+	int reach = 400;
 	int damage = 2;
 	float delay = -1; //ms
 	float delayCountDown = delay;

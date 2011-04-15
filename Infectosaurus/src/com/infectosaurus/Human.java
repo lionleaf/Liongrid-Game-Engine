@@ -22,4 +22,13 @@ public class Human extends GameObject{
 		
 		speed = rand.nextInt(200)+30;
 	}
+	
+	//TODO remove! This is only for testing
+	@Override
+	protected void die() {
+		super.die();
+		BaseObject.gamePointers.gameObjectHandler.add(new Human());
+	}
+	
+	
 }

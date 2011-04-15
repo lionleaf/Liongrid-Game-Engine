@@ -44,7 +44,7 @@ public abstract class GameObject extends BaseObject{
 		components = new FixedSizeArray<Component>(size);
 	}
 	
-	private void die(){
+	protected void die(){
 		BaseObject.gamePointers.gameObjectHandler.remove(this);
 	}
 	

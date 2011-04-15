@@ -43,11 +43,11 @@ public class RenderingThread implements Panel.Renderer {
 			if(drawBGQueue != null && drawBGQueue.getObjects().getCount() > 0){
 				FixedSizeArray<BaseObject> objects = drawBGQueue.getObjects();
 				final int count = objects.getCount();
-				for (int i = 0; i < count; i++){
-					
+				for (int i = 0; i < count; i++){	
 					RenderElement elem = (RenderElement) objects.get(i);
 					if(elem == null){ 
-						Log.d("RENDER", "elem in drawBGQueue is " + elem );
+						Log.d("RENDER", "elem in drawBGQueue is " + elem + 
+								"Last count was " + count + " Now it is "+ objects.getCount());
 						continue;
 					}
 					elem.drawable.draw(gl, elem.x, elem.y, 1, 1);
@@ -111,7 +111,7 @@ public class RenderingThread implements Panel.Renderer {
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 	}
 
-	public void setDrawQueues(ObjectHandler drawQueue, ObjectHandler renderBGQueues) {
+	public synchronized void setDrawQueues(ObjectHandler drawQueue, ObjectHandler renderBGQueues) {
 		this.drawQueue = drawQueue;
 		this.drawBGQueue = renderBGQueues;
 		synchronized(drawLock) {

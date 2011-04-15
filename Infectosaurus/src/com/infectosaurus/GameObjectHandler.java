@@ -33,7 +33,6 @@ public class GameObjectHandler extends ObjectHandler {
 	 * Or null if there is nothing within reach. It will not return itself.
 	 */ 
 	public FixedSizeArray<GameObject> getClose(GameObject gObject, int reach) {
-		commitUpdates();
 		int length = objects.getCount();
 		Object[] objectArr = objects.getArray();
 		
