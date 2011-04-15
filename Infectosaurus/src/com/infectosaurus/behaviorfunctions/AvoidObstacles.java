@@ -1,6 +1,7 @@
 package com.infectosaurus.behaviorfunctions;
 
 import com.infectosaurus.BaseObject;
+import com.infectosaurus.states.State;
 
 public class AvoidObstacles extends BehaviorFunction{
 
@@ -11,9 +12,9 @@ public class AvoidObstacles extends BehaviorFunction{
 	}
 
 	@Override
-	public void update(float dt, BaseObject parent) {
+	protected float evaluate(State s) {
 		// TODO Auto-generated method stub
-		
+		return 0;
 	}
 
 }
