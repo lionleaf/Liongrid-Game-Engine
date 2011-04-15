@@ -19,7 +19,6 @@ public class AggressivMoveComponent extends Component{
 		GameObject gameObject = (GameObject) parent;
 		GameObject target = gameObjHandler.getClosest(gameObject, gameObject.team.Human);
 		if(target != null){
-			Log.d("MoveComp", "Found target, changing course");
 			gameObject.vel.set(target.pos);
 			gameObject.vel.subtract(gameObject.pos);
 			gameObject.vel.normalize();

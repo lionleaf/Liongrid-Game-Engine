@@ -26,7 +26,7 @@ public class DrawableBitmap extends BaseObject implements Drawable {
 	private int resource;
 	private Context context;
 	
-	DrawableBitmap(int resource, int width, int height, Context context) {
+	protected DrawableBitmap(int resource, int width, int height, Context context) {
 
 		//TODO remove
 		mWidth = width;

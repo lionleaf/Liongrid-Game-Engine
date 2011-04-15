@@ -1,5 +1,7 @@
 package com.infectosaurus;
 
+import com.infectosaurus.maptiles.TileType;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
