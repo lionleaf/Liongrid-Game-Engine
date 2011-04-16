@@ -15,13 +15,13 @@ public class Human extends GameObject{
 		Panel panel = BaseObject.gamePointers.panel;
 		
 		DrawableBitmap db = new DrawableBitmap(
-				R.drawable.mann1, 25, 25,panel.getContext());
+				R.drawable.mann1, 50, 50,panel.getContext());
 		addComponent(new SpriteComponent(db)); 
 		addComponent(new RandomWalkerComponent());
 		addComponent(new MoveComponent());
 		
 		
-		speed = rand.nextInt(100)+10;
+		speed = rand.nextInt(40)+10;
 		
 		int width = BaseObject.gamePointers.panel.getWidth();
 		int height = BaseObject.gamePointers.panel.getHeight();
