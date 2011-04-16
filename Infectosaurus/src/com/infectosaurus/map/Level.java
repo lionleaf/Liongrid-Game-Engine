@@ -1,29 +1,37 @@
-package com.infectosaurus;
+package com.infectosaurus.map;
 
-import com.infectosaurus.maptiles.TileType;
+import com.infectosaurus.BaseObject;
+import com.infectosaurus.DrawableBitmap;
+import com.infectosaurus.MovementType;
+import com.infectosaurus.Panel;
+import com.infectosaurus.R;
+import com.infectosaurus.RenderSystem;
+import com.infectosaurus.Vector2;
+import com.infectosaurus.R.drawable;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-public class TileManager extends BaseObject {
+public class Level extends BaseObject {
 	
 	private static final boolean REDRAW_ALL = true;
+	private static final int NODE_DENSITY = 2;
 	
 	private Bitmap mBitmap;
 	private int cameraPosX = 0;
 	private int cameraPosY = 0;
 	private static int TILE_SIZE = 64;
 	private TileType[] tileTypes;
+	private Vector2 mapSize = new Vector2();
+	private Vector2 pathNodes[];
 	Vector2 pos;
 	DrawableBitmap drawBitmap;
 	RenderSystem rSys;
-
 	
-	private Vector2 mapSize = new Vector2();
 	int rcounter = 0;
 
 
-	TileManager(){
+	public Level(){
 		Panel panel = BaseObject.gamePointers.panel;
 		initTileTypes();
 		drawBitmap = new DrawableBitmap(
@@ -32,6 +40,13 @@ public class TileManager extends BaseObject {
 		rSys = BaseObject.gamePointers.renderSystem;
 		mapSize.x = 8;
 		mapSize.y = 12;
+		insertPathNodes();
+	}
+
+	private void insertPathNodes() {
+		int count = (int) (mapSize.x * mapSize.y * NODE_DENSITY);
+		pathNodes = new Vector2[count];
+		
 	}
 
 	@Override

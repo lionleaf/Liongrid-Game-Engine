@@ -1,4 +1,4 @@
-package com.infectosaurus.maptiles;
+package com.infectosaurus.map;
 
 import com.infectosaurus.DrawableBitmap;
 import com.infectosaurus.MovementType;

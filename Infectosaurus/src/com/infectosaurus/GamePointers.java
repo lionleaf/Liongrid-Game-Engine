@@ -1,5 +1,7 @@
 package com.infectosaurus;
 
+import com.infectosaurus.map.Level;
+
 /**
  * @author Lionleaf
  * This is a class that holds a few pointers to the most important
@@ -13,5 +15,5 @@ public class GamePointers {
 	public RenderSystem renderSystem;
 	public RenderingThread renderThread;
 	public Panel panel;
-	public TileManager tileSystem;
+	public Level tileSystem;
 }
