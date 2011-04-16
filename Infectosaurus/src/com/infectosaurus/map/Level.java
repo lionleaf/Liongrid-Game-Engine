@@ -1,5 +1,7 @@
 package com.infectosaurus.map;
 
+import java.util.Random;
+
 import com.infectosaurus.BaseObject;
 import com.infectosaurus.DrawableBitmap;
 import com.infectosaurus.MovementType;
@@ -8,22 +10,29 @@ import com.infectosaurus.R;
 import com.infectosaurus.RenderSystem;
 import com.infectosaurus.Vector2;
 import com.infectosaurus.R.drawable;
+import com.infectosaurus.Vector2Int;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+/**
+ * 
+ *
+ */
 public class Level extends BaseObject {
 	
-	private static final boolean REDRAW_ALL = true;
-	private static final int NODE_DENSITY = 2;
+	static final boolean REDRAW_ALL = true;
+	static final int NODE_DENSITY = 2;
+	static final int TILE_SIZE = 64;
+	static final int BLOCK_SIZE = TILE_SIZE/2;
+	static Random rand = new Random();
 	
 	private Bitmap mBitmap;
 	private int cameraPosX = 0;
 	private int cameraPosY = 0;
-	private static int TILE_SIZE = 64;
-	private TileType[] tileTypes;
-	private Vector2 mapSize = new Vector2();
-	private Vector2 pathNodes[];
+	private Tile[][] tiles;
+	private Vector2Int mapSize;
+	private Vector2Int[] pathNodes;
 	Vector2 pos;
 	DrawableBitmap drawBitmap;
 	RenderSystem rSys;
@@ -33,20 +42,50 @@ public class Level extends BaseObject {
 
 	public Level(){
 		Panel panel = BaseObject.gamePointers.panel;
-		initTileTypes();
 		drawBitmap = new DrawableBitmap(
 				R.drawable.scrub, TILE_SIZE, TILE_SIZE, panel.getContext());
 		pos = new Vector2();
 		rSys = BaseObject.gamePointers.renderSystem;
-		mapSize.x = 8;
-		mapSize.y = 12;
+		mapSize = new Vector2Int();
+		loadTiles();
 		insertPathNodes();
 	}
 
+	private void loadTiles() {
+		// TODO Auto-generated method stub
+		mapSize.x = 8;
+		mapSize.y = 12;
+		tiles = new Tile[mapSize.x][mapSize.y];
+		for (int i = 0; i < mapSize.x; i++) {
+			for (int j = 0; j < mapSize.y; j++) {
+				tiles[i][j] = new Tile();
+				tiles[i][j].tileType = gamePointers.tileSet.tileTypes[0];
+				
+			}
+		}
+	}
+
 	private void insertPathNodes() {
-		int count = (int) (mapSize.x * mapSize.y * NODE_DENSITY);
-		pathNodes = new Vector2[count];
-		
+		int count = mapSize.x * mapSize.y* NODE_DENSITY;
+		pathNodes = new Vector2Int[count];
+		boolean blocked = true;
+		for(int i = 0; i < count; i++){
+			while(blocked){
+				pathNodes[i] = new Vector2Int(rand.nextInt(mapSize.x),
+										      rand.nextInt(mapSize.y));
+				
+				
+				Tile cTile = 
+					tiles[pathNodes[i].x/TILE_SIZE][pathNodes[i].y/TILE_SIZE];
+				
+				int localX = (pathNodes[i].x%TILE_SIZE)/BLOCK_SIZE;
+				int localY = (pathNodes[i].y%TILE_SIZE)/BLOCK_SIZE;
+				
+				blocked = cTile.isBlocked(MovementType.WALKING, 
+						            localX, 
+						            localY);
+			}
+		}
 	}
 
 	@Override
@@ -75,33 +114,5 @@ public class Level extends BaseObject {
 		// TODO Auto-generated method stub
 
 	}
-
-	public void clearArea(int x, int y, int width, int height) {
-		if(REDRAW_ALL) return;
-		
-		//Most efficient way to do the math. Instead of making a method
-		final int  lowerLeftX = ((cameraPosX + x)/TILE_SIZE);
-		final int lowerLeftY = ((cameraPosY + y)/TILE_SIZE);
-		final int upperRightX = ((cameraPosX + x + width)/TILE_SIZE);
-		final int upperRightY = ((cameraPosY + y + height)/TILE_SIZE);
-		
-		for(int tileX = lowerLeftX; tileX <= upperRightX; tileX++){
-			for(int tileY = lowerLeftY; tileY <= upperRightY; tileY++){
-				clearTile(tileX, tileY);
-			}
-		}
-	}
 	
-	public void initTileTypes(){
-		Panel panel = BaseObject.gamePointers.panel;
-		int tile1 = R.drawable.scrub;
-		
-		int[] bitmaps = {tile1};
-		tileTypes = new TileType[bitmaps.length];
-		for(int i = 0; i < tileTypes.length; i++){
-			tileTypes[i] = 
-				new TileType(tile1, new boolean[2][2][MovementType.values().length], 
-						TILE_SIZE, panel.getContext());
-		}
-	}
 }

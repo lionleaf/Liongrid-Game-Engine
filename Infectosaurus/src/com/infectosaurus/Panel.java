@@ -1,6 +1,7 @@
 package com.infectosaurus;
 
 import com.infectosaurus.map.Level;
+import com.infectosaurus.map.TileSet;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
@@ -32,12 +33,12 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback{
 	    gamePointers.panel = this;
 	    ObjectHandler root = new ObjectHandler();
 	    gamePointers.root = root;
-	    Level tile = new Level();
-	    gamePointers.tileSystem = tile;
+	    gamePointers.tileSet = new TileSet();
+	    gamePointers.level = new Level();
 	    GameObjectHandler gOHandler = new GameObjectHandler();
 	    gamePointers.gameObjectHandler = gOHandler;
 	   
-	    root.add(tile);
+	    root.add(gamePointers.level);
 	    root.add(gOHandler);
 	   
 	   

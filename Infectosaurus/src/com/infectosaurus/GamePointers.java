@@ -1,6 +1,7 @@
 package com.infectosaurus;
 
 import com.infectosaurus.map.Level;
+import com.infectosaurus.map.TileSet;
 
 /**
  * @author Lionleaf
@@ -15,5 +16,6 @@ public class GamePointers {
 	public RenderSystem renderSystem;
 	public RenderingThread renderThread;
 	public Panel panel;
-	public Level tileSystem;
+	public Level level;
+	public TileSet tileSet;
 }
