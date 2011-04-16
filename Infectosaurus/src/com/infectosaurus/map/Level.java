@@ -19,48 +19,51 @@ import android.graphics.BitmapFactory;
  * 
  *
  */
-public class Level extends BaseObject {
+public class Level {
 	
-	static final boolean REDRAW_ALL = true;
+	public Tile[][] tiles;
+	public TileType[][] renderQueue;
+	public static final int TILE_SIZE = 64;
+	public static final int BLOCK_SIZE = TILE_SIZE/2;
+	
 	static final int NODE_DENSITY = 2;
-	static final int TILE_SIZE = 64;
-	static final int BLOCK_SIZE = TILE_SIZE/2;
-	static Random rand = new Random();
+
+	private static final Random rand = new Random();
 	
-	private Bitmap mBitmap;
+	
 	private int cameraPosX = 0;
 	private int cameraPosY = 0;
-	private Tile[][] tiles;
+	
+	
 	private Vector2Int mapSize;
 	private Vector2Int[] pathNodes;
-	Vector2 pos;
-	DrawableBitmap drawBitmap;
-	RenderSystem rSys;
-	
-	int rcounter = 0;
+
+
 
 
 	public Level(){
-		Panel panel = BaseObject.gamePointers.panel;
-		drawBitmap = new DrawableBitmap(
-				R.drawable.scrub, TILE_SIZE, TILE_SIZE, panel.getContext());
-		pos = new Vector2();
-		rSys = BaseObject.gamePointers.renderSystem;
 		mapSize = new Vector2Int();
 		loadTiles();
+		generateRenderQueue();
 		insertPathNodes();
 	}
 
+	private void generateRenderQueue() {
+		renderQueue = new TileType[mapSize.x][mapSize.y];
+		for (int i = 0; i < mapSize.x; i++) {
+			for (int j = 0; j < mapSize.y; j++) {
+				renderQueue[i][j] = tiles[i][j].tileType; 
+			}
+		}
+	}
+
 	private void loadTiles() {
-		// TODO Auto-generated method stub
 		mapSize.x = 8;
 		mapSize.y = 12;
 		tiles = new Tile[mapSize.x][mapSize.y];
 		for (int i = 0; i < mapSize.x; i++) {
 			for (int j = 0; j < mapSize.y; j++) {
-				tiles[i][j] = new Tile();
-				tiles[i][j].tileType = gamePointers.tileSet.tileTypes[0];
-				
+				tiles[i][j] = new Tile(BaseObject.gamePointers.tileSet.tileTypes[0]);
 			}
 		}
 	}
@@ -88,31 +91,5 @@ public class Level extends BaseObject {
 		}
 	}
 
-	@Override
-	public void update(float dt, BaseObject parent){
-		if(REDRAW_ALL){
-			refreshMap();
-		}
-	}
-
-	public void clearTile(int x, int y){
-		//We calculate the values here instead of calling a method for speed!
-		rSys.scheduleForBGDraw(drawBitmap, 
-				x*TILE_SIZE - cameraPosX, y*TILE_SIZE - cameraPosY);
-	}
-
-	public void refreshMap(){
-		for(int x = 0; x < mapSize.x ; x++){
-			for(int y = 0 ; y < mapSize.y ; y++){
-				clearTile(x, y);
-			}
-		}
-	}
-
-	@Override
-	public void reset() {
-		// TODO Auto-generated method stub
-
-	}
 	
 }

@@ -4,21 +4,19 @@ package com.infectosaurus;
 public class RenderSystem {
 	private ObjectHandler<RenderElement>[] renderQueues;
 	private int queueIndex;
-	private ObjectHandler<RenderElement>[] renderBGQueues;
 	private ObjectPool<RenderElement> rElementPool;
 	
 	
-	private final static int QUEUE_SIZE = 64;
+	//TODO tie to max size of GOHandler!!
+	private final static int QUEUE_SIZE = 256;
 	private final static int DRAW_QUEUE_COUNT = 2;
     private final static int MAX_BG_TILES = 128;
 	
     public RenderSystem() {
         renderQueues = new ObjectHandler[DRAW_QUEUE_COUNT];
-        renderBGQueues = new ObjectHandler[DRAW_QUEUE_COUNT];
         for (int i = 0; i < DRAW_QUEUE_COUNT; i++) {
             renderQueues[i] = new ObjectHandler<RenderElement>(QUEUE_SIZE);
             renderQueues[i].objects.setComparator(RenderElement.comparer);
-            renderBGQueues[i] = new ObjectHandler<RenderElement>(MAX_BG_TILES);
         }
         
         int poolSize = (QUEUE_SIZE+MAX_BG_TILES) * 6;
@@ -47,31 +45,28 @@ public class RenderSystem {
         element.x = x;
         element.y = y;  
     	
-    	renderBGQueues[queueIndex].add(element);
-	}
+    }
     
     public void swap(RenderingThread renderer) {
         renderQueues[queueIndex].commitUpdates();
-        renderBGQueues[queueIndex].commitUpdates();
 
         // This code will block if the previous queue is still being executed.
-        renderer.setDrawQueues(renderQueues[queueIndex], renderBGQueues[queueIndex]);
+        renderer.setDrawQueue(renderQueues[queueIndex]);
         
         final int lastQueue = (queueIndex == 0) ? DRAW_QUEUE_COUNT - 1 : queueIndex - 1;
-
-        // Clear the old queues.
+        
+        //Clear the old queues.
         FixedSizeArray<RenderElement> objects;
         objects = renderQueues[lastQueue].getObjects();
         clearQueue(objects, renderQueues);
-        objects = renderBGQueues[lastQueue].getObjects();
-        clearQueue(objects,renderBGQueues);
-
+        
         queueIndex = (queueIndex + 1) % DRAW_QUEUE_COUNT;
     }
 
 	private void clearQueue(FixedSizeArray<RenderElement> objects, ObjectHandler[] queue) {
 		final int count = objects.getCount();
 		RenderElement rElement;
+		
 		for (int i = count - 1; i >= 0; i--) {
 			rElement = (RenderElement) objects.removeLast();
 			rElementPool.release(rElement);

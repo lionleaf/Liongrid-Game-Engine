@@ -7,9 +7,10 @@ import com.infectosaurus.GameObject.Team;
  * This class needs to hold all the GameObjects and sort the 
  * components in a way that they can be done in the right order 
  */
-public class GameObjectHandler extends ObjectHandler {
-	private static final int DEFAULT_CAPACITY = 64;
+public class GameObjectHandler extends ObjectHandler<GameObject> {
+	private static final int DEFAULT_CAPACITY = 256;
 	GameObjectHandler(){
+		super(DEFAULT_CAPACITY);
 		objects.add(new Human());
 		objects.add(new Human());
 		objects.add(new Human());

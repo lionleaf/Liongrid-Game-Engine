@@ -11,10 +11,11 @@ import android.graphics.Bitmap;
 
 /**
  * Representation of a single tile. It contains info on which tileType
- * as well as specific situations currently active in it.
+ * as well as specific situations currently active in it. Since tileType is static
+ * this cannot be pooled!
  *
  */
-public class Tile extends BaseObject {
+public class Tile {
 	
 	
 	/**
@@ -22,15 +23,12 @@ public class Tile extends BaseObject {
 	 * 
 	 * Made public for speed. Read only! DO NOT ALTER!
 	 */
-	public TileType tileType;
+	public final TileType tileType;
 	
-
-	@Override
-	public void reset() {
-		//Probably don`t need 
+	public Tile(TileType tileType){
+		this.tileType = tileType;
 	}
-
-
+	
 	/**
 	 * Checks if a sub
 	 * 

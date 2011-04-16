@@ -2,6 +2,10 @@ package com.infectosaurus;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
+
+import com.infectosaurus.map.Level;
+import com.infectosaurus.map.TileType;
+
 import android.opengl.GLU;
 import android.util.Log;
 
@@ -12,7 +16,7 @@ public class RenderingThread implements Panel.Renderer {
     private ObjectHandler drawQueue;
 	private Object drawLock;
 	private boolean drawQueueChanged;
-	private ObjectHandler drawBGQueue;
+	private static final float SCALE = 1f;
     
  
     public RenderingThread() {
@@ -40,30 +44,30 @@ public class RenderingThread implements Panel.Renderer {
 			int mWidth = BaseObject.gamePointers.panel.getWidth();
 			int mHeight= BaseObject.gamePointers.panel.getHeight();
 			DrawableBitmap.beginDrawing(gl, mWidth, mHeight);
-			if(drawBGQueue != null && drawBGQueue.getObjects().getCount() > 0){
-				FixedSizeArray<RenderElement> objects = drawBGQueue.getObjects();
+			
+			//Draw tiles
+			Level level = BaseObject.gamePointers.level;
+			TileType[][] bgTiles = level.renderQueue;
+			
+			if(bgTiles != null && bgTiles.length > 0){
 				
-				final int count = objects.getCount();
-				Object[] elems = objects.getArray();
-				for (int i = 0; i < count; i++){	
-					RenderElement elem = (RenderElement)elems[i];
-					
-					if(elems[i] == null){ 
-						Log.d("RENDER", "elem in drawBGQueue is " + elem + 
-								"Last count was " + count + " Now it is "+ objects.getCount());
-						continue;
+				for (int i = 0; i < bgTiles.length; i++) {
+					for (int j = 0; j < bgTiles[i].length; j++) {
+						//TODO camera code here!
+						int x = level.TILE_SIZE*i;
+						int y = level.TILE_SIZE*j;
+						bgTiles[i][j].draw(gl, x, y, SCALE, SCALE);
 					}
-					elem.drawable.draw(gl, elem.x, elem.y, 1, 1);
-					
 				}
 			}
+			
 			
 			if (drawQueue != null && drawQueue.getObjects().getCount() > 0 ){
 				FixedSizeArray<RenderElement> objects = drawQueue.getObjects();
 				final int count = objects.getCount();
 				Object[] elems = objects.getArray();
 				objects.sort(true);
-				//Log.d("RENDER","NEW RUN!");
+
 				for (int i = 0; i < count; i++){	
 					RenderElement elem = (RenderElement)elems[i];
 					
@@ -72,8 +76,7 @@ public class RenderingThread implements Panel.Renderer {
 								"Last count was " + count + " Now it is "+ objects.getCount());
 						continue;
 					}
-					elem.drawable.draw(gl, elem.x, elem.y, 1, 1);
-					//Log.d("RENDER", "y: "+elem.y);
+					elem.drawable.draw(gl, elem.x, elem.y, SCALE, SCALE);
 				}
 			}
 			DrawableBitmap.endDrawing(gl);
@@ -120,9 +123,8 @@ public class RenderingThread implements Panel.Renderer {
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 	}
 
-	public synchronized void setDrawQueues(ObjectHandler drawQueue, ObjectHandler renderBGQueues) {
+	public synchronized void setDrawQueue(ObjectHandler drawQueue) {
 		this.drawQueue = drawQueue;
-		this.drawBGQueue = renderBGQueues;
 		synchronized(drawLock) {
             drawQueueChanged = true;
             drawLock.notify();
