@@ -41,30 +41,39 @@ public class RenderingThread implements Panel.Renderer {
 			int mHeight= BaseObject.gamePointers.panel.getHeight();
 			DrawableBitmap.beginDrawing(gl, mWidth, mHeight);
 			if(drawBGQueue != null && drawBGQueue.getObjects().getCount() > 0){
-				FixedSizeArray<BaseObject> objects = drawBGQueue.getObjects();
+				FixedSizeArray<RenderElement> objects = drawBGQueue.getObjects();
+				
 				final int count = objects.getCount();
+				Object[] elems = objects.getArray();
 				for (int i = 0; i < count; i++){	
-					RenderElement elem = (RenderElement) objects.get(i);
-					if(elem == null){ 
+					RenderElement elem = (RenderElement)elems[i];
+					
+					if(elems[i] == null){ 
 						Log.d("RENDER", "elem in drawBGQueue is " + elem + 
 								"Last count was " + count + " Now it is "+ objects.getCount());
 						continue;
 					}
 					elem.drawable.draw(gl, elem.x, elem.y, 1, 1);
+					
 				}
 			}
 			
 			if (drawQueue != null && drawQueue.getObjects().getCount() > 0 ){
-				FixedSizeArray<BaseObject> objects = drawQueue.getObjects();
+				FixedSizeArray<RenderElement> objects = drawQueue.getObjects();
 				final int count = objects.getCount();
-				for (int i = 0; i< count; i++){
+				Object[] elems = objects.getArray();
+				objects.sort(true);
+				//Log.d("RENDER","NEW RUN!");
+				for (int i = 0; i < count; i++){	
+					RenderElement elem = (RenderElement)elems[i];
 					
-					RenderElement elem = (RenderElement) objects.get(i);
-					if(elem == null){ 
-						Log.d("RENDER", "elem in drawQueue is " + elem );
+					if(elems[i] == null){ 
+						Log.d("RENDER", "elem in drawBGQueue is " + elem + 
+								"Last count was " + count + " Now it is "+ objects.getCount());
 						continue;
 					}
 					elem.drawable.draw(gl, elem.x, elem.y, 1, 1);
+					//Log.d("RENDER", "y: "+elem.y);
 				}
 			}
 			DrawableBitmap.endDrawing(gl);

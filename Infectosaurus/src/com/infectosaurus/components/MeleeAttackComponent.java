@@ -14,10 +14,11 @@ public class MeleeAttackComponent extends Component {
 	GameObjectHandler gameObjHandler;
 	static final int CLOSE_CAPACITY = 20;
 	FixedSizeArray<GameObject> close;
-	int reach = 400;
+	int reach = 10;
 	int damage = 2;
-	float delay = -1; //ms
+	float delay = 0.5f; //sec
 	float delayCountDown = delay;
+	private GameObject lastTarget = null;
 	
 	
 	public MeleeAttackComponent(){
@@ -40,8 +41,6 @@ public class MeleeAttackComponent extends Component {
 			gameObjHandler.getClose(gObject, reach);
 		if(targets == null) return;
 		
-		Log.d("MeleeAttack","Objects nearby!");
-		
 		final int length = targets.getCount();
 		Object[] targetArr = targets.getArray();
 		
@@ -58,6 +57,8 @@ public class MeleeAttackComponent extends Component {
 		}
 		
 		if(target == null) return;
+		if(target != lastTarget ) delayCountDown = delay;
+		lastTarget = target;
 		Log.d("MeleeAttack","Found target!");
 		
 		delayCountDown -= dt;

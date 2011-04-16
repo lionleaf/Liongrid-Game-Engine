@@ -87,7 +87,6 @@ public abstract class GameObject extends BaseObject{
 	}
 	
 	public void afflict(Effect e){
-		Log.d("GameObject", "AFFLICTED");
 		effects.add(e);
 	}
 

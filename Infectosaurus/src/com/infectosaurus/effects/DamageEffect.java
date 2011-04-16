@@ -19,7 +19,6 @@ public class DamageEffect extends Effect {
 	
 	public void update(float dt, GameObject target, GameObject afflictor){
 		target.hp -= damage;
-		Log.d("DamageEffect", "Damage dealt");
 	}
 	
 	@Override

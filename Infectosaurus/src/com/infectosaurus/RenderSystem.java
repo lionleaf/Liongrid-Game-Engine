@@ -2,9 +2,9 @@ package com.infectosaurus;
 
 
 public class RenderSystem {
-	private ObjectHandler[] renderQueues;
+	private ObjectHandler<RenderElement>[] renderQueues;
 	private int queueIndex;
-	private ObjectHandler[] renderBGQueues;
+	private ObjectHandler<RenderElement>[] renderBGQueues;
 	private ObjectPool<RenderElement> rElementPool;
 	
 	
@@ -16,8 +16,9 @@ public class RenderSystem {
         renderQueues = new ObjectHandler[DRAW_QUEUE_COUNT];
         renderBGQueues = new ObjectHandler[DRAW_QUEUE_COUNT];
         for (int i = 0; i < DRAW_QUEUE_COUNT; i++) {
-            renderQueues[i] = new ObjectHandler(QUEUE_SIZE);
-            renderBGQueues[i] = new ObjectHandler(MAX_BG_TILES);
+            renderQueues[i] = new ObjectHandler<RenderElement>(QUEUE_SIZE);
+            renderQueues[i].objects.setComparator(RenderElement.comparer);
+            renderBGQueues[i] = new ObjectHandler<RenderElement>(MAX_BG_TILES);
         }
         
         int poolSize = (QUEUE_SIZE+MAX_BG_TILES) * 6;
@@ -59,7 +60,7 @@ public class RenderSystem {
         final int lastQueue = (queueIndex == 0) ? DRAW_QUEUE_COUNT - 1 : queueIndex - 1;
 
         // Clear the old queues.
-        FixedSizeArray<BaseObject> objects;
+        FixedSizeArray<RenderElement> objects;
         objects = renderQueues[lastQueue].getObjects();
         clearQueue(objects, renderQueues);
         objects = renderBGQueues[lastQueue].getObjects();
@@ -68,7 +69,7 @@ public class RenderSystem {
         queueIndex = (queueIndex + 1) % DRAW_QUEUE_COUNT;
     }
 
-	private void clearQueue(FixedSizeArray<BaseObject> objects, ObjectHandler[] queue) {
+	private void clearQueue(FixedSizeArray<RenderElement> objects, ObjectHandler[] queue) {
 		final int count = objects.getCount();
 		RenderElement rElement;
 		for (int i = count - 1; i >= 0; i--) {

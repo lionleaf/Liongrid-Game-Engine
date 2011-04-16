@@ -1,10 +1,27 @@
 package com.infectosaurus;
 
+import java.util.Comparator;
+
+import android.util.Log;
+
 public class RenderElement extends BaseObject{
 	public Drawable drawable;
 	//public Vector2 pos;
 	public float x;
 	public float y;
+	
+	static class HeightComparer implements Comparator<RenderElement>{
+
+		public int compare(RenderElement object1, RenderElement object2) {
+			float y1 = object1.y;
+			float y2 = object2.y;
+			return  -Float.compare(y1, y2);
+		}
+		
+	}
+	
+	static HeightComparer comparer = new HeightComparer();
+	
 	
 	public RenderElement(){
 		super();
