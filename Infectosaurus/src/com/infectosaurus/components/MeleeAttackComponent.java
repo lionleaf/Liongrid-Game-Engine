@@ -59,7 +59,6 @@ public class MeleeAttackComponent extends Component {
 		if(target == null) return;
 		if(target != lastTarget ) delayCountDown = delay;
 		lastTarget = target;
-		Log.d("MeleeAttack","Found target!");
 		
 		delayCountDown -= dt;
 		if(delayCountDown > 0) return;
@@ -71,7 +70,6 @@ public class MeleeAttackComponent extends Component {
 		DamageEffect eff = new DamageEffect();
 		eff.set(damage);
 		target.afflict(eff);
-		Log.d("MeleeAttack","Attack dealt!");
 		
 	}
 }
