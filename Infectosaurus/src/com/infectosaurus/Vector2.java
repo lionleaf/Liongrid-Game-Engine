@@ -98,6 +98,11 @@ public final class Vector2 {
         return (x * x) + (y * y);
     }
 
+    /**
+     * Returns distance squared!
+     * @param other
+     * @return
+     */
     public final float distance2(Vector2 other) {
         float dx = x - other.x;
         float dy = y - other.y;

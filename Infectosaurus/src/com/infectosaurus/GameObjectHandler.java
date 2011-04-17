@@ -34,7 +34,7 @@ public class GameObjectHandler extends ObjectHandler<GameObject> {
 	 * @return - A FixedSizeArray with the results. (Remember to release it!) 
 	 * Or null if there is nothing within reach. It will not return itself.
 	 */ 
-	public FixedSizeArray<GameObject> getClose(GameObject gObject, int reach) {
+	public FixedSizeArray<GameObject> getClose(GameObject gObject, int reach, Team team) {
 		int length = objects.getCount();
 		Object[] objectArr = objects.getArray();
 		
@@ -43,8 +43,10 @@ public class GameObjectHandler extends ObjectHandler<GameObject> {
 		
 		for (int i = 0; i < length; i++) {
 			GameObject currentObject = (GameObject) objectArr[i];
+			
 			if(currentObject.pos.distance2(gObject.pos) <= reach 
-					&& currentObject != gObject){
+					&& currentObject != gObject
+					&& currentObject.team != team){
 				returnObjects.add(currentObject);
 			}
 		}
@@ -54,6 +56,12 @@ public class GameObjectHandler extends ObjectHandler<GameObject> {
 		
 	}
 	
+	/**
+	 * These are quite expensive and scale a lot with complexity, not good!
+	 * @param gObject
+	 * @param team
+	 * @return
+	 */
 	public GameObject getClosest(GameObject gObject, Team team){
 		
 		GameObject closest = null;

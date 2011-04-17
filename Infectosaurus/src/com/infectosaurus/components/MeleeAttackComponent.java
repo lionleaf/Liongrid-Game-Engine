@@ -6,6 +6,7 @@ import com.infectosaurus.BaseObject;
 import com.infectosaurus.FixedSizeArray;
 import com.infectosaurus.GameObject;
 import com.infectosaurus.GameObjectHandler;
+import com.infectosaurus.GameObject.Team;
 import com.infectosaurus.effects.DamageEffect;
 
 
@@ -14,7 +15,7 @@ public class MeleeAttackComponent extends Component {
 	GameObjectHandler gameObjHandler;
 	static final int CLOSE_CAPACITY = 20;
 	FixedSizeArray<GameObject> close;
-	int reach = 10;
+	int reach = 100; //Square of the actual reach 100 means 10 px
 	int damage = 2;
 	float delay = 0.5f; //sec
 	float delayCountDown = delay;
@@ -37,26 +38,15 @@ public class MeleeAttackComponent extends Component {
 		
 		
 		GameObject gObject = (GameObject) parent;
-		FixedSizeArray<GameObject> targets = 
-			gameObjHandler.getClose(gObject, reach);
-		if(targets == null) return;
+		GameObject target =	gameObjHandler.getClosest(
+				gObject, gObject.team == Team.Human ? Team.Alien : Team.Human);
+
 		
-		final int length = targets.getCount();
-		Object[] targetArr = targets.getArray();
-		
-		GameObject target = null;
-		GameObject currentTarget = null;
-		
-		
-		for (int i = 0; i < length; i++) {
-			currentTarget = (GameObject) targetArr[i]; 
-			if(currentTarget.team != gObject.team){
-				target = currentTarget;
-				break; //Just take the first guy!
-			}
+		if(target == null || 
+				target.pos.distance2(gObject.pos) > reach){
+			return;
 		}
 		
-		if(target == null) return;
 		if(target != lastTarget ) delayCountDown = delay;
 		lastTarget = target;
 		
