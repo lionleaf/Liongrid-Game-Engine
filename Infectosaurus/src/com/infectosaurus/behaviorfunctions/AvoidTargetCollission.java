@@ -3,7 +3,7 @@ package com.infectosaurus.behaviorfunctions;
 import com.infectosaurus.BaseObject;
 import com.infectosaurus.states.State;
 
-public class AvoidTargetCoallission extends BehaviorFunction{
+public class AvoidTargetCollission extends BehaviorFunction{
 
 	@Override
 	public void reset() {
