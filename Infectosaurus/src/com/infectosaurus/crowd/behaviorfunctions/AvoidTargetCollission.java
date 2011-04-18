@@ -1,7 +1,7 @@
 package com.infectosaurus.crowd.behaviorfunctions;
 
 import com.infectosaurus.BaseObject;
-import com.infectosaurus.crowd.actions.State;
+import com.infectosaurus.crowd.State;
 
 public class AvoidTargetCollission extends BehaviorFunction{
 

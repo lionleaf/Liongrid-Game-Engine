@@ -2,7 +2,7 @@ package com.infectosaurus.components;
 
 import com.infectosaurus.BaseObject;
 import com.infectosaurus.FixedSizeArray;
-import com.infectosaurus.crowd.actions.State;
+import com.infectosaurus.crowd.State;
 import com.infectosaurus.crowd.behaviorfunctions.BehaviorFunction;
 
 /**
