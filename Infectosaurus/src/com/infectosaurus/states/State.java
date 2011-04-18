@@ -1,10 +1,25 @@
 package com.infectosaurus.states;
 
+import com.infectosaurus.FixedSizeArray;
+import com.infectosaurus.Vector2;
+
 /**
- * @author lastis
- *  A State is a specific behavior a game object is doing.
- *  A game object can only have one active state at the time 
+ * 
+ *  A State is something that specifies all the
+ *   info about the current doing of an agent.
+ *  A game object always have one active state. 
  */
 public class State {
-
+	Vector2 pos;
+	/**
+	 * Facing direction in radians
+	 */
+	float orientation; 
+	
+	float time;
+	
+	//Action action;  Create the class.
+	
+	FixedSizeArray<State> previousStates;
+	
 }
