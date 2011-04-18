@@ -1,4 +1,4 @@
-package com.infectosaurus.states;
+package com.infectosaurus.crowd.actions;
 
 import com.infectosaurus.BaseObject;
 import com.infectosaurus.FixedSizeArray;

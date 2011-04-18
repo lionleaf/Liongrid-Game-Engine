@@ -1,9 +1,9 @@
-package com.infectosaurus.behaviorfunctions;
+package com.infectosaurus.crowd.behaviorfunctions;
 
 import com.infectosaurus.BaseObject;
-import com.infectosaurus.states.State;
+import com.infectosaurus.crowd.actions.State;
 
-public class AvoidObstacles extends BehaviorFunction{
+public class MoveTowards extends BehaviorFunction{
 
 	@Override
 	public void reset() {
