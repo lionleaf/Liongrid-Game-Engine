@@ -69,7 +69,7 @@ public class Level {
 	}
 
 	private void insertPathNodes() {
-		int count = mapSize.x * mapSize.y* NODE_DENSITY;
+		int count = mapSize.x * mapSize.y * NODE_DENSITY;
 		pathNodes = new Vector2Int[count];
 		boolean blocked = true;
 		for(int i = 0; i < count; i++){
@@ -85,8 +85,8 @@ public class Level {
 				int localY = (pathNodes[i].y%TILE_SIZE)/BLOCK_SIZE;
 				
 				blocked = cTile.isBlocked(MovementType.WALKING, 
-						            localX, 
-						            localY);
+						                  localX, 
+						                  localY);
 			}
 		}
 	}

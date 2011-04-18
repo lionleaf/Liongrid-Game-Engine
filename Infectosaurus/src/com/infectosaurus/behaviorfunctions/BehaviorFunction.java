@@ -9,15 +9,19 @@ import com.infectosaurus.states.State;
  * specific states will be initiated. 
  */
 public abstract class BehaviorFunction extends BaseObject{
-	double alpha = 1;
+	float alpha = 1;
 
 	public void update(State[] s, float[] prob){
 		int i;
 		float x;
 		for(i = 0; i < prob.length; i++){
 			x = evaluate(s[i]);
-			prob[i] = (float) Math.signum(x*alpha); 
+			prob[i] = (float) sigmoid(x*alpha); 
 		}
+	}
+
+	private double sigmoid(float f) {
+		return 1/(1 + Math.exp(-f*alpha));
 	}
 
 	/**
