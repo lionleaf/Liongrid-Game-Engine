@@ -2,6 +2,7 @@ package com.infectosaurus.components;
 
 import com.infectosaurus.BaseObject;
 import com.infectosaurus.FixedSizeArray;
+import com.infectosaurus.GameObject;
 import com.infectosaurus.crowd.State;
 import com.infectosaurus.crowd.behaviorfunctions.BehaviorFunction;
 
@@ -26,7 +27,7 @@ public class BehaviorComponent extends Component{
 	public BehaviorComponent() {
 		for (int i = 0; i < defaultStates.length; i++) {
 			defaultStates[i] = new State();
-			defaultStates[i].turnAngle = Math.PI/2 - (i*Math.PI/4);
+			defaultStates[i].turnAngle = (float) (Math.PI/2 - (i*Math.PI/4));
 		}
 		
 		for (int i = 0; i < defaultStates.length; i++) {
@@ -44,6 +45,7 @@ public class BehaviorComponent extends Component{
 		
 		calculateDefaultProb();
 		
+		curState.update(dt, parent);
 		Object[] bObjects = behaviours.getArray();
 		int size = behaviours.getCount();
 		for (int i = 0; i < size; i++) {
