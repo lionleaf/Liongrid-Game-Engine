@@ -12,7 +12,7 @@ public class AvoidTargetCollission extends BehaviorFunction{
 	}
 
 	@Override
-	protected float evaluate(State s) {
+	protected float evaluate(State s, State lastState) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

@@ -16,13 +16,13 @@ public abstract class BehaviorFunction extends BaseObject{
 	 * @param s - An array of States. Will be casted! BE CAREFUL!
 	 * @param prob
 	 */
-	public void update(FixedSizeArray<State> s, float[] prob){
+	public void update(FixedSizeArray<State> s, float[] prob, State lastState){
 		int i;
 		float x;
 		Object[] o = s.getArray();
 		int length = s.getCount();
 		for(i = 0; i < length; i++){
-			x = evaluate((State)o[i]);
+			x = evaluate((State)o[i], lastState);
 			prob[i] *= (float) sigmoid(x*alpha); 
 		}
 	}
@@ -35,5 +35,5 @@ public abstract class BehaviorFunction extends BaseObject{
 	 * @param s the state to have its probability calculated
 	 * @return any real number
 	 */
-	protected abstract float evaluate(State s);
+	protected abstract float evaluate(State s, State lastState);
 }

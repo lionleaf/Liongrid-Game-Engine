@@ -8,7 +8,9 @@ import com.infectosaurus.BaseObject;
 import com.infectosaurus.FixedSizeArray;
 import com.infectosaurus.GameObject;
 import com.infectosaurus.crowd.State;
+import com.infectosaurus.crowd.behaviorfunctions.AvoidEdgeBehaviour;
 import com.infectosaurus.crowd.behaviorfunctions.BehaviorFunction;
+import com.infectosaurus.crowd.behaviorfunctions.InfectoFrightBehaviour;
 import com.infectosaurus.crowd.behaviorfunctions.MoveTowards;
 
 /**
@@ -31,7 +33,7 @@ public class BehaviorComponent extends Component{
 	State curState;
 	
 	public BehaviorComponent() {
-		behaviours.add(new MoveTowards());
+		behaviours.add(new InfectoFrightBehaviour()); 
 		
 		for (int i = 0; i < defaultStates.length; i++) {
 			defaultStates[i] = new State();
@@ -54,15 +56,13 @@ public class BehaviorComponent extends Component{
 		
 		calculateDefaultProb();
 		// Update the next available states for the default states
-		for (int i = 0; i < defaultStates.length; i++) {
-			defaultStates[i].updateNextStates(dt, parent);
-		}
+		curState.updateNextStates(dt, parent);
 		
 		Object[] bObjects = behaviours.getArray();
 		int length = behaviours.getCount();
 		for (int i = 0; i < length; i++) {
 			BehaviorFunction bf = (BehaviorFunction) bObjects[i];
-			bf.update(curState.nextStates, probabilities);
+			bf.update(curState.nextStates, probabilities, curState);
 		}
 		
 		curState = pickState(curState, probabilities);

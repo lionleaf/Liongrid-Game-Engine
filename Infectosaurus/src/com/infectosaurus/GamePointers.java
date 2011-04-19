@@ -18,4 +18,5 @@ public class GamePointers {
 	public Panel panel;
 	public Level level;
 	public TileSet tileSet;
+	public Infectosaurus currentSaurus;
 }
