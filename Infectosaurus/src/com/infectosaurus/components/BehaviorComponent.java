@@ -2,11 +2,14 @@ package com.infectosaurus.components;
 
 import java.util.Random;
 
+import android.util.Log;
+
 import com.infectosaurus.BaseObject;
 import com.infectosaurus.FixedSizeArray;
 import com.infectosaurus.GameObject;
 import com.infectosaurus.crowd.State;
 import com.infectosaurus.crowd.behaviorfunctions.BehaviorFunction;
+import com.infectosaurus.crowd.behaviorfunctions.MoveTowards;
 
 /**
  * @author lastis
@@ -28,12 +31,13 @@ public class BehaviorComponent extends Component{
 	State curState;
 	
 	public BehaviorComponent() {
+		behaviours.add(new MoveTowards());
 		
 		for (int i = 0; i < defaultStates.length; i++) {
 			defaultStates[i] = new State();
-			defaultStates[i].turnAngle = (float) (Math.PI/2 - (i*Math.PI/4));
+			defaultStates[i].turnAngle = (float) (2*Math.PI - (i*Math.PI));
 		}
-		
+		defaultStates[2].turnAngle = 0;
 		for (int i = 0; i < defaultStates.length; i++) {
 			for (int j = 0; j < defaultStates.length; j++) {
 				defaultStates[i].addNextState(defaultStates[j]);
@@ -47,13 +51,8 @@ public class BehaviorComponent extends Component{
 	public void update(float dt, BaseObject parent) {
 		checkSituationChange();		
 		
-		float pickState = random.nextFloat();
 		
 		calculateDefaultProb();
-		// Let the state update the pos and vel to the parent
-		curState.update(dt, parent);
-		((GameObject) parent).pos = curState.pos;
-		((GameObject) parent).vel = curState.vel;
 		// Update the next available states for the default states
 		for (int i = 0; i < defaultStates.length; i++) {
 			defaultStates[i].updateNextStates(dt, parent);
@@ -63,19 +62,59 @@ public class BehaviorComponent extends Component{
 		int length = behaviours.getCount();
 		for (int i = 0; i < length; i++) {
 			BehaviorFunction bf = (BehaviorFunction) bObjects[i];
-			bf.update((State[]) curState.nextStates.getArray(), probabilities);
+			bf.update(curState.nextStates, probabilities);
 		}
+		
+		curState = pickState(curState, probabilities);
+		if(curState == null) return;
+		((GameObject) parent).pos.set(curState.pos);
+		((GameObject) parent).vel.set(curState.vel);
+		((GameObject) parent).direction = curState.angle;
+		
 		
 	}
 
+
+	private State pickState(State curState, float[] probabilities) {
+		float pickState = random.nextFloat();
+		float sum = 0f;
+		int length = curState.nextStates.getCount();
+		for (int i = 0; i < length; i++) {
+			sum += probabilities[i];
+		}
+		
+		for (int i = 0; i < length; i++) {
+			probabilities[i] /= sum;
+			if(i > 0){
+				if(i == length -1){
+					probabilities[i] = 1f;
+					break;
+				}
+				probabilities[i] += probabilities[i-1];
+				
+			}
+			
+		}
+		
+		State s = null;
+		for (int i = 0; i < length; i++) {
+			if(pickState <= probabilities[i]) {
+				s = curState.nextStates.get(i);
+				break;
+			}
+		}
+		
+		return s;
+	}
+
 	private void checkSituationChange() {
+		
 	}
 
 	private void calculateDefaultProb() {
-		for(int i = 0;  i < probabilities.length; i++){
-			if(i < curState.nextStates.getCount()) 
-				probabilities[i] = 1.0f/curState.nextStates.getCount();
-			else probabilities[i] = 0f;
+		int length = curState.nextStates.getCount();
+		for(int i = 0;  i < length; i++){
+			probabilities[i] = 1.0f;
 		}
 	}
 

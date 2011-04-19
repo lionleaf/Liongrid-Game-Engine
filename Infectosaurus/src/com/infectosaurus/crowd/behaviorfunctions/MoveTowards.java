@@ -13,8 +13,8 @@ public class MoveTowards extends BehaviorFunction{
 
 	@Override
 	protected float evaluate(State s) {
-		// TODO Auto-generated method stub
-		return 0;
+		return 1f;
+		//return s.turnAngle > 0 ? 3f : -3f;
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.infectosaurus.crowd;
 
+import android.util.Log;
+
 import com.infectosaurus.BaseObject;
 import com.infectosaurus.FixedSizeArray;
 import com.infectosaurus.GameObject;
@@ -14,8 +16,8 @@ import com.infectosaurus.Vector2;
 public class State extends BaseObject {
 	public Vector2 pos = new Vector2();
 	public Vector2 vel;
-	float time;
 	public float turnAngle = 0;
+	public float angle;
 	
 	//Action action;  Create the class.
 	static final int MAX_STATES = 5;
@@ -30,7 +32,6 @@ public class State extends BaseObject {
 
 	@Override
 	public void reset() {
-		time = 0;
 		turnAngle = 0;
 		pos.zero();
 		vel.zero();
@@ -40,15 +41,17 @@ public class State extends BaseObject {
 	}
 	
 	@Override
-	public void update(float dt, BaseObject parent){
+	public void update(float dt, BaseObject grandParent){
+		GameObject gameObject = ((GameObject) grandParent);
+		vel.set(gameObject.vel);
+		pos.set(gameObject.pos);
 		if (turnAngle != 0){
 			// Angle to turn
-			float angle = dt*turnAngle;
-			vel.x = (float) (vel.x * Math.cos(angle) - vel.y * Math.cos(angle));
-			vel.y = (float) (vel.x * Math.sin(angle) + vel.y * Math.sin(angle));
-			((GameObject) parent).vel = vel;
+			float tempangle = dt*turnAngle;
+			angle = gameObject.direction + tempangle;
+			vel.x = (float) (Math.cos(angle) * gameObject.speed);
+			vel.y = (float) (Math.sin(angle) * gameObject.speed);
 		}
-		pos = ((GameObject) parent).pos;
 		pos.add(vel.x * dt, vel.y * dt);
 	}
 

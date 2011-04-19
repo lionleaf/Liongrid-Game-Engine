@@ -5,6 +5,7 @@ import java.util.Random;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import com.infectosaurus.components.BehaviorComponent;
 import com.infectosaurus.components.MoveComponent;
 import com.infectosaurus.components.RandomWalkerComponent;
 import com.infectosaurus.components.SpriteComponent;
@@ -17,15 +18,16 @@ public class Human extends GameObject{
 		DrawableBitmap db = new DrawableBitmap(
 				R.drawable.mann1, 50, 50,panel.getContext());
 		addComponent(new SpriteComponent(db)); 
-		addComponent(new RandomWalkerComponent());
-		addComponent(new MoveComponent());
-		
+		addComponent(new BehaviorComponent());
 		
 		speed = rand.nextInt(40)+10;
+		vel.x = 30;
+		vel.y = 30;
 		
 		int width = BaseObject.gamePointers.panel.getWidth();
 		int height = BaseObject.gamePointers.panel.getHeight();
 		if(width <= 0 || height <= 0) return;
+		
 		
 		pos.x = rand.nextInt(width);
 		pos.y = rand.nextInt(height);
