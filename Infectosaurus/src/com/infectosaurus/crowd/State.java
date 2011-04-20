@@ -70,8 +70,9 @@ public class State extends BaseObject{
 	}
 
 	public void copy(State s) {
-		
-		
+		this.vel.set(s.vel);
+		this.pos.set(s.pos);
+		this.turnAngle = s.turnAngle;
 	}
 
 	
