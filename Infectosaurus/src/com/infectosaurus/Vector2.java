@@ -121,6 +121,10 @@ public final class Vector2 {
         return magnitude;
     }
 
+    public final float getAngle(){
+    	return (float) Math.atan2(y, x);
+    }
+    
     public final void zero() {
         set(0.0f, 0.0f);
     }
