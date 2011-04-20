@@ -17,7 +17,6 @@ public class State extends BaseObject {
 	public Vector2 pos = new Vector2();
 	public Vector2 vel;
 	public float turnAngle = 0;
-	public float angle;
 	
 	//Action action;  Create the class.
 	static final int MAX_STATES = 5;
@@ -48,7 +47,7 @@ public class State extends BaseObject {
 		if (turnAngle != 0){
 			// Angle to turn
 			float tempangle = dt*turnAngle;
-			angle = gameObject.direction + tempangle;
+			float angle = gameObject.vel.getAngle() + tempangle;
 			vel.x = (float) (Math.cos(angle) * gameObject.speed);
 			vel.y = (float) (Math.sin(angle) * gameObject.speed);
 		}
