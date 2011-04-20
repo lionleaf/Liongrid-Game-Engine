@@ -12,7 +12,7 @@ public class InfectoFrightBehaviour extends BehaviorFunction {
 	@Override
 	protected float evaluate(State s, State lastState) {
 		inf = gamePointers.currentSaurus;
-		if(inf == null) return 1;
+		if(inf == null) return 0;
 		
 		vec.set(inf.pos);
 		vec.subtract(lastState.pos);

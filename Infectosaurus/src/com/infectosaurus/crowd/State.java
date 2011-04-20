@@ -14,7 +14,7 @@ import com.infectosaurus.Vector2;
  *  A game object always have one active state. 
  */
 public class State extends BaseObject{
-	public Vector2 pos = new Vector2();
+	public Vector2 pos;
 	public Vector2 vel;
 	public float turnAngle = 0;
 	

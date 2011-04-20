@@ -8,6 +8,7 @@ import com.infectosaurus.BaseObject;
 import com.infectosaurus.FixedSizeArray;
 import com.infectosaurus.GameObject;
 import com.infectosaurus.crowd.State;
+import com.infectosaurus.crowd.StateList;
 import com.infectosaurus.crowd.behaviorfunctions.AvoidEdgeBehaviour;
 import com.infectosaurus.crowd.behaviorfunctions.BehaviorFunction;
 import com.infectosaurus.crowd.behaviorfunctions.InfectoFrightBehaviour;
@@ -30,9 +31,11 @@ public class BehaviorComponent extends Component{
 		new FixedSizeArray<BehaviorFunction>(MAX_BEHAVIOURS);
 	float[] probabilities = new float[MAX_BEHAVIOURS]; 
 	State[] defaultStates = new State[DEFAULT_STATES];
+	StateList prevStates;
 	State curState;
-	State prevState;
+	
 	public BehaviorComponent() {
+		prevStates = new StateList();
 		behaviours.add(new InfectoFrightBehaviour()); 
 		
 		for (int i = 0; i < defaultStates.length; i++) {
@@ -51,11 +54,8 @@ public class BehaviorComponent extends Component{
 	
 	@Override
 	public void update(float dt, BaseObject parent) {
-		prevState = curState.clone();
-		checkSituationChange();		
 		
-		
-		calculateDefaultProb();
+		calculateProb();
 		
 		// Update the next available states for the default states
 		curState.updateNextStates(dt, parent);
@@ -64,14 +64,13 @@ public class BehaviorComponent extends Component{
 		int length = behaviours.getCount();
 		for (int i = 0; i < length; i++) {
 			BehaviorFunction bf = (BehaviorFunction) bObjects[i];
-			bf.update(curState.nextStates, probabilities, prevState);
+			bf.update(curState.nextStates, probabilities, prevStates);
 		}
 		
-		curState = pickState(curState, probabilities);
+		prevStates.add(curState);
+		curState = pickState(curState.nextStates, probabilities);
 		
 		if(curState == null) return;
-		
-		
 		
 		((GameObject) parent).pos.set(curState.pos);
 		((GameObject) parent).vel.set(curState.vel);
@@ -81,10 +80,10 @@ public class BehaviorComponent extends Component{
 	}
 
 
-	private State pickState(State curState, float[] probabilities) {
+	private State pickState(FixedSizeArray<State> nextStates, float[] probabilities) {
 		float pickState = random.nextFloat();
 		float sum = 0f;
-		int length = curState.nextStates.getCount();
+		int length = nextStates.getCount();
 		for (int i = 0; i < length; i++) {
 			sum += probabilities[i];
 		}
@@ -105,7 +104,7 @@ public class BehaviorComponent extends Component{
 		State s = null;
 		for (int i = 0; i < length; i++) {
 			if(pickState <= probabilities[i]) {
-				s = curState.nextStates.get(i);
+				s = nextStates.get(i);
 				break;
 			}
 		}
@@ -113,19 +112,11 @@ public class BehaviorComponent extends Component{
 		return s;
 	}
 
-	private void checkSituationChange() {
-		
-	}
-
-	private void calculateDefaultProb() {
+	private void calculateProb() {
 		int length = curState.nextStates.getCount();
 		for(int i = 0;  i < length; i++){
 			probabilities[i] = 1.0f;
 		}
-	}
-
-	private void calculateStates() {
-		
 	}
 
 }
