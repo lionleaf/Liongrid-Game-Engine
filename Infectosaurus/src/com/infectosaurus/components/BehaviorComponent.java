@@ -69,7 +69,7 @@ public class BehaviorComponent extends Component{
 		if(curState == null) return;
 		((GameObject) parent).pos.set(curState.pos);
 		((GameObject) parent).vel.set(curState.vel);
-		((GameObject) parent).direction = curState.angle;
+		//((GameObject) parent).direction = curState.angle;
 		
 		
 	}
