@@ -23,12 +23,12 @@ public abstract class BehaviorFunction extends BaseObject{
 		int length = s.getCount();
 		for(i = 0; i < length; i++){
 			x = evaluate((State)o[i], lastState);
-			prob[i] *= (float) sigmoid(x*alpha); 
+			prob[i] *= (float) sigmoid(x); 
 		}
 	}
 
-	private double sigmoid(float f) {
-		return 1/(1 + Math.exp(-f*alpha));
+	private double sigmoid(float r) {
+		return 1/(1 + Math.exp(-r*alpha));
 	}
 
 	/**

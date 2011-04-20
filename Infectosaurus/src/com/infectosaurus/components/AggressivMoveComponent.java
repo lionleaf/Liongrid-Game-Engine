@@ -1,11 +1,8 @@
 package com.infectosaurus.components;
 
-import android.util.Log;
-
 import com.infectosaurus.BaseObject;
 import com.infectosaurus.GameObject;
 import com.infectosaurus.GameObjectHandler;
-import com.infectosaurus.GamePointers;
 
 public class AggressivMoveComponent extends Component{
 	

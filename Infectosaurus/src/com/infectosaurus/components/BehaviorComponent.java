@@ -31,7 +31,7 @@ public class BehaviorComponent extends Component{
 	float[] probabilities = new float[MAX_BEHAVIOURS]; 
 	State[] defaultStates = new State[DEFAULT_STATES];
 	State curState;
-	
+	State prevState;
 	public BehaviorComponent() {
 		behaviours.add(new InfectoFrightBehaviour()); 
 		
@@ -51,10 +51,12 @@ public class BehaviorComponent extends Component{
 	
 	@Override
 	public void update(float dt, BaseObject parent) {
+		prevState =  pickState(curState, probabilities).clone();
 		checkSituationChange();		
 		
 		
 		calculateDefaultProb();
+		
 		// Update the next available states for the default states
 		curState.updateNextStates(dt, parent);
 		
@@ -62,11 +64,15 @@ public class BehaviorComponent extends Component{
 		int length = behaviours.getCount();
 		for (int i = 0; i < length; i++) {
 			BehaviorFunction bf = (BehaviorFunction) bObjects[i];
-			bf.update(curState.nextStates, probabilities, curState);
+			bf.update(curState.nextStates, probabilities, prevState);
 		}
 		
 		curState = pickState(curState, probabilities);
+		
 		if(curState == null) return;
+		
+		
+		
 		((GameObject) parent).pos.set(curState.pos);
 		((GameObject) parent).vel.set(curState.vel);
 		//((GameObject) parent).direction = curState.angle;
