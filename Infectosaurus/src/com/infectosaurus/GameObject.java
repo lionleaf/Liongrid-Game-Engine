@@ -17,7 +17,6 @@ public abstract class GameObject extends BaseObject{
 	public boolean alive = true;
 	public Vector2 pos = new Vector2(0,0);
 	public Vector2 vel = new Vector2(0,0);
-	public float direction = (float) (Math.PI/4);
 	public float speed = 10;
 	public int hp = 1;
 	
