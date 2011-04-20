@@ -13,14 +13,13 @@ import com.infectosaurus.Vector2;
  *   info about the current doing of an agent.
  *  A game object always have one active state. 
  */
-public class State extends BaseObject implements Cloneable{
+public class State extends BaseObject{
 	public Vector2 pos = new Vector2();
 	public Vector2 vel;
 	public float turnAngle = 0;
 	
 	//Action action;  Create the class.
 	static final int MAX_STATES = 5;
-	FixedSizeArray<State> previousStates;
 	public FixedSizeArray<State> nextStates 
 		= new FixedSizeArray<State>(MAX_STATES);
 	
@@ -34,19 +33,8 @@ public class State extends BaseObject implements Cloneable{
 		turnAngle = 0;
 		pos.zero();
 		vel.zero();
-		previousStates.clear();
 		//Action.reset()
 		
-	}
-	
-	public State clone(){
-		try {
-			return (State)super.clone();
-		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
 	}
 	
 	@Override
@@ -79,6 +67,11 @@ public class State extends BaseObject implements Cloneable{
 	
 	public void removeState(State state){
 		nextStates.remove(state, true);
+	}
+
+	public void copy(State s) {
+		
+		
 	}
 
 	
