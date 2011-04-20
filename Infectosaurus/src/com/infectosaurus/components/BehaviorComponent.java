@@ -51,7 +51,7 @@ public class BehaviorComponent extends Component{
 	
 	@Override
 	public void update(float dt, BaseObject parent) {
-		prevState =  pickState(curState, probabilities).clone();
+		prevState = curState.clone();
 		checkSituationChange();		
 		
 		
