@@ -2,6 +2,7 @@ package com.infectosaurus.crowd.behaviorfunctions;
 
 import com.infectosaurus.BaseObject;
 import com.infectosaurus.crowd.State;
+import com.infectosaurus.crowd.StateList;
 
 public class AvoidObstacles extends BehaviorFunction{
 
@@ -12,7 +13,7 @@ public class AvoidObstacles extends BehaviorFunction{
 	}
 
 	@Override
-	protected float evaluate(State s, State lastState) {
+	protected float evaluate(State s, StateList lastStates) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

@@ -1,6 +1,7 @@
 package com.infectosaurus.crowd.behaviorfunctions;
 
 import com.infectosaurus.crowd.State;
+import com.infectosaurus.crowd.StateList;
 
 public class MoveTowards extends BehaviorFunction{
 
@@ -11,7 +12,7 @@ public class MoveTowards extends BehaviorFunction{
 	}
 
 	@Override
-	protected float evaluate(State s, State lastState) {
+	protected float evaluate(State s, StateList lastStates) {
 		return 1f;
 		//return s.turnAngle > 0 ? 3f : -3f;
 	}

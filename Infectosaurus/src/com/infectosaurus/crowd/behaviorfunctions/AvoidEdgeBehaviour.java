@@ -1,11 +1,12 @@
 package com.infectosaurus.crowd.behaviorfunctions;
 
 import com.infectosaurus.crowd.State;
+import com.infectosaurus.crowd.StateList;
 
 public class AvoidEdgeBehaviour extends BehaviorFunction {
 
 	@Override
-	protected float evaluate(State s, State lastState) {
+	protected float evaluate(State s, StateList lastStates) {
 		int width = gamePointers.panel.getWidth();
 		int height = gamePointers.panel.getHeight();
 		
