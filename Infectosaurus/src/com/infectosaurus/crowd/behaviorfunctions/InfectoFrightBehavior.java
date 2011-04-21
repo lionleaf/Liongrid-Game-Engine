@@ -5,10 +5,11 @@ import com.infectosaurus.Vector2;
 import com.infectosaurus.crowd.State;
 import com.infectosaurus.crowd.StateList;
 
-public class InfectoFrightBehaviour extends BehaviorFunction {
+public class InfectoFrightBehavior extends BehaviorFunction {
 	Infectosaurus inf = null;
 	static final float nr = (float) ((Math.PI*Math.PI)/8);
 	Vector2 vec = new Vector2();
+	float alpha = 10;
 	
 	@Override
 	protected float evaluate(State s, StateList lastStates) {
@@ -17,18 +18,24 @@ public class InfectoFrightBehaviour extends BehaviorFunction {
 		
 		vec.set(inf.pos);
 		vec.subtract(lastStates.get(1).pos);
-		float angleToInfect = vec.getAngle();
-		float lastAngle = lastStates.get(1).vel.getAngle() - angleToInfect ;
-		float newAngle = s.vel.getAngle() - angleToInfect ;
+		float angToInf = vec.getAngle();
+		float away = 
+			(float)(angToInf > 0 ? angToInf - Math.PI : angToInf + Math.PI);
+		return gauss(s.vel.getAngle(), away, 1f);
 		
-		if((newAngle*newAngle) >= (lastAngle*lastAngle)){
-			return 10;
-		}else{
-			return -10; 
-		}
-		
-		
-		
+	}
+
+	private float gauss(float x, float mu, float sig2) {
+		return (float) Math.exp(-Math.pow((Math.abs(x)-mu), 2)/2);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.infectosaurus.crowd.behaviorfunctions.BehaviorFunction#sigmoid(float)
+	 */
+	@Override
+	protected float sigmoid(float r) {
+		// TODO Auto-generated method stub
+		return sigmoid(r, alpha);
 	}
 
 	@Override

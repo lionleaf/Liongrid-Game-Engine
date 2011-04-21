@@ -11,7 +11,6 @@ import com.infectosaurus.crowd.StateList;
  * specific states will be initiated. 
  */
 public abstract class BehaviorFunction extends BaseObject{
-	float alpha = 1;
 
 	/**
 	 * @param s - An array of States. Will be casted! BE CAREFUL!
@@ -26,14 +25,17 @@ public abstract class BehaviorFunction extends BaseObject{
 		int length = s.getCount();
 		for(i = 0; i < length; i++){
 			x = evaluate((State)o[i], prevStates);
-			prob[i] *= (float) sigmoid(x); 
+			prob[i] *= sigmoid(x); 
 		}
 	}
 
-	private double sigmoid(float r) {
-		return 1/(1 + Math.exp(-r*alpha));
+	protected float sigmoid(float r,float alpha) {
+		return (float) (1/(1 + Math.exp(-r*alpha)));
 	}
-
+	
+	protected float sigmoid(float r){
+		return sigmoid(r, 1);
+	}
 	/**
 	 * @param s the state to have its probability calculated
 	 * @return any real number

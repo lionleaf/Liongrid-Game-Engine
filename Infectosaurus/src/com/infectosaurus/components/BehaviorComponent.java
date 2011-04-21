@@ -11,7 +11,7 @@ import com.infectosaurus.crowd.State;
 import com.infectosaurus.crowd.StateList;
 import com.infectosaurus.crowd.behaviorfunctions.AvoidEdgeBehaviour;
 import com.infectosaurus.crowd.behaviorfunctions.BehaviorFunction;
-import com.infectosaurus.crowd.behaviorfunctions.InfectoFrightBehaviour;
+import com.infectosaurus.crowd.behaviorfunctions.InfectoFrightBehavior;
 import com.infectosaurus.crowd.behaviorfunctions.MoveTowards;
 
 /**
@@ -36,7 +36,7 @@ public class BehaviorComponent extends Component{
 	
 	public BehaviorComponent() {
 		prevStates = new StateList();
-		behaviours.add(new InfectoFrightBehaviour()); 
+		behaviours.add(new InfectoFrightBehavior()); 
 		
 		for (int i = 0; i < defaultStates.length; i++) {
 			defaultStates[i] = new State();
