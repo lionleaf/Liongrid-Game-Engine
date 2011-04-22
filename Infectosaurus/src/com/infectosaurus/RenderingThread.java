@@ -54,8 +54,8 @@ public class RenderingThread implements Panel.Renderer {
 				for (int i = 0; i < bgTiles.length; i++) {
 					for (int j = 0; j < bgTiles[i].length; j++) {
 						//TODO camera code here!
-						int x = level.TILE_SIZE*i;
-						int y = level.TILE_SIZE*j;
+						int x = (int) (level.TILE_SIZE*i*SCALE);
+						int y = (int) (level.TILE_SIZE*j*SCALE);
 						bgTiles[i][j].draw(gl, x, y, SCALE, SCALE);
 					}
 				}

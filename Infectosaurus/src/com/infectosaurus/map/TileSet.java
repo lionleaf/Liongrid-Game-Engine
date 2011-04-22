@@ -26,13 +26,19 @@ public class TileSet {
 	 */
 	public void initTileTypes(){
 		Panel panel = BaseObject.gamePointers.panel;
-		int tile1 = R.drawable.scrub;
+		int tile1 = R.drawable.tile1;
+		int tile2 = R.drawable.tile2;
+		int tile3 = R.drawable.tile3;
+		int tile4 = R.drawable.tile4;
+		int tile5 = R.drawable.tile5;
+		int tile6 = R.drawable.tile6;
 		
-		int[] bitmaps = {tile1};
+		
+		int[] bitmaps = {tile1,tile2,tile3,tile4,tile5,tile6};
 		tileTypes = new TileType[bitmaps.length];
 		for(int i = 0; i < tileTypes.length; i++){
 			tileTypes[i] = 
-				new TileType(tile1, new boolean[2][2][MovementType.values().length], 
+				new TileType(bitmaps[i], new boolean[2][2][MovementType.values().length], 
 						Level.TILE_SIZE, panel.getContext());
 		}
 	}
