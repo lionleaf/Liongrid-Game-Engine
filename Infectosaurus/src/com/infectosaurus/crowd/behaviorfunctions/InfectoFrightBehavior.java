@@ -19,9 +19,35 @@ public class InfectoFrightBehavior extends BehaviorFunction {
 		vec.set(inf.pos);
 		vec.subtract(lastStates.get(1).pos);
 		float angToInf = vec.getAngle();
-		float away = 
+		
+		//Angle of velocity towards infectosaurus. 0 is straight on. Pi is away
+		float lastVelAngle = lastStates.get(1).vel.getAngle() - angToInf;
+		float newVelAngle = s.vel.getAngle() - angToInf;
+		
+		//Get rid of negative angles:
+		lastVelAngle = Math.abs(lastVelAngle);
+		newVelAngle = Math.abs(newVelAngle);
+		
+		//Choose the smallest angle
+		if(lastVelAngle > Math.PI){
+			lastVelAngle = (float) (2*Math.PI - lastVelAngle);
+		}
+		if(newVelAngle > Math.PI){
+			newVelAngle  = (float) (2*Math.PI - newVelAngle);
+		}
+		
+		if(newVelAngle < lastVelAngle){
+			return -5;
+		}else if(newVelAngle == lastVelAngle){
+			return 2;
+		}else{//Better outcome!
+			return 5;
+		}
+		
+		
+		/*float away = 
 			(float)(angToInf > 0 ? angToInf - Math.PI : angToInf + Math.PI);
-		return gauss(s.vel.getAngle(), away, 1f);
+		//return gauss(s.vel.getAngle(), away, 1f);*/
 		
 	}
 

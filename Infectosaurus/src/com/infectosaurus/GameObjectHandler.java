@@ -9,19 +9,16 @@ import com.infectosaurus.GameObject.Team;
  */
 public class GameObjectHandler extends ObjectHandler<GameObject> {
 	private static final int DEFAULT_CAPACITY = 256;
+	
+	static final int NUMBER_OF_HUMANS = 20;
 	GameObjectHandler(){
 		super(DEFAULT_CAPACITY);
-		objects.add(new Human());
-		objects.add(new Human());
-		objects.add(new Human());
-		objects.add(new Human());
-		objects.add(new Human());
-		objects.add(new Human());
-		objects.add(new Human());
-		objects.add(new Human());
-		objects.add(new Human());
-		objects.add(new Human());
-		objects.add(new Human());
+		Human human;
+		for (int i = 0; i < NUMBER_OF_HUMANS; i++) {
+			human = new Human();
+			human.pos.set(200,300);
+			objects.add(new Human());
+		}
 	}
 	
 	

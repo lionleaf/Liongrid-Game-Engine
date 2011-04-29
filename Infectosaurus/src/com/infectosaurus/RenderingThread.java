@@ -16,7 +16,7 @@ public class RenderingThread implements Panel.Renderer {
     private ObjectHandler drawQueue;
 	private Object drawLock;
 	private boolean drawQueueChanged;
-	private static final float SCALE = 1f;
+	private static final float SCALE = 1f; 
     
  
     public RenderingThread() {
@@ -24,7 +24,7 @@ public class RenderingThread implements Panel.Renderer {
     	drawLock = new Object();
     }
 
-	public void onDrawFrame(GL10 gl) {
+	public void onDrawFrame(GL10 gl) { 
 		OpenGLSystem.gl = gl;
 		//Avoid drawing same scene twice
 		synchronized(drawLock) {

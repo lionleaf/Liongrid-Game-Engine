@@ -20,7 +20,7 @@ public class Human extends GameObject{
 		addComponent(new SpriteComponent(db)); 
 		addComponent(new BehaviorComponent());
 		
-		speed = 40;
+		speed = rand.nextInt(20)+10;
 		
 		int width = BaseObject.gamePointers.panel.getWidth();
 		int height = BaseObject.gamePointers.panel.getHeight();
@@ -28,7 +28,7 @@ public class Human extends GameObject{
 		
 		
 		pos.x = rand.nextInt(width);
-		pos.y = rand.nextInt(height);
+		pos.y = rand.nextInt(height); 
 		
 	}
 	
