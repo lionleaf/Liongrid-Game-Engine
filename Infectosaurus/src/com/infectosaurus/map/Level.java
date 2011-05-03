@@ -87,7 +87,7 @@ public class Level {
 		TileType[] tileTypes = BaseObject.gamePointers.tileSet.tileTypes;
 
 		//if(reader.nextInt() != 11) return;
-		byte[] workspaceBytes = new byte[4];
+		//byte[] workspaceBytes = new byte[4]; //Used to read ints
 
 		try {
 			//reader.read(workspaceBytes,0,4);
