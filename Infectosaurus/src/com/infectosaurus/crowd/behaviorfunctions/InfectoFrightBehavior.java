@@ -51,10 +51,6 @@ public class InfectoFrightBehavior extends BehaviorFunction {
 		
 	}
 
-	private float gauss(float x, float mu, float sig2) {
-		return (float) Math.exp(-Math.pow((Math.abs(x)-mu), 2)/2);
-	}
-
 	/* (non-Javadoc)
 	 * @see com.infectosaurus.crowd.behaviorfunctions.BehaviorFunction#sigmoid(float)
 	 */

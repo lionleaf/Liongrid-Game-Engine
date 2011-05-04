@@ -2,17 +2,13 @@ package com.infectosaurus.components;
 
 import java.util.Random;
 
-import android.util.Log;
-
 import com.infectosaurus.BaseObject;
 import com.infectosaurus.FixedSizeArray;
 import com.infectosaurus.GameObject;
 import com.infectosaurus.crowd.State;
 import com.infectosaurus.crowd.StateList;
-import com.infectosaurus.crowd.behaviorfunctions.AvoidEdgeBehaviour;
 import com.infectosaurus.crowd.behaviorfunctions.BehaviorFunction;
 import com.infectosaurus.crowd.behaviorfunctions.InfectoFrightBehavior;
-import com.infectosaurus.crowd.behaviorfunctions.MoveTowards;
 
 /**
  * @author lastis
@@ -27,7 +23,7 @@ public class BehaviorComponent extends Component{
 	static Random random = new Random();
 	public static final int DEFAULT_STATES = 5;
 	private final static int MAX_BEHAVIOURS = 32;
-	FixedSizeArray<BehaviorFunction> behaviours = 
+	FixedSizeArray<BehaviorFunction> behaviors = 
 		new FixedSizeArray<BehaviorFunction>(MAX_BEHAVIOURS);
 	float[] probabilities = new float[MAX_BEHAVIOURS]; 
 	State[] defaultStates = new State[DEFAULT_STATES];
@@ -36,7 +32,7 @@ public class BehaviorComponent extends Component{
 	
 	public BehaviorComponent() {
 		prevStates = new StateList();
-		behaviours.add(new InfectoFrightBehavior()); 
+		behaviors.add(new InfectoFrightBehavior()); 
 		
 		for (int i = 0; i < defaultStates.length; i++) {
 			defaultStates[i] = new State();
@@ -52,6 +48,10 @@ public class BehaviorComponent extends Component{
 		curState = defaultStates[2];
 	}
 	
+	public void addBehaviorFunction(BehaviorFunction func){
+		behaviors.add(func);
+	}
+	
 	@Override
 	public void update(float dt, BaseObject parent) {
 		
@@ -60,8 +60,8 @@ public class BehaviorComponent extends Component{
 		// Update the next available states for the default states
 		curState.updateNextStates(dt, parent);
 		
-		Object[] bObjects = behaviours.getArray();
-		int length = behaviours.getCount();
+		Object[] bObjects = behaviors.getArray();
+		int length = behaviors.getCount();
 		for (int i = 0; i < length; i++) {
 			BehaviorFunction bf = (BehaviorFunction) bObjects[i];
 			bf.update(curState.nextStates, probabilities, prevStates);
@@ -80,7 +80,8 @@ public class BehaviorComponent extends Component{
 	}
 
 
-	private State pickState(FixedSizeArray<State> nextStates, float[] probabilities) {
+	private State pickState(FixedSizeArray<State> nextStates, 
+							float[] probabilities) {
 		float pickState = random.nextFloat();
 		float sum = 0f;
 		int length = nextStates.getCount();
