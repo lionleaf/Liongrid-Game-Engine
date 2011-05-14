@@ -44,8 +44,21 @@ public class Level {
 	private Vector2Int[] pathNodes;
 
 
-
-
+	
+	/**
+	 * @return the height in px
+	 */
+	public int getWidth(){
+		return tiles.length * TILE_SIZE;
+	}
+	
+	/**
+	 * @return the height in px
+	 */
+	public int getHeight(){
+		return tiles[0].length * TILE_SIZE;
+	}
+	
 	public Level(){
 		mapSize = new Vector2Int();
 		loadTiles();

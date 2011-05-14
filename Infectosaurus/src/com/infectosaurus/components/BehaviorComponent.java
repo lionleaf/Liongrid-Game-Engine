@@ -7,6 +7,7 @@ import com.infectosaurus.FixedSizeArray;
 import com.infectosaurus.GameObject;
 import com.infectosaurus.crowd.State;
 import com.infectosaurus.crowd.StateList;
+import com.infectosaurus.crowd.behaviorfunctions.AvoidEdgeBehaviour;
 import com.infectosaurus.crowd.behaviorfunctions.BehaviorFunction;
 import com.infectosaurus.crowd.behaviorfunctions.InfectoFrightBehavior;
 
@@ -32,7 +33,7 @@ public class BehaviorComponent extends Component{
 	
 	public BehaviorComponent() {
 		prevStates = new StateList();
-		behaviors.add(new InfectoFrightBehavior()); 
+		addDefaultBehaviours();
 		
 		for (int i = 0; i < defaultStates.length; i++) {
 			defaultStates[i] = new State();
@@ -47,6 +48,13 @@ public class BehaviorComponent extends Component{
 		
 		curState = defaultStates[2];
 	}
+	
+	
+	private void addDefaultBehaviours(){
+		behaviors.add(new InfectoFrightBehavior()); 
+		behaviors.add(new AvoidEdgeBehaviour());
+	}
+	
 	
 	public void addBehaviorFunction(BehaviorFunction func){
 		behaviors.add(func);
