@@ -8,6 +8,8 @@ import com.infectosaurus.map.TileType;
 
 import android.opengl.GLU;
 import android.util.Log;
+import android.view.Display;
+import android.view.WindowManager;
 
 
 public class RenderingThread implements Panel.Renderer {
@@ -100,6 +102,7 @@ public class RenderingThread implements Panel.Renderer {
 
 
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+		
 		 /*
          * Some one-time OpenGL initialization can be made here probably based
          * on features of this particular context

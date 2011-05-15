@@ -3,6 +3,7 @@ package com.infectosaurus;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.Window;
 
@@ -19,10 +20,23 @@ public class GameBoard extends Activity{
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         Log.d(TAG,"In GameBoard");
+        
+        setScreenDimensions();
+		
         panel = new Panel(this);
         setContentView(panel);
+        
     }
 	
+	private void setScreenDimensions() {
+        Display display = getWindowManager().getDefaultDisplay(); 
+		/* Now we can retrieve all display-related infos */
+		Camera.screenWidth = display.getWidth();
+		Camera.screenHeight = display.getHeight();	
+		
+		Log.d(TAG, "Height = " + Camera.screenHeight);
+	}
+
 	@Override
 	protected void onPause(){
 		super.onPause();
