@@ -98,7 +98,6 @@ public class GameThread extends Thread {
 	public void registerScreenTouch(MotionEvent event) {
 		synchronized(updateLock){
 			if(BaseObject.gamePointers.currentSaurus == null){
-				
 				Infectosaurus inf = new Infectosaurus();
 				BaseObject.gamePointers.currentSaurus = inf;
 				BaseObject.gamePointers.gameObjectHandler.add(inf);
