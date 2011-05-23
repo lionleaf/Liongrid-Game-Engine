@@ -28,6 +28,16 @@ public class RenderSystem {
     public void scheduleForDraw(Drawable object, Vector2 pos) {
         RenderElement element = rElementPool.allocate();
         if(element == null) return;
+        
+        //Check if element is outside the screen view
+        if(pos.x < Camera.cameraPosition[0])
+        	if(pos.x > Camera.cameraPosition[0] + Camera.screenWidth)
+        		return;
+        if(pos.y < Camera.cameraPosition[1])
+        	if(pos.x > Camera.cameraPosition[1] + Camera.screenHeight)
+        		return;
+        
+        
         //Since this is done a lot, we want max speed, so we change
         //the public variables instead of calling set
         element.drawable = object;
