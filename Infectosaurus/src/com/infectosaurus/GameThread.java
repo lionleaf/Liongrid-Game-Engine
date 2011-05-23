@@ -120,7 +120,7 @@ public class GameThread extends Thread {
 	}
 
 	public void registerKeyDown(KeyEvent event) {
-		// TODO Auto-generated method stub
+		Log.d(Main.TAG, "How this work");
 		
 	}
 }
