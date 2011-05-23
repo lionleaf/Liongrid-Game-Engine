@@ -2,6 +2,7 @@ package com.infectosaurus;
 
 import android.os.SystemClock;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 
 /**
@@ -116,5 +117,10 @@ public class GameThread extends Thread {
 	
 	public synchronized void onResume(){
 		//TODO
+	}
+
+	public void registerKeyDown(KeyEvent event) {
+		// TODO Auto-generated method stub
+		
 	}
 }

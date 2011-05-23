@@ -57,6 +57,13 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback,
 	}
 	
 	@Override
+	public boolean onKeyDown(int keyCode, android.view.KeyEvent event) {
+		BaseObject.gamePointers.gameThread.registerKeyDown(event);
+		return false;
+	}
+	
+	
+	@Override
 	public void onPause() {
 		super.onPause();
 		BaseObject.gamePointers.gameThread.onPause();

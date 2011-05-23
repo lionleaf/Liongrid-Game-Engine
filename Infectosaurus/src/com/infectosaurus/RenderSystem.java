@@ -6,7 +6,6 @@ public class RenderSystem {
 	private int queueIndex;
 	private ObjectPool<RenderElement> rElementPool;
 	
-	
 	//TODO tie to max size of GOHandler!!
 	private final static int QUEUE_SIZE = 256;
 	private final static int DRAW_QUEUE_COUNT = 2;
