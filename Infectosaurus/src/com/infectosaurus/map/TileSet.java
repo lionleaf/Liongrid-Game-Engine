@@ -1,5 +1,15 @@
 package com.infectosaurus.map;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import org.xml.sax.SAXException;
+
 import com.infectosaurus.BaseObject;
 import com.infectosaurus.MovementType;
 import com.infectosaurus.Panel;
@@ -18,6 +28,8 @@ public class TileSet {
 	 */
 	public TileType[] tileTypes;
 	
+	public HashMap<Integer,Integer> tileIDtoIndexMap = new HashMap<Integer,Integer>();
+	
 	public TileSet(){
 		initTileTypes();
 	}
@@ -25,7 +37,8 @@ public class TileSet {
 	 * Load the tileSet! Must be called before any tiles can be drawn 
 	 */
 	public void initTileTypes(){
-		Panel panel = BaseObject.gamePointers.panel;
+		loadTileSet(R.raw.tileset);
+		/*Panel panel = BaseObject.gamePointers.panel;
 		int tile1 = R.drawable.tile1;
 		int tile2 = R.drawable.tile2;
 		int tile3 = R.drawable.tile3;
@@ -38,8 +51,25 @@ public class TileSet {
 		tileTypes = new TileType[bitmaps.length];
 		for(int i = 0; i < tileTypes.length; i++){
 			tileTypes[i] = 
-				new TileType(bitmaps[i], new boolean[2][2][MovementType.values().length], 
-						Level.TILE_SIZE, panel.getContext());
+				new TileType(bitmaps[i], new boolean[2][2][MovementType.values().length]);
+		}*/
+	}
+	
+	public void loadTileSet(int res){
+		Panel panel = BaseObject.gamePointers.panel;
+		InputStream inputStream = panel.getResources().openRawResource(res);
+		SAXParserFactory factory = SAXParserFactory.newInstance();
+	    try {
+	            SAXParser parser = factory.newSAXParser();
+	            TileSetSaxParser handler = new TileSetSaxParser(this);
+	            parser.parse(inputStream, handler);
+	            
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		} catch (SAXException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 }

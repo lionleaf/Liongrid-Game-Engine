@@ -109,4 +109,13 @@ public class GameThread extends Thread {
 		}
 		
 	}
+
+	public synchronized void onPause() {
+		
+		//TODO
+	}
+	
+	public synchronized void onResume(){
+		//TODO
+	}
 }

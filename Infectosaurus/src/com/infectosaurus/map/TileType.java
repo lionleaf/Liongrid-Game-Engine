@@ -2,6 +2,7 @@ package com.infectosaurus.map;
 
 import android.content.Context;
 
+import com.infectosaurus.BaseObject;
 import com.infectosaurus.DrawableBitmap;
 
 /**
@@ -39,8 +40,8 @@ public class TileType extends DrawableBitmap{
 	 *  as calculations depend upon it
 	 * @param context - gamePointer.panel;
 	 */
-	public TileType(int resource, boolean[][][] blocked, int size, Context context){
-		super(resource, size, size, context);
+	public TileType(int resource, boolean[][][] blocked){
+		super(resource, Level.TILE_SIZE, Level.TILE_SIZE, BaseObject.gamePointers.panel.getContext());
 		
 		this.blocked = blocked;	
 	}

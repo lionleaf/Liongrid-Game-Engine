@@ -1,5 +1,7 @@
 package com.infectosaurus.components;
 
+import android.util.Log;
+
 import com.infectosaurus.BaseObject;
 import com.infectosaurus.Drawable;
 import com.infectosaurus.GameObject;
@@ -22,7 +24,7 @@ public class SpriteComponent extends Component {
 		GameObject gameObject = (GameObject) parent;
 		pos = gameObject.pos;
 		lastPos.set(pos);
-		
+			
 		BaseObject.gamePointers.renderSystem.scheduleForDraw(drawing, pos);
 	}
 	

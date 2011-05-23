@@ -6,8 +6,7 @@
     <uses-sdk android:minSdkVersion="4" />
 
     <application android:label="@string/app_name" android:debuggable="true" android:icon="@drawable/mann1">
-        <activity android:name=".Main"
-        android:screenOrientation="landscape"
+        <activity android:name=".Main"  android:screenOrientation="landscape"
                   android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -15,7 +14,7 @@
             </intent-filter>
             
         </activity>
-			<activity android:name="GameBoard" android:label="@string/app_name">
+			<activity android:name="GameBoard"  android:screenOrientation="landscape" android:label="@string/app_name">
 		</activity>
     </application>
 </manifest>
