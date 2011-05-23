@@ -118,9 +118,4 @@ public class GameThread extends Thread {
 	public synchronized void onResume(){
 		//TODO
 	}
-
-	public void registerKeyDown(KeyEvent event) {
-		Log.d(Main.TAG, "How this work");
-		
-	}
 }
