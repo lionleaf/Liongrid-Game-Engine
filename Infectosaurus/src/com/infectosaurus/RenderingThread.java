@@ -14,7 +14,6 @@ import android.view.WindowManager;
 
 public class RenderingThread implements Panel.Renderer {
     
-    private static final String TAG = "My Activity";
     private ObjectHandler drawQueue;
 	private Object drawLock;
 	private boolean drawQueueChanged;
@@ -22,7 +21,7 @@ public class RenderingThread implements Panel.Renderer {
     
  
     public RenderingThread() {
-    	Log.d(TAG,"In RThread");
+    	Log.d(Main.TAG,"In RThread");
     	drawLock = new Object();
     }
 

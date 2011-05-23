@@ -34,7 +34,7 @@ public abstract class GameObject extends BaseObject{
 
 	
 	GameObject(){
-		Log.d("GameBoard", "In BaseObject");
+		Log.d(Main.TAG, "In BaseObject");
 		components = new FixedSizeArray<Component>(DEFAULT_COMPONENT_SIZE);
 		effects = new FixedSizeArray<Effect>(DEFAULT_COMPONENT_SIZE);
 		Log.d("Place", "GameObject construct");

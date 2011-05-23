@@ -15,7 +15,6 @@ import android.view.Window;
  *		This activity is the upper class for the whole game play
  */
 public class GameBoard extends Activity{
-	private static final String TAG = BaseObject.TAG;
 	Panel panel;
 
 	@Override
@@ -23,7 +22,7 @@ public class GameBoard extends Activity{
 		super.onCreate(savedInstanceState);
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		Log.d(TAG,"In GameBoards onCreate");
+		Log.d(Main.TAG,"In GameBoards onCreate");
 
 		setScreenDimensions();
 
@@ -47,7 +46,7 @@ public class GameBoard extends Activity{
 		Camera.screenWidth = display.getWidth();
 		Camera.screenHeight = display.getHeight();	
 
-		Log.d(TAG, "Height = " + Camera.screenHeight);
+		Log.d(Main.TAG, "Height = " + Camera.screenHeight);
 	}
 
 	@Override

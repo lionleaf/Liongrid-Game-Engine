@@ -14,7 +14,7 @@ import android.util.Log;
 
 public class Infectosaurus extends GameObject {
 	Infectosaurus() {
-		Log.d("Place", "Infectosaurus construct");
+		Log.d(Main.TAG, "Infectosaurus construct");
 		Panel panel = BaseObject.gamePointers.panel;
 		
 		addComponent(new MeleeAttackComponent());

@@ -16,12 +16,9 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback,
 
 	private static final long serialVersionUID = -385597431318350061L;
 	
-	private static final String TAG = "MyActivity";
-	
-	
 	public Panel(Context context) {
 		super(context);
-	    Log.d(TAG,"In Panel");
+	    Log.d(Main.TAG,"In Panel");
 	    
 	}
 	

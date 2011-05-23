@@ -12,7 +12,6 @@ public class ObjectHandler <T extends BaseObject> extends BaseObject {
 	protected FixedSizeArray<T> pendingAdditions;
 	
 	private static final int DEFAULT_CAPACITY = 64;
-	String tag = "ObjectHandler";
 	
 	public ObjectHandler(){
 		super();

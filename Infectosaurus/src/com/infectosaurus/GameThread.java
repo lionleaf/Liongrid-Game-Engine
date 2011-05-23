@@ -19,7 +19,6 @@ public class GameThread extends Thread {
 	private long lastTime = -1;
 	
 	private boolean running = true;
-	private final static String TAG = "GameThread";
 	RenderSystem renderSystem;
 	RenderingThread renderThread;
 
@@ -41,7 +40,7 @@ public class GameThread extends Thread {
     public void run() {
     	renderSystem = BaseObject.gamePointers.renderSystem;
     	renderThread = BaseObject.gamePointers.renderThread;
-    	Log.d(TAG, "Starting GameThread");
+    	Log.d(Main.TAG, "Starting GameThread");
     	while(running){
     		//Make sure we don`t swap queues while renderer is rendering
     		renderThread.waitDrawingComplete();

@@ -10,7 +10,6 @@ import android.util.Log;
  * 
  */
 public abstract class BaseObject {
-	public static final String TAG = "Infectosaurus";
 	public static GamePointers gamePointers;
 	public BaseObject(){
 		//Log.d("GameBoard", "In BaseObject");
