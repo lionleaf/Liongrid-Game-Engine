@@ -10,7 +10,7 @@ import com.infectosaurus.GameObject.Team;
 public class GameObjectHandler extends ObjectHandler<GameObject> {
 	private static final int DEFAULT_CAPACITY = 256;
 	
-	static final int NUMBER_OF_HUMANS = 20;
+	static final int NUMBER_OF_HUMANS = 1;
 	GameObjectHandler(){
 		super(DEFAULT_CAPACITY);
 		Human human;
