@@ -88,7 +88,11 @@ public class DrawableBitmap extends BaseObject implements Drawable {
 			// we need to do it again so the saved textureID will be loaded a second time
 			// the bitmap is drawn.
 			gl.glBindTexture(GL10.GL_TEXTURE_2D, textureID);
-			((GL11Ext) gl).glDrawTexfOES(x*scaleX, y*scaleY, 0, (float) mWidth *scaleX, (float) mHeight*scaleY); 
+			((GL11Ext) gl).glDrawTexfOES(x*scaleX - Camera.pos.x * scaleX, 
+										 y*scaleY - Camera.pos.y * scaleY, 
+										 0, 
+										 (float) mWidth *scaleX, 
+										 (float) mHeight*scaleY); 
 		}
 	}
 

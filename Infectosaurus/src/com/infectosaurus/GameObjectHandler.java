@@ -16,7 +16,7 @@ public class GameObjectHandler extends ObjectHandler<GameObject> {
 		Human human;
 		for (int i = 0; i < NUMBER_OF_HUMANS; i++) {
 			human = new Human();
-			human.pos.set(200,300);
+			human.pos.set(0,0);
 			objects.add(new Human());
 		}
 	}

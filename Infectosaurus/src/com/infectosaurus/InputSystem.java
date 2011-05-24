@@ -18,11 +18,11 @@ public class InputSystem extends SimpleOnGestureListener{
 		return true;
 	}
 	
-//	@Override
-//	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-//		Log.d(Main.TAG, "Scroll event");
-//		Camera.cameraPosition[0] = (int) e2.getX();
-//		Camera.cameraPosition[1] = (int) e2.getY();
-//		return true;
-//	}
+	@Override
+	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+		// Adjust pos.x settings for landscape mode
+		Camera.pos.x = Camera.screenWidth - (int) e1.getX();
+		Camera.pos.y = (int) e1.getY();
+		return true;
+	}
 }
