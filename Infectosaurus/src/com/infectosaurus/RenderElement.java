@@ -2,6 +2,8 @@ package com.infectosaurus;
 
 import java.util.Comparator;
 
+import com.infectosaurus.tools.Vector2;
+
 import android.util.Log;
 
 public class RenderElement extends BaseObject{

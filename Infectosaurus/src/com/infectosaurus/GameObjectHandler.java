@@ -1,6 +1,7 @@
 package com.infectosaurus;
 
 import com.infectosaurus.GameObject.Team;
+import com.infectosaurus.tools.FixedSizeArray;
 
 /**
  * @author Lastis

@@ -1,6 +1,6 @@
 package com.infectosaurus.crowd;
 
-import com.infectosaurus.ObjectPool;
+import com.infectosaurus.tools.ObjectPool;
 
 public class StateList {
 	public static final int LIST_SIZE = 10;

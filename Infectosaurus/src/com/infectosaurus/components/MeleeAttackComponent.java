@@ -3,11 +3,11 @@ package com.infectosaurus.components;
 import android.util.Log;
 
 import com.infectosaurus.BaseObject;
-import com.infectosaurus.FixedSizeArray;
 import com.infectosaurus.GameObject;
 import com.infectosaurus.GameObjectHandler;
 import com.infectosaurus.GameObject.Team;
 import com.infectosaurus.effects.DamageEffect;
+import com.infectosaurus.tools.FixedSizeArray;
 
 
 public class MeleeAttackComponent extends Component {

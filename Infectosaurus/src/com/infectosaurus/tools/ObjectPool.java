@@ -1,4 +1,7 @@
-package com.infectosaurus;
+package com.infectosaurus.tools;
+
+import com.infectosaurus.BaseObject;
+import com.infectosaurus.Main;
 
 import android.util.Log;
 

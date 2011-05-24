@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
-package com.infectosaurus;
+package com.infectosaurus.tools;
 
 import java.util.Arrays;
 import java.util.Comparator;
+
+import com.infectosaurus.Main;
 
 import android.util.Log;
 

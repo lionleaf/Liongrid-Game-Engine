@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.infectosaurus.components.Component;
 import com.infectosaurus.effects.Effect;
+import com.infectosaurus.tools.FixedSizeArray;
+import com.infectosaurus.tools.Vector2;
 
 /**
  * @author Lionleaf

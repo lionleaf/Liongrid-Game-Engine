@@ -1,5 +1,9 @@
 package com.infectosaurus;
 
+import com.infectosaurus.tools.FixedSizeArray;
+import com.infectosaurus.tools.ObjectPool;
+import com.infectosaurus.tools.Vector2;
+
 import android.util.Log;
 
 

@@ -5,8 +5,8 @@ import android.util.Log;
 import com.infectosaurus.BaseObject;
 import com.infectosaurus.Drawable;
 import com.infectosaurus.GameObject;
-import com.infectosaurus.Vector2;
 import com.infectosaurus.map.Level;
+import com.infectosaurus.tools.Vector2;
 
 public class SpriteComponent extends Component {
 	Drawable drawing;

@@ -19,7 +19,7 @@ import com.infectosaurus.BaseObject;
 import com.infectosaurus.GamePointers;
 import com.infectosaurus.MovementType;
 import com.infectosaurus.Panel;
-import com.infectosaurus.Vector2Int;
+import com.infectosaurus.tools.Vector2Int;
 
 public class Level {
 

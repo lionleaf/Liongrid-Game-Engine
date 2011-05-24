@@ -1,9 +1,9 @@
 package com.infectosaurus.crowd.behaviorfunctions;
 
 import com.infectosaurus.BaseObject;
-import com.infectosaurus.FixedSizeArray;
 import com.infectosaurus.crowd.State;
 import com.infectosaurus.crowd.StateList;
+import com.infectosaurus.tools.FixedSizeArray;
 
 /**
  * @author lastis

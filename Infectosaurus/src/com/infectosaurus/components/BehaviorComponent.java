@@ -3,13 +3,13 @@ package com.infectosaurus.components;
 import java.util.Random;
 
 import com.infectosaurus.BaseObject;
-import com.infectosaurus.FixedSizeArray;
 import com.infectosaurus.GameObject;
 import com.infectosaurus.crowd.State;
 import com.infectosaurus.crowd.StateList;
 import com.infectosaurus.crowd.behaviorfunctions.AvoidEdgeBehaviour;
 import com.infectosaurus.crowd.behaviorfunctions.BehaviorFunction;
 import com.infectosaurus.crowd.behaviorfunctions.InfectoFrightBehavior;
+import com.infectosaurus.tools.FixedSizeArray;
 
 /**
  * @author lastis

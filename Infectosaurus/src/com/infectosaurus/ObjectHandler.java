@@ -1,5 +1,7 @@
 package com.infectosaurus;
 
+import com.infectosaurus.tools.FixedSizeArray;
+
 public class ObjectHandler <T extends BaseObject> extends BaseObject {
 	protected FixedSizeArray<T> objects;
 	

@@ -17,7 +17,7 @@
  * CHANGED
  */
 
-package com.infectosaurus;
+package com.infectosaurus.tools;
 
 /**
  * Simple 2D vector class.  Handles basic vector math for 2D vectors.

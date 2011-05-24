@@ -1,9 +1,9 @@
 package com.infectosaurus.crowd.behaviorfunctions;
 
 import com.infectosaurus.Infectosaurus;
-import com.infectosaurus.Vector2;
 import com.infectosaurus.crowd.State;
 import com.infectosaurus.crowd.StateList;
+import com.infectosaurus.tools.Vector2;
 
 public class InfectoFrightBehavior extends BehaviorFunction {
 	Infectosaurus inf = null;

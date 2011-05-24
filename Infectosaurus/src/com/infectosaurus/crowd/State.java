@@ -3,9 +3,9 @@ package com.infectosaurus.crowd;
 import android.util.Log;
 
 import com.infectosaurus.BaseObject;
-import com.infectosaurus.FixedSizeArray;
 import com.infectosaurus.GameObject;
-import com.infectosaurus.Vector2;
+import com.infectosaurus.tools.FixedSizeArray;
+import com.infectosaurus.tools.Vector2;
 
 /**
  * 

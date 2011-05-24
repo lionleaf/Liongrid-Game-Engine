@@ -1,4 +1,5 @@
-package com.infectosaurus;
+package com.infectosaurus.tools;
+
 
 public class Vector2Int {
 	    public int x;

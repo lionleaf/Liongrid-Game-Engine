@@ -5,6 +5,7 @@ import javax.microedition.khronos.opengles.GL10;
 
 import com.infectosaurus.map.Level;
 import com.infectosaurus.map.TileType;
+import com.infectosaurus.tools.FixedSizeArray;
 
 import android.opengl.GLU;
 import android.util.Log;
@@ -17,7 +18,7 @@ public class RenderingThread implements Panel.Renderer {
     private ObjectHandler drawQueue;
 	private Object drawLock;
 	private boolean drawQueueChanged;
-	public static final float SCALE = 1.3f; 
+	public static final float SCALE = 1f; 
     
  
     public RenderingThread() {
