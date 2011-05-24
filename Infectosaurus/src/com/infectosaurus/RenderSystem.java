@@ -43,22 +43,6 @@ public class RenderSystem {
     	renderQueues[queueIndex].add(element);
     }
     
-    public void scheduleForBGDraw(Drawable object, int x, int y) {
-    	RenderElement element = rElementPool.allocate();
-        if(element == null) return;
-        //Check if element is outside the screen view
-        if(x < Camera.pos.x) return;
-    	if(x > Camera.pos.x + Camera.screenWidth) return;
-        if(y < Camera.pos.y) return;
-    	if(y > Camera.pos.y + Camera.screenHeight) return;
-    	//Since this is done a lot, we want max speed, so we change
-        //the public variables instead of calling set
-        element.drawable = object;
-        element.x = x;
-        element.y = y;  
-    	
-    }
-    
     public void swap(RenderingThread renderer) {
         renderQueues[queueIndex].commitUpdates();
 

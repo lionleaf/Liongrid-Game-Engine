@@ -54,10 +54,17 @@ public class RenderingThread implements Panel.Renderer {
 				
 				for (int i = 0; i < bgTiles.length; i++) {
 					for (int j = 0; j < bgTiles[i].length; j++) {
-						//TODO camera code here!
+						
 						int x = (int) (level.TILE_SIZE*i*SCALE);
 						int y = (int) (level.TILE_SIZE*j*SCALE);
-						bgTiles[i][j].draw(gl, x, y, SCALE, SCALE);
+						//Check if element is outside the screen view
+				        if(x < Camera.pos.x) continue;
+				    	if(x > Camera.pos.x + Camera.screenWidth) continue;
+				        if(y < Camera.pos.y) continue;
+				    	if(y > Camera.pos.y + Camera.screenHeight) continue;
+				    	
+						bgTiles[i][j].draw(gl, x - Camera.pos.x
+								, y - Camera.pos.y, SCALE, SCALE);
 					}
 				}
 			}
@@ -77,7 +84,11 @@ public class RenderingThread implements Panel.Renderer {
 								"Last count was " + count + " Now it is "+ objects.getCount());
 						continue;
 					}
-					elem.drawable.draw(gl, elem.x, elem.y, SCALE, SCALE);
+					elem.drawable.draw(gl, 
+									   elem.x - Camera.pos.x, 
+									   elem.y - Camera.pos.y, 
+									   SCALE, 
+									   SCALE);
 				}
 			}
 			DrawableBitmap.endDrawing(gl);

@@ -21,10 +21,6 @@ import com.infectosaurus.MovementType;
 import com.infectosaurus.Panel;
 import com.infectosaurus.Vector2Int;
 
-/**
- * 
- *
- */
 public class Level {
 
 	public Tile[][] tiles;
@@ -36,14 +32,8 @@ public class Level {
 
 	private static final Random rand = new Random();
 
-
-	private int cameraPosX = 0;
-	private int cameraPosY = 0;
-
-
 	private Vector2Int mapSize;
 	private Vector2Int[] pathNodes;
-
 
 	
 	/**
@@ -81,7 +71,6 @@ public class Level {
 	}
 
 	private void generateTestTiles(){
-
 		mapSize.x = 8;
 		mapSize.y = 12;
 		tiles = new Tile[mapSize.x][mapSize.y];
@@ -91,6 +80,7 @@ public class Level {
 			}
 		}
 	}
+	
 	private void loadTilesFromFile(int res) {
 
 		Panel panel = BaseObject.gamePointers.panel;
@@ -165,6 +155,4 @@ public class Level {
 			}
 		}
 	}
-
-
 }
