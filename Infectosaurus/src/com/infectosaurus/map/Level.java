@@ -27,12 +27,13 @@ public class Level {
 	public TileType[][] renderQueue;
 	public static final int TILE_SIZE = 32;
 	public static final int BLOCK_SIZE = TILE_SIZE/2;
-
 	static final int NODE_DENSITY = 2;
+
+	public static Vector2Int mapSizePx = new Vector2Int();
 
 	private static final Random rand = new Random();
 
-	private Vector2Int mapSize;
+	private static Vector2Int mapSize;
 	private Vector2Int[] pathNodes;
 
 	
@@ -99,7 +100,9 @@ public class Level {
 			//mapSize.x = byteArrayToInt(workspaceBytes);
 			int id = reader.read(); //The version of the file
 			mapSize.x = reader.read();
-			mapSize.y = reader.read(); 
+			mapSizePx.x = mapSize.x * TILE_SIZE;
+			mapSize.y = reader.read();
+			mapSizePx.y = mapSize.y * TILE_SIZE;
 			
 			
 			Log.d(Main.TAG, mapSize.toString());
