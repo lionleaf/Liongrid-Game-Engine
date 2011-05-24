@@ -16,7 +16,7 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback,
 	Serializable{
 
 	private static final long serialVersionUID = -385597431318350061L;
-	private GestureDetector gestureDetector;
+
 	
 	public Panel(Context context) {
 		super(context);
@@ -29,8 +29,6 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback,
         // underlying surface is created and destroyed
 	    getHolder().addCallback(this);
 	    getHolder().setType(SurfaceHolder.SURFACE_TYPE_GPU);
-	    
-	    gestureDetector = new GestureDetector(new InputSystem());
 	    
 	    GamePointers gamePointers = new GamePointers();
 	    BaseObject.gamePointers = gamePointers;
@@ -54,15 +52,15 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback,
 	    setRenderer(BaseObject.gamePointers.renderThread);
 	}
 	
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-		// Gesture detection
-        if (gestureDetector.onTouchEvent(event)) {
-            return false;
-        }
-		BaseObject.gamePointers.gameThread.registerScreenTouch(event);
-		return false;
-	}
+//	@Override
+//	public boolean onTouchEvent(MotionEvent event) {
+//		// Gesture detection
+//        if (gestureDetector.onTouchEvent(event)) {
+//            return true;
+//        }
+//		BaseObject.gamePointers.gameThread.registerScreenTouch(event);
+//		return false;
+//	}
 	
 	
 	@Override
