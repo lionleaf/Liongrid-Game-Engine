@@ -13,6 +13,7 @@ import java.util.Scanner;
 import android.content.res.AssetManager;
 import android.util.Log;
 
+import com.infectosaurus.Main;
 import com.infectosaurus.R;
 import com.infectosaurus.BaseObject;
 import com.infectosaurus.GamePointers;
@@ -111,7 +112,7 @@ public class Level {
 			mapSize.y = reader.read(); 
 			
 			
-			Log.d("TAG", mapSize.toString());
+			Log.d(Main.TAG, mapSize.toString());
 			tiles = new Tile[mapSize.x][mapSize.y];
 
 			for (int i = 0; i < mapSize.x; i++) {

@@ -73,7 +73,4 @@ public class GameBoard extends Activity{
 		super.onResume();
 		panel.onResume();
 	}
-
-
-
 }

@@ -15,7 +15,6 @@ public class InputSystem extends SimpleOnGestureListener{
 	@Override
 	public boolean onDown(MotionEvent e) {
 		// This must be here for the gesture listener to work!!!!!
-		// TODO Auto-generated method stub
 		return true;
 	}
 	

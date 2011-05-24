@@ -249,7 +249,7 @@ public class FixedSizeArray<T> {
            if (mComparator != null) {
                mSorter.sort(mContents, mCount, mComparator);
            } else {
-               Log.d("FixedSizeArray", "No comparator specified for this type, using Arrays.sort().");
+               Log.d(Main.TAG, "No comparator specified for this type, using Arrays.sort().");
                
                Arrays.sort(mContents, 0, mCount);
            }

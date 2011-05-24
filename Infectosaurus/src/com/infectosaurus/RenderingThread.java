@@ -73,7 +73,7 @@ public class RenderingThread implements Panel.Renderer {
 					RenderElement elem = (RenderElement)elems[i];
 					
 					if(elems[i] == null){ 
-						Log.d("RENDER", "elem in drawBGQueue is " + elem + 
+						Log.d(Main.TAG, "elem in drawBGQueue is " + elem + 
 								"Last count was " + count + " Now it is "+ objects.getCount());
 						continue;
 					}
