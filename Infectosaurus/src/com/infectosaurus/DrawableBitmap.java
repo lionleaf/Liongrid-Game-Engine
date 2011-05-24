@@ -46,10 +46,13 @@ public class DrawableBitmap extends BaseObject implements Drawable {
      * @param viewHeight - Height
      */
     public static void beginDrawing(GL10 gl, float viewWidth, float viewHeight) {
+    	gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
     	gl.glShadeModel(GL10.GL_FLAT);
         gl.glEnable(GL10.GL_BLEND);
         gl.glBlendFunc(GL10.GL_ONE, GL10.GL_ONE_MINUS_SRC_ALPHA);
         gl.glColor4x(0x10000, 0x10000, 0x10000, 0x10000);
+        
+        gl.glPushMatrix();
 
         gl.glMatrixMode(GL10.GL_PROJECTION);
         gl.glPushMatrix();
