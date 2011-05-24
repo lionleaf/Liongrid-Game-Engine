@@ -2,6 +2,8 @@ package com.infectosaurus;
 
 import java.io.Serializable;
 
+import com.infectosaurus.map.Level;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,7 +30,7 @@ public class GameBoard extends Activity{
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		Log.d(Main.TAG,"In GameBoards onCreate");
 
-		setScreenDimensions();
+		setScreenDimensionsAndScale();
 
 		panel = new Panel(this);
 		panel.init(); 
@@ -41,7 +43,6 @@ public class GameBoard extends Activity{
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-
 	}
 	
 	@Override
@@ -53,13 +54,13 @@ public class GameBoard extends Activity{
         return false;
 	}
 
-	private void setScreenDimensions() {
+	private void setScreenDimensionsAndScale() {
 		Display display = getWindowManager().getDefaultDisplay(); 
 		/* Now we can retrieve all display-related infos */
 		Camera.screenWidth = display.getWidth();
-		Camera.screenHeight = display.getHeight();	
-
-		Log.d(Main.TAG, "Height = " + Camera.screenHeight);
+		Camera.screenHeight = display.getHeight();
+		// 5 tiles width is the screen dimension 
+		Camera.scale = Camera.screenWidth/(5*Level.TILE_SIZE);
 	}
 
 	@Override

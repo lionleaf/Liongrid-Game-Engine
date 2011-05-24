@@ -18,7 +18,6 @@ public class RenderingThread implements Panel.Renderer {
     private ObjectHandler drawQueue;
 	private Object drawLock;
 	private boolean drawQueueChanged;
-	public static final float SCALE = 1f; 
     
  
     public RenderingThread() {
@@ -65,7 +64,7 @@ public class RenderingThread implements Panel.Renderer {
 				    	if(y > Camera.pos.y + Camera.screenHeight) continue;
 				    	
 						bgTiles[i][j].draw(gl, x - Camera.pos.x
-								, y - Camera.pos.y, SCALE, SCALE);
+								, y - Camera.pos.y, Camera.scale, Camera.scale);
 					}
 				}
 			}
@@ -88,8 +87,8 @@ public class RenderingThread implements Panel.Renderer {
 					elem.drawable.draw(gl, 
 									   elem.x - Camera.pos.x, 
 									   elem.y - Camera.pos.y, 
-									   SCALE, 
-									   SCALE);
+									   Camera.scale, 
+									   Camera.scale);
 				}
 			}
 			DrawableBitmap.endDrawing(gl);
