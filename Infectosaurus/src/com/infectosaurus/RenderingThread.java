@@ -17,7 +17,7 @@ public class RenderingThread implements Panel.Renderer {
     private ObjectHandler drawQueue;
 	private Object drawLock;
 	private boolean drawQueueChanged;
-	private static final float SCALE = 1f; 
+	public static final float SCALE = 1.3f; 
     
  
     public RenderingThread() {
@@ -55,12 +55,12 @@ public class RenderingThread implements Panel.Renderer {
 				for (int i = 0; i < bgTiles.length; i++) {
 					for (int j = 0; j < bgTiles[i].length; j++) {
 						
-						int x = (int) (level.TILE_SIZE*i*SCALE);
-						int y = (int) (level.TILE_SIZE*j*SCALE);
+						int x = level.TILE_SIZE*i;
+						int y = level.TILE_SIZE*j;
 						//Check if element is outside the screen view
-				        if(x < Camera.pos.x) continue;
+				        if(x + level.TILE_SIZE < Camera.pos.x) continue;
 				    	if(x > Camera.pos.x + Camera.screenWidth) continue;
-				        if(y < Camera.pos.y) continue;
+				        if(y + level.TILE_SIZE < Camera.pos.y) continue;
 				    	if(y > Camera.pos.y + Camera.screenHeight) continue;
 				    	
 						bgTiles[i][j].draw(gl, x - Camera.pos.x

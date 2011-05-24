@@ -103,11 +103,12 @@ public class GameThread extends Thread {
 				BaseObject.gamePointers.gameObjectHandler.add(inf);
 			}
 			
-			float y = BaseObject.gamePointers.panel.getHeight()-event.getY();
-			BaseObject.gamePointers.currentSaurus.pos.set(event.getX() + Camera.pos.x, 
-														  y            + Camera.pos.y);
+			float y = (BaseObject.gamePointers.panel.getHeight()-event.getY()) / 
+				RenderingThread.SCALE;
+			float x = event.getX() / RenderingThread.SCALE;
+			BaseObject.gamePointers.currentSaurus.pos.set(x + Camera.pos.x, 
+														  y + Camera.pos.y);
 		}
-		
 	}
 
 	public synchronized void onPause() {

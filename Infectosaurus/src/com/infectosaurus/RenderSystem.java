@@ -29,9 +29,9 @@ public class RenderSystem {
     public void scheduleForDraw(Drawable object, Vector2 pos) {
         RenderElement element = rElementPool.allocate();
         if(element == null) return;
-        if(pos.x < Camera.pos.x) return;
+        if(pos.x + object.getWidth() < Camera.pos.x) return;
     	if(pos.x > Camera.pos.x + Camera.screenWidth) return;
-        if(pos.y < Camera.pos.y) return;
+        if(pos.y + object.getHeight() < Camera.pos.y) return;
     	if(pos.y > Camera.pos.y + Camera.screenHeight) return;
         
         
