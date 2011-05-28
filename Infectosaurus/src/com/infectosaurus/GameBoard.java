@@ -29,11 +29,16 @@ public class GameBoard extends Activity{
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		Log.d(Main.TAG,"In GameBoards onCreate");
-
+		
 		setScreenDimensionsAndScale();
 
 		panel = new Panel(this);
-		panel.init(); 
+		if(savedInstanceState == null){
+			panel.init(); 
+		}else{
+			BaseObject.gamePointers = (GamePointers)
+				savedInstanceState.getSerializable("GamePointers");
+		}
 		panel.startGame();
 
 		setContentView(panel);
@@ -43,6 +48,8 @@ public class GameBoard extends Activity{
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
+		outState.putSerializable("GamePointers", (Serializable) BaseObject.gamePointers);
+		
 	}
 	
 	@Override
@@ -66,12 +73,15 @@ public class GameBoard extends Activity{
 	@Override
 	protected void onPause(){
 		super.onPause();
+		Log.d("Infectosaurus", "onPause()");
+		
 		panel.onPause();
 	}
 
 	@Override
 	protected void onResume(){
 		super.onResume();
+		Log.d("Infectosaurus", "onResume()");
 		panel.onResume();
 	}
 }

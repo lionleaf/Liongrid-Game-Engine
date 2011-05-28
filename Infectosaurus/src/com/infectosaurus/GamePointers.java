@@ -1,5 +1,7 @@
 package com.infectosaurus;
 
+import java.io.Serializable;
+
 import com.infectosaurus.map.Level;
 import com.infectosaurus.map.TileSet;
 
@@ -9,7 +11,7 @@ import com.infectosaurus.map.TileSet;
  * objects in the game. The current object of this class can be 
  * accessed through the static field BaseObject.gamePointers
  */
-public class GamePointers {
+public class GamePointers implements Serializable {
 	public GameThread gameThread;
 	public GameObjectHandler gameObjectHandler;
 	public ObjectHandler root;
