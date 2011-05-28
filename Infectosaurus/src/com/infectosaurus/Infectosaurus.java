@@ -20,7 +20,7 @@ public class Infectosaurus extends GameObject {
 		addComponent(new MeleeAttackComponent());
 		
 		DrawableBitmap db = new DrawableBitmap(
-				R.drawable.lumberinghulklo,50,50,panel.getContext());
+				R.drawable.lumberinghulklo,16,16,panel.getContext());
 		addComponent(new AggressivMoveComponent());
 		addComponent(new SpriteComponent(db));
 		addComponent(new MoveComponent());

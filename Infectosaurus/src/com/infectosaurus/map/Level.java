@@ -13,6 +13,7 @@ import java.util.Scanner;
 import android.content.res.AssetManager;
 import android.util.Log;
 
+import com.infectosaurus.Camera;
 import com.infectosaurus.Main;
 import com.infectosaurus.R;
 import com.infectosaurus.BaseObject;
@@ -103,7 +104,6 @@ public class Level {
 			mapSizePx.x = mapSize.x * TILE_SIZE;
 			mapSize.y = reader.read();
 			mapSizePx.y = mapSize.y * TILE_SIZE;
-			
 			
 			Log.d(Main.TAG, mapSize.toString());
 			tiles = new Tile[mapSize.x][mapSize.y];
