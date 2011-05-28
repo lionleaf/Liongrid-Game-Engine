@@ -67,8 +67,7 @@ public class GameBoard extends Activity{
 		Camera.screenWidth = display.getWidth();
 		Camera.screenHeight = display.getHeight();
 		// Always make room for 10 tiles along the x axis in landscape mode
-		Camera.scale = Camera.screenHeight/((float)4*Level.TILE_SIZE);
-		Camera.scale = 0.7f;
+		Camera.scale = Camera.screenHeight/((float)Camera.TILES_PER_WIDTH*Level.TILE_SIZE);
 	}
 
 	@Override
@@ -82,7 +81,7 @@ public class GameBoard extends Activity{
 	@Override
 	protected void onResume(){
 		super.onResume();
-		Log.d("Infectosaurus", "onResume()");
+		Log.d("Infectosaurus", "onResume()"); 
 		panel.onResume();
 	}
 }

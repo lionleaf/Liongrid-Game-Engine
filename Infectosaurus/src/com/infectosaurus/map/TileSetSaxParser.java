@@ -80,7 +80,7 @@ public class TileSetSaxParser extends DefaultHandler {
 	
 	private int getResId(String variableName, Class<?> c) {
 	    try {
-	        Field idField = c.getDeclaredField(variableName);
+	        Field idField = c.getDeclaredField(variableName.toLowerCase());
 	        return idField.getInt(idField);
 	    } catch (Exception e) {
 	        e.printStackTrace();

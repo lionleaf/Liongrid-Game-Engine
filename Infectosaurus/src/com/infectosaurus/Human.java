@@ -16,7 +16,7 @@ public class Human extends GameObject{
 		Panel panel = BaseObject.gamePointers.panel;
 		
 		DrawableBitmap db = new DrawableBitmap(
-				R.drawable.mann1, 16, 16,panel.getContext());
+				R.drawable.mann1, 16*3, 16*3,panel.getContext());
 		addComponent(new SpriteComponent(db)); 
 		addComponent(new BehaviorComponent());
 		

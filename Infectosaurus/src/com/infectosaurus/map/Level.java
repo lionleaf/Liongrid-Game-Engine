@@ -69,7 +69,7 @@ public class Level {
 	}
 
 	private void loadTiles() {
-		loadTilesFromFile(R.raw.test);
+		loadTilesFromFile(R.raw.road);
 	}
 
 	private void generateTestTiles(){
