@@ -30,7 +30,7 @@ public class GameThread extends Thread {
 	private static final int MIN_UPDATE_MS = 12; 
 	private static final float MAX_TIMESTEP = 0.1f; //seconds
 	
-	private volatile boolean paused = false;
+	private volatile boolean paused = true;
 	
 	
 	
