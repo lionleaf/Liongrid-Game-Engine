@@ -23,14 +23,14 @@ public class InputSystem extends SimpleOnGestureListener{
 			float distanceX, float distanceY) {
 		// Adjust pos.x settings for landscape mode
 		Camera.pos.x += (int) distanceX / Camera.scale;
-		if(Camera.pos.x + Camera.screenHeight > Level.mapSizePx.x * Camera.scale) 
-			Camera.pos.x = (int) (Level.mapSizePx.x*Camera.scale - Camera.screenHeight);
-		if(Camera.pos.x < 0) Camera.pos.x = 0;
+		if(Camera.pos.x + Camera.screenHeight/Camera.scale > Level.mapSizePx.x ) 
+			Camera.pos.x = (int) (Level.mapSizePx.x - Camera.screenHeight/Camera.scale);
+		if(Camera.pos.x  < 0) Camera.pos.x = 0;
 		
 		Camera.pos.y -= (int) distanceY / Camera.scale;
-		if(Camera.pos.y + Camera.screenWidth > Level.mapSizePx.y * Camera.scale) 
-			Camera.pos.y = (int) (Level.mapSizePx.y * Camera.scale - Camera.screenWidth);
-		if(Camera.pos.y < 0) Camera.pos.y = 0;
+		if(Camera.pos.y  + Camera.screenWidth/Camera.scale > Level.mapSizePx.y) 
+			Camera.pos.y = (Level.mapSizePx.y) - (int) (Camera.screenWidth/Camera.scale);
+		if(Camera.pos.y  < 0) Camera.pos.y = 0;
 		return true;
 	}
 }
