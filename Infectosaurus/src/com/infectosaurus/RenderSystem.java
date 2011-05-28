@@ -31,12 +31,12 @@ public class RenderSystem {
     }
     
     public void scheduleForDraw(Drawable object, Vector2 pos) {
-        RenderElement element = rElementPool.allocate();
+    	
+    	if(cull(object, pos)) return;
+    	
+    	RenderElement element = rElementPool.allocate();
         if(element == null) return;
-        if(pos.x + object.getWidth() < Camera.pos.x) return;
-    	if(pos.x > Camera.pos.x + Camera.screenWidth) return;
-        if(pos.y + object.getHeight() < Camera.pos.y) return;
-    	if(pos.y > Camera.pos.y + Camera.screenHeight) return;
+        
         
         
         //Since this is done a lot, we want max speed, so we change
@@ -45,6 +45,16 @@ public class RenderSystem {
         element.x = pos.x;
         element.y = pos.y;   	
     	renderQueues[queueIndex].add(element);
+    }
+    
+    
+    public boolean cull(Drawable object, Vector2 pos){
+    	if(pos.x + object.getWidth() < Camera.pos.x) return true;
+    	if(pos.x * Camera.scale > Camera.pos.x * Camera.scale + Camera.screenWidth) return true;
+        if(pos.y + object.getHeight() < Camera.pos.y) return true;
+    	if(pos.y * Camera.scale > Camera.pos.y * Camera.scale + Camera.screenHeight) return true;
+    	
+    	return false;
     }
     
     public void swap(RenderingThread renderer) {
