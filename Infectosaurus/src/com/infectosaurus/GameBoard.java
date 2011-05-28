@@ -68,6 +68,7 @@ public class GameBoard extends Activity{
 		Camera.screenHeight = display.getHeight();
 		// Always make room for 10 tiles along the x axis in landscape mode
 		Camera.scale = Camera.screenHeight/((float)4*Level.TILE_SIZE);
+		Camera.scale = 0.7f;
 	}
 
 	@Override

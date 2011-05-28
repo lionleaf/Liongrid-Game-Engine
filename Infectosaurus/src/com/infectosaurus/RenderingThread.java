@@ -44,27 +44,39 @@ public class RenderingThread implements Panel.Renderer {
 		synchronized (this) {
 			int mWidth = BaseObject.gamePointers.panel.getWidth();
 			int mHeight= BaseObject.gamePointers.panel.getHeight();
+			
+			//Get current camera state, to avoid different 
+			//camera throughout drawing
+			//TODO We pretty much copy the whole camera.
+			// Different solution? Not static?
+			int cameraX = Camera.pos.x;
+			int cameraY = Camera.pos.y;
+			int cameraHeight = Camera.screenHeight;
+			int cameraWidth = Camera.screenWidth;
+			float scale = Camera.scale;
+			
+			
 			DrawableBitmap.beginDrawing(gl, mWidth, mHeight);
 			
 			//Draw tiles
 			Level level = BaseObject.gamePointers.level;
 			TileType[][] bgTiles = level.renderQueue;
 			
-			if(bgTiles != null && bgTiles.length > 0){
-				
+			if(bgTiles != null && bgTiles.length > 0){		
+				//TODO Do way more efficient!
 				for (int i = 0; i < bgTiles.length; i++) {
 					for (int j = 0; j < bgTiles[i].length; j++) {
 						
-						int x = level.TILE_SIZE*i;
-						int y = level.TILE_SIZE*j;
+						int x = Level.TILE_SIZE*i;
+						int y = Level.TILE_SIZE*j;
 						//Check if element is outside the screen view
-				        if(x + level.TILE_SIZE < Camera.pos.x) continue;
-				    	if(x > Camera.pos.x + Camera.screenWidth) continue;
-				        if(y + level.TILE_SIZE < Camera.pos.y) continue;
-				    	if(y > Camera.pos.y + Camera.screenHeight) continue;
+				        if(x + Level.TILE_SIZE < cameraX) continue;
+				    	if(x > cameraX + cameraWidth) continue;
+				        if(y + Level.TILE_SIZE < cameraY) continue;
+				    	if(y > cameraY + cameraHeight) continue;
 				    	
-						bgTiles[i][j].draw(gl, x - Camera.pos.x
-								, y - Camera.pos.y, Camera.scale, Camera.scale);
+						bgTiles[i][j].draw(gl, x - cameraX
+								, y - cameraY, scale, scale);
 					}
 				}
 			}
@@ -85,10 +97,10 @@ public class RenderingThread implements Panel.Renderer {
 						continue;
 					}
 					elem.drawable.draw(gl, 
-									   elem.x - Camera.pos.x, 
-									   elem.y - Camera.pos.y, 
-									   Camera.scale, 
-									   Camera.scale);
+									   elem.x - cameraX, 
+									   elem.y - cameraY, 
+									   scale, 
+									   scale);
 				}
 			}
 			DrawableBitmap.endDrawing(gl);
