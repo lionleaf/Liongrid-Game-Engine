@@ -22,14 +22,17 @@ public class GameThread extends Thread {
 	private boolean running = true;
 	RenderSystem renderSystem;
 	RenderingThread renderThread;
-
+	
 	private Object updateLock;
 	
 	private static final int MIN_REFRESH_TIME = 16; //ms, 16 gives 60fps
 	//ms, if the dt is lower than this, don't update this cycle
 	private static final int MIN_UPDATE_MS = 12; 
-	
 	private static final float MAX_TIMESTEP = 0.1f; //seconds
+	
+	private volatile boolean paused = false;
+	
+	
 	
     public GameThread() {
     	updateLock = new Object();
@@ -46,7 +49,17 @@ public class GameThread extends Thread {
     		//Make sure we don`t swap queues while renderer is rendering
     		renderThread.waitDrawingComplete();
     		
-    		
+    		synchronized(this){
+    			try {
+					while(paused){
+						wait();
+					}
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+    			
+    		}
     		
     		currentTime = SystemClock.uptimeMillis();
     		
@@ -111,12 +124,14 @@ public class GameThread extends Thread {
 		}
 	}
 
-	public synchronized void onPause() {
-		
-		//TODO
+	public void onPause() {
+		paused = true;
 	}
 	
-	public synchronized void onResume(){
-		//TODO
+	public void onResume(){
+		paused = false;
+		synchronized(this){
+			notifyAll();
+		}
 	}
 }
