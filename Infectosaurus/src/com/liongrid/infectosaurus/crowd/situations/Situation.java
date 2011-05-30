@@ -1,6 +1,6 @@
 package com.liongrid.infectosaurus.crowd.situations;
 
-import com.liongrid.infectosaurus.gameengine.GameObject;
+import com.liongrid.gameengine.GameObject;
 
 public abstract class Situation {
 	Situation(GameObject go) {

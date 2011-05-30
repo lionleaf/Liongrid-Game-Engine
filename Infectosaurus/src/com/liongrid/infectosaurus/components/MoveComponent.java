@@ -2,8 +2,8 @@ package com.liongrid.infectosaurus.components;
 
 import android.util.Log;
 
-import com.liongrid.infectosaurus.gameengine.BaseObject;
-import com.liongrid.infectosaurus.gameengine.GameObject;
+import com.liongrid.gameengine.BaseObject;
+import com.liongrid.gameengine.GameObject;
 
 public class MoveComponent extends Component {
 	

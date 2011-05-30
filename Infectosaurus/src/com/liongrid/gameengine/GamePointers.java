@@ -1,4 +1,4 @@
-package com.liongrid.infectosaurus.gameengine;
+package com.liongrid.gameengine;
 
 import java.io.Serializable;
 

@@ -1,7 +1,7 @@
 package com.liongrid.infectosaurus.effects;
 
-import com.liongrid.infectosaurus.gameengine.BaseObject;
-import com.liongrid.infectosaurus.gameengine.GameObject;
+import com.liongrid.gameengine.BaseObject;
+import com.liongrid.gameengine.GameObject;
 
 public abstract class Effect extends BaseObject{
 	float duration = 0; // 0 means one-time effect

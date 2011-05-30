@@ -2,8 +2,8 @@ package com.liongrid.infectosaurus.map;
 
 import android.content.Context;
 
-import com.liongrid.infectosaurus.gameengine.BaseObject;
-import com.liongrid.infectosaurus.gameengine.DrawableBitmap;
+import com.liongrid.gameengine.BaseObject;
+import com.liongrid.gameengine.DrawableBitmap;
 
 /**
  * Representation of one type of Tile. 

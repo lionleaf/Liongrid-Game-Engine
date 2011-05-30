@@ -1,7 +1,7 @@
 package com.liongrid.infectosaurus.tools;
 
+import com.liongrid.gameengine.BaseObject;
 import com.liongrid.infectosaurus.Main;
-import com.liongrid.infectosaurus.gameengine.BaseObject;
 
 import android.util.Log;
 

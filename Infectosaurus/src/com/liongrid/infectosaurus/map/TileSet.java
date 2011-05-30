@@ -10,9 +10,9 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.SAXException;
 
+import com.liongrid.gameengine.BaseObject;
 import com.liongrid.infectosaurus.R;
 import com.liongrid.infectosaurus.Panel;
-import com.liongrid.infectosaurus.gameengine.BaseObject;
 import com.liongrid.infectosaurus.tools.MovementType;
 
 /**

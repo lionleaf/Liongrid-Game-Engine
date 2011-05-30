@@ -1,4 +1,4 @@
-package com.liongrid.infectosaurus.gameengine;
+package com.liongrid.gameengine;
 
 import com.liongrid.infectosaurus.tools.FixedSizeArray;
 import com.liongrid.infectosaurus.tools.ObjectHandler;

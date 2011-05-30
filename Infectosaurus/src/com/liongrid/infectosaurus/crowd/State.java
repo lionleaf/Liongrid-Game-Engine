@@ -2,8 +2,8 @@ package com.liongrid.infectosaurus.crowd;
 
 import android.util.Log;
 
-import com.liongrid.infectosaurus.gameengine.BaseObject;
-import com.liongrid.infectosaurus.gameengine.GameObject;
+import com.liongrid.gameengine.BaseObject;
+import com.liongrid.gameengine.GameObject;
 import com.liongrid.infectosaurus.tools.FixedSizeArray;
 import com.liongrid.infectosaurus.tools.Vector2;
 

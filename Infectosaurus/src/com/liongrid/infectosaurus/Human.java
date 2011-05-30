@@ -5,14 +5,14 @@ import java.util.Random;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import com.liongrid.gameengine.BaseObject;
+import com.liongrid.gameengine.DrawableBitmap;
+import com.liongrid.gameengine.GameObject;
 import com.liongrid.infectosaurus.R;
 import com.liongrid.infectosaurus.components.BehaviorComponent;
 import com.liongrid.infectosaurus.components.MoveComponent;
 import com.liongrid.infectosaurus.components.RandomWalkerComponent;
 import com.liongrid.infectosaurus.components.SpriteComponent;
-import com.liongrid.infectosaurus.gameengine.BaseObject;
-import com.liongrid.infectosaurus.gameengine.DrawableBitmap;
-import com.liongrid.infectosaurus.gameengine.GameObject;
 
 public class Human extends GameObject{
 	static Random rand = new Random();

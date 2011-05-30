@@ -1,8 +1,8 @@
 package com.liongrid.infectosaurus.tools;
 
+import com.liongrid.gameengine.GameObject;
+import com.liongrid.gameengine.GameObject.Team;
 import com.liongrid.infectosaurus.Human;
-import com.liongrid.infectosaurus.gameengine.GameObject;
-import com.liongrid.infectosaurus.gameengine.GameObject.Team;
 
 /**
  * @author Lastis

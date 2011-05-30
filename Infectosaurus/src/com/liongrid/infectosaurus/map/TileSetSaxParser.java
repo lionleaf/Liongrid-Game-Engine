@@ -6,8 +6,8 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import com.liongrid.gameengine.BaseObject;
 import com.liongrid.infectosaurus.R;
-import com.liongrid.infectosaurus.gameengine.BaseObject;
 
 public class TileSetSaxParser extends DefaultHandler {
 	

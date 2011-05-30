@@ -13,12 +13,12 @@ import java.util.Scanner;
 import android.content.res.AssetManager;
 import android.util.Log;
 
+import com.liongrid.gameengine.BaseObject;
+import com.liongrid.gameengine.Camera;
+import com.liongrid.gameengine.GamePointers;
 import com.liongrid.infectosaurus.R;
 import com.liongrid.infectosaurus.Main;
 import com.liongrid.infectosaurus.Panel;
-import com.liongrid.infectosaurus.gameengine.BaseObject;
-import com.liongrid.infectosaurus.gameengine.Camera;
-import com.liongrid.infectosaurus.gameengine.GamePointers;
 import com.liongrid.infectosaurus.tools.MovementType;
 import com.liongrid.infectosaurus.tools.Vector2Int;
 

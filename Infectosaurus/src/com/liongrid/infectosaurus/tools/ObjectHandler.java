@@ -1,6 +1,6 @@
 package com.liongrid.infectosaurus.tools;
 
-import com.liongrid.infectosaurus.gameengine.BaseObject;
+import com.liongrid.gameengine.BaseObject;
 
 public class ObjectHandler <T extends BaseObject> extends BaseObject {
 	public FixedSizeArray<T> objects;

@@ -1,7 +1,7 @@
 package com.liongrid.infectosaurus.components;
 
-import com.liongrid.infectosaurus.gameengine.BaseObject;
-import com.liongrid.infectosaurus.gameengine.GameObject;
+import com.liongrid.gameengine.BaseObject;
+import com.liongrid.gameengine.GameObject;
 import com.liongrid.infectosaurus.tools.GameObjectHandler;
 
 public class AggressivMoveComponent extends Component{

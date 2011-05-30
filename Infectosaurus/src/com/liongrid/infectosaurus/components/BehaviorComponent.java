@@ -2,13 +2,13 @@ package com.liongrid.infectosaurus.components;
 
 import java.util.Random;
 
+import com.liongrid.gameengine.BaseObject;
+import com.liongrid.gameengine.GameObject;
 import com.liongrid.infectosaurus.crowd.State;
 import com.liongrid.infectosaurus.crowd.StateList;
 import com.liongrid.infectosaurus.crowd.behaviorfunctions.AvoidEdgeBehaviour;
 import com.liongrid.infectosaurus.crowd.behaviorfunctions.BehaviorFunction;
 import com.liongrid.infectosaurus.crowd.behaviorfunctions.InfectoFrightBehavior;
-import com.liongrid.infectosaurus.gameengine.BaseObject;
-import com.liongrid.infectosaurus.gameengine.GameObject;
 import com.liongrid.infectosaurus.tools.FixedSizeArray;
 
 /**

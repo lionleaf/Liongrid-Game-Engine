@@ -1,4 +1,4 @@
-package com.liongrid.infectosaurus.gameengine;
+package com.liongrid.gameengine;
 
 public class Texture {
 	public int resource;

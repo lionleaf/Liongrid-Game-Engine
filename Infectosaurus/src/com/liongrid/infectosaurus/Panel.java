@@ -2,11 +2,11 @@ package com.liongrid.infectosaurus;
 
 import java.io.Serializable;
 
-import com.liongrid.infectosaurus.gameengine.BaseObject;
-import com.liongrid.infectosaurus.gameengine.GamePointers;
-import com.liongrid.infectosaurus.gameengine.GameThread;
-import com.liongrid.infectosaurus.gameengine.RenderSystem;
-import com.liongrid.infectosaurus.gameengine.RenderingThread;
+import com.liongrid.gameengine.BaseObject;
+import com.liongrid.gameengine.GamePointers;
+import com.liongrid.gameengine.GameThread;
+import com.liongrid.gameengine.RenderSystem;
+import com.liongrid.gameengine.RenderingThread;
 import com.liongrid.infectosaurus.map.Level;
 import com.liongrid.infectosaurus.map.TileSet;
 import com.liongrid.infectosaurus.tools.GameObjectHandler;

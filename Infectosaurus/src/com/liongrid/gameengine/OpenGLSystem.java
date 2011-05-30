@@ -1,4 +1,4 @@
-package com.liongrid.infectosaurus.gameengine;
+package com.liongrid.gameengine;
 
 import javax.microedition.khronos.opengles.GL10;
 

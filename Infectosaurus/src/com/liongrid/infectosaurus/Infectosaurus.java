@@ -1,14 +1,14 @@
 package com.liongrid.infectosaurus;
 
+import com.liongrid.gameengine.BaseObject;
+import com.liongrid.gameengine.DrawableBitmap;
+import com.liongrid.gameengine.GameObject;
 import com.liongrid.infectosaurus.R;
 import com.liongrid.infectosaurus.components.AggressivMoveComponent;
 import com.liongrid.infectosaurus.components.MeleeAttackComponent;
 import com.liongrid.infectosaurus.components.MoveComponent;
 import com.liongrid.infectosaurus.components.RandomWalkerComponent;
 import com.liongrid.infectosaurus.components.SpriteComponent;
-import com.liongrid.infectosaurus.gameengine.BaseObject;
-import com.liongrid.infectosaurus.gameengine.DrawableBitmap;
-import com.liongrid.infectosaurus.gameengine.GameObject;
 
 
 import android.content.Context;
