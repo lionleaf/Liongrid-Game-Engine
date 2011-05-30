@@ -42,7 +42,6 @@ public class GameBoard extends Activity{
 				//savedInstanceState.getSerializable("GamePointers");
 		}
 		panel.startGame();
-
 		setContentView(panel);
 
 	}
@@ -64,11 +63,11 @@ public class GameBoard extends Activity{
 	}
 
 	private void setScreenDimensionsAndScale() {
+		
 		Display display = getWindowManager().getDefaultDisplay(); 
 		/* Now we can retrieve all display-related infos */
-		Camera.screenWidth = display.getWidth();
 		Camera.screenHeight = display.getHeight();
-		// Always make room for 10 tiles along the x axis in landscape mode
+		Camera.screenWidth = display.getWidth();
 		Camera.scale = Camera.screenHeight/((float)Camera.TILES_PER_WIDTH*Level.TILE_SIZE);
 	}
 

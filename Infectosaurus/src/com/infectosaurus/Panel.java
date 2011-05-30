@@ -52,16 +52,6 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback,
 	    setRenderer(BaseObject.gamePointers.renderThread);
 	}
 	
-//	@Override
-//	public boolean onTouchEvent(MotionEvent event) {
-//		// Gesture detection
-//        if (gestureDetector.onTouchEvent(event)) {
-//            return true;
-//        }
-//		BaseObject.gamePointers.gameThread.registerScreenTouch(event);
-//		return false;
-//	}
-	
 	
 	@Override
 	public void onPause() {

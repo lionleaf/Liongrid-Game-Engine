@@ -50,10 +50,7 @@ public class DrawableBitmap extends BaseObject implements Drawable {
     	gl.glShadeModel(GL10.GL_FLAT);
         gl.glEnable(GL10.GL_BLEND);
         gl.glBlendFunc(GL10.GL_ONE, GL10.GL_ONE_MINUS_SRC_ALPHA);
-        gl.glColor4x(0x10000, 0x10000, 0x10000, 0x10000);
-        
         gl.glPushMatrix();
-
         gl.glMatrixMode(GL10.GL_PROJECTION);
         gl.glPushMatrix();
         gl.glLoadIdentity();
@@ -61,8 +58,9 @@ public class DrawableBitmap extends BaseObject implements Drawable {
         gl.glMatrixMode(GL10.GL_MODELVIEW);
         gl.glPushMatrix();
         gl.glLoadIdentity();
-       
         gl.glEnable(GL10.GL_TEXTURE_2D);
+
+        
     }
 	
     
@@ -92,7 +90,7 @@ public class DrawableBitmap extends BaseObject implements Drawable {
 			// the bitmap is drawn.
 			gl.glBindTexture(GL10.GL_TEXTURE_2D, textureID);
 			((GL11Ext) gl).glDrawTexfOES(Math.round(x*scaleX), 
-										Math.round(y*scaleY), 
+										 Math.round(y*scaleY), 
 										 0, 
 										 (float) mWidth *scaleX, 
 										 (float) mHeight*scaleY); 
@@ -100,6 +98,7 @@ public class DrawableBitmap extends BaseObject implements Drawable {
 	}
 
 
+	
 
 	private void loadGLTextures(GL10 gl) {
 //		Log.d(TAG, "Loading texture");

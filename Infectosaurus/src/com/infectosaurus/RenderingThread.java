@@ -51,8 +51,8 @@ public class RenderingThread implements Panel.Renderer {
 			// Different solution? Not static?
 			int cameraX = Camera.pos.x;
 			int cameraY = Camera.pos.y;
-			int cameraHeight = Camera.screenHeight;
-			int cameraWidth = Camera.screenWidth;
+			int cameraHeight = Camera.screenWidth;
+			int cameraWidth = Camera.screenHeight;
 			float scale = Camera.scale;
 			
 			
@@ -80,7 +80,6 @@ public class RenderingThread implements Panel.Renderer {
 					}
 				}
 			}
-			
 			
 			if (drawQueue != null && drawQueue.getObjects().getCount() > 0 ){
 				FixedSizeArray<RenderElement> objects = drawQueue.getObjects();
