@@ -1,25 +1,27 @@
 package com.liongrid.infectosaurus.components;
 
 import com.liongrid.gameengine.BaseObject;
+import com.liongrid.gameengine.Component;
 import com.liongrid.gameengine.GameObject;
-import com.liongrid.infectosaurus.tools.GameObjectHandler;
+import com.liongrid.infectosaurus.InfectoGameObject;
+import com.liongrid.infectosaurus.tools.InfectoGameObjectHandler;
 
-public class AggressivMoveComponent extends Component{
+public class AggressivMoveComponent extends Component<InfectoGameObject>{
 	
-	private GameObjectHandler gameObjHandler;
+	private InfectoGameObjectHandler gameObjHandler;
 
 	public AggressivMoveComponent(){
 		gameObjHandler = BaseObject.gamePointers.gameObjectHandler;
 	}
 
-	public void update(float dt, BaseObject parent) {
-		GameObject gameObject = (GameObject) parent;
-		GameObject target = gameObjHandler.getClosest(gameObject, gameObject.team.Human);
+	@Override
+	public void update(float dt, InfectoGameObject parent) {
+		InfectoGameObject target = gameObjHandler.getClosest(parent, parent.team.Human);
 		if(target != null){
-			gameObject.vel.set(target.pos);
-			gameObject.vel.subtract(gameObject.pos);
-			gameObject.vel.normalize();
-			gameObject.vel.multiply(gameObject.speed);
+			parent.vel.set(target.pos);
+			parent.vel.subtract(parent.pos);
+			parent.vel.normalize();
+			parent.vel.multiply(parent.speed);
 		}
 	}
 }

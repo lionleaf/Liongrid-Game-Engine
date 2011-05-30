@@ -3,7 +3,6 @@ package com.liongrid.gameengine;
 import android.util.Log;
 
 import com.liongrid.infectosaurus.Main;
-import com.liongrid.infectosaurus.components.Component;
 import com.liongrid.infectosaurus.effects.Effect;
 import com.liongrid.infectosaurus.tools.FixedSizeArray;
 import com.liongrid.infectosaurus.tools.Vector2;
@@ -12,21 +11,9 @@ import com.liongrid.infectosaurus.tools.Vector2;
  * @author Lionleaf
  *
  */
-public abstract class GameObject extends BaseObject{
-	
-	public enum Team{ Human, Alien };
-	
-	public Team team = Team.Human; //Default team
-	public boolean alive = true;
-	public Vector2 pos = new Vector2(0,0);
-	public Vector2 vel = new Vector2(0,0);
-	public float speed = 10;
-	public int hp = 1;
-	
-	
-	
-	
-	private FixedSizeArray<Component> components;
+public abstract class GameObject<T extends GameObject<?>> extends BaseObject{
+
+	private FixedSizeArray<Component<T>> components;
 	private FixedSizeArray<Effect> effects;
 	
 	private static final int DEFAULT_COMPONENT_SIZE = 64;
@@ -38,25 +25,18 @@ public abstract class GameObject extends BaseObject{
 	
 	protected GameObject(){
 		Log.d(Main.TAG, "In BaseObject");
-		components = new FixedSizeArray<Component>(DEFAULT_COMPONENT_SIZE);
-		effects = new FixedSizeArray<Effect>(DEFAULT_COMPONENT_SIZE);
+		components = new FixedSizeArray<Component<T>>(DEFAULT_COMPONENT_SIZE);
+		effects = new FixedSizeArray<Effect>(DEFAULT_EFFECT_SIZE);
 		Log.d(Main.TAG, "GameObject construct");
 	}
 	
 	GameObject(int size){
-		components = new FixedSizeArray<Component>(size);
+		components = new FixedSizeArray<Component<T>>(size);
 	}
-	
-	protected void die(){
-		BaseObject.gamePointers.gameObjectHandler.remove(this);
-	}
-	
+
 	@Override
 	public void update(float dt, BaseObject parent){
-		if(hp < 0) { // Temp death function!!! TODO RREMOVE
-			die();
-			return;
-		}
+		
 		int size = effects.getCount();
 		for (int i = 0; i < size; i++) {
 			Effect e = effects.get(i);
@@ -70,7 +50,7 @@ public abstract class GameObject extends BaseObject{
 		
 		size = components.getCount();
 		while(Counter < size){
-			components.get(Counter++).update(dt, this);
+			components.get(Counter++).update(dt, (T) this);
 		}
 		Counter = 0;
 	}
@@ -80,7 +60,7 @@ public abstract class GameObject extends BaseObject{
 	 * Adds a component that will be updated every time this object is
 	 * @param component - The component object
 	 */
-	public void addComponent(Component component){
+	public void addComponent(Component<T> component){
 		components.add(component);
 	}
 	

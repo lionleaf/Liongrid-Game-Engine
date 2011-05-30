@@ -55,8 +55,14 @@ public class GameThread extends Thread {
     		
     		waitWhilePaused();
     		
-    		calculateDT();
-    		  		
+    		//calculateDT();
+    		currentTime = SystemClock.uptimeMillis();
+    		dt = currentTime - lastTime;
+    		if(lastTime == -1){
+    			lastTime = SystemClock.uptimeMillis();
+    			dt = 0; //Take no timestep if this is the first iteration
+    		}		
+    		
     		long dtfinal = dt; 
     		if(dt > MIN_UPDATE_MS){
     			float dtsec = (currentTime - lastTime) * 0.001f;
@@ -87,12 +93,7 @@ public class GameThread extends Thread {
     }
 
 	private void calculateDT() {
-		currentTime = SystemClock.uptimeMillis();
-		dt = currentTime - lastTime;
-		if(lastTime == -1){
-			lastTime = SystemClock.uptimeMillis();
-			dt = 0; //Take no timestep if this is the first iteration
-		}		
+		
 	}
 
 	private synchronized void waitWhilePaused() {

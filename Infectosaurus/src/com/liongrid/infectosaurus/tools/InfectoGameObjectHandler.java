@@ -1,19 +1,19 @@
 package com.liongrid.infectosaurus.tools;
 
-import com.liongrid.gameengine.GameObject;
-import com.liongrid.gameengine.GameObject.Team;
 import com.liongrid.infectosaurus.Human;
+import com.liongrid.infectosaurus.InfectoGameObject;
+import com.liongrid.infectosaurus.Team;
 
 /**
  * @author Lastis
  * This class needs to hold all the GameObjects and sort the 
  * components in a way that they can be done in the right order 
  */
-public class GameObjectHandler extends ObjectHandler<GameObject> {
+public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
 	private static final int DEFAULT_CAPACITY = 256;
 	
-	static final int NUMBER_OF_HUMANS = 20;
-	public GameObjectHandler(){
+	static final int NUMBER_OF_HUMANS = 10;
+	public InfectoGameObjectHandler(){
 		super(DEFAULT_CAPACITY);
 		Human human;
 		for (int i = 0; i < NUMBER_OF_HUMANS; i++) {
@@ -33,15 +33,15 @@ public class GameObjectHandler extends ObjectHandler<GameObject> {
 	 * @return - A FixedSizeArray with the results. (Remember to release it!) 
 	 * Or null if there is nothing within reach. It will not return itself.
 	 */ 
-	public FixedSizeArray<GameObject> getClose(GameObject gObject, int reach, Team team) {
+	public FixedSizeArray<InfectoGameObject> getClose(InfectoGameObject gObject, int reach, Team team) {
 		int length = objects.getCount();
 		Object[] objectArr = objects.getArray();
 		
 		//TODO pool object arrays?!
-		FixedSizeArray<GameObject> returnObjects = new FixedSizeArray<GameObject>(length);
+		FixedSizeArray<InfectoGameObject> returnObjects = new FixedSizeArray<InfectoGameObject>(length);
 		
 		for (int i = 0; i < length; i++) {
-			GameObject currentObject = (GameObject) objectArr[i];
+			InfectoGameObject currentObject = (InfectoGameObject) objectArr[i];
 			
 			if(currentObject.pos.distance2(gObject.pos) <= reach 
 					&& currentObject != gObject
@@ -61,9 +61,9 @@ public class GameObjectHandler extends ObjectHandler<GameObject> {
 	 * @param team
 	 * @return
 	 */
-	public GameObject getClosest(GameObject gObject, Team team){
+	public InfectoGameObject getClosest(InfectoGameObject gObject, Team team){
 		
-		GameObject closest = null;
+		InfectoGameObject closest = null;
 		float closestDistance = Float.MAX_VALUE;
 		float currentDistance = 0;
 		
@@ -72,7 +72,7 @@ public class GameObjectHandler extends ObjectHandler<GameObject> {
 		Object[] objectArr = objects.getArray();
 		
 		for (int i = 0; i < length; i++) {
-			GameObject currentObject = (GameObject) objectArr[i];
+			InfectoGameObject currentObject = (InfectoGameObject) objectArr[i];
 			
 			if(currentObject.team != team) continue;
 			

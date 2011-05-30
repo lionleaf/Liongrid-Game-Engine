@@ -14,7 +14,7 @@ import com.liongrid.infectosaurus.components.MoveComponent;
 import com.liongrid.infectosaurus.components.RandomWalkerComponent;
 import com.liongrid.infectosaurus.components.SpriteComponent;
 
-public class Human extends GameObject{
+public class Human extends InfectoGameObject{
 	static Random rand = new Random();
 	public Human() {
 		Panel panel = BaseObject.gamePointers.panel;

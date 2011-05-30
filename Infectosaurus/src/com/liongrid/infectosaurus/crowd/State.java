@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.GameObject;
+import com.liongrid.infectosaurus.InfectoGameObject;
 import com.liongrid.infectosaurus.tools.FixedSizeArray;
 import com.liongrid.infectosaurus.tools.Vector2;
 
@@ -39,7 +40,7 @@ public class State extends BaseObject{
 	
 	@Override
 	public void update(float dt, BaseObject grandParent){
-		GameObject gameObject = ((GameObject) grandParent);
+		InfectoGameObject gameObject = ((InfectoGameObject) grandParent);
 		vel.set(gameObject.vel);
 		pos.set(gameObject.pos);
 		if (turnAngle != 0){

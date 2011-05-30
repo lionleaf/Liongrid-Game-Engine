@@ -5,10 +5,12 @@ import java.util.Random;
 import android.util.Log;
 
 import com.liongrid.gameengine.BaseObject;
+import com.liongrid.gameengine.Component;
 import com.liongrid.gameengine.GameObject;
+import com.liongrid.infectosaurus.InfectoGameObject;
 import com.liongrid.infectosaurus.tools.Vector2;
 
-public class RandomWalkerComponent extends Component{
+public class RandomWalkerComponent extends Component<InfectoGameObject>{
 	Random random;
 	int width; //Screw real data, let`s guess
 	int height;
@@ -29,14 +31,14 @@ public class RandomWalkerComponent extends Component{
 	}
 
 	@Override
-	public void update(float dt, BaseObject parent) {
+	public void update(float dt, InfectoGameObject parent) {
 		width = BaseObject.gamePointers.panel.getWidth();
 		height = BaseObject.gamePointers.panel.getHeight();
 		if(width <= 0 || height <= 0) return;
 		
-		GameObject gameObject = (GameObject) parent;
-		vel = gameObject.vel;
-		pos = gameObject.pos;
+
+		vel = parent.vel;
+		pos = parent.pos;
 		
 		float newDistance = 0f;
 		if(!findFirstGoal){
@@ -60,7 +62,7 @@ public class RandomWalkerComponent extends Component{
 			vel.set(goal);
 			vel.subtract(pos);
 			vel.normalize();
-			vel.multiply(gameObject.speed);
+			vel.multiply(parent.speed);
 			recalculate = false;
 		}
 		

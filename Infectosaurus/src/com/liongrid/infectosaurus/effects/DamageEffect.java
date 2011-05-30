@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.GameObject;
+import com.liongrid.infectosaurus.InfectoGameObject;
 
 public class DamageEffect extends Effect {
 	
@@ -17,7 +18,7 @@ public class DamageEffect extends Effect {
 		this.damage = damage;
 	}
 	
-	public void update(float dt, GameObject target, GameObject afflictor){
+	public void update(float dt, InfectoGameObject target, InfectoGameObject afflictor){
 		target.hp -= damage;
 	}
 	

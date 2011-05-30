@@ -3,28 +3,30 @@ package com.liongrid.infectosaurus.components;
 import android.util.Log;
 
 import com.liongrid.gameengine.BaseObject;
+import com.liongrid.gameengine.Component;
 import com.liongrid.gameengine.GameObject;
-import com.liongrid.gameengine.GameObject.Team;
+import com.liongrid.infectosaurus.Team;
+import com.liongrid.infectosaurus.InfectoGameObject;
 import com.liongrid.infectosaurus.effects.DamageEffect;
 import com.liongrid.infectosaurus.tools.FixedSizeArray;
-import com.liongrid.infectosaurus.tools.GameObjectHandler;
+import com.liongrid.infectosaurus.tools.InfectoGameObjectHandler;
 
 
-public class MeleeAttackComponent extends Component {
+public class MeleeAttackComponent extends Component<InfectoGameObject> {
 
-	GameObjectHandler gameObjHandler;
+	InfectoGameObjectHandler gameObjHandler;
 	static final int CLOSE_CAPACITY = 20;
-	FixedSizeArray<GameObject> close;
+	FixedSizeArray<InfectoGameObject> close;
 	int reach = 100; //Square of the actual reach 100 means 10 px
 	int damage = 2;
 	float delay = 0.5f; //sec
 	float delayCountDown = delay;
-	private GameObject lastTarget = null;
+	private InfectoGameObject lastTarget = null;
 	
 	
 	public MeleeAttackComponent(){
 		super();
-		close = new FixedSizeArray<GameObject>(CLOSE_CAPACITY);
+		close = new FixedSizeArray<InfectoGameObject>(CLOSE_CAPACITY);
 		set();
 		
 	}
@@ -34,16 +36,15 @@ public class MeleeAttackComponent extends Component {
 	}
 	
 	@Override
-	public void update(float dt, BaseObject parent) {
+	public void update(float dt, InfectoGameObject parent) {
 		
 		
-		GameObject gObject = (GameObject) parent;
-		GameObject target =	gameObjHandler.getClosest(
-				gObject, gObject.team == Team.Human ? Team.Alien : Team.Human);
+		InfectoGameObject target =	gameObjHandler.getClosest(
+				parent, parent.team == Team.Human ? Team.Alien : Team.Human);
 
 		
 		if(target == null || 
-				target.pos.distance2(gObject.pos) > reach){
+				target.pos.distance2(parent.pos) > reach){
 			return;
 		}
 		

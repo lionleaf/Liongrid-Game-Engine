@@ -3,7 +3,9 @@ package com.liongrid.infectosaurus.components;
 import java.util.Random;
 
 import com.liongrid.gameengine.BaseObject;
+import com.liongrid.gameengine.Component;
 import com.liongrid.gameengine.GameObject;
+import com.liongrid.infectosaurus.InfectoGameObject;
 import com.liongrid.infectosaurus.crowd.State;
 import com.liongrid.infectosaurus.crowd.StateList;
 import com.liongrid.infectosaurus.crowd.behaviorfunctions.AvoidEdgeBehaviour;
@@ -18,7 +20,7 @@ import com.liongrid.infectosaurus.tools.FixedSizeArray;
  * The probability of each of the states are modified by the behavior
  * functions. 
  */
-public class BehaviorComponent extends Component{
+public class BehaviorComponent extends Component<InfectoGameObject>{
 	
 
 	static Random random = new Random();
@@ -61,7 +63,7 @@ public class BehaviorComponent extends Component{
 	}
 	
 	@Override
-	public void update(float dt, BaseObject parent) {
+	public void update(float dt, InfectoGameObject parent) {
 		
 		calculateProb();
 		
@@ -80,8 +82,8 @@ public class BehaviorComponent extends Component{
 		
 		if(curState == null) return;
 		
-		((GameObject) parent).pos.set(curState.pos);
-		((GameObject) parent).vel.set(curState.vel);
+		parent.pos.set(curState.pos);
+		parent.vel.set(curState.vel);
 		//((GameObject) parent).direction = curState.angle;
 		
 		

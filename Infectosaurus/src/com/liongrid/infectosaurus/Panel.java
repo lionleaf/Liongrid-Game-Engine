@@ -9,7 +9,7 @@ import com.liongrid.gameengine.RenderSystem;
 import com.liongrid.gameengine.RenderingThread;
 import com.liongrid.infectosaurus.map.Level;
 import com.liongrid.infectosaurus.map.TileSet;
-import com.liongrid.infectosaurus.tools.GameObjectHandler;
+import com.liongrid.infectosaurus.tools.InfectoGameObjectHandler;
 import com.liongrid.infectosaurus.tools.ObjectHandler;
 
 import android.content.Context;
@@ -45,7 +45,7 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback,
 	    gamePointers.root = new ObjectHandler();
 	    gamePointers.tileSet = new TileSet();
 	    gamePointers.level = new Level();
-	    gamePointers.gameObjectHandler = new GameObjectHandler();
+	    gamePointers.gameObjectHandler = new InfectoGameObjectHandler();
 	   
 	    gamePointers.root.add(gamePointers.gameObjectHandler);
 	    

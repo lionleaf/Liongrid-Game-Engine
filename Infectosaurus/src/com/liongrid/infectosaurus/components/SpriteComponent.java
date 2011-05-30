@@ -3,12 +3,14 @@ package com.liongrid.infectosaurus.components;
 import android.util.Log;
 
 import com.liongrid.gameengine.BaseObject;
+import com.liongrid.gameengine.Component;
 import com.liongrid.gameengine.Drawable;
 import com.liongrid.gameengine.GameObject;
+import com.liongrid.infectosaurus.InfectoGameObject;
 import com.liongrid.infectosaurus.map.Level;
 import com.liongrid.infectosaurus.tools.Vector2;
 
-public class SpriteComponent extends Component {
+public class SpriteComponent extends Component<InfectoGameObject> {
 	Drawable drawing;
 	Vector2 pos;
 	Vector2 lastPos;
@@ -20,9 +22,9 @@ public class SpriteComponent extends Component {
 	}
 	
 	@Override
-	public void update(float dt, BaseObject parent){
-		GameObject gameObject = (GameObject) parent;
-		pos = gameObject.pos;
+	public void update(float dt, InfectoGameObject parent){
+
+		pos = parent.pos;
 		lastPos.set(pos);
 			
 		BaseObject.gamePointers.renderSystem.scheduleForDraw(drawing, pos);

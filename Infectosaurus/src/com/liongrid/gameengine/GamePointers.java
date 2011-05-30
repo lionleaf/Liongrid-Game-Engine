@@ -6,7 +6,7 @@ import com.liongrid.infectosaurus.Infectosaurus;
 import com.liongrid.infectosaurus.Panel;
 import com.liongrid.infectosaurus.map.Level;
 import com.liongrid.infectosaurus.map.TileSet;
-import com.liongrid.infectosaurus.tools.GameObjectHandler;
+import com.liongrid.infectosaurus.tools.InfectoGameObjectHandler;
 import com.liongrid.infectosaurus.tools.ObjectHandler;
 
 /**
@@ -17,7 +17,7 @@ import com.liongrid.infectosaurus.tools.ObjectHandler;
  */
 public class GamePointers implements Serializable {
 	public GameThread gameThread;
-	public GameObjectHandler gameObjectHandler;
+	public InfectoGameObjectHandler gameObjectHandler;
 	public ObjectHandler root;
 	public RenderSystem renderSystem;
 	public RenderingThread renderThread;
