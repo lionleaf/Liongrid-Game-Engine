@@ -36,8 +36,10 @@ public class GameBoard extends Activity{
 		if(savedInstanceState == null){
 			panel.init(); 
 		}else{
-			BaseObject.gamePointers = (GamePointers)
-				savedInstanceState.getSerializable("GamePointers");
+			
+			BaseObject.gamePointers.panel = panel;
+			//BaseObject.gamePointers = (GamePointers)
+				//savedInstanceState.getSerializable("GamePointers");
 		}
 		panel.startGame();
 
@@ -48,7 +50,7 @@ public class GameBoard extends Activity{
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putSerializable("GamePointers", (Serializable) BaseObject.gamePointers);
+		//outState.putSerializable("GamePointers", (Serializable) BaseObject.gamePointers);
 		
 	}
 	
