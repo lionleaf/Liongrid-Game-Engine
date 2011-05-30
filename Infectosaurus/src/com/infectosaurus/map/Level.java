@@ -22,7 +22,7 @@ import com.infectosaurus.MovementType;
 import com.infectosaurus.Panel;
 import com.infectosaurus.tools.Vector2Int;
 
-public class Level {
+public class Level extends BaseObject{
 
 	public Tile[][] tiles;
 	public TileType[][] renderQueue;
@@ -78,19 +78,19 @@ public class Level {
 		tiles = new Tile[mapSize.x][mapSize.y];
 		for (int i = 0; i < mapSize.x; i++) {
 			for (int j = 0; j < mapSize.y; j++) {
-				tiles[i][j] = new Tile(BaseObject.gamePointers.tileSet.tileTypes[0]);
+				tiles[i][j] = new Tile(gamePointers.tileSet.tileTypes[0]);
 			}
 		}
 	}
 	
 	private void loadTilesFromFile(int res) {
 
-		Panel panel = BaseObject.gamePointers.panel;
+		Panel panel = gamePointers.panel;
 		InputStream inputStream = panel.getResources().openRawResource(res);
 
 		AssetManager.AssetInputStream reader = (AssetManager.AssetInputStream) inputStream;
 
-		TileType[] tileTypes = BaseObject.gamePointers.tileSet.tileTypes;
+		TileType[] tileTypes = gamePointers.tileSet.tileTypes;
 
 		//if(reader.nextInt() != 11) return;
 		//byte[] workspaceBytes = new byte[4]; //Used to read ints
@@ -108,9 +108,13 @@ public class Level {
 			Log.d(Main.TAG, mapSize.toString());
 			tiles = new Tile[mapSize.x][mapSize.y];
 
+			int tileID;
+			int index;
 			for (int i = 0; i < mapSize.x; i++) {
 				for (int j = 0; j < mapSize.y; j++) {
-					tiles[i][j] = new Tile(tileTypes[reader.read()]);
+					tileID = reader.read(); 
+					index = gamePointers.tileSet.tileIDtoIndexMap.get(tileID);
+					tiles[i][j] = new Tile(tileTypes[index]);
 				}
 			}
 		} catch (IOException e) {
@@ -157,5 +161,11 @@ public class Level {
 						localY);
 			}
 		}
+	}
+
+	@Override
+	public void reset() {
+		// TODO Auto-generated method stub
+		
 	}
 }
