@@ -49,38 +49,18 @@ public class GameThread extends Thread {
     		//Make sure we don`t swap queues while renderer is rendering
     		renderThread.waitDrawingComplete();
     		
-    		synchronized(this){
-    			try {
-					while(paused){
-						wait();
-					}
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-    			
-    		}
+    		waitWhilePaused();
     		
-    		currentTime = SystemClock.uptimeMillis();
-    		
-    		dt = currentTime - lastTime;
-    		   		
-    		if(lastTime == -1){
-    			lastTime = SystemClock.uptimeMillis();
-    			dt = 0; //Take no timestep if this is the first iteration
-    		}
+    		calculateDT();
     		  		
     		long dtfinal = dt; 
-    		
     		if(dt > MIN_UPDATE_MS){
     			float dtsec = (currentTime - lastTime) * 0.001f;
     			//We never want to take too big timesteps!
     			if(dtsec > MAX_TIMESTEP){
     				dtsec = MAX_TIMESTEP;
     			}
-    			lastTime = currentTime; 
-    			
-    			
+    			lastTime = currentTime;
     			
     			//Update all game logic
     			synchronized(updateLock){
@@ -93,17 +73,33 @@ public class GameThread extends Thread {
     			dtfinal = SystemClock.uptimeMillis() - currentTime;
     			
     		}
-    		
-    		//if(dtfinal < MIN_REFRESH_TIME){
     		//Take a small nap to get those touch events!
     			try {
 					Thread.sleep(Math.max(2,MIN_UPDATE_MS - dtfinal));
 				} catch (InterruptedException e) {
 					//Doesn`t matter
-				}
-    		//}
+			}
     	}
     }
+
+	private void calculateDT() {
+		currentTime = SystemClock.uptimeMillis();
+		dt = currentTime - lastTime;
+		if(lastTime == -1){
+			lastTime = SystemClock.uptimeMillis();
+			dt = 0; //Take no timestep if this is the first iteration
+		}		
+	}
+
+	private synchronized void waitWhilePaused() {
+		while(paused){
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 	public void doTouchEvent(MotionEvent event) {
 	}
@@ -116,8 +112,7 @@ public class GameThread extends Thread {
 				BaseObject.gamePointers.gameObjectHandler.add(inf);
 			}
 			
-			float y = (BaseObject.gamePointers.panel.getHeight()-event.getY()) / 
-				Camera.scale;
+			float y = (BaseObject.gamePointers.panel.getHeight() - event.getY()) / Camera.scale;
 			float x = event.getX() / Camera.scale;
 			BaseObject.gamePointers.currentSaurus.pos.set(x + Camera.pos.x, 
 														  y + Camera.pos.y);
