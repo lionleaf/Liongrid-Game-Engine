@@ -66,7 +66,7 @@ public class TileSetSaxParser extends DefaultHandler {
 		super.endElement(uri, localName, qName);
 		
 		if(localName.equalsIgnoreCase("Tile")){
-			TextureLibrary texLib = BaseObject.gamePointers.longTermTexLib;		
+			TextureLibrary texLib = BaseObject.gamePointers.textureLib;		
 			tileTypes[currentIndex] = new TileType(texLib.allocateTexture(currentRes),currentBlocked);
 			tileSet.tileIDtoIndexMap.put(currentID, currentIndex);
 			currentIndex++;

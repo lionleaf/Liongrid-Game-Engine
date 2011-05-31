@@ -154,11 +154,8 @@ public class RenderingThread implements Panel.Renderer {
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
         
         
-        BaseObject.gamePointers.longTermTexLib.invalidateAll();
-        BaseObject.gamePointers.shortTermTexLib.invalidateAll();
-        BaseObject.gamePointers.longTermTexLib.loadAll(
-        		BaseObject.gamePointers.panel.getContext(), gl);
-        BaseObject.gamePointers.shortTermTexLib.loadAll(
+        BaseObject.gamePointers.textureLib.invalidateAll();
+        BaseObject.gamePointers.textureLib.loadAll(
         		BaseObject.gamePointers.panel.getContext(), gl);
 	}
 
@@ -170,10 +167,6 @@ public class RenderingThread implements Panel.Renderer {
 		}
 	}
 	
-	public void onSurfaceLost(){
-		BaseObject.gamePointers.longTermTexLib.invalidateAll();
-		BaseObject.gamePointers.shortTermTexLib.invalidateAll();
-	}
 	
 	
 	

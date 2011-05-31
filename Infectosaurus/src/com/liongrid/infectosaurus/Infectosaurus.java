@@ -24,7 +24,7 @@ public class Infectosaurus extends InfectoGameObject {
 		
 		addComponent(new MeleeAttackComponent());
 		
-		TextureLibrary texLib = gamePointers.longTermTexLib;
+		TextureLibrary texLib = gamePointers.textureLib;
 		DrawableBitmap db = new DrawableBitmap(
 				texLib.allocateTexture(R.drawable.lumberinghulklo), 16*3, 16*3);
 		

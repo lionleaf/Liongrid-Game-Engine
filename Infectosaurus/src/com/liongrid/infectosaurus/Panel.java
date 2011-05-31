@@ -40,8 +40,7 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback,
 	    
 	    GamePointers gamePointers = new GamePointers();
 	    BaseObject.gamePointers = gamePointers;
-	    gamePointers.longTermTexLib = new TextureLibrary();
-	    gamePointers.shortTermTexLib = new TextureLibrary();
+	    gamePointers.textureLib = new TextureLibrary();
 	    gamePointers.renderSystem = new RenderSystem();
 	    gamePointers.panel = this;
 	    gamePointers.root = new ObjectHandler();
@@ -64,7 +63,7 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback,
 	}
 	
 	public void loadTextures(){
-		TextureLibrary tLib = BaseObject.gamePointers.shortTermTexLib;
+		TextureLibrary tLib = BaseObject.gamePointers.textureLib;
 		tLib.allocateTexture(R.drawable.lumberinghulklo);
 		tLib.allocateTexture(R.drawable.mann1);
 	}
