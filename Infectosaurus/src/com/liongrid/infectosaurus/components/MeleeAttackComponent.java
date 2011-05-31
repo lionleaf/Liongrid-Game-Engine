@@ -5,11 +5,11 @@ import android.util.Log;
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Component;
 import com.liongrid.gameengine.GameObject;
+import com.liongrid.gameengine.tools.FixedSizeArray;
+import com.liongrid.gameengine.tools.InfectoGameObjectHandler;
 import com.liongrid.infectosaurus.Team;
 import com.liongrid.infectosaurus.InfectoGameObject;
 import com.liongrid.infectosaurus.effects.DamageEffect;
-import com.liongrid.infectosaurus.tools.FixedSizeArray;
-import com.liongrid.infectosaurus.tools.InfectoGameObjectHandler;
 
 
 public class MeleeAttackComponent extends Component<InfectoGameObject> {

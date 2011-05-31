@@ -5,13 +5,13 @@ import java.util.Random;
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Component;
 import com.liongrid.gameengine.GameObject;
+import com.liongrid.gameengine.tools.FixedSizeArray;
 import com.liongrid.infectosaurus.InfectoGameObject;
 import com.liongrid.infectosaurus.crowd.State;
 import com.liongrid.infectosaurus.crowd.StateList;
 import com.liongrid.infectosaurus.crowd.behaviorfunctions.AvoidEdgeBehaviour;
 import com.liongrid.infectosaurus.crowd.behaviorfunctions.BehaviorFunction;
 import com.liongrid.infectosaurus.crowd.behaviorfunctions.InfectoFrightBehavior;
-import com.liongrid.infectosaurus.tools.FixedSizeArray;
 
 /**
  * @author lastis

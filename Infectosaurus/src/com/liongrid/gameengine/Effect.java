@@ -1,7 +1,5 @@
-package com.liongrid.infectosaurus.effects;
+package com.liongrid.gameengine;
 
-import com.liongrid.gameengine.BaseObject;
-import com.liongrid.gameengine.GameObject;
 import com.liongrid.infectosaurus.InfectoGameObject;
 
 public abstract class Effect extends BaseObject{

@@ -11,9 +11,9 @@ import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.SAXException;
 
 import com.liongrid.gameengine.BaseObject;
+import com.liongrid.gameengine.tools.MovementType;
 import com.liongrid.infectosaurus.R;
 import com.liongrid.infectosaurus.Panel;
-import com.liongrid.infectosaurus.tools.MovementType;
 
 /**
  * The set of TileTypes. This should be loaded from a xml upon start, 

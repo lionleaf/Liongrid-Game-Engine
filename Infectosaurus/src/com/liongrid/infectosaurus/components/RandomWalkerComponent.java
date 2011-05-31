@@ -7,8 +7,8 @@ import android.util.Log;
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Component;
 import com.liongrid.gameengine.GameObject;
+import com.liongrid.gameengine.tools.Vector2;
 import com.liongrid.infectosaurus.InfectoGameObject;
-import com.liongrid.infectosaurus.tools.Vector2;
 
 public class RandomWalkerComponent extends Component<InfectoGameObject>{
 	Random random;

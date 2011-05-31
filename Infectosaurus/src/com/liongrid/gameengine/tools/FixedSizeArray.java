@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.liongrid.infectosaurus.tools;
+package com.liongrid.gameengine.tools;
 
 import java.util.Arrays;
 import java.util.Comparator;

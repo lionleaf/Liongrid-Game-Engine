@@ -2,7 +2,7 @@ package com.liongrid.gameengine;
 
 import java.util.Comparator;
 
-import com.liongrid.infectosaurus.tools.Vector2;
+import com.liongrid.gameengine.tools.Vector2;
 
 import android.util.Log;
 

@@ -1,4 +1,4 @@
-package com.liongrid.infectosaurus.tools;
+package com.liongrid.gameengine.tools;
 
 
 public class Vector2Int {

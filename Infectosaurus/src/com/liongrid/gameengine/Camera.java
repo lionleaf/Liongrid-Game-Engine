@@ -1,6 +1,6 @@
 package com.liongrid.gameengine;
 
-import com.liongrid.infectosaurus.tools.Vector2Int;
+import com.liongrid.gameengine.tools.Vector2Int;
 
 public class Camera {
 	public static final float TILES_PER_WIDTH = 12;

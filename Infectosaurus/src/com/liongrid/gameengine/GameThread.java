@@ -1,8 +1,8 @@
 package com.liongrid.gameengine;
 
+import com.liongrid.gameengine.tools.ObjectHandler;
 import com.liongrid.infectosaurus.Infectosaurus;
 import com.liongrid.infectosaurus.Main;
-import com.liongrid.infectosaurus.tools.ObjectHandler;
 
 import android.os.SystemClock;
 import android.util.Log;

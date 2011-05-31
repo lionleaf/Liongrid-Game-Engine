@@ -1,9 +1,9 @@
 package com.liongrid.infectosaurus.crowd.behaviorfunctions;
 
+import com.liongrid.gameengine.tools.Vector2;
 import com.liongrid.infectosaurus.Infectosaurus;
 import com.liongrid.infectosaurus.crowd.State;
 import com.liongrid.infectosaurus.crowd.StateList;
-import com.liongrid.infectosaurus.tools.Vector2;
 
 public class InfectoFrightBehavior extends BehaviorFunction {
 	Infectosaurus inf = null;

@@ -1,4 +1,4 @@
-package com.liongrid.infectosaurus.tools;
+package com.liongrid.gameengine.tools;
 
 import com.liongrid.gameengine.BaseObject;
 

@@ -2,7 +2,7 @@ package com.liongrid.infectosaurus;
 
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.GameObject;
-import com.liongrid.infectosaurus.tools.Vector2;
+import com.liongrid.gameengine.tools.Vector2;
 
 public class InfectoGameObject extends GameObject<InfectoGameObject> {
 

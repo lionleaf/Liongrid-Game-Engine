@@ -3,12 +3,12 @@ package com.liongrid.gameengine;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import com.liongrid.gameengine.tools.FixedSizeArray;
+import com.liongrid.gameengine.tools.ObjectHandler;
 import com.liongrid.infectosaurus.Main;
 import com.liongrid.infectosaurus.Panel;
 import com.liongrid.infectosaurus.map.Level;
 import com.liongrid.infectosaurus.map.TileType;
-import com.liongrid.infectosaurus.tools.FixedSizeArray;
-import com.liongrid.infectosaurus.tools.ObjectHandler;
 
 import android.opengl.GLU;
 import android.util.Log;

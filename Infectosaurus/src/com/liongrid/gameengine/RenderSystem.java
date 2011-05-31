@@ -1,9 +1,9 @@
 package com.liongrid.gameengine;
 
-import com.liongrid.infectosaurus.tools.FixedSizeArray;
-import com.liongrid.infectosaurus.tools.ObjectHandler;
-import com.liongrid.infectosaurus.tools.ObjectPool;
-import com.liongrid.infectosaurus.tools.Vector2;
+import com.liongrid.gameengine.tools.FixedSizeArray;
+import com.liongrid.gameengine.tools.ObjectHandler;
+import com.liongrid.gameengine.tools.ObjectPool;
+import com.liongrid.gameengine.tools.Vector2;
 
 import android.util.Log;
 

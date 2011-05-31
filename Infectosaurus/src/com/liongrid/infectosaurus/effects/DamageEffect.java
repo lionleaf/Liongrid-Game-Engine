@@ -3,6 +3,7 @@ package com.liongrid.infectosaurus.effects;
 import android.util.Log;
 
 import com.liongrid.gameengine.BaseObject;
+import com.liongrid.gameengine.Effect;
 import com.liongrid.gameengine.GameObject;
 import com.liongrid.infectosaurus.InfectoGameObject;
 

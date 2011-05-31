@@ -2,10 +2,9 @@ package com.liongrid.gameengine;
 
 import android.util.Log;
 
+import com.liongrid.gameengine.tools.FixedSizeArray;
+import com.liongrid.gameengine.tools.Vector2;
 import com.liongrid.infectosaurus.Main;
-import com.liongrid.infectosaurus.effects.Effect;
-import com.liongrid.infectosaurus.tools.FixedSizeArray;
-import com.liongrid.infectosaurus.tools.Vector2;
 
 /**
  * @author Lionleaf

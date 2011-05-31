@@ -17,7 +17,7 @@
  * CHANGED
  */
 
-package com.liongrid.infectosaurus.tools;
+package com.liongrid.gameengine.tools;
 
 /**
  * Simple 2D vector class.  Handles basic vector math for 2D vectors.

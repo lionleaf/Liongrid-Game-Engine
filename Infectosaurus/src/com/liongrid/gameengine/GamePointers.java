@@ -2,12 +2,12 @@ package com.liongrid.gameengine;
 
 import java.io.Serializable;
 
+import com.liongrid.gameengine.tools.InfectoGameObjectHandler;
+import com.liongrid.gameengine.tools.ObjectHandler;
 import com.liongrid.infectosaurus.Infectosaurus;
 import com.liongrid.infectosaurus.Panel;
 import com.liongrid.infectosaurus.map.Level;
 import com.liongrid.infectosaurus.map.TileSet;
-import com.liongrid.infectosaurus.tools.InfectoGameObjectHandler;
-import com.liongrid.infectosaurus.tools.ObjectHandler;
 
 /**
  * @author Lionleaf
