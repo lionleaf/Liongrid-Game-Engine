@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.DrawableBitmap;
+import com.liongrid.gameengine.Texture;
 
 /**
  * Representation of one type of Tile. 
@@ -40,8 +41,8 @@ public class TileType extends DrawableBitmap{
 	 *  as calculations depend upon it
 	 * @param context - gamePointer.panel;
 	 */
-	public TileType(int resource, boolean[][][] blocked){
-		super(resource, Level.TILE_SIZE, Level.TILE_SIZE, BaseObject.gamePointers.panel.getContext());
+	public TileType(Texture texture, boolean[][][] blocked){
+		super(texture, Level.TILE_SIZE, Level.TILE_SIZE);
 		
 		this.blocked = blocked;	
 	}

@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.DrawableBitmap;
 import com.liongrid.gameengine.GameObject;
+import com.liongrid.gameengine.TextureLibrary;
 import com.liongrid.infectosaurus.R;
 import com.liongrid.infectosaurus.components.BehaviorComponent;
 import com.liongrid.infectosaurus.components.MoveComponent;
@@ -17,17 +18,16 @@ import com.liongrid.infectosaurus.components.SpriteComponent;
 public class Human extends InfectoGameObject{
 	static Random rand = new Random();
 	public Human() {
-		Panel panel = BaseObject.gamePointers.panel;
-		
+		TextureLibrary texLib = gamePointers.longTermTexLib;
 		DrawableBitmap db = new DrawableBitmap(
-				R.drawable.mann1, 16*3, 16*3,panel.getContext());
+				texLib.allocateTexture(R.drawable.mann1), 16*3, 16*3);
 		addComponent(new SpriteComponent(db)); 
 		addComponent(new BehaviorComponent());
 		
 		speed = rand.nextInt(20)+10;
 		
-		int width = BaseObject.gamePointers.panel.getWidth();
-		int height = BaseObject.gamePointers.panel.getHeight();
+		int width = gamePointers.panel.getWidth();
+		int height = gamePointers.panel.getHeight();
 		if(width <= 0 || height <= 0) return;
 		
 		

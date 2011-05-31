@@ -101,9 +101,9 @@ public class TextureLibrary extends BaseObject {
 	public void deleteAll(GL10 gl) {
 		for (int x = 0; x < mTextureHash.length; x++) {
 			if (mTextureHash[x].resource != -1 && mTextureHash[x].loaded) {
-				assert mTextureHash[x].name != -1;
-				mTextureNameWorkspace[0] = mTextureHash[x].name;
-				mTextureHash[x].name = -1;
+				assert mTextureHash[x].id != -1;
+				mTextureNameWorkspace[0] = mTextureHash[x].id;
+				mTextureHash[x].id = -1;
 				mTextureHash[x].loaded = false;
 				gl.glDeleteTextures(1, mTextureNameWorkspace, 0);
 				int error = gl.glGetError();
@@ -120,7 +120,7 @@ public class TextureLibrary extends BaseObject {
 	public void invalidateAll() {
 		for (int x = 0; x < mTextureHash.length; x++) {
 			if (mTextureHash[x].resource != -1 && mTextureHash[x].loaded) {
-				mTextureHash[x].name = -1;
+				mTextureHash[x].id = -1;
 				mTextureHash[x].loaded = false;
 			}
 		}
@@ -190,7 +190,7 @@ public class TextureLibrary extends BaseObject {
 			((GL11) gl).glTexParameteriv(GL10.GL_TEXTURE_2D, GL11Ext.GL_TEXTURE_CROP_RECT_OES,
 					mCropWorkspace, 0);
 
-			texture.name = textureName;
+			texture.id = textureName;
 			texture.width = bitmap.getWidth();
 			texture.height = bitmap.getHeight();
 
@@ -265,7 +265,7 @@ public class TextureLibrary extends BaseObject {
 
 		if (index != -1) {
 			mTextureHash[index].resource = id;
-			mTextureHash[index].name = name;
+			mTextureHash[index].id = name;
 			mTextureHash[index].width = width;
 			mTextureHash[index].height = height;
 			texture = mTextureHash[index];

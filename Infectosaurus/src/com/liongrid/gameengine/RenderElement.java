@@ -7,7 +7,7 @@ import com.liongrid.infectosaurus.tools.Vector2;
 import android.util.Log;
 
 public class RenderElement extends BaseObject{
-	public Drawable drawable;
+	public DrawableObject drawable;
 	//public Vector2 pos;
 	public float x;
 	public float y;
@@ -38,14 +38,14 @@ public class RenderElement extends BaseObject{
 		y = 0;*/
 	}
 
-	public void set(Drawable object, Vector2 pos) {
+	public void set(DrawableObject object, Vector2 pos) {
 		this.drawable = object;
 		x = pos.x;
 		y = pos.y;
 		
 	}
 	
-	public void set(Drawable drawable, int x, int y){
+	public void set(DrawableObject drawable, int x, int y){
 		this.drawable = drawable;
 		this.x = x;
 		this.y = y;

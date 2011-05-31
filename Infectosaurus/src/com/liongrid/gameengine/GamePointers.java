@@ -25,4 +25,6 @@ public class GamePointers implements Serializable {
 	public Level level;
 	public TileSet tileSet;
 	public Infectosaurus currentSaurus;
+	public TextureLibrary shortTermTexLib;
+	public TextureLibrary longTermTexLib;
 }

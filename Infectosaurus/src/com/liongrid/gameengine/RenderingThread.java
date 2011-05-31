@@ -122,6 +122,10 @@ public class RenderingThread implements Panel.Renderer {
         gl.glLoadIdentity();
         float ratio = (float)width/height;
         gl.glFrustumf(-ratio, ratio, -1, 1, 1, 10);
+        
+        //Load textures TODO move this to the best place
+        
+        
 	}
 
 
@@ -148,6 +152,14 @@ public class RenderingThread implements Panel.Renderer {
         gl.glTexEnvx(GL10.GL_TEXTURE_ENV, GL10.GL_TEXTURE_ENV_MODE, GL10.GL_MODULATE);
 
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
+        
+        
+        BaseObject.gamePointers.longTermTexLib.invalidateAll();
+        BaseObject.gamePointers.shortTermTexLib.invalidateAll();
+        BaseObject.gamePointers.longTermTexLib.loadAll(
+        		BaseObject.gamePointers.panel.getContext(), gl);
+        BaseObject.gamePointers.shortTermTexLib.loadAll(
+        		BaseObject.gamePointers.panel.getContext(), gl);
 	}
 
 	public synchronized void setDrawQueue(ObjectHandler drawQueue) {
@@ -158,11 +170,18 @@ public class RenderingThread implements Panel.Renderer {
 		}
 	}
 	
+	public void onSurfaceLost(){
+		BaseObject.gamePointers.longTermTexLib.invalidateAll();
+		BaseObject.gamePointers.shortTermTexLib.invalidateAll();
+	}
+	
+	
+	
+	
 	/**
      * This function blocks while drawFrame() is in progress, and may be used by other threads to
      * determine when drawing is occurring.
-     */
-
+     */	
 	public synchronized void waitDrawingComplete() {
 		
 	}

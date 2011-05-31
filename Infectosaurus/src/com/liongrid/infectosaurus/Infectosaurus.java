@@ -3,6 +3,7 @@ package com.liongrid.infectosaurus;
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.DrawableBitmap;
 import com.liongrid.gameengine.GameObject;
+import com.liongrid.gameengine.TextureLibrary;
 import com.liongrid.infectosaurus.R;
 import com.liongrid.infectosaurus.components.AggressivMoveComponent;
 import com.liongrid.infectosaurus.components.MeleeAttackComponent;
@@ -23,8 +24,10 @@ public class Infectosaurus extends InfectoGameObject {
 		
 		addComponent(new MeleeAttackComponent());
 		
+		TextureLibrary texLib = gamePointers.longTermTexLib;
 		DrawableBitmap db = new DrawableBitmap(
-				R.drawable.lumberinghulklo,16*3,16*3,panel.getContext());
+				texLib.allocateTexture(R.drawable.lumberinghulklo), 16*3, 16*3);
+		
 		addComponent(new AggressivMoveComponent());
 		addComponent(new SpriteComponent(db));
 		addComponent(new MoveComponent());

@@ -7,6 +7,7 @@ import com.liongrid.gameengine.GamePointers;
 import com.liongrid.gameengine.GameThread;
 import com.liongrid.gameengine.RenderSystem;
 import com.liongrid.gameengine.RenderingThread;
+import com.liongrid.gameengine.TextureLibrary;
 import com.liongrid.infectosaurus.map.Level;
 import com.liongrid.infectosaurus.map.TileSet;
 import com.liongrid.infectosaurus.tools.InfectoGameObjectHandler;
@@ -39,7 +40,8 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback,
 	    
 	    GamePointers gamePointers = new GamePointers();
 	    BaseObject.gamePointers = gamePointers;
-	    
+	    gamePointers.longTermTexLib = new TextureLibrary();
+	    gamePointers.shortTermTexLib = new TextureLibrary();
 	    gamePointers.renderSystem = new RenderSystem();
 	    gamePointers.panel = this;
 	    gamePointers.root = new ObjectHandler();
@@ -49,6 +51,8 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback,
 	   
 	    gamePointers.root.add(gamePointers.gameObjectHandler);
 	    
+	    loadTextures();
+	    
 	    gamePointers.gameThread = new GameThread();
 	    BaseObject.gamePointers.renderThread = new RenderingThread();
 	    
@@ -57,6 +61,12 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback,
 	public void startGame(){
 		BaseObject.gamePointers.gameThread.start();
 	    
+	}
+	
+	public void loadTextures(){
+		TextureLibrary tLib = BaseObject.gamePointers.shortTermTexLib;
+		tLib.allocateTexture(R.drawable.lumberinghulklo);
+		tLib.allocateTexture(R.drawable.mann1);
 	}
 	
 	public void setRender(){

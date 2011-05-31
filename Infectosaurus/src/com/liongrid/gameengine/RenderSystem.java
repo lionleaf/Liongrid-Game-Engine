@@ -31,7 +31,7 @@ public class RenderSystem {
         queueIndex = 0;
     }
     
-    public void scheduleForDraw(Drawable object, Vector2 pos) {
+    public void scheduleForDraw(DrawableObject object, Vector2 pos) {
     	
     	if(cull(object, pos)) return;
     	
@@ -49,7 +49,7 @@ public class RenderSystem {
     }
     
     
-    public boolean cull(Drawable object, Vector2 pos){
+    public boolean cull(DrawableObject object, Vector2 pos){
     	if(pos.x + object.getWidth() < Camera.pos.x) return true;
     	if(pos.x * Camera.scale > Camera.pos.x * Camera.scale + Camera.screenHeight) return true;
         if(pos.y + object.getHeight() < Camera.pos.y) return true;

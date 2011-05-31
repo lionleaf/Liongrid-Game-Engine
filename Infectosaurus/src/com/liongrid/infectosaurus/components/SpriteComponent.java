@@ -4,18 +4,18 @@ import android.util.Log;
 
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Component;
-import com.liongrid.gameengine.Drawable;
+import com.liongrid.gameengine.DrawableObject;
 import com.liongrid.gameengine.GameObject;
 import com.liongrid.infectosaurus.InfectoGameObject;
 import com.liongrid.infectosaurus.map.Level;
 import com.liongrid.infectosaurus.tools.Vector2;
 
 public class SpriteComponent extends Component<InfectoGameObject> {
-	Drawable drawing;
+	DrawableObject drawing;
 	Vector2 pos;
 	Vector2 lastPos;
 	
-	public SpriteComponent(Drawable drawing){
+	public SpriteComponent(DrawableObject drawing){
 		
 		this.drawing = drawing;
 		lastPos = new Vector2();

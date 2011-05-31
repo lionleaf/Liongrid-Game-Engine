@@ -7,6 +7,8 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import com.liongrid.gameengine.BaseObject;
+import com.liongrid.gameengine.DrawableBitmap;
+import com.liongrid.gameengine.TextureLibrary;
 import com.liongrid.infectosaurus.R;
 
 public class TileSetSaxParser extends DefaultHandler {
@@ -64,7 +66,8 @@ public class TileSetSaxParser extends DefaultHandler {
 		super.endElement(uri, localName, qName);
 		
 		if(localName.equalsIgnoreCase("Tile")){
-			tileTypes[currentIndex] = new TileType(currentRes,currentBlocked);
+			TextureLibrary texLib = BaseObject.gamePointers.longTermTexLib;		
+			tileTypes[currentIndex] = new TileType(texLib.allocateTexture(currentRes),currentBlocked);
 			tileSet.tileIDtoIndexMap.put(currentID, currentIndex);
 			currentIndex++;
 		}

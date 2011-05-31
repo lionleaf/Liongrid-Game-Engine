@@ -2,7 +2,7 @@ package com.liongrid.gameengine;
 
 import javax.microedition.khronos.opengles.GL10;
 
-public interface Drawable {
+public interface DrawableObject {
 	
 	/**
 	 * Draws the object on the screen
@@ -23,6 +23,8 @@ public interface Drawable {
 	 * @return the width that will be drawn if you call draw now
 	 */
 	public int getHeight();
+
+	public Texture getTexture();
 	
 	//TODO This height and width does not depend upon the scale. 
 	//Will introduce bugs at some point! FIX!

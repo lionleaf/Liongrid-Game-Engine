@@ -38,7 +38,7 @@ public class GameBoard extends Activity{
 		panel = new Panel(this);
 		if(savedInstanceState == null){
 			panel.init(); 
-			panel.startGame();
+			
 		}else{
 			
 			BaseObject.gamePointers.panel = panel;
@@ -46,6 +46,7 @@ public class GameBoard extends Activity{
 				//savedInstanceState.getSerializable("GamePointers");
 		}
 		panel.startGame();
+		panel.setRender();
 		setContentView(panel);
 
 	}
