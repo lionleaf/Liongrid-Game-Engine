@@ -50,7 +50,7 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback,
 	   
 	    gamePointers.root.add(gamePointers.gameObjectHandler);
 	    
-	    loadTextures();
+	    preLoadTextures();
 	    
 	    gamePointers.gameThread = new GameThread();
 	    BaseObject.gamePointers.renderThread = new RenderingThread();
@@ -62,7 +62,12 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback,
 	    
 	}
 	
-	public void loadTextures(){
+	/**
+	 * This should be placed somewhere else later. 
+	 * But you have to load the textures to be used in a level!
+	 *  Before you start up!
+	 */
+	public void preLoadTextures(){
 		TextureLibrary tLib = BaseObject.gamePointers.textureLib;
 		tLib.allocateTexture(R.drawable.lumberinghulklo);
 		tLib.allocateTexture(R.drawable.mann1);
