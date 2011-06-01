@@ -26,7 +26,7 @@ public class Infectosaurus extends InfectoGameObject {
 		
 		TextureLibrary texLib = gamePointers.textureLib;
 		DrawableBitmap db = new DrawableBitmap(
-				texLib.allocateTexture(R.drawable.lumberinghulklo), 16*3, 16*3);
+				texLib.allocateTexture(R.drawable.spheremonster01), 16*3, 16*3);
 		
 		addComponent(new AggressivMoveComponent());
 		addComponent(new SpriteComponent(db));

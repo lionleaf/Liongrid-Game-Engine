@@ -69,7 +69,7 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback,
 	 */
 	public void preLoadTextures(){
 		TextureLibrary tLib = BaseObject.gamePointers.textureLib;
-		tLib.allocateTexture(R.drawable.lumberinghulklo);
+		tLib.allocateTexture(R.drawable.spheremonster01);
 		tLib.allocateTexture(R.drawable.mann1);
 	}
 	
