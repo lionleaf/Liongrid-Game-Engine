@@ -51,9 +51,9 @@ public class RenderSystem {
     
     public boolean cull(DrawableObject object, Vector2 pos){
     	if(pos.x + object.getWidth() < Camera.pos.x) return true;
-    	if(pos.x * Camera.scale > Camera.pos.x * Camera.scale + Camera.screenHeight) return true;
+    	if(pos.x > Camera.pos.x + Camera.screenWidth/Camera.scale) return true;
         if(pos.y + object.getHeight() < Camera.pos.y) return true;
-    	if(pos.y * Camera.scale > Camera.pos.y * Camera.scale + Camera.screenWidth) return true;
+    	if(pos.y > Camera.pos.y + Camera.screenHeight/Camera.scale) return true;
     	
     	return false;
     }

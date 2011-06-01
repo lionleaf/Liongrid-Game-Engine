@@ -73,7 +73,7 @@ public class RenderingThread implements Panel.Renderer {
 						int x = Level.TILE_SIZE*i;
 						int y = Level.TILE_SIZE*j;
 						//Check if element is outside the screen view
-				        if(x + Level.TILE_SIZE < cameraX) continue;
+				        if(x + Level.TILE_SIZE < cameraX/scale) continue;
 				    	if(x > cameraX + cameraWidth/scale) continue;
 				        if(y + Level.TILE_SIZE < cameraY) continue;
 				    	if(y > cameraY + cameraHeight/scale) continue;
