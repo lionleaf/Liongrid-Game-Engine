@@ -27,22 +27,35 @@ public class InputSystem extends SimpleOnGestureListener{
 		
 		BaseObject.gamePointers.renderThread.waitDrawingComplete();
 		
-		// Adjust pos.x settings for landscape mode
-		Camera.pos.x += (int) distanceX / Camera.scale;
-		Log.d(Main.TAG,"mapSizePx.x = " + Level.mapSizePx.x);
-		Log.d(Main.TAG,"screenWidth = " + Camera.screenWidth);
-		Log.d(Main.TAG,"screenWidth/scale = " + Camera.screenWidth/Camera.scale);
-		Log.d(Main.TAG,"scale = " + Camera.scale);
-		if(Camera.pos.x  < 0) Camera.pos.x = 0;
-		else if(Camera.pos.x + Camera.screenWidth/Camera.scale > Level.mapSizePx.x) 
+		//Make sure not to put any value into the camera that 
+		//we are not sure are valid
+		float tempX = Camera.pos.x + distanceX / Camera.scale;
+		
+//		Log.d(Main.TAG,"mapSizePx.x = " + Level.mapSizePx.x);
+//		Log.d(Main.TAG,"screenWidth = " + Camera.screenWidth);
+//		Log.d(Main.TAG,"screenWidth/scale = " + Camera.screenWidth/Camera.scale);
+//		Log.d(Main.TAG,"scale = " + Camera.scale);
+		
+		
+		if(tempX  < 0) Camera.pos.x = 0;
+		else if(tempX + Camera.screenWidth/Camera.scale > Level.mapSizePx.x) 
 			Camera.pos.x = Math.max(0, 
 					Level.mapSizePx.x - (int)( Camera.screenWidth/Camera.scale));
+		else{
+			Camera.pos.x = (int) tempX;
+		}
 		
-		Camera.pos.y -= (int) distanceY / Camera.scale;
-		if(Camera.pos.y  < 0) Camera.pos.y = 0;
-		else if(Camera.pos.y  + Camera.screenHeight/Camera.scale > Level.mapSizePx.y) 
+		float tempY = Camera.pos.y - distanceY / Camera.scale;
+		if(tempY  < 0){
+			Camera.pos.y = 0;
+		}else if(Camera.pos.y  + Camera.screenHeight/Camera.scale > Level.mapSizePx.y){ 
 			Camera.pos.y = Math.max(0, 
 					(Level.mapSizePx.y) - (int) (Camera.screenHeight/Camera.scale));
+		}else{
+			Camera.pos.y = (int) tempY;
+		}
+		
+		
 		return true;
 	}
 }

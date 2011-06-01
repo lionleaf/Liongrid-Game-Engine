@@ -75,6 +75,7 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback,
 	
 	public void setRender(){
 		setRenderer(BaseObject.gamePointers.renderThread);
+		setKeepScreenOn(true);
 	}
 	
 	
