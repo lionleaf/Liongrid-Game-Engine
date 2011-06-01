@@ -17,7 +17,8 @@ import android.view.WindowManager;
 
 
 public class RenderingThread implements Panel.Renderer {
-    
+	static final int TILE_SIZE = Level.TILE_SIZE;
+	
     private ObjectHandler drawQueue;
 	private Object drawLock;
 	private boolean drawQueueChanged;
@@ -52,10 +53,11 @@ public class RenderingThread implements Panel.Renderer {
 			//camera throughout drawing
 			//TODO We pretty much copy the whole camera.
 			// Different solution? Not static?
+			
 			int cameraX = Camera.pos.x;
 			int cameraY = Camera.pos.y;
-			int cameraHeight = Camera.screenWidth;
-			int cameraWidth = Camera.screenHeight;
+			int cameraWidth = Camera.screenWidth;
+			int cameraHeight = Camera.screenHeight;
 			float scale = Camera.scale;
 			
 			
@@ -65,11 +67,13 @@ public class RenderingThread implements Panel.Renderer {
 			Level level = BaseObject.gamePointers.level;
 			TileType[][] bgTiles = level.renderQueue;
 			
-			if(bgTiles != null && bgTiles.length > 0){		
-				//TODO Do way more efficient!
-				for (int i = 0; i < bgTiles.length; i++) {
-					for (int j = 0; j < bgTiles[i].length; j++) {
-						
+			if(bgTiles != null && bgTiles.length > 0){
+				int tilesX =  (int)(cameraX + cameraWidth/scale)/TILE_SIZE + 1;
+				if(tilesX > Level.mapSize.x) tilesX = Level.mapSize.x;
+				int tilesY =  (int)(cameraY + cameraHeight/scale)/TILE_SIZE + 1;
+				if(tilesY > Level.mapSize.y) tilesY = Level.mapSize.y;
+				for (int i = cameraX / Level.TILE_SIZE; i < tilesX; i++) {
+					for (int j = cameraY / Level.TILE_SIZE; j < tilesY; j++) {
 						int x = Level.TILE_SIZE*i;
 						int y = Level.TILE_SIZE*j;
 						//Check if element is outside the screen view

@@ -31,10 +31,10 @@ public class Level extends BaseObject{
 	static final int NODE_DENSITY = 2;
 
 	public static Vector2Int mapSizePx = new Vector2Int();
+	public static Vector2Int mapSize;
 
 	private static final Random rand = new Random();
 
-	private static Vector2Int mapSize;
 	private Vector2Int[] pathNodes;
 
 	
