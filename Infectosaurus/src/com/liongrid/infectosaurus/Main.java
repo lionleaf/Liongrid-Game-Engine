@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
 
 public class Main extends Activity {
 	public static final String TAG = "Infectosaurus";
@@ -14,8 +16,27 @@ public class Main extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG,"In Main");
-        Intent i;
-        i = new Intent(this, GameBoard.class);
-        startActivity(i);
+        setContentView(R.layout.main);
+        
+        View startButton = findViewById(R.id.startGameButton);
+        startButton.setOnClickListener(new OnClickListener(){
+
+			public void onClick(View v) {
+				Intent i;
+		        i = new Intent(v.getContext(), GameBoard.class);
+		        startActivity(i);
+			}
+        	
+        });
+        
+        View exitButton = findViewById(R.id.exitGameButton);
+        exitButton.setOnClickListener(new OnClickListener(){
+        	
+			public void onClick(View v) {
+				Main.this.finish();
+			}
+        	
+        });
+        
     }
 }

@@ -4,9 +4,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-<TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="@string/hello"
-    />
+    <TableLayout android:id="@+id/tableLayout1" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <Button android:layout_width="wrap_content" android:text="@string/startGame" android:layout_height="wrap_content" android:layout_gravity="top" android:layout_weight="1" android:id="@+id/startGameButton"></Button>
+        <Button android:layout_height="wrap_content" android:layout_gravity="bottom" android:layout_width="wrap_content" android:text="@string/exit" android:id="@+id/exitGameButton"></Button>
+    </TableLayout>
 </LinearLayout>
