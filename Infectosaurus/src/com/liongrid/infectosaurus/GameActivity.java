@@ -31,7 +31,6 @@ public class GameActivity extends Activity implements GameActivityInterface{
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		
 		infectoPointers = new InfectoPointers();
 		gestureDetector = new GestureDetector(this, new InputSystem());
 		
@@ -42,11 +41,10 @@ public class GameActivity extends Activity implements GameActivityInterface{
 
 		panel = new Panel(this);
 		
-		
 		if(savedInstanceState == null){
 			panel.init();
-			infectoPointers.gameObjectHandler = new InfectoGameObjectHandler();
-			panel.addToRoot(infectoPointers.gameObjectHandler);
+			init();
+			
 		}else{
 			BaseObject.gamePointers.panel = panel;
 		}
@@ -55,9 +53,12 @@ public class GameActivity extends Activity implements GameActivityInterface{
 		panel.setRender();
 		preLoadTextures();
 		
-		
-		
 		setContentView(panel);
+	}
+
+	private void init() {
+		infectoPointers.gameObjectHandler = new InfectoGameObjectHandler();
+		panel.addToRoot(infectoPointers.gameObjectHandler);		
 	}
 
 
