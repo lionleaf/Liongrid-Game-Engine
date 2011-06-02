@@ -39,6 +39,8 @@ public class MeleeAttackComponent extends Component<InfectoGameObject> {
 	@Override
 	public void update(float dt, InfectoGameObject parent) {
 		
+		delayCountDown -= dt;
+		if(delayCountDown > 0) return;
 		
 		InfectoGameObject target =	gameObjHandler.getClosest(
 				parent, parent.team == Team.Human ? Team.Alien : Team.Human);
@@ -49,11 +51,9 @@ public class MeleeAttackComponent extends Component<InfectoGameObject> {
 			return;
 		}
 		
-		if(target != lastTarget ) delayCountDown = 0;
 		lastTarget = target;
 		
-		delayCountDown -= dt;
-		if(delayCountDown > 0) return;
+		
 		delayCountDown = delay;
 		
 		
