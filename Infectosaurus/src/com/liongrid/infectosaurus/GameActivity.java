@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Camera;
+import com.liongrid.gameengine.GameActivityInterface;
 import com.liongrid.gameengine.InputSystem;
 import com.liongrid.gameengine.Panel;
 import com.liongrid.infectosaurus.map.Level;
@@ -21,7 +22,7 @@ import android.view.Window;
  * @author Lastis
  *		This activity is the upper class for the whole game play
  */
-public class GameActivity extends Activity{
+public class GameActivity extends Activity implements GameActivityInterface{
 	Panel panel;
 	private GestureDetector gestureDetector;
 
@@ -30,7 +31,7 @@ public class GameActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		
 		gestureDetector = new GestureDetector(this, new InputSystem());
-
+		
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		Log.d(Main.TAG,"In GameActivity onCreate");
 		
@@ -49,6 +50,7 @@ public class GameActivity extends Activity{
 		setContentView(panel);
 	}
 
+
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
@@ -65,8 +67,7 @@ public class GameActivity extends Activity{
         return false;
 	}
 
-	private void setScreenDimensionsAndScale() {
-		
+	public void setScreenDimensionsAndScale() {
 		Display display = getWindowManager().getDefaultDisplay(); 
 		/* Now we can retrieve all display-related infos */
 		Camera.screenHeight = display.getHeight();
