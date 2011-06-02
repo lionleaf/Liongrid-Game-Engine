@@ -26,6 +26,6 @@ public class InfectoGameObject extends GameObject<InfectoGameObject> {
 	}
 	
 	protected void die(){
-		BaseObject.gamePointers.gameObjectHandler.remove(this);
+		GameActivity.infectoPointers.gameObjectHandler.remove(this);
 	}
 }

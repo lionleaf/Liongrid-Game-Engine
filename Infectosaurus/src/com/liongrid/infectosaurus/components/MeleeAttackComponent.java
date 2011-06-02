@@ -6,6 +6,7 @@ import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Component;
 import com.liongrid.gameengine.GameObject;
 import com.liongrid.gameengine.tools.FixedSizeArray;
+import com.liongrid.infectosaurus.GameActivity;
 import com.liongrid.infectosaurus.InfectoGameObjectHandler;
 import com.liongrid.infectosaurus.Team;
 import com.liongrid.infectosaurus.InfectoGameObject;
@@ -32,7 +33,7 @@ public class MeleeAttackComponent extends Component<InfectoGameObject> {
 	}
 	
 	public void set(){
-		gameObjHandler = (InfectoGameObjectHandler) BaseObject.gamePointers.gameObjectHandler;
+		gameObjHandler = GameActivity.infectoPointers.gameObjectHandler;
 	}
 	
 	@Override

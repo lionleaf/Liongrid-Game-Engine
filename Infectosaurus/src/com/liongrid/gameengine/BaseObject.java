@@ -12,7 +12,7 @@ import android.util.Log;
  * 
  */
 public abstract class BaseObject {
-	public static GamePointers gamePointers;
+	public static GameEnginePointers gamePointers;
 	public BaseObject(){
 		//Log.d("GameBoard", "In BaseObject");
 	}

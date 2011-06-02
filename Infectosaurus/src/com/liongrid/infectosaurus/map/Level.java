@@ -15,7 +15,7 @@ import android.util.Log;
 
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Camera;
-import com.liongrid.gameengine.GamePointers;
+import com.liongrid.gameengine.GameEnginePointers;
 import com.liongrid.gameengine.Panel;
 import com.liongrid.gameengine.tools.MovementType;
 import com.liongrid.gameengine.tools.Vector2Int;

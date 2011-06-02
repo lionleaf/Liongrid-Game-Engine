@@ -34,7 +34,7 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback,
 	    getHolder().addCallback(this);
 	    getHolder().setType(SurfaceHolder.SURFACE_TYPE_GPU);
 	    
-	    GamePointers gamePointers = new GamePointers();
+	    GameEnginePointers gamePointers = new GameEnginePointers();
 	    BaseObject.gamePointers = gamePointers;
 	    gamePointers.textureLib = new TextureLibrary();
 	    gamePointers.renderSystem = new RenderSystem();
@@ -42,15 +42,17 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback,
 	    gamePointers.root = new ObjectHandler();
 	    gamePointers.tileSet = new TileSet();
 	    gamePointers.level = new Level();
-	    gamePointers.gameObjectHandler = new InfectoGameObjectHandler();
-	   
-	    gamePointers.root.add(gamePointers.gameObjectHandler);
 	    
+	   
 	    preLoadTextures();
 	    
 	    gamePointers.gameThread = new GameThread();
 	    BaseObject.gamePointers.renderThread = new RenderingThread();
 	    
+	}
+	
+	public void addToRoot(BaseObject object){
+		BaseObject.gamePointers.root.add(object);
 	}
 	
 	public void startGame(){

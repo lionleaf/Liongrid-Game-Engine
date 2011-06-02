@@ -1,5 +1,6 @@
 package com.liongrid.gameengine;
 
+import com.liongrid.infectosaurus.GameActivity;
 import com.liongrid.infectosaurus.Infectosaurus;
 import com.liongrid.infectosaurus.Main;
 
@@ -113,7 +114,7 @@ public class GameThread extends Thread {
 			if(BaseObject.gamePointers.currentSaurus == null){
 				Infectosaurus inf = new Infectosaurus();
 				BaseObject.gamePointers.currentSaurus = inf;
-				BaseObject.gamePointers.gameObjectHandler.add(inf);
+				GameActivity.infectoPointers.gameObjectHandler.add(inf);
 			}
 			
 			float y = (BaseObject.gamePointers.panel.getHeight() - event.getY()) / Camera.scale;

@@ -1,10 +1,11 @@
-package com.liongrid.gameengine;
+package com.liongrid.infectosaurus;
 
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.GestureDetector.SimpleOnGestureListener;
 
-import com.liongrid.infectosaurus.Main;
+import com.liongrid.gameengine.BaseObject;
+import com.liongrid.gameengine.Camera;
 import com.liongrid.infectosaurus.map.Level;
 
 public class InputSystem extends SimpleOnGestureListener{

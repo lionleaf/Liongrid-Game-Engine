@@ -3,6 +3,7 @@ package com.liongrid.infectosaurus.components;
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Component;
 import com.liongrid.gameengine.GameObject;
+import com.liongrid.infectosaurus.GameActivity;
 import com.liongrid.infectosaurus.InfectoGameObject;
 import com.liongrid.infectosaurus.InfectoGameObjectHandler;
 
@@ -11,7 +12,7 @@ public class AggressivMoveComponent extends Component<InfectoGameObject>{
 	private InfectoGameObjectHandler gameObjHandler;
 
 	public AggressivMoveComponent(){
-		gameObjHandler = (InfectoGameObjectHandler) BaseObject.gamePointers.gameObjectHandler;
+		gameObjHandler = GameActivity.infectoPointers.gameObjectHandler;
 	}
 
 	@Override
