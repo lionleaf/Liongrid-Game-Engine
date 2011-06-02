@@ -1,7 +1,6 @@
 package com.liongrid.gameengine;
 
 import com.liongrid.gameengine.tools.FixedSizeArray;
-import com.liongrid.gameengine.tools.ObjectHandler;
 import com.liongrid.gameengine.tools.ObjectPool;
 import com.liongrid.gameengine.tools.Vector2;
 

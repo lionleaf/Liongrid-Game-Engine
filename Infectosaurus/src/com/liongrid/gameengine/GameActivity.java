@@ -1,10 +1,8 @@
-package com.liongrid.infectosaurus;
+package com.liongrid.gameengine;
 
 import java.io.Serializable;
 
-import com.liongrid.gameengine.BaseObject;
-import com.liongrid.gameengine.Camera;
-import com.liongrid.gameengine.InputSystem;
+import com.liongrid.infectosaurus.Main;
 import com.liongrid.infectosaurus.map.Level;
 
 import android.app.Activity;

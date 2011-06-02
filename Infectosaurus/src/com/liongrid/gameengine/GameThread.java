@@ -1,6 +1,5 @@
 package com.liongrid.gameengine;
 
-import com.liongrid.gameengine.tools.ObjectHandler;
 import com.liongrid.infectosaurus.Infectosaurus;
 import com.liongrid.infectosaurus.Main;
 

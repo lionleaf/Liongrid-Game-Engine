@@ -6,7 +6,7 @@ import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Component;
 import com.liongrid.gameengine.GameObject;
 import com.liongrid.gameengine.tools.FixedSizeArray;
-import com.liongrid.gameengine.tools.InfectoGameObjectHandler;
+import com.liongrid.infectosaurus.InfectoGameObjectHandler;
 import com.liongrid.infectosaurus.Team;
 import com.liongrid.infectosaurus.InfectoGameObject;
 import com.liongrid.infectosaurus.effects.DamageEffect;

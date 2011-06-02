@@ -1,8 +1,7 @@
-package com.liongrid.gameengine.tools;
+package com.liongrid.infectosaurus;
 
-import com.liongrid.infectosaurus.Human;
-import com.liongrid.infectosaurus.InfectoGameObject;
-import com.liongrid.infectosaurus.Team;
+import com.liongrid.gameengine.ObjectHandler;
+import com.liongrid.gameengine.tools.FixedSizeArray;
 
 /**
  * @author Lastis

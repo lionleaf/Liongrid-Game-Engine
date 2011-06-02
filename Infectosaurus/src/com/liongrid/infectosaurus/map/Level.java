@@ -16,11 +16,11 @@ import android.util.Log;
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Camera;
 import com.liongrid.gameengine.GamePointers;
+import com.liongrid.gameengine.Panel;
 import com.liongrid.gameengine.tools.MovementType;
 import com.liongrid.gameengine.tools.Vector2Int;
 import com.liongrid.infectosaurus.R;
 import com.liongrid.infectosaurus.Main;
-import com.liongrid.infectosaurus.Panel;
 
 public class Level extends BaseObject{
 

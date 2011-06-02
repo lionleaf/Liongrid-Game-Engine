@@ -1,6 +1,6 @@
-package com.liongrid.gameengine.tools;
+package com.liongrid.gameengine;
 
-import com.liongrid.gameengine.BaseObject;
+import com.liongrid.gameengine.tools.FixedSizeArray;
 
 public class ObjectHandler <T extends BaseObject> extends BaseObject {
 	public FixedSizeArray<T> objects;
