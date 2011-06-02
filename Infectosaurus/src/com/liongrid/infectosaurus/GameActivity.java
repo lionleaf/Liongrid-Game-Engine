@@ -6,6 +6,7 @@ import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Camera;
 import com.liongrid.gameengine.GameActivityInterface;
 import com.liongrid.gameengine.Panel;
+import com.liongrid.gameengine.TextureLibrary;
 import com.liongrid.infectosaurus.map.Level;
 
 import android.app.Activity;
@@ -31,7 +32,7 @@ public class GameActivity extends Activity implements GameActivityInterface{
 		super.onCreate(savedInstanceState);
 		
 		
-		InfectoPointers infectoPointers = new InfectoPointers();
+		infectoPointers = new InfectoPointers();
 		gestureDetector = new GestureDetector(this, new InputSystem());
 		
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -40,17 +41,21 @@ public class GameActivity extends Activity implements GameActivityInterface{
 		setScreenDimensionsAndScale();
 
 		panel = new Panel(this);
+		
+		
 		if(savedInstanceState == null){
-			panel.init(); 
+			panel.init();
+			infectoPointers.gameObjectHandler = new InfectoGameObjectHandler();
+			panel.addToRoot(infectoPointers.gameObjectHandler);
 		}else{
 			BaseObject.gamePointers.panel = panel;
-			//BaseObject.gamePointers = (GamePointers)
-				//savedInstanceState.getSerializable("GamePointers");
 		}
+		
 		panel.startGame();
 		panel.setRender();
-		infectoPointers.gameObjectHandler = new InfectoGameObjectHandler();
-		panel.addToRoot(infectoPointers.gameObjectHandler);
+		preLoadTextures();
+		
+		
 		
 		setContentView(panel);
 	}
@@ -61,6 +66,17 @@ public class GameActivity extends Activity implements GameActivityInterface{
 		super.onSaveInstanceState(outState);
 		//outState.putSerializable("GamePointers", (Serializable) BaseObject.gamePointers);
 		
+	}
+	
+	/**
+	 * This should be placed somewhere else later. 
+	 * But you have to load the textures to be used in a level!
+	 *  Before you start up!
+	 */
+	public void preLoadTextures(){
+		TextureLibrary tLib = BaseObject.gamePointers.textureLib;
+		tLib.allocateTexture(R.drawable.spheremonster01);
+		tLib.allocateTexture(R.drawable.mann1);
 	}
 	
 	@Override
