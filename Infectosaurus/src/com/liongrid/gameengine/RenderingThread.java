@@ -173,8 +173,6 @@ public class RenderingThread implements Panel.Renderer {
 	
 	
 	
-	
-	
 	/**
      * This function blocks while drawFrame() is in progress, and may be used by other threads to
      * determine when drawing is occurring.

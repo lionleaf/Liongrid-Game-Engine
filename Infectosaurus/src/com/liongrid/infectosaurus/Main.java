@@ -23,7 +23,7 @@ public class Main extends Activity {
 
 			public void onClick(View v) {
 				Intent i;
-		        i = new Intent(v.getContext(), GameBoard.class);
+		        i = new Intent(v.getContext(), GameActivity.class);
 		        startActivity(i);
 			}
         	

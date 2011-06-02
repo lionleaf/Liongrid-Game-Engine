@@ -20,7 +20,7 @@ import android.view.Window;
  * @author Lastis
  *		This activity is the upper class for the whole game play
  */
-public class GameBoard extends Activity{
+public class GameActivity extends Activity{
 	Panel panel;
 	private GestureDetector gestureDetector;
 

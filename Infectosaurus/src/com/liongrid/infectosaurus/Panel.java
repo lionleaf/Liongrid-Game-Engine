@@ -59,7 +59,10 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback,
 	
 	public void startGame(){
 		BaseObject.gamePointers.gameThread.start();
-	    
+	}
+	
+	public void setRender(){
+		setRenderer(BaseObject.gamePointers.renderThread);
 	}
 	
 	/**
@@ -71,11 +74,6 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback,
 		TextureLibrary tLib = BaseObject.gamePointers.textureLib;
 		tLib.allocateTexture(R.drawable.spheremonster01);
 		tLib.allocateTexture(R.drawable.mann1);
-	}
-	
-	public void setRender(){
-		setRenderer(BaseObject.gamePointers.renderThread);
-		setKeepScreenOn(true);
 	}
 	
 	
