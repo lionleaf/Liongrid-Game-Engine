@@ -21,7 +21,7 @@
             </intent-filter>
             
         </activity>
-			<activity android:name=".GameBoard"  
+			<activity android:name="com.liongrid.gameengine.GameActivity"  
 					android:screenOrientation="landscape" 
 					android:label="@string/app_name"
 					android:configChanges="keyboardHidden|orientation">

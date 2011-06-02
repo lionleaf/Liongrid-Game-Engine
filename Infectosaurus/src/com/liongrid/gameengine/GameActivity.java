@@ -29,16 +29,14 @@ public class GameActivity extends Activity{
 		gestureDetector = new GestureDetector(this, new InputSystem());
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		Log.d(Main.TAG,"In GameBoards onCreate");
+		Log.d(Main.TAG,"In GameActivity onCreate");
 		
 		setScreenDimensionsAndScale();
 
 		panel = new Panel(this);
 		if(savedInstanceState == null){
 			panel.init(); 
-			
 		}else{
-			
 			BaseObject.gamePointers.panel = panel;
 			//BaseObject.gamePointers = (GamePointers)
 				//savedInstanceState.getSerializable("GamePointers");
@@ -46,7 +44,6 @@ public class GameActivity extends Activity{
 		panel.startGame();
 		panel.setRender();
 		setContentView(panel);
-
 	}
 
 	@Override

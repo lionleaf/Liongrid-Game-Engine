@@ -32,7 +32,7 @@ public class MeleeAttackComponent extends Component<InfectoGameObject> {
 	}
 	
 	public void set(){
-		gameObjHandler = BaseObject.gamePointers.gameObjectHandler;
+		gameObjHandler = (InfectoGameObjectHandler) BaseObject.gamePointers.gameObjectHandler;
 	}
 	
 	@Override

@@ -14,8 +14,12 @@ import com.liongrid.infectosaurus.map.TileSet;
  * accessed through the static field BaseObject.gamePointers
  */
 public class GamePointers implements Serializable {
+	/**
+	 * This pointer should be to a specific GameObjectHandler which will have to be casted
+	 * when used. 
+	 */
+	public ObjectHandler gameObjectHandler;
 	public GameThread gameThread;
-	public InfectoGameObjectHandler gameObjectHandler;
 	public ObjectHandler root;
 	public RenderSystem renderSystem;
 	public RenderingThread renderThread;

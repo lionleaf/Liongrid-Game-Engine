@@ -11,7 +11,7 @@ public class AggressivMoveComponent extends Component<InfectoGameObject>{
 	private InfectoGameObjectHandler gameObjHandler;
 
 	public AggressivMoveComponent(){
-		gameObjHandler = BaseObject.gamePointers.gameObjectHandler;
+		gameObjHandler = (InfectoGameObjectHandler) BaseObject.gamePointers.gameObjectHandler;
 	}
 
 	@Override
