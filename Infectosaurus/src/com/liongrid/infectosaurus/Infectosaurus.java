@@ -13,6 +13,7 @@ import com.liongrid.infectosaurus.components.MeleeAttackComponent;
 import com.liongrid.infectosaurus.components.MoveComponent;
 import com.liongrid.infectosaurus.components.RandomWalkerComponent;
 import com.liongrid.infectosaurus.components.SpriteComponent;
+import com.liongrid.infectosaurus.effects.DelayedDamageEffect;
 
 
 import android.content.Context;
@@ -43,5 +44,18 @@ public class Infectosaurus extends InfectoGameObject {
 		addComponent(new MoveComponent());
 		speed = 100;
 		team = Team.Alien;
+		
+		
+		//Temp stuff to die in x sec
+		DelayedDamageEffect e = new DelayedDamageEffect();
+		e.set(20,500);
+		afflict(e);
+		
+	}
+	
+	@Override
+	protected void die() {
+		super.die();
+		gamePointers.currentSaurus = null;
 	}
 }

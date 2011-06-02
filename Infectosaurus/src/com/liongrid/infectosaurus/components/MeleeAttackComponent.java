@@ -11,6 +11,7 @@ import com.liongrid.infectosaurus.InfectoGameObjectHandler;
 import com.liongrid.infectosaurus.Team;
 import com.liongrid.infectosaurus.InfectoGameObject;
 import com.liongrid.infectosaurus.effects.DamageEffect;
+import com.liongrid.infectosaurus.effects.SpeedBuffEffect;
 
 
 public class MeleeAttackComponent extends Component<InfectoGameObject> {
@@ -62,6 +63,10 @@ public class MeleeAttackComponent extends Component<InfectoGameObject> {
 		DamageEffect eff = new DamageEffect();
 		eff.set(damage);
 		target.afflict(eff);
+		
+		SpeedBuffEffect speed = new SpeedBuffEffect();
+		speed.set(1f, 1, 100);
+		target.afflict(speed);
 		
 	}
 }

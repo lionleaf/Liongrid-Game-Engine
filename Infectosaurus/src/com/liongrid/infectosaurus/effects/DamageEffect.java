@@ -7,7 +7,7 @@ import com.liongrid.gameengine.Effect;
 import com.liongrid.gameengine.GameObject;
 import com.liongrid.infectosaurus.InfectoGameObject;
 
-public class DamageEffect extends Effect {
+public class DamageEffect extends Effect<InfectoGameObject> {
 	
 	private int damage;
 	
@@ -15,18 +15,39 @@ public class DamageEffect extends Effect {
 		
 	}
 	
+	/**
+	 * @param damage - damage to be done
+	 */
 	public void set(int damage){
+		//instant, so we set duration to 0
+		super.set(0);
+		
 		this.damage = damage;
 	}
 	
-	public void update(float dt, InfectoGameObject target, InfectoGameObject afflictor){
+	
+	
+	public void tick(float dt, InfectoGameObject target){
 		target.hp -= damage;
 	}
 	
 	@Override
 	public void reset() {
-		// TODO Auto-generated method stub
+		super.reset();
+		
+		damage = 0;
 
 	}
+
+	@Override
+	public void onApply(InfectoGameObject target) {
+	}
+
+	@Override
+	public void onRemove(InfectoGameObject target) {
+		
+	}
+
+
 
 }

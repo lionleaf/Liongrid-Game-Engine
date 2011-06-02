@@ -26,7 +26,7 @@ public class Human extends InfectoGameObject{
 		addComponent(new SpriteComponent(db)); 
 		addComponent(new BehaviorComponent());
 		
-		speed = rand.nextInt(20)+10;
+		speed = rand.nextInt(20)+20;
 		
 		int width = gamePointers.panel.getWidth();
 		int height = gamePointers.panel.getHeight();

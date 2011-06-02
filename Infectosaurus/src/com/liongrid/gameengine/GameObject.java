@@ -13,7 +13,7 @@ import com.liongrid.infectosaurus.Main;
 public abstract class GameObject<T extends GameObject<?>> extends BaseObject{
 
 	private FixedSizeArray<Component<T>> components;
-	private FixedSizeArray<Effect> effects;
+	private FixedSizeArray<Effect<T>> effects;
 	
 	private static final int DEFAULT_COMPONENT_SIZE = 64;
 	private static final int DEFAULT_EFFECT_SIZE = 64;
@@ -25,7 +25,7 @@ public abstract class GameObject<T extends GameObject<?>> extends BaseObject{
 	protected GameObject(){
 		Log.d(Main.TAG, "In BaseObject");
 		components = new FixedSizeArray<Component<T>>(DEFAULT_COMPONENT_SIZE);
-		effects = new FixedSizeArray<Effect>(DEFAULT_EFFECT_SIZE);
+		effects = new FixedSizeArray<Effect<T>>(DEFAULT_EFFECT_SIZE);
 		Log.d(Main.TAG, "GameObject construct");
 	}
 	
@@ -33,17 +33,27 @@ public abstract class GameObject<T extends GameObject<?>> extends BaseObject{
 		components = new FixedSizeArray<Component<T>>(size);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void update(float dt, BaseObject parent){
 		
 		int size = effects.getCount();
+		Object[] rawArr = effects.getArray();
 		for (int i = 0; i < size; i++) {
-			Effect e = effects.get(i);
+			Effect<T> e = (Effect<T>) rawArr[i];
+			
 			if(!e.expired()){
+				if(e.firstTick()){
+					e.onApply((T) this);
+				}
 				e.update(dt, this);
 			}else{
+				e.onRemove((T) this);
 				effects.swapWithLast(i);
 				effects.removeLast();
+				//Since we swapped and removed, adjust counters
+				size--;
+				i--;
 			}
 		}
 		
