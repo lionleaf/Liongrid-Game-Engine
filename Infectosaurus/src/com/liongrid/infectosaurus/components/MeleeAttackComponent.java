@@ -19,9 +19,9 @@ public class MeleeAttackComponent extends Component<InfectoGameObject> {
 	static final int CLOSE_CAPACITY = 20;
 	FixedSizeArray<InfectoGameObject> close;
 	int reach = 100; //Square of the actual reach 100 means 10 px
-	int damage = 2;
+	int damage = 1;
 	float delay = 0.5f; //sec
-	float delayCountDown = delay;
+	float delayCountDown = 0;
 	private InfectoGameObject lastTarget = null;
 	
 	
@@ -49,7 +49,7 @@ public class MeleeAttackComponent extends Component<InfectoGameObject> {
 			return;
 		}
 		
-		if(target != lastTarget ) delayCountDown = delay;
+		if(target != lastTarget ) delayCountDown = 0;
 		lastTarget = target;
 		
 		delayCountDown -= dt;
