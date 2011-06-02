@@ -1,7 +1,6 @@
 package com.liongrid.infectosaurus;
 
 
-import com.liongrid.gameengine.GameActivity;
 
 import android.app.Activity;
 import android.content.Intent;
