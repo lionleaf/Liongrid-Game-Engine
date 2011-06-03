@@ -18,7 +18,7 @@ public class InfectoGameObject extends GameObject<InfectoGameObject> {
 	@Override
 	public void update(float dt, BaseObject parent) {
 		// TODO Auto-generated method stub
-		if(hp < 0) { // Temp death function!!! TODO RREMOVE
+		if(hp <= 0) { // Temp death function!!! TODO RREMOVE
 			die();
 			return;
 		}
