@@ -10,7 +10,9 @@ import com.liongrid.gameengine.TextureLibrary;
 import com.liongrid.infectosaurus.map.Level;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.util.Log;
 import android.view.Display;
 import android.view.GestureDetector;
@@ -23,6 +25,10 @@ import android.view.Window;
  *		This activity is the upper class for the whole game play
  */
 public class GameActivity extends Activity implements GameActivityInterface{
+	
+	//To keep screen alive
+	private PowerManager.WakeLock wl;
+	
 	Panel panel;
 	private GestureDetector gestureDetector;
 	public static InfectoPointers infectoPointers;
@@ -30,6 +36,9 @@ public class GameActivity extends Activity implements GameActivityInterface{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        wl = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
 		
 		infectoPointers = new InfectoPointers();
 		gestureDetector = new GestureDetector(this, new InputSystem());
@@ -101,7 +110,7 @@ public class GameActivity extends Activity implements GameActivityInterface{
 	protected void onPause(){
 		super.onPause();
 		Log.d("Infectosaurus", "onPause()");
-		
+		wl.release();
 		panel.onPause();
 	}
 
@@ -109,6 +118,7 @@ public class GameActivity extends Activity implements GameActivityInterface{
 	protected void onResume(){
 		super.onResume();
 		Log.d("Infectosaurus", "onResume()"); 
+		wl.acquire();
 		panel.onResume();
 	}
 }
