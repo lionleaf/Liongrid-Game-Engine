@@ -8,11 +8,12 @@ import com.liongrid.gameengine.Texture;
 import com.liongrid.gameengine.TextureLibrary;
 import com.liongrid.infectosaurus.R;
 import com.liongrid.infectosaurus.components.AggressivMoveComponent;
-import com.liongrid.infectosaurus.components.AnimationComponent;
+import com.liongrid.infectosaurus.components.LAnimation;
 import com.liongrid.infectosaurus.components.MeleeAttackComponent;
 import com.liongrid.infectosaurus.components.MoveComponent;
 import com.liongrid.infectosaurus.components.RandomWalkerComponent;
 import com.liongrid.infectosaurus.components.SpriteComponent;
+import com.liongrid.infectosaurus.components.SpriteComponent.SpriteState;
 import com.liongrid.infectosaurus.effects.DelayedDamageEffect;
 
 
@@ -38,9 +39,21 @@ public class Infectosaurus extends InfectoGameObject {
 		dbs[2] = new DrawableBitmap(tex, 16*3+10, 16*3+10);
 		dbs[3] = new DrawableBitmap(tex, 16*3+5, 16*3+5);
 		
+		DrawableBitmap[] attackBmps = new DrawableBitmap[1];
+		
+		attackBmps[0] = new DrawableBitmap(tex, 16*3+17, 16*3+17);
+		
+		LAnimation moveAnimation =new LAnimation(dbs, 0.1f);
+		LAnimation attackAnimation = new LAnimation(attackBmps, 0.1f, false);
+		
+		SpriteComponent sprite = new SpriteComponent();
+		sprite.setAnimation(SpriteState.idle, moveAnimation);
+		sprite.setAnimation(SpriteState.attacking, attackAnimation);
+		
+		
 		
 		addComponent(new AggressivMoveComponent());
-		addComponent(new AnimationComponent(dbs, 0.1f));
+		addComponent(sprite);
 		addComponent(new MoveComponent());
 		speed = 100;
 		team = Team.Alien;

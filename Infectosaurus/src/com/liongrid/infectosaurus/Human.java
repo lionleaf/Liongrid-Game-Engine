@@ -42,7 +42,6 @@ public class Human extends InfectoGameObject{
 	@Override
 	protected void die() {
 		super.die();
-		GameActivity.infectoPointers.gameObjectHandler.add(new Human());
 	}
 	
 	

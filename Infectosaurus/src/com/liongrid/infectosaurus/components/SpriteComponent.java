@@ -8,26 +8,69 @@ import com.liongrid.gameengine.DrawableObject;
 import com.liongrid.gameengine.GameObject;
 import com.liongrid.gameengine.tools.Vector2;
 import com.liongrid.infectosaurus.InfectoGameObject;
+import com.liongrid.infectosaurus.components.SpriteComponent.SpriteState;
 import com.liongrid.infectosaurus.map.Level;
 
 public class SpriteComponent extends Component<InfectoGameObject> {
+	public static enum SpriteState{
+		idle,
+		moving,
+		attacking;
+	}
+	
+	SpriteState defaultState = SpriteState.idle; 
+	SpriteState currentState = defaultState;
+	LAnimation lastAnimation = null;
 	DrawableObject drawing;
 	Vector2 pos;
-	Vector2 lastPos;
+
+	LAnimation[] animations = new LAnimation[SpriteState.values().length];
+	
+	
+	public SpriteComponent(){
+		
+	}
+	
 	
 	public SpriteComponent(DrawableObject drawing){
-		
 		this.drawing = drawing;
-		lastPos = new Vector2();
+	}
+	
+	
+	public void setAnimation(SpriteState s, LAnimation animation){
+		animations[s.ordinal()] = animation;
 	}
 	
 	@Override
 	public void update(float dt, InfectoGameObject parent){
 
 		pos = parent.pos;
-		lastPos.set(pos);
+		
+		LAnimation animation = animations[currentState.ordinal()];
+		DrawableObject toDraw;
+
+		if(animation != null){
+
+			toDraw = animation.getCurrentFrame(dt);
 			
-		BaseObject.gamePointers.renderSystem.scheduleForDraw(drawing, pos);
+			if(toDraw == null && currentState != defaultState){
+				currentState = defaultState;
+				//Now that we`ve changed state, recursively try again and return
+				update(dt, parent);
+				return;
+			}
+			
+			//clean up after ourself
+			if(lastAnimation != null && lastAnimation != animation){
+				lastAnimation.resetAnimation();
+			}
+			
+			
+		}else{
+			toDraw = drawing;
+		}
+		
+		BaseObject.gamePointers.renderSystem.scheduleForDraw(toDraw, pos);
 	}
 	
 }
