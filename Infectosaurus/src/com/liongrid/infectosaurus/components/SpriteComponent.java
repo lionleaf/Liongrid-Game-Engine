@@ -70,6 +70,12 @@ public class SpriteComponent extends Component<InfectoGameObject> {
 			toDraw = drawing;
 		}
 		
+		
+		//center the image around the pos point
+		
+		pos.x -= 0.5 * drawing.getWidth();
+		pos.y  -= 0.5 * drawing.getHeight();
+		
 		BaseObject.gamePointers.renderSystem.scheduleForDraw(toDraw, pos);
 	}
 	

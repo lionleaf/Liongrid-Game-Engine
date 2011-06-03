@@ -15,12 +15,12 @@ public interface DrawableObject {
 	public void draw(GL10 gl, float x, float y, float scaleX, float scaleY);
 	
 	/**
-	 * @return the width that will be drawn if you call draw now
+	 * @return the current width (unscaled, but you should probably not scale)
 	 */
 	public int getWidth();
 	
 	/**
-	 * @return the width that will be drawn if you call draw now
+	 * @return the current height (unscaled, but you should probably not scale)
 	 */
 	public int getHeight();
 
