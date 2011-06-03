@@ -35,9 +35,15 @@ public class Tile {
 	 * @param mType
 	 * @param x
 	 * @param y
-	 * @return
+	 * @return true if x and y are out of bounds
 	 */
 	public boolean isBlocked(MovementType mType, int x, int y) {
+		if(x >= tileType.blocked[mType.ordinal()].length 
+				|| y >= tileType.blocked[mType.ordinal()][0].length
+				|| x < 0 || y < 0){
+			return true;
+		}
+		
 		return tileType.blocked[mType.ordinal()][x][y];
 	}
 	

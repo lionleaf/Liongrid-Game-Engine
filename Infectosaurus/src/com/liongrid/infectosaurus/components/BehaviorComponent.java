@@ -10,6 +10,7 @@ import com.liongrid.infectosaurus.InfectoGameObject;
 import com.liongrid.infectosaurus.crowd.State;
 import com.liongrid.infectosaurus.crowd.StateList;
 import com.liongrid.infectosaurus.crowd.behaviorfunctions.AvoidEdgeBehaviour;
+import com.liongrid.infectosaurus.crowd.behaviorfunctions.AvoidObstacles;
 import com.liongrid.infectosaurus.crowd.behaviorfunctions.BehaviorFunction;
 import com.liongrid.infectosaurus.crowd.behaviorfunctions.InfectoFrightBehavior;
 
@@ -54,7 +55,7 @@ public class BehaviorComponent extends Component<InfectoGameObject>{
 	
 	private void addDefaultBehaviours(){
 		behaviors.add(new InfectoFrightBehavior()); 
-		behaviors.add(new AvoidEdgeBehaviour());
+		behaviors.add(new AvoidObstacles());
 	}
 	
 	

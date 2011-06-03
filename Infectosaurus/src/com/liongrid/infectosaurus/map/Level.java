@@ -163,6 +163,24 @@ public class Level extends BaseObject{
 		}
 	}
 
+	public boolean isPositionBlocked(int x, int y, MovementType mType){
+		int xIndex = x/TILE_SIZE;
+		int yIndex = y/TILE_SIZE;
+		//outside the map is blocked for all!
+		if(xIndex >= tiles.length || yIndex >= tiles[0].length 
+				|| x < 0 || y < 0){
+			return true;
+		}
+		
+		//This should be safe now
+		Tile tile = tiles[xIndex][yIndex];
+		
+		int localX = (x%TILE_SIZE)/BLOCK_SIZE;
+		int localY = (y%TILE_SIZE)/BLOCK_SIZE;
+		
+		return tile.isBlocked(mType, localX, localY);
+	}
+	
 	@Override
 	public void reset() {
 		// TODO Auto-generated method stub
