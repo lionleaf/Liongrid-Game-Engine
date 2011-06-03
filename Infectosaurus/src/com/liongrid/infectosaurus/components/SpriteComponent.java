@@ -21,8 +21,7 @@ public class SpriteComponent extends Component<InfectoGameObject> {
 	SpriteState defaultState = SpriteState.idle; 
 	SpriteState currentState = defaultState;
 	LAnimation lastAnimation = null;
-	DrawableObject drawing;
-	Vector2 pos;
+	DrawableObject defaultDrawing;
 
 	LAnimation[] animations = new LAnimation[SpriteState.values().length];
 	
@@ -33,7 +32,7 @@ public class SpriteComponent extends Component<InfectoGameObject> {
 	
 	
 	public SpriteComponent(DrawableObject drawing){
-		this.drawing = drawing;
+		this.defaultDrawing = drawing;
 	}
 	
 	
@@ -44,7 +43,8 @@ public class SpriteComponent extends Component<InfectoGameObject> {
 	@Override
 	public void update(float dt, InfectoGameObject parent){
 
-		pos = parent.pos;
+		float x = parent.pos.x;
+		float y = parent.pos.y;
 		
 		LAnimation animation = animations[currentState.ordinal()];
 		DrawableObject toDraw;
@@ -67,16 +67,16 @@ public class SpriteComponent extends Component<InfectoGameObject> {
 			
 			
 		}else{
-			toDraw = drawing;
+			toDraw = defaultDrawing;
 		}
 		
 		
 		//center the image around the pos point
 		
-		pos.x -= 0.5 * drawing.getWidth();
-		pos.y  -= 0.5 * drawing.getHeight();
+		x -= 0.5 * toDraw.getWidth();
+		y -= 0.5 * toDraw.getHeight();
 		
-		BaseObject.gamePointers.renderSystem.scheduleForDraw(toDraw, pos);
+		BaseObject.gamePointers.renderSystem.scheduleForDraw(toDraw, x, y);
 	}
 	
 }

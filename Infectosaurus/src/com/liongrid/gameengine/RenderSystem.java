@@ -30,9 +30,19 @@ public class RenderSystem {
         queueIndex = 0;
     }
     
+    /**
+     * @deprecated 
+     * use public void scheduleForDraw(DrawableObject object, float x, float y) 
+     * @param object
+     * @param pos
+     */
     public void scheduleForDraw(DrawableObject object, Vector2 pos) {
+    	scheduleForDraw(object, pos.x, pos.y);
+    }
+    
+ public void scheduleForDraw(DrawableObject object, float x, float y) {
     	
-    	if(cull(object, pos)) return;
+    	if(cull(object, x, y)) return;
     	
     	RenderElement element = rElementPool.allocate();
         if(element == null) return;
@@ -42,17 +52,17 @@ public class RenderSystem {
         //Since this is done a lot, we want max speed, so we change
         //the public variables instead of calling set
         element.drawable = object;
-        element.x = pos.x;
-        element.y = pos.y;   	
+        element.x = x;
+        element.y = y;   	
     	renderQueues[queueIndex].add(element);
     }
     
     
-    public boolean cull(DrawableObject object, Vector2 pos){
-    	if(pos.x + object.getWidth() < Camera.pos.x) return true;
-    	if(pos.x > Camera.pos.x + Camera.screenWidth/Camera.scale) return true;
-        if(pos.y + object.getHeight() < Camera.pos.y) return true;
-    	if(pos.y > Camera.pos.y + Camera.screenHeight/Camera.scale) return true;
+    public boolean cull(DrawableObject object, float x, float y){
+    	if(x + object.getWidth() < Camera.pos.x) return true;
+    	if(x > Camera.pos.x + Camera.screenWidth/Camera.scale) return true;
+        if(y + object.getHeight() < Camera.pos.y) return true;
+    	if(y > Camera.pos.y + Camera.screenHeight/Camera.scale) return true;
     	
     	return false;
     }
