@@ -73,6 +73,23 @@ public abstract class GameObject<T extends GameObject<?>> extends BaseObject{
 		components.add(component);
 	}
 	
+	/**
+	 * This is potentially really slow, should be tested!
+	 * 
+	 * @param type The type your looking for. ie. SpriteComponent.class;
+	 * @return a component of the type, or null if none was found
+	 */
+	public Component<T> findComponentOfType(Class<? extends Component<T>> type){
+		Object[] rawArray = components.getArray();
+		int size = components.getCount();
+		for(int i = 0; i < size; i++){
+			if(type.isAssignableFrom(rawArray[i].getClass())){
+				return (Component<T>) rawArray[i];
+			}
+		}
+		return null;
+	}
+	
 	@Override
 	public void reset(){
 		

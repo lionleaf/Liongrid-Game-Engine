@@ -10,6 +10,7 @@ import com.liongrid.infectosaurus.GameActivity;
 import com.liongrid.infectosaurus.InfectoGameObjectHandler;
 import com.liongrid.infectosaurus.Team;
 import com.liongrid.infectosaurus.InfectoGameObject;
+import com.liongrid.infectosaurus.components.SpriteComponent.SpriteState;
 import com.liongrid.infectosaurus.effects.DamageEffect;
 import com.liongrid.infectosaurus.effects.SpeedBuffEffect;
 
@@ -67,6 +68,15 @@ public class MeleeAttackComponent extends Component<InfectoGameObject> {
 		SpeedBuffEffect speed = new SpeedBuffEffect();
 		speed.set(1f, 1, 100);
 		target.afflict(speed);
+		
+		
+		SpriteComponent spr = (SpriteComponent) parent.findComponentOfType(SpriteComponent.class);
+		if(spr == null) {
+			Log.d("Infectosaurus", "Could not find SpriteComponent... that`s odd");
+			return;
+		}
+		
+		spr.currentState = SpriteState.attacking;
 		
 	}
 }

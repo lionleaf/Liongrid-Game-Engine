@@ -35,16 +35,16 @@ public class Infectosaurus extends InfectoGameObject {
 		Texture tex = texLib.allocateTexture(R.drawable.spheremonster01);
 		
 		dbs[0] = new DrawableBitmap(tex, 16*3, 16*3);
-		dbs[1] = new DrawableBitmap(tex, 16*3+5, 16*3+5);
-		dbs[2] = new DrawableBitmap(tex, 16*3+10, 16*3+10);
-		dbs[3] = new DrawableBitmap(tex, 16*3+5, 16*3+5);
+		dbs[1] = new DrawableBitmap(tex, 16*3+3, 16*3+3);
+		dbs[2] = new DrawableBitmap(tex, 16*3+6, 16*3+6);
+		dbs[3] = new DrawableBitmap(tex, 16*3+3, 16*3+3);
 		
 		DrawableBitmap[] attackBmps = new DrawableBitmap[1];
 		
-		attackBmps[0] = new DrawableBitmap(tex, 16*3+17, 16*3+17);
+		attackBmps[0] = new DrawableBitmap(tex, 16*3+20, 16*3+20);
 		
 		LAnimation moveAnimation =new LAnimation(dbs, 0.1f);
-		LAnimation attackAnimation = new LAnimation(attackBmps, 0.1f, false);
+		LAnimation attackAnimation = new LAnimation(attackBmps, 0.06f, false);
 		
 		SpriteComponent sprite = new SpriteComponent();
 		sprite.setAnimation(SpriteState.idle, moveAnimation);
