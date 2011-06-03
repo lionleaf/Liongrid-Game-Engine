@@ -36,6 +36,8 @@ public class Level extends BaseObject{
 	private static final Random rand = new Random();
 
 	private Vector2Int[] pathNodes;
+	
+	private static final int defaultMap = R.raw.road2;
 
 	
 	/**
@@ -61,15 +63,19 @@ public class Level extends BaseObject{
 
 	private void generateRenderQueue() {
 		renderQueue = new TileType[mapSize.x][mapSize.y];
-		for (int i = 0; i < mapSize.x; i++) {
-			for (int j = 0; j < mapSize.y; j++) {
-				renderQueue[i][j] = tiles[i][j].tileType; 
+		
+		//Renderqueue must be inverted, since in OpenGL y=0 
+		//is at the bottom of the screen
+		
+		for (int y = 0; y < mapSize.y; y++) {
+			for (int x = 0; x < mapSize.x; x++) {
+				renderQueue[x][mapSize.y-1-y] = tiles[x][y].tileType; 
 			}
 		}
 	}
 
 	private void loadTiles() {
-		loadTilesFromFile(R.raw.road);
+		loadTilesFromFile(defaultMap);
 	}
 
 	private void generateTestTiles(){
@@ -110,11 +116,11 @@ public class Level extends BaseObject{
 
 			int tileID;
 			int index;
-			for (int i = 0; i < mapSize.x; i++) {
-				for (int j = 0; j < mapSize.y; j++) {
+			for (int y = 0; y < mapSize.y; y++) {
+				for (int x = 0; x < mapSize.x; x++) {
 					tileID = reader.read(); 
 					index = gamePointers.tileSet.tileIDtoIndexMap.get(tileID);
-					tiles[i][j] = new Tile(tileTypes[index]);
+					tiles[x][y] = new Tile(tileTypes[index]);
 				}
 			}
 		} catch (IOException e) {
