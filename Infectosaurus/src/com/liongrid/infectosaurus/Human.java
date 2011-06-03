@@ -18,7 +18,7 @@ import com.liongrid.infectosaurus.components.SpriteComponent;
 public class Human extends InfectoGameObject{
 	static Random rand = new Random();
 	public Human() {
-		hp = 5;
+		hp = 2;
 		
 		TextureLibrary texLib = gamePointers.textureLib;
 		DrawableBitmap db = new DrawableBitmap(

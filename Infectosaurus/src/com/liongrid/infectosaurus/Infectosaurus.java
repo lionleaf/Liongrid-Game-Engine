@@ -41,10 +41,10 @@ public class Infectosaurus extends InfectoGameObject {
 		
 		DrawableBitmap[] attackBmps = new DrawableBitmap[1];
 		
-		attackBmps[0] = new DrawableBitmap(tex, 16*3+20, 16*3+20);
+		attackBmps[0] = new DrawableBitmap(tex, 16*3+25, 16*3+25);
 		
 		LAnimation moveAnimation =new LAnimation(dbs, 0.1f);
-		LAnimation attackAnimation = new LAnimation(attackBmps, 0.06f, false);
+		LAnimation attackAnimation = new LAnimation(attackBmps, 0.1f, false);
 		
 		SpriteComponent sprite = new SpriteComponent();
 		sprite.setAnimation(SpriteState.idle, moveAnimation);
