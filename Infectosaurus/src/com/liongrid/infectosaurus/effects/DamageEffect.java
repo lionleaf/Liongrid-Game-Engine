@@ -28,7 +28,7 @@ public class DamageEffect extends Effect<InfectoGameObject> {
 	
 	
 	public void tick(float dt, InfectoGameObject target){
-		target.hp -= damage;
+		
 	}
 	
 	@Override
@@ -41,6 +41,7 @@ public class DamageEffect extends Effect<InfectoGameObject> {
 
 	@Override
 	public void onApply(InfectoGameObject target) {
+		target.hp -= damage;
 	}
 
 	@Override
