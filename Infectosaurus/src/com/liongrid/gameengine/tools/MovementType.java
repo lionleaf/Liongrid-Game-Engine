@@ -1,5 +1,5 @@
 package com.liongrid.gameengine.tools;
 
 public enum MovementType {
-	WALKING, FLYING, SWIMMING
+	Walk, Fly, Swim
 }

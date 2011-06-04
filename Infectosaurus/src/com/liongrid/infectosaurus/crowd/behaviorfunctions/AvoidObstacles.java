@@ -17,7 +17,7 @@ public class AvoidObstacles extends BehaviorFunction{
 	protected float evaluate(State s, StateList lastStates) {
 		
 		if(gamePointers.level.isPositionBlocked(
-				(int)s.pos.x, (int)s.pos.y, MovementType.WALKING)){
+				(int)s.pos.x, (int)s.pos.y, MovementType.Walk)){
 			return -10000;
 		}
 		

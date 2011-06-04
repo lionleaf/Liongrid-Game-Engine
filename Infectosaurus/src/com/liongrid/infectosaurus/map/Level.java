@@ -58,7 +58,7 @@ public class Level extends BaseObject{
 		mapSize = new Vector2Int();
 		loadTiles();
 		generateRenderQueue();
-		insertPathNodes();
+		//insertPathNodes();
 	}
 
 	private void generateRenderQueue() {
@@ -162,7 +162,7 @@ public class Level extends BaseObject{
 				int localX = (pathNodes[i].x%TILE_SIZE)/BLOCK_SIZE;
 				int localY = (pathNodes[i].y%TILE_SIZE)/BLOCK_SIZE;
 
-				blocked = cTile.isBlocked(MovementType.WALKING, 
+				blocked = cTile.isBlocked(MovementType.Walk, 
 						localX, 
 						localY);
 			}
