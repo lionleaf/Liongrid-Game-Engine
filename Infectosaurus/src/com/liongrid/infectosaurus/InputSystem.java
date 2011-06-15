@@ -49,7 +49,7 @@ public class InputSystem extends SimpleOnGestureListener{
 		float tempY = Camera.pos.y - distanceY / Camera.scale;
 		if(tempY  < 0){
 			Camera.pos.y = 0;
-		}else if(Camera.pos.y  + Camera.screenHeight/Camera.scale > Level.mapSizePx.y){ 
+		}else if(tempY  + Camera.screenHeight/Camera.scale > Level.mapSizePx.y){ 
 			Camera.pos.y = Math.max(0, 
 					(Level.mapSizePx.y) - (int) (Camera.screenHeight/Camera.scale));
 		}else{
