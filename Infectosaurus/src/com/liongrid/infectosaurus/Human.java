@@ -2,17 +2,10 @@ package com.liongrid.infectosaurus;
 
 import java.util.Random;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-
-import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.DrawableBitmap;
-import com.liongrid.gameengine.GameObject;
 import com.liongrid.gameengine.TextureLibrary;
 import com.liongrid.infectosaurus.R;
 import com.liongrid.infectosaurus.components.BehaviorComponent;
-import com.liongrid.infectosaurus.components.MoveComponent;
-import com.liongrid.infectosaurus.components.RandomWalkerComponent;
 import com.liongrid.infectosaurus.components.SpriteComponent;
 
 public class Human extends InfectoGameObject{
@@ -23,6 +16,7 @@ public class Human extends InfectoGameObject{
 		TextureLibrary texLib = gamePointers.textureLib;
 		DrawableBitmap db = new DrawableBitmap(
 				texLib.allocateTexture(R.drawable.mann1), 16*3, 16*3);
+		hitboxR = 16*3;
 		addComponent(new SpriteComponent(db)); 
 		addComponent(new BehaviorComponent());
 		
@@ -43,6 +37,4 @@ public class Human extends InfectoGameObject{
 	protected void die() {
 		super.die();
 	}
-	
-	
 }

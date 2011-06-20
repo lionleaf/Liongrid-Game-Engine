@@ -111,7 +111,7 @@ public class Level extends BaseObject{
 			mapSize.y = reader.read();
 			mapSizePx.y = mapSize.y * TILE_SIZE;
 			
-			Log.d(Main.TAG, mapSize.toString());
+//			Log.d(Main.TAG, mapSize.toString());
 			tiles = new Tile[mapSize.x][mapSize.y];
 
 			int tileID;
@@ -189,7 +189,11 @@ public class Level extends BaseObject{
 	
 	@Override
 	public void reset() {
-		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void update(float dt, BaseObject parent) {
 		
 	}
 }
