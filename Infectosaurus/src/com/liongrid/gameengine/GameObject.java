@@ -95,6 +95,12 @@ public abstract class GameObject<T extends GameObject<?>> extends BaseObject{
 		
 	}
 	
+	/**
+	 * Adds an Effect to the effect array. When the GameObject is updated, each
+	 * of the effects will be updated also.
+	 * @param e - The effect to be added to the effect list. The effects needs to
+	 * extend GameEngine.Effect
+	 */
 	public void afflict(Effect e){
 		effects.add(e);
 	}

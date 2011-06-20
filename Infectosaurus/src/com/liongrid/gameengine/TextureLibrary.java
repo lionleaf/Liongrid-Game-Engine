@@ -279,4 +279,9 @@ public class TextureLibrary extends BaseObject {
 			mTextureHash[x].reset();
 		}
 	}
+
+	@Override
+	public void update(float dt, BaseObject parent) {
+		
+	}
 }

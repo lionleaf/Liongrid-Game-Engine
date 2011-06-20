@@ -15,6 +15,11 @@ public class DrawableBitmap extends BaseObject implements DrawableObject {
 	private int mCrop[];
 	private float mOpacity;
 
+	/**
+	 * @param texture - texture of the bitmap
+	 * @param width - width of the object to be drawn in in-game coordinates
+	 * @param height - height of the object to be drawn in in-game coordinates
+	 */
 	public DrawableBitmap(Texture texture, int width, int height) {
 		super();
 		mTexture = texture;

@@ -7,7 +7,6 @@ import com.liongrid.infectosaurus.crowd.StateList;
 
 public class InfectoFrightBehavior extends BehaviorFunction {
 	Infectosaurus inf = null;
-	static final float nr = (float) ((Math.PI*Math.PI)/8);
 	Vector2 vec = new Vector2();
 	float alpha = 10;
 	

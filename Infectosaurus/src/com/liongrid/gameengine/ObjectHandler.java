@@ -2,7 +2,8 @@ package com.liongrid.gameengine;
 
 import com.liongrid.gameengine.tools.FixedSizeArray;
 
-public class ObjectHandler <T extends BaseObject> extends BaseObject {
+public class ObjectHandler <T extends BaseObject> extends BaseObject 
+		implements ObjectHandlerInterface<T>{
 	public FixedSizeArray<T> objects;
 	
 	
@@ -13,7 +14,6 @@ public class ObjectHandler <T extends BaseObject> extends BaseObject {
 	protected FixedSizeArray<T> pendingRemovals;
 	protected FixedSizeArray<T> pendingAdditions;
 	
-	private static final int DEFAULT_CAPACITY = 64;
 	
 	public ObjectHandler(){
 		super();
@@ -29,6 +29,12 @@ public class ObjectHandler <T extends BaseObject> extends BaseObject {
 		pendingAdditions = new FixedSizeArray<T>(size);
 	}
 
+	/**
+	 * The given object will be added to and pendingAdditions list. This will not
+	 * interfere with the current update list. The commitUpdates method has to 
+	 * be called for the additions to be added to the objects array.
+	 * @param object
+	 */
 	public void add(T object){
 		pendingAdditions.add(object);
 	}
@@ -73,17 +79,14 @@ public class ObjectHandler <T extends BaseObject> extends BaseObject {
 		for(int i = 0; i < count; i++){
 			((BaseObject)objectArray[i]).update(dt, this);
 		}
-		
 	}
 
 	@Override
 	public void reset() {
 		// TODO Auto-generated method stub
-		
 	}
 
 	public FixedSizeArray<T> getObjects() {
 		return objects;
 	}
-
 }

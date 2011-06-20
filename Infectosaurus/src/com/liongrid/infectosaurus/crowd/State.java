@@ -15,6 +15,7 @@ import com.liongrid.infectosaurus.InfectoGameObject;
  *  A game object always have one active state. 
  */
 public class State extends BaseObject{
+	public InfectoGameObject parent;
 	public Vector2 pos;
 	public Vector2 vel;
 	public float turnAngle = 0;
@@ -40,15 +41,16 @@ public class State extends BaseObject{
 	
 	@Override
 	public void update(float dt, BaseObject grandParent){
-		InfectoGameObject gameObject = ((InfectoGameObject) grandParent);
-		vel.set(gameObject.vel);
-		pos.set(gameObject.pos);
+		parent = ((InfectoGameObject) grandParent);
+		
+		vel.set(parent.vel);
+		pos.set(parent.pos);
 		if (turnAngle != 0){
 			// Angle to turn
 			float tempangle = dt*turnAngle;
-			float angle = gameObject.vel.getAngle() + tempangle;
-			vel.x = (float) (Math.cos(angle) * gameObject.speed);
-			vel.y = (float) (Math.sin(angle) * gameObject.speed);
+			float angle = parent.vel.getAngle() + tempangle;
+			vel.x = (float) (Math.cos(angle) * parent.speed);
+			vel.y = (float) (Math.sin(angle) * parent.speed);
 		}
 		pos.add(vel.x * dt, vel.y * dt);
 	}

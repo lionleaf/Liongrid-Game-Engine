@@ -11,6 +11,7 @@ import com.liongrid.infectosaurus.crowd.State;
 import com.liongrid.infectosaurus.crowd.StateList;
 import com.liongrid.infectosaurus.crowd.behaviorfunctions.AvoidEdgeBehaviour;
 import com.liongrid.infectosaurus.crowd.behaviorfunctions.AvoidObstacles;
+import com.liongrid.infectosaurus.crowd.behaviorfunctions.AvoidTargetCollission;
 import com.liongrid.infectosaurus.crowd.behaviorfunctions.BehaviorFunction;
 import com.liongrid.infectosaurus.crowd.behaviorfunctions.InfectoFrightBehavior;
 
@@ -23,7 +24,6 @@ import com.liongrid.infectosaurus.crowd.behaviorfunctions.InfectoFrightBehavior;
  */
 public class BehaviorComponent extends Component<InfectoGameObject>{
 	
-
 	static Random random = new Random();
 	public static final int DEFAULT_STATES = 5;
 	private final static int MAX_BEHAVIOURS = 32;
@@ -43,12 +43,12 @@ public class BehaviorComponent extends Component<InfectoGameObject>{
 			defaultStates[i].turnAngle = (float) (2*Math.PI - (i*Math.PI));
 		}
 		defaultStates[2].turnAngle = 0;
+		// Each of the default states has a pointer to each other in nextStates.
 		for (int i = 0; i < defaultStates.length; i++) {
 			for (int j = 0; j < defaultStates.length; j++) {
 				defaultStates[i].addNextState(defaultStates[j]);
 			}
 		}
-		
 		curState = defaultStates[2];
 	}
 	
@@ -56,6 +56,7 @@ public class BehaviorComponent extends Component<InfectoGameObject>{
 	private void addDefaultBehaviours(){
 		behaviors.add(new InfectoFrightBehavior()); 
 		behaviors.add(new AvoidObstacles());
+//		behaviors.add(new AvoidTargetCollission());
 	}
 	
 	
@@ -86,7 +87,6 @@ public class BehaviorComponent extends Component<InfectoGameObject>{
 		parent.pos.set(curState.pos);
 		parent.vel.set(curState.vel);
 		//((GameObject) parent).direction = curState.angle;
-		
 		
 	}
 

@@ -9,7 +9,7 @@ import com.liongrid.gameengine.TextureLibrary;
 import com.liongrid.infectosaurus.R;
 import com.liongrid.infectosaurus.components.AggressivMoveComponent;
 import com.liongrid.infectosaurus.components.LAnimation;
-import com.liongrid.infectosaurus.components.MeleeAttackComponent;
+import com.liongrid.infectosaurus.components.InfMeleeAttackComponent;
 import com.liongrid.infectosaurus.components.MoveComponent;
 import com.liongrid.infectosaurus.components.RandomWalkerComponent;
 import com.liongrid.infectosaurus.components.SpriteComponent;
@@ -27,7 +27,6 @@ public class Infectosaurus extends InfectoGameObject {
 		Log.d(Main.TAG, "Infectosaurus construct");
 		Panel panel = BaseObject.gamePointers.panel;
 		
-		addComponent(new MeleeAttackComponent());
 		
 		TextureLibrary texLib = gamePointers.textureLib;
 		DrawableBitmap[] dbs = new DrawableBitmap[4];
@@ -43,7 +42,7 @@ public class Infectosaurus extends InfectoGameObject {
 		
 		attackBmps[0] = new DrawableBitmap(tex, 16*3+25, 16*3+25);
 		
-		LAnimation moveAnimation =new LAnimation(dbs, 0.1f);
+		LAnimation moveAnimation = new LAnimation(dbs, 0.1f);
 		LAnimation attackAnimation = new LAnimation(attackBmps, 0.1f, false);
 		
 		SpriteComponent sprite = new SpriteComponent();
@@ -52,6 +51,7 @@ public class Infectosaurus extends InfectoGameObject {
 		
 		
 		
+		addComponent(new InfMeleeAttackComponent());
 		addComponent(new AggressivMoveComponent());
 		addComponent(sprite);
 		addComponent(new MoveComponent());

@@ -75,7 +75,6 @@ public class GameActivity extends Activity implements GameActivityInterface{
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		//outState.putSerializable("GamePointers", (Serializable) BaseObject.gamePointers);
-		
 	}
 	
 	/**
@@ -101,9 +100,10 @@ public class GameActivity extends Activity implements GameActivityInterface{
 	public void setScreenDimensionsAndScale() {
 		Display display = getWindowManager().getDefaultDisplay(); 
 		/* Now we can retrieve all display-related infos */
-		Camera.screenHeight = display.getHeight();
-		Camera.screenWidth = display.getWidth();
-		Camera.scale = Camera.screenHeight/((float)Camera.TILES_PER_WIDTH*Level.TILE_SIZE);
+		Camera.init(display.getHeight(), 
+					display.getWidth(), 
+					Level.TILE_SIZE);
+		Camera.setUnitsPerHeight(12);
 	}
 
 	@Override

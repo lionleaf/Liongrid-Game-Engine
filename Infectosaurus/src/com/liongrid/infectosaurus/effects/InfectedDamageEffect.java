@@ -1,17 +1,23 @@
 package com.liongrid.infectosaurus.effects;
 
+import java.util.Random;
+
 import android.util.Log;
 
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Effect;
 import com.liongrid.gameengine.GameObject;
+import com.liongrid.infectosaurus.GameActivity;
 import com.liongrid.infectosaurus.InfectoGameObject;
+import com.liongrid.infectosaurus.Infectosaurus;
 
-public class DamageEffect extends Effect<InfectoGameObject> {
+public class InfectedDamageEffect extends Effect<InfectoGameObject> {
 	
 	private int damage;
+	private float infectChance = 33f/100;
+	private static Random random = new Random();
 	
-	public DamageEffect(){
+	public InfectedDamageEffect(){
 		
 	}
 	
@@ -34,7 +40,6 @@ public class DamageEffect extends Effect<InfectoGameObject> {
 	@Override
 	public void reset() {
 		super.reset();
-		
 		damage = 0;
 
 	}
@@ -42,6 +47,14 @@ public class DamageEffect extends Effect<InfectoGameObject> {
 	@Override
 	public void onApply(InfectoGameObject target) {
 		target.hp -= damage;
+		if(target.infectable && target.hp <= 0){
+			float check = random.nextFloat();
+			if(check < infectChance){
+				Infectosaurus inf = new Infectosaurus();
+				inf.pos.set(target.pos);
+				GameActivity.infectoPointers.gameObjectHandler.add(inf);
+			}
+		}
 	}
 
 	@Override

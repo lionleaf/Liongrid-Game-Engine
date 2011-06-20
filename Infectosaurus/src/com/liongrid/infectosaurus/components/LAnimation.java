@@ -84,4 +84,9 @@ public class LAnimation extends BaseObject {
 		frames = 0;
 		timePassed = 0;
 	}
+
+	@Override
+	public void update(float dt, BaseObject parent) {
+		
+	}
 }

@@ -11,11 +11,11 @@ import com.liongrid.infectosaurus.InfectoGameObjectHandler;
 import com.liongrid.infectosaurus.Team;
 import com.liongrid.infectosaurus.InfectoGameObject;
 import com.liongrid.infectosaurus.components.SpriteComponent.SpriteState;
-import com.liongrid.infectosaurus.effects.DamageEffect;
+import com.liongrid.infectosaurus.effects.InfectedDamageEffect;
 import com.liongrid.infectosaurus.effects.SpeedBuffEffect;
 
 
-public class MeleeAttackComponent extends Component<InfectoGameObject> {
+public class InfMeleeAttackComponent extends Component<InfectoGameObject> {
 
 	InfectoGameObjectHandler gameObjHandler;
 	static final int CLOSE_CAPACITY = 20;
@@ -27,7 +27,7 @@ public class MeleeAttackComponent extends Component<InfectoGameObject> {
 	private InfectoGameObject lastTarget = null;
 	
 	
-	public MeleeAttackComponent(){
+	public InfMeleeAttackComponent(){
 		super();
 		close = new FixedSizeArray<InfectoGameObject>(CLOSE_CAPACITY);
 		set();
@@ -45,7 +45,7 @@ public class MeleeAttackComponent extends Component<InfectoGameObject> {
 		if(delayCountDown > 0) return;
 		
 		InfectoGameObject target =	gameObjHandler.getClosest(
-				parent, parent.team == Team.Human ? Team.Alien : Team.Human);
+				parent, parent.pos, parent.team == Team.Human ? Team.Alien : Team.Human);
 
 		
 		if(target == null || 
@@ -61,7 +61,7 @@ public class MeleeAttackComponent extends Component<InfectoGameObject> {
 		
 		//TODO pool this!!
 		
-		DamageEffect eff = new DamageEffect();
+		InfectedDamageEffect eff = new InfectedDamageEffect();
 		eff.set(damage);
 		target.afflict(eff);
 		

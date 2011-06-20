@@ -39,7 +39,6 @@ public class Tile {
 	 * @return true if x and y are out of bounds
 	 */
 	public boolean isBlocked(MovementType mType, int x, int y) {
-		Log.d("Infectosaurus", tileType.blocked[mType.ordinal()]+"");
 		if(x >= tileType.blocked[mType.ordinal()].length 
 				|| y >= tileType.blocked[mType.ordinal()][0].length
 				|| x < 0 || y < 0){

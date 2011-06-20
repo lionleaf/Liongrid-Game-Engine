@@ -17,7 +17,8 @@ public class AggressivMoveComponent extends Component<InfectoGameObject>{
 
 	@Override
 	public void update(float dt, InfectoGameObject parent) {
-		InfectoGameObject target = gameObjHandler.getClosest(parent, parent.team.Human);
+		InfectoGameObject target = 
+			gameObjHandler.getClosest(parent, parent.pos, parent.team.Human);
 		if(target != null){
 			parent.vel.set(target.pos);
 			parent.vel.subtract(parent.pos);
