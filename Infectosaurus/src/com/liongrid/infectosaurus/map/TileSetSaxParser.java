@@ -6,6 +6,8 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import android.util.Log;
+
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.TextureLibrary;
 import com.liongrid.gameengine.tools.MovementType;
@@ -59,6 +61,7 @@ public class TileSetSaxParser extends DefaultHandler {
 				//If we don`t have the movementType, skip it.
 				currentMType = null;
 			}
+			
 		}
 		
 	}
@@ -71,12 +74,27 @@ public class TileSetSaxParser extends DefaultHandler {
 		
 		if(localName.equalsIgnoreCase("Tile")){
 			TextureLibrary texLib = BaseObject.gamePointers.textureLib;		
+			checkTrue(currentBlocked);
 			tileTypes[currentIndex] = new TileType(texLib.allocateTexture(currentRes),currentBlocked);
 			tileSet.tileIDtoIndexMap.put(currentID, currentIndex);
 			currentIndex++;
 		}
 	}
 	
+	private void checkTrue(boolean[][][] arr) {
+		for(boolean[][] barr : arr){
+			for(boolean[] ba : barr){
+				for(boolean b : ba){
+					if(b){
+						Log.d("True", "yeah");
+					}
+				}
+			}
+		}
+		
+	}
+
+
 	@Override
 	public void endDocument() throws SAXException {
 		// TODO Auto-generated method stub
@@ -114,18 +132,23 @@ public class TileSetSaxParser extends DefaultHandler {
 			return;
 		}
 		
-		currentBlocked[currentMType.ordinal()] = getBooleanArray(ch, blockDimensions);
+		
+		//Seems to be a lot of whitespace etc, get rid of all noise>
+		
+		char[] realch = String.copyValueOf(ch).replaceAll(
+				"[^01]\\s", "").toCharArray();
+		
+		int l = realch.length;
+		Log.d("wooho","length: "+l);
+		for (int i = start; i < l + start; i++) {
+			currentBlocked[currentMType.ordinal()][i%blockDimensions][i/blockDimensions]
+			                = (ch[i] == '1');
+			
+			
+				
+			
+		}
+		
 		
 	}
-
-
-	private boolean[][] getBooleanArray(char[] ch, int blockDimensions) {
-		int l = blockDimensions ^ blockDimensions;
-		boolean[][] resArray = new boolean[blockDimensions][blockDimensions];
-		for (int i = 0; i < l; i++) {
-			resArray[i%blockDimensions][i/blockDimensions] = ch[i] == '1'? true: false;
-		}
-		return resArray;
-	}
-	
 }
