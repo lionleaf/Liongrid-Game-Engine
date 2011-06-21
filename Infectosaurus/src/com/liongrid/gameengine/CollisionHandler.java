@@ -91,12 +91,15 @@ public class CollisionHandler extends BaseObject implements
 	public void update(float dt, BaseObject parent) {
 		commitUpdates();
 		
-		int length = types.getCount();
+		FixedSizeArray<Shape.CollisionHandler> shapes;
+		Shape.CollisionHandler shape1;
+		int length; int count; 
+		length = types.getCount();
 		for(int i = 0; i < length; i++){
-			FixedSizeArray<Shape.CollisionHandler> shapes = types.get(i);
-			int count = shapes.getCount();
+			shapes = types.get(i);
+			count = shapes.getCount();
 			for(int j = 0; j < count; j++){
-				Shape.CollisionHandler shape1 = shapes.get(j);
+				shape1 = shapes.get(j);
 				collides(shape1, i, j, dt);
 			}
 		}
@@ -104,28 +107,45 @@ public class CollisionHandler extends BaseObject implements
 
 	private void collides(Shape.CollisionHandler shape1, int typeI, 
 			int shapeI, float dt) {
-		int i; int j;
-		FixedSizeArray<Shape.CollisionHandler> shapes;
-//		int[] possibleCollisions = shape1.getPossibleCollisions();
-//		if(possibleCollisions == null) possibleCollisions = allTypes;
-//		for(i = 0; i <= typeI; i++){
-//			
-//		}
 		
-		int length = types.getCount();
+		FixedSizeArray<Shape.CollisionHandler> shapes;
+		Shape.CollisionHandler shape2;
+		int[] pCol1; int[] pCol2; // Possible Collisions
+		int i; int j; int type1; int type2;
+		int length; int count;
+		boolean test1 = false; boolean test2 = false;
+		
+		type1 = typeI;
+		pCol1 = shape1.getPossibleCollisions();
+		if(pCol1 == null) pCol1 = allTypes;
+		
+		length = types.getCount();
 		for(i = typeI; i < length; i++){
 			shapes = types.get(i);
-			int count = shapes.getCount();
+			count = shapes.getCount();
 			for(j = shapeI + 1; j < count; j++){
-				Shape.CollisionHandler shape2 = shapes.get(j);
+				shape2 = shapes.get(j);
+				type2 = j;
+				pCol2 = shape2.getPossibleCollisions();
+				if(pCol2 == null) pCol2 = allTypes;
+				
+				
+				// This loop sets test2 = true if a number in pCol1 matches type2.
+				for(int u: pCol1){ if(u == type2){ test1 = true; break;}}
+				// This loop sets test1 = true if a number in pCol1 matches type2.
+				for(int u: pCol2){ if(u == type1){ test2 = true; break;}}
+				
+				// If both test are negative, these two shapes can't collide.
+				if(!test1 && !test2) continue;
+				
+				shape1.expandHitbox(dt);
+				shape2.expandHitbox(dt);
 				if(Collision.collides(shape1, shape2)){
-					shape1.expandHitbox(dt);
-					shape2.expandHitbox(dt);
-					shape1.collides(shape2);
-					shape2.collides(shape1);
-					shape1.resetHitbox();
-					shape2.resetHitbox();
+					if(test1) shape1.collide(shape2);
+					if(test2) shape2.collide(shape1);
 				}
+				shape1.resetHitbox();
+				shape2.resetHitbox();
 			}
 		}
 	}

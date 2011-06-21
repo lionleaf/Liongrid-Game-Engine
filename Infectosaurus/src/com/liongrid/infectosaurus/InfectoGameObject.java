@@ -34,7 +34,7 @@ public class InfectoGameObject extends GameObject<InfectoGameObject>
 		GameActivity.infectoPointers.gameObjectHandler.remove(this);
 	}
 
-	public void collides(Shape shape) {
+	public void collide(Shape shape) {
 		
 	}
 

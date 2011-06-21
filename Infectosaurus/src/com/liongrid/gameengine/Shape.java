@@ -44,7 +44,7 @@ public abstract interface Shape {
 		 * Tells the object that it collides with a shape. 
 		 * @param shape - The shape that the Collideable collides with.  
 		 */
-		public void collides(Shape shape);
+		public void collide(Shape shape);
 		
 		/**
 		 * Erases old history and makes the collideable ready for new collisions.
