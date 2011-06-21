@@ -2,7 +2,7 @@ package com.liongrid.gameengine;
 
 import com.liongrid.gameengine.tools.FixedSizeArray;
 
-public interface ObjectHandlerInterface<T extends BaseObject>{
+public interface ObjectHandlerInterface<T>{
 	
 	static final int DEFAULT_CAPACITY = 64;
 	

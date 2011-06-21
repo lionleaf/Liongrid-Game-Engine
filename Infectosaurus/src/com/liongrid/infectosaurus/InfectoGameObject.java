@@ -1,13 +1,13 @@
 package com.liongrid.infectosaurus;
 
 import com.liongrid.gameengine.BaseObject;
-import com.liongrid.gameengine.Collideable;
+import com.liongrid.gameengine.Shape;
 import com.liongrid.gameengine.GameObject;
-import com.liongrid.gameengine.Collideable.CAC_Circle;
+import com.liongrid.gameengine.Shape.CHCircle;
 import com.liongrid.gameengine.tools.Vector2;
 
 public class InfectoGameObject extends GameObject<InfectoGameObject> 
-		implements CAC_Circle{
+		implements CHCircle{
 
 	
 	public Team team = Team.Human; //Default team
@@ -34,7 +34,7 @@ public class InfectoGameObject extends GameObject<InfectoGameObject>
 		GameActivity.infectoPointers.gameObjectHandler.remove(this);
 	}
 
-	public void collides(Collideable shape) {
+	public void collides(Shape shape) {
 		
 	}
 
@@ -60,6 +60,16 @@ public class InfectoGameObject extends GameObject<InfectoGameObject>
 	}
 
 	public int getShape() {
-		return Collideable.CIRCLE;
+		return Shape.CIRCLE;
+	}
+
+	public void expandHitbox(float dt) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void resetHitbox() {
+		// TODO Auto-generated method stub
+		
 	}
 }

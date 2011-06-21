@@ -2,7 +2,7 @@ package com.liongrid.gameengine;
 
 import com.liongrid.gameengine.tools.Vector2;
 
-public abstract interface Collideable {
+public abstract interface Shape {
 	
 	public static final int CIRCLE = 1;
 	public static final int SQUARE = 2;
@@ -18,33 +18,33 @@ public abstract interface Collideable {
 	 */
 	public int getShape();
 	
-	public interface Circle extends Collideable{
+	public interface Circle extends Shape{
 		/**
 		 * @return the radius of the circle.
 		 */
 		public float getRadius();
 	}
 	
-	public interface Square extends Collideable{
+	public interface Square extends Shape{
 		
 	}
 	
-	public interface CAC_Circle 
-		extends Collideable.CollisionArea, Collideable.Circle {
+	public interface CHCircle 
+		extends Shape.CollisionHandler, Shape.Circle {
 		
 	}
 	
-	public interface CAC_Square
-		extends Collideable.CollisionArea, Collideable.Square {
+	public interface CHSquare
+		extends Shape.CollisionHandler, Shape.Square {
 		
 	}
 	
-	public abstract interface CollisionArea extends Collideable{
+	public abstract interface CollisionHandler extends Shape{
 		/**
 		 * Tells the object that it collides with a shape. 
 		 * @param shape - The shape that the Collideable collides with.  
 		 */
-		public void collides(Collideable shape);
+		public void collides(Shape shape);
 		
 		/**
 		 * Erases old history and makes the collideable ready for new collisions.
@@ -62,5 +62,8 @@ public abstract interface Collideable {
 		 * @return the index of the type(s) the object represents
 		 */
 		public int[] getType();
+		
+		public void expandHitbox(float dt);
+		public void resetHitbox();
 	}
 }

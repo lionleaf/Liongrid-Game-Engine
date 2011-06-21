@@ -3,7 +3,7 @@ package com.liongrid.infectosaurus;
 import android.util.Log;
 
 import com.liongrid.gameengine.BaseObject;
-import com.liongrid.gameengine.CollisionArea;
+import com.liongrid.gameengine.CollisionHandler;
 import com.liongrid.gameengine.IllegalObjectException;
 import com.liongrid.gameengine.ObjectHandler;
 import com.liongrid.gameengine.tools.FixedSizeArray;
@@ -19,22 +19,18 @@ public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
 	
 	static final int NUMBER_OF_HUMANS = 10;
 
-	private CollisionArea ca;
+	private CollisionHandler ca;
 	public InfectoGameObjectHandler(){
 		super(DEFAULT_CAPACITY);
 		Human human;
-		ca = new CollisionArea(Team.values().length, DEFAULT_CAPACITY);
+		ca = new CollisionHandler(Team.values().length, DEFAULT_CAPACITY);
 		
 		for (int i = 0; i < NUMBER_OF_HUMANS; i++) {
 			human = new Human();
 			human.pos.set(0,0);
 			Human newHuman = new Human();
 			objects.add(newHuman);
-			try {
-				ca.add(newHuman);
-			} catch (IllegalObjectException e) {
-				Log.d(Main.TAG, "Could not add object to CollisionArea!");
-			}
+			ca.add(newHuman);
 		}
 	}
 	
