@@ -17,11 +17,15 @@ public class CollisionArea extends BaseObject implements
 	 * This is simply a two dimensional array.
 	 */
 	private FixedSizeArray<FixedSizeArray<Collideable.CollisionArea>> types;
+	private FixedSizeArray<Collideable.CollisionArea> pendingAdditions;
+	private FixedSizeArray<Collideable.CollisionArea> pendingRemovals;
 	
 	
 	public CollisionArea(int typeCnt, int capacity) {
 		types = 
 			new FixedSizeArray<FixedSizeArray<Collideable.CollisionArea>>(typeCnt);
+		pendingAdditions = new FixedSizeArray<Collideable.CollisionArea>(capacity);
+		pendingRemovals = new FixedSizeArray<Collideable.CollisionArea>(capacity);
 		int length = typeCnt;
 		for(int i = 0; i < length; i++){
 			types.add(new FixedSizeArray<Collideable.CollisionArea>(capacity));
@@ -36,9 +40,10 @@ public class CollisionArea extends BaseObject implements
 	 * @see com.liongrid.gameengine.ObjectHandlerInterface#add(com.liongrid.gameengine.BaseObject)
 	 */
 	public void add(BaseObject o) throws IllegalObjectException{
-		int[] type = ((Collideable.CollisionArea) o).getType();
-		for(int i : type){
-			types.get(i).add((Collideable.CollisionArea) o);
+		try {
+			pendingAdditions.add((Collideable.CollisionArea) o);
+		} catch (ClassCastException e) {
+			throw new IllegalObjectException();
 		}
 	}
 
@@ -48,15 +53,40 @@ public class CollisionArea extends BaseObject implements
 	 * 
 	 * @see com.liongrid.gameengine.ObjectHandlerInterface#remove(com.liongrid.gameengine.BaseObject)
 	 */
-	public void remove(BaseObject o) {
-		int[] type = ((Collideable.CollisionArea) o).getType();
-		for(int i : type){
-			types.get(i).remove((Collideable.CollisionArea) o, true);
+	public void remove(BaseObject o) throws IllegalObjectException{
+		try {
+			pendingRemovals.add((Collideable.CollisionArea) o);
+		} catch (ClassCastException e) {
+			throw new IllegalObjectException();
 		}
 	}
 
 	public void commitUpdates() {
+		int i;
+		int j;
+		int length;
+		int[] type;
+		Collideable.CollisionArea shape;
 		
+		length = pendingRemovals.getCount();
+		for(i = 0; i < length; i++){
+			shape = pendingRemovals.get(i);
+			type = shape.getType();
+			for(j = 0; j < type.length; j++){
+				types.get(j).remove(shape, true);
+			}
+		}
+		pendingRemovals.clear();
+		
+		length = pendingAdditions.getCount();
+		for(i = 0; i < length; i++){
+			shape = pendingAdditions.get(i);
+			type = shape.getType();
+			for(j = 0; j < type.length; j++){
+				types.get(j).add(shape);
+			}
+		}
+		pendingAdditions.clear();
 	}
 
 	public FixedSizeArray<BaseObject> getObjects() {
@@ -66,6 +96,8 @@ public class CollisionArea extends BaseObject implements
 
 	@Override
 	public void update(float dt, BaseObject parent) {
+		commitUpdates();
+		
 		int length = types.getCount();
 		for(int i = 0; i < length; i++){
 			FixedSizeArray<Collideable.CollisionArea> shapes = types.get(i);
@@ -78,10 +110,10 @@ public class CollisionArea extends BaseObject implements
 	}
 
 	private void collides(Collideable.CollisionArea shape1, int typeI, int shapeI) {
-		int length = types.getCount() - typeI;
+		int length = types.getCount();
 		for(int i = typeI; i < length; i++){
 			FixedSizeArray<Collideable.CollisionArea> shapes = types.get(i);
-			int count = types.get(i).getCount();
+			int count = shapes.getCount();
 			for(int j = shapeI + 1; j < count; j++){
 				Collideable.CollisionArea shape2 = shapes.get(j);
 				if(Collision.collides(shape1, shape2)){
