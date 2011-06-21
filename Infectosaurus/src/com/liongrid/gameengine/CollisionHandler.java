@@ -90,6 +90,7 @@ public class CollisionHandler extends BaseObject implements
 	@Override
 	public void update(float dt, BaseObject parent) {
 		commitUpdates();
+		clearArrays();
 		
 		FixedSizeArray<Shape.CollisionHandler> shapes;
 		Shape.CollisionHandler shape1;
@@ -104,6 +105,19 @@ public class CollisionHandler extends BaseObject implements
 			}
 		}
 	}
+
+	private void clearArrays() {
+		int length = types.getCount();
+		FixedSizeArray<Shape.CollisionHandler> shapes;
+		for(int i = 0; i < length ; i++){
+			shapes = types.get(i);
+			int count = shapes.getCount();
+			for(int j = 0; j < count; j++){
+				shapes.get(j).clear();
+			}
+		}
+	}
+
 
 	private void collides(Shape.CollisionHandler shape1, int typeI, 
 			int shapeI, float dt) {
