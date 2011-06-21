@@ -73,7 +73,7 @@ public class CollisionArea extends BaseObject implements
 			shape = pendingRemovals.get(i);
 			type = shape.getType();
 			for(j = 0; j < type.length; j++){
-				types.get(j).remove(shape, true);
+				types.get(type[j]).remove(shape, true);
 			}
 		}
 		pendingRemovals.clear();
@@ -83,7 +83,7 @@ public class CollisionArea extends BaseObject implements
 			shape = pendingAdditions.get(i);
 			type = shape.getType();
 			for(j = 0; j < type.length; j++){
-				types.get(j).add(shape);
+				types.get(type[j]).add(shape);
 			}
 		}
 		pendingAdditions.clear();
