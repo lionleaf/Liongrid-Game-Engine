@@ -47,7 +47,7 @@ public class InfectoGameObject extends GameObject<InfectoGameObject>
 	}
 
 	public int[] getType() {
-		int[] i = {0};
+		int[] i = {team.ordinal()};
 		return i;
 	}
 
@@ -56,7 +56,7 @@ public class InfectoGameObject extends GameObject<InfectoGameObject>
 	}
 
 	public float getRadius() {
-		return 16*3;
+		return hitboxR;
 	}
 
 	public int getShape() {
