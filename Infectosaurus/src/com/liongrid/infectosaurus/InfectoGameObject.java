@@ -4,10 +4,11 @@ import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Shape;
 import com.liongrid.gameengine.GameObject;
 import com.liongrid.gameengine.Shape.CHCircle;
+import com.liongrid.gameengine.tools.FixedSizeArray;
 import com.liongrid.gameengine.tools.Vector2;
 
 public class InfectoGameObject extends GameObject<InfectoGameObject> 
-		implements CHCircle{
+		implements CHCircle<InfectoGameObject>{
 
 	
 	public Team team = Team.Human; //Default team
@@ -17,7 +18,10 @@ public class InfectoGameObject extends GameObject<InfectoGameObject>
 	public float speed = 10;
 	public int hp = 1;
 	public boolean infectable = true; // Tells if the object can be infected
-	protected int hitboxR = 0;
+	
+	protected float hitboxR = 0;
+	protected float radius = 0;
+	protected FixedSizeArray<InfectoGameObject> collisions;
 	
 	
 	
@@ -34,7 +38,7 @@ public class InfectoGameObject extends GameObject<InfectoGameObject>
 		GameActivity.infectoPointers.gameObjectHandler.remove(this);
 	}
 
-	public void collide(Shape shape) {
+	public void collide(InfectoGameObject o) {
 		
 	}
 
@@ -64,12 +68,10 @@ public class InfectoGameObject extends GameObject<InfectoGameObject>
 	}
 
 	public void expandHitbox(float dt) {
-		// TODO Auto-generated method stub
-		
+		hitboxR = radius*speed*dt;
 	}
 
 	public void resetHitbox() {
-		// TODO Auto-generated method stub
-		
+		hitboxR = radius;
 	}
 }

@@ -10,13 +10,13 @@ import com.liongrid.gameengine.tools.FixedSizeArray;
  * methods that ObjectHandler contains, even though all of the methods have been 
  * overridden. 
  */
-public class CollisionHandler extends BaseObject implements 
-		ObjectHandlerInterface<Shape.CollisionHandler>{
+public class CollisionHandler<T extends Shape.CollisionHandler<T>> extends BaseObject 
+		implements ObjectHandlerInterface<T>{
 	
 	//This is simply a two dimensional array.
-	private FixedSizeArray<FixedSizeArray<Shape.CollisionHandler>> types;
-	private FixedSizeArray<Shape.CollisionHandler> pendingAdditions;
-	private FixedSizeArray<Shape.CollisionHandler> pendingRemovals;
+	private FixedSizeArray<FixedSizeArray<T>> types;
+	private FixedSizeArray<T> pendingAdditions;
+	private FixedSizeArray<T> pendingRemovals;
 	private static int[] allTypes;
 	
 	
@@ -25,34 +25,22 @@ public class CollisionHandler extends BaseObject implements
 		for(int i = 0; i < allTypes.length; i++) allTypes[i] = i;
 		
 		types = 
-			new FixedSizeArray<FixedSizeArray<Shape.CollisionHandler>>(typeCnt);
-		pendingAdditions = new FixedSizeArray<Shape.CollisionHandler>(capacity);
-		pendingRemovals = new FixedSizeArray<Shape.CollisionHandler>(capacity);
+			new FixedSizeArray<FixedSizeArray<T>>(typeCnt);
+		pendingAdditions = new FixedSizeArray<T>(capacity);
+		pendingRemovals = new FixedSizeArray<T>(capacity);
 		int length = typeCnt;
 		for(int i = 0; i < length; i++){
-			types.add(new FixedSizeArray<Shape.CollisionHandler>(capacity));
+			types.add(new FixedSizeArray<T>(capacity));
 		}
 	}
 	
 
-	/** 
-	 * Will be casted to Collideable.CollisionArea. Make sure the BaseObjects used 
-	 * implements one of the sub-interfaces!
-	 * 
-	 * @see com.liongrid.gameengine.ObjectHandlerInterface#add(com.liongrid.gameengine.BaseObject)
-	 */
-	public void add(Shape.CollisionHandler o){
-		pendingAdditions.add((Shape.CollisionHandler) o);
+	public void add(T o){
+		pendingAdditions.add(o);
 	}
 
-	/**
-	 * Will be casted to Collideable.CollisionArea. Make sure the BaseObjects used 
-	 * implements one of the sub-interfaces!
-	 * 
-	 * @see com.liongrid.gameengine.ObjectHandlerInterface#remove(com.liongrid.gameengine.BaseObject)
-	 */
-	public void remove(Shape.CollisionHandler o){
-		pendingRemovals.add((Shape.CollisionHandler) o);
+	public void remove(T o){
+		pendingRemovals.add(o);
 	}
 
 	public void commitUpdates() {
@@ -60,7 +48,7 @@ public class CollisionHandler extends BaseObject implements
 		int j;
 		int length;
 		int[] type;
-		Shape.CollisionHandler shape;
+		T shape;
 		
 		length = pendingRemovals.getCount();
 		for(i = 0; i < length; i++){
@@ -83,8 +71,20 @@ public class CollisionHandler extends BaseObject implements
 		pendingAdditions.clear();
 	}
 
-	public FixedSizeArray<Shape.CollisionHandler> getObjects() {
+	public FixedSizeArray<T> getObjects() {
 		return null;
+	}
+	
+	private void clearArrays() {
+		int length = types.getCount();
+		FixedSizeArray<T> shapes;
+		for(int i = 0; i < length ; i++){
+			shapes = types.get(i);
+			int count = shapes.getCount();
+			for(int j = 0; j < count; j++){
+				shapes.get(j).clear();
+			}
+		}
 	}
 
 	@Override
@@ -92,8 +92,8 @@ public class CollisionHandler extends BaseObject implements
 		commitUpdates();
 		clearArrays();
 		
-		FixedSizeArray<Shape.CollisionHandler> shapes;
-		Shape.CollisionHandler shape1;
+		FixedSizeArray<T> shapes;
+		T shape1;
 		int length; int count; 
 		length = types.getCount();
 		for(int i = 0; i < length; i++){
@@ -106,24 +106,12 @@ public class CollisionHandler extends BaseObject implements
 		}
 	}
 
-	private void clearArrays() {
-		int length = types.getCount();
-		FixedSizeArray<Shape.CollisionHandler> shapes;
-		for(int i = 0; i < length ; i++){
-			shapes = types.get(i);
-			int count = shapes.getCount();
-			for(int j = 0; j < count; j++){
-				shapes.get(j).clear();
-			}
-		}
-	}
 
 
-	private void collides(Shape.CollisionHandler shape1, int typeI, 
-			int shapeI, float dt) {
+	private void collides(T shape1, int typeI, int shapeI, float dt) {
 		
-		FixedSizeArray<Shape.CollisionHandler> shapes;
-		Shape.CollisionHandler shape2;
+		FixedSizeArray<T> shapes;
+		T shape2;
 		int[] pCol1; int[] pCol2; // Possible Collisions
 		int i; int j; int type1; int type2;
 		int length; int count;

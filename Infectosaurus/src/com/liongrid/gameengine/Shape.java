@@ -29,22 +29,22 @@ public abstract interface Shape {
 		
 	}
 	
-	public interface CHCircle 
-		extends Shape.CollisionHandler, Shape.Circle {
+	public interface CHCircle<T extends Shape> 
+		extends Shape.CollisionHandler<T>, Shape.Circle {
 		
 	}
 	
-	public interface CHSquare
-		extends Shape.CollisionHandler, Shape.Square {
+	public interface CHSquare<T extends Shape>
+		extends Shape.CollisionHandler<T>, Shape.Square {
 		
 	}
 	
-	public abstract interface CollisionHandler extends Shape{
+	public abstract interface CollisionHandler<T extends Shape> extends Shape{
 		/**
 		 * Tells the object that it collides with a shape. 
-		 * @param shape - The shape that the Collideable collides with.  
+		 * @param object - The shape that the Collideable collides with.  
 		 */
-		public void collide(Shape shape);
+		public void collide(T object);
 		
 		/**
 		 * Erases old history and makes the collideable ready for new collisions.

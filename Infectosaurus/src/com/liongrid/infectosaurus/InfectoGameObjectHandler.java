@@ -19,11 +19,12 @@ public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
 	
 	static final int NUMBER_OF_HUMANS = 10;
 
-	private CollisionHandler ca;
+	private CollisionHandler<InfectoGameObject> ca;
 	public InfectoGameObjectHandler(){
 		super(DEFAULT_CAPACITY);
 		Human human;
-		ca = new CollisionHandler(Team.values().length, DEFAULT_CAPACITY);
+		ca = new CollisionHandler<InfectoGameObject>
+					(Team.values().length, DEFAULT_CAPACITY);
 		
 		for (int i = 0; i < NUMBER_OF_HUMANS; i++) {
 			human = new Human();
