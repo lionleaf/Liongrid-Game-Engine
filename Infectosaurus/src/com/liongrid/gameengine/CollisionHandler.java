@@ -144,7 +144,6 @@ public class CollisionHandler<T extends Shape.CollisionHandler<T>> extends BaseO
 				// If both test are negative, these two shapes can't collide.
 				if(!test1 && !test2) continue;
 				
-				//TODO This code is never reached!
 				shape1.expandHitbox(dt);
 				shape2.expandHitbox(dt);
 				if(Collision.collides(shape1, shape2)){
