@@ -46,13 +46,8 @@ public class InfectoGameObject extends GameObject<InfectoGameObject>
 		
 	}
 
-	public int[] getPossibleCollisions() {
-		return null;
-	}
-
-	public int[] getType() {
-		int[] i = {team.ordinal()};
-		return i;
+	public int getType() {
+		return team.ordinal();
 	}
 
 	public Vector2 getPos() {

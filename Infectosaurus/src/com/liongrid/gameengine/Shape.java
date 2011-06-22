@@ -53,15 +53,9 @@ public abstract interface Shape {
 		public void clear();
 		
 		/**
-		 * @return the index of the different types the object can collide with.
-		 * returns null if the object can collide with every type.
+		 * @return the index of the type the object represents
 		 */
-		public int[] getPossibleCollisions();
-		
-		/**
-		 * @return the index of the type(s) the object represents
-		 */
-		public int[] getType();
+		public int getType();
 		
 		public void expandHitbox(float dt);
 		public void resetHitbox();

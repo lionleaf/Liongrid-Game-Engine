@@ -13,19 +13,23 @@ import com.liongrid.gameengine.tools.FixedSizeArray;
 public class CollisionHandler<T extends Shape.CollisionHandler<T>> extends BaseObject 
 		implements ObjectHandlerInterface<T>{
 	
-	//This is simply a two dimensional array.
 	private FixedSizeArray<FixedSizeArray<T>> types;
 	private FixedSizeArray<T> pendingAdditions;
 	private FixedSizeArray<T> pendingRemovals;
-	private static int[] allTypes;
+	/**
+	 * This is used to faster access the elements in types
+	 */
+	private T[][] rawArray;
+	/**
+	 * This is used to fast get the length of the sublists of types.
+	 */
+	private static int[] arrayLengths;
 	
 	
 	public CollisionHandler(int typeCnt, int capacity) {
-		allTypes = new int[typeCnt];
-		for(int i = 0; i < allTypes.length; i++) allTypes[i] = i;
+		arrayLengths = new int[typeCnt];
 		
-		types = 
-			new FixedSizeArray<FixedSizeArray<T>>(typeCnt);
+		types = new FixedSizeArray<FixedSizeArray<T>>(typeCnt);
 		pendingAdditions = new FixedSizeArray<T>(capacity);
 		pendingRemovals = new FixedSizeArray<T>(capacity);
 		int length = typeCnt;
@@ -47,19 +51,15 @@ public class CollisionHandler<T extends Shape.CollisionHandler<T>> extends BaseO
 		int i;
 		int j;
 		int length;
-		int[] type;
+		int type;
 		T shape;
-		
-		
 		
 		Object[] rawArr = pendingRemovals.getArray();
 		length = pendingRemovals.getCount();
 		for(i = 0; i < length; i++){
 			shape = (T) rawArr[i];
 			type = shape.getType();
-			for(j = 0; j < type.length; j++){
-				types.get(type[j]).remove(shape, true);
-			}
+			types.get(type).remove(shape, true);
 		}
 		pendingRemovals.clear();
 		
@@ -68,9 +68,7 @@ public class CollisionHandler<T extends Shape.CollisionHandler<T>> extends BaseO
 		for(i = 0; i < length; i++){
 			shape = (T) rawArr[i];
 			type = shape.getType();
-			for(j = 0; j < type.length; j++){
-				types.get(type[j]).add(shape);
-			}
+			types.get(type).add(shape);
 		}
 		pendingAdditions.clear();
 	}
@@ -79,76 +77,48 @@ public class CollisionHandler<T extends Shape.CollisionHandler<T>> extends BaseO
 		return null;
 	}
 	
-	private void clearArrays() {
-		int length = types.getCount();
-		FixedSizeArray<T> shapes;
-		for(int i = 0; i < length ; i++){
-			shapes = types.get(i);
-			int count = shapes.getCount();
-			for(int j = 0; j < count; j++){
-				shapes.get(j).clear();
-			}
-		}
-	}
 
 	@Override
 	public void update(float dt, BaseObject parent) {
+		int i; int j;
+		for(i = 0; i < arrayLengths.length; i++){
+			FixedSizeArray<T> shapes = types.get(i);
+			arrayLengths[i] = shapes.getCapacity();
+			rawArray[i]	= (T[]) shapes.getArray();
+		}
+		
 		commitUpdates();
 		clearArrays();
 		
-		FixedSizeArray<T> shapes;
-		T shape1;
-		int length; int count; 
-		length = types.getCount();
-		for(int i = 0; i < length; i++){
-			shapes = types.get(i);
-			count = shapes.getCount();
-			for(int j = 0; j < count; j++){
-				shape1 = shapes.get(j);
-				collides(shape1, i, j, dt);
+		for(i = 0; i < arrayLengths.length; i++){
+			for(j = 0; j < arrayLengths[i]; j++){
+				collides(i, j, dt);
+			}
+		}
+	}
+	
+	private void clearArrays() {
+		for(int i = 0; i < arrayLengths.length ; i++){
+			for(int j = 0; j < arrayLengths[i]; j++){
+				rawArray[i][j].clear();
 			}
 		}
 	}
 
-
-
-	private void collides(T shape1, int typeI, int shapeI, float dt) {
-		
-		FixedSizeArray<T> shapes;
+	private void collides(int typeI, int shapeI, float dt) {
+		T shape1 = rawArray[typeI][shapeI];
 		T shape2;
-		int[] pCol1; int[] pCol2; // Possible Collisions
-		int i; int j; int type1; int type2;
-		int length; int count;
-		boolean test1 = false; boolean test2 = false;
+		int i; int j;
 		
-		type1 = typeI;
-		pCol1 = shape1.getPossibleCollisions();
-		if(pCol1 == null) pCol1 = allTypes;
-		
-		length = types.getCount();
-		for(i = typeI; i < length; i++){
-			shapes = types.get(i);
-			count = shapes.getCount();
-			for(j = shapeI + 1; j < count; j++){
-				shape2 = shapes.get(j);
-				type2 = j;
-				pCol2 = shape2.getPossibleCollisions();
-				if(pCol2 == null) pCol2 = allTypes;
-				
-				
-				// This loop sets test2 = true if a number in pCol1 matches type2.
-				for(int u: pCol1){ if(u == type2){ test1 = true; break;}}
-				// This loop sets test1 = true if a number in pCol1 matches type2.
-				for(int u: pCol2){ if(u == type1){ test2 = true; break;}}
-				
-				// If both test are negative, these two shapes can't collide.
-				if(!test1 && !test2) continue;
+		for(i = typeI; i < arrayLengths.length; i++){
+			for(j = shapeI + 1; j < arrayLengths[i]; j++){
+				shape2 = rawArray[i][j];
 				
 				shape1.expandHitbox(dt);
 				shape2.expandHitbox(dt);
 				if(Collision.collides(shape1, shape2)){
-					if(test1) shape1.collide(shape2);
-					if(test2) shape2.collide(shape1);
+					shape1.collide(shape2);
+					shape2.collide(shape1);
 				}
 				shape1.resetHitbox();
 				shape2.resetHitbox();
