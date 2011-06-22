@@ -50,9 +50,12 @@ public class CollisionHandler<T extends Shape.CollisionHandler<T>> extends BaseO
 		int[] type;
 		T shape;
 		
+		
+		
+		Object[] rawArr = pendingRemovals.getArray();
 		length = pendingRemovals.getCount();
 		for(i = 0; i < length; i++){
-			shape = pendingRemovals.get(i);
+			shape = (T) rawArr[i];
 			type = shape.getType();
 			for(j = 0; j < type.length; j++){
 				types.get(type[j]).remove(shape, true);
@@ -60,9 +63,10 @@ public class CollisionHandler<T extends Shape.CollisionHandler<T>> extends BaseO
 		}
 		pendingRemovals.clear();
 		
+		rawArr = pendingAdditions.getArray();
 		length = pendingAdditions.getCount();
 		for(i = 0; i < length; i++){
-			shape = pendingAdditions.get(i);
+			shape = (T) rawArr[i];
 			type = shape.getType();
 			for(j = 0; j < type.length; j++){
 				types.get(type[j]).add(shape);
@@ -140,6 +144,7 @@ public class CollisionHandler<T extends Shape.CollisionHandler<T>> extends BaseO
 				// If both test are negative, these two shapes can't collide.
 				if(!test1 && !test2) continue;
 				
+				//TODO This code is never reached!
 				shape1.expandHitbox(dt);
 				shape2.expandHitbox(dt);
 				if(Collision.collides(shape1, shape2)){
