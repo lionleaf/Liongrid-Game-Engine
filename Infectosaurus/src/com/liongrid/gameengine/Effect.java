@@ -9,6 +9,9 @@ import com.liongrid.infectosaurus.InfectoGameObject;
  * 
  * To make a new effect, extend this class and override the abstract methods.
  * Do not override update() (Or if you do, call super.update()).
+ * You should also override the set() and reset() methods, and remember to 
+ * call the super methods there aswell! 
+ * (All parameters are to be set in the set method, not the constructor)
  * 
  * To implement an effect system, you have to have a list of the effects,
  * and each frame check whether the effect has expired or not; if it has not,
@@ -80,10 +83,11 @@ public abstract class Effect<T extends BaseObject> extends BaseObject{
 	public boolean expired() {
 		return duration < 0;
 	}
-
 	
 	
-	
+	/**
+	 * @return true if the effect has not ticked yet
+	 */
 	public boolean firstTick(){
 		return !ticked ;
 	}
