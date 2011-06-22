@@ -52,7 +52,7 @@ public abstract class Effect<T extends BaseObject> extends BaseObject{
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public void update(float dt, BaseObject parent){
+	public final void update(float dt, BaseObject parent){
 		
 		assert duration >= 0;
 		
