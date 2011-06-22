@@ -43,9 +43,6 @@ public abstract class GameObject<T extends GameObject<?>> extends BaseObject{
 			Effect<T> e = (Effect<T>) rawArr[i];
 			
 			if(!e.expired()){
-				if(e.firstTick()){
-					e.onApply((T) this);
-				}
 				e.update(dt, this);
 			}else{
 				e.onRemove((T) this);

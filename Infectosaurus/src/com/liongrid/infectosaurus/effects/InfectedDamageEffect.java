@@ -32,7 +32,7 @@ public class InfectedDamageEffect extends Effect<InfectoGameObject> {
 	}
 	
 	
-	
+	@Override
 	public void tick(float dt, InfectoGameObject target){
 		
 	}
