@@ -14,12 +14,13 @@ import com.liongrid.infectosaurus.Main;
  * methods that ObjectHandler contains, even though all of the methods have been 
  * overridden. 
  */
-public class CollisionHandler<T extends Shape.CollisionHandler<T>> extends BaseObject 
+public class LargeObjectCollider<T extends Shape.Collideable<T>> extends BaseObject 
 		implements ObjectHandlerInterface<T>{
 	
 	private FixedSizeArray<FixedSizeArray<T>> types;
 	private FixedSizeArray<T> pendingAdditions;
 	private FixedSizeArray<T> pendingRemovals;
+	private FixedSizeArray<T> typeLess;
 	/**
 	 * This is used to faster access the elements in types
 	 */
@@ -31,14 +32,15 @@ public class CollisionHandler<T extends Shape.CollisionHandler<T>> extends BaseO
 	private static int[] arrayLengths;
 	
 	
-	public CollisionHandler(int typeCnt, int capacity) {
+	public LargeObjectCollider(int typeCnt, int capacity) {
 		count = 0;
 		arrayLengths = new int[typeCnt];
 		rawArray = new Object[typeCnt][];
 		
-		types = new FixedSizeArray<FixedSizeArray<T>>(typeCnt);
 		pendingAdditions = new FixedSizeArray<T>(capacity);
 		pendingRemovals = new FixedSizeArray<T>(capacity);
+		typeLess = new FixedSizeArray<T>(capacity);
+		types = new FixedSizeArray<FixedSizeArray<T>>(typeCnt);
 		int length = typeCnt;
 		for(int i = 0; i < length; i++){
 			types.add(new FixedSizeArray<T>(capacity));
@@ -88,6 +90,7 @@ public class CollisionHandler<T extends Shape.CollisionHandler<T>> extends BaseO
 	@Override
 	public void update(float dt, BaseObject parent) {
 		commitUpdates();
+		int typeLessCnt = typeLess.getCount();
 		
 		count = 0;
 		int i; int j;
@@ -102,6 +105,12 @@ public class CollisionHandler<T extends Shape.CollisionHandler<T>> extends BaseO
 		
 		for(i = 0; i < arrayLengths.length; i++){
 			for(j = 0; j < arrayLengths[i]; j++){
+				if(typeLessCnt != 0){
+					Object[] typeLessArray = typeLess.getArray();
+					for(int k = 0; k < typeLessCnt; k++){
+						((T) typeLessArray[k]).collide((T) rawArray[i][j]);
+					}
+				}
 				collides(i, j, dt);
 			}
 		}
@@ -116,13 +125,8 @@ public class CollisionHandler<T extends Shape.CollisionHandler<T>> extends BaseO
 		for(i = typeI; i < arrayLengths.length; i++){
 			for(j = shapeI + 1; j < arrayLengths[i]; j++){
 				shape2 = (T) rawArray[i][j];
-				
-				shape1.expandHitbox(dt);
-				shape2.expandHitbox(dt);
-				if(Collision.collides(shape1, shape2)){
-					shape1.collide(shape2);
-					shape2.collide(shape1);
-				}
+				shape1.collide(shape2);
+				shape2.collide(shape1);
 			}
 		}
 	}
@@ -154,6 +158,11 @@ public class CollisionHandler<T extends Shape.CollisionHandler<T>> extends BaseO
 				}
 			}
 		}
+		return returnO;
+	}
+	
+	public T[] getClose(Vector2 pos, float withIn, int[] type){
+		T[] returnO = null;
 		return returnO;
 	}
 

@@ -21,10 +21,9 @@ public class Collision {
 		
 		Vector2 pos1 = circle1.getPos();
 		Vector2 pos2 = circle2.getPos();
-		float rad1 = circle1.getRadius();
-		float rad2 = circle2.getRadius();
+		float distance = circle1.getRadius() + circle2.getRadius();;
 		
-		if(pos1.distance2(pos2) < rad1 + rad2) return true;
+		if(pos1.distance2(pos2) < (distance)*(distance)) return true;
 		return false;
 	}
 }
