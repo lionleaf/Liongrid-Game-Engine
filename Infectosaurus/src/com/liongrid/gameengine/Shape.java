@@ -58,6 +58,5 @@ public abstract interface Shape {
 		public int getType();
 		
 		public void expandHitbox(float dt);
-		public void resetHitbox();
 	}
 }

@@ -2,7 +2,10 @@ package com.liongrid.gameengine;
 
 import java.io.InvalidObjectException;
 
+import android.util.Log;
+
 import com.liongrid.gameengine.tools.FixedSizeArray;
+import com.liongrid.infectosaurus.Main;
 
 /**
  * @author Lastis
@@ -19,7 +22,7 @@ public class CollisionHandler<T extends Shape.CollisionHandler<T>> extends BaseO
 	/**
 	 * This is used to faster access the elements in types
 	 */
-	private T[][] rawArray;
+	private Object[][] rawArray;
 	/**
 	 * This is used to fast get the length of the sublists of types.
 	 */
@@ -28,6 +31,7 @@ public class CollisionHandler<T extends Shape.CollisionHandler<T>> extends BaseO
 	
 	public CollisionHandler(int typeCnt, int capacity) {
 		arrayLengths = new int[typeCnt];
+		rawArray = new Object[typeCnt][];
 		
 		types = new FixedSizeArray<FixedSizeArray<T>>(typeCnt);
 		pendingAdditions = new FixedSizeArray<T>(capacity);
@@ -83,8 +87,8 @@ public class CollisionHandler<T extends Shape.CollisionHandler<T>> extends BaseO
 		int i; int j;
 		for(i = 0; i < arrayLengths.length; i++){
 			FixedSizeArray<T> shapes = types.get(i);
-			arrayLengths[i] = shapes.getCapacity();
-			rawArray[i]	= (T[]) shapes.getArray();
+			arrayLengths[i] = shapes.getCount();
+			rawArray[i]	= shapes.getArray();
 		}
 		
 		commitUpdates();
@@ -97,22 +101,15 @@ public class CollisionHandler<T extends Shape.CollisionHandler<T>> extends BaseO
 		}
 	}
 	
-	private void clearArrays() {
-		for(int i = 0; i < arrayLengths.length ; i++){
-			for(int j = 0; j < arrayLengths[i]; j++){
-				rawArray[i][j].clear();
-			}
-		}
-	}
 
 	private void collides(int typeI, int shapeI, float dt) {
-		T shape1 = rawArray[typeI][shapeI];
+		T shape1 = (T) rawArray[typeI][shapeI];
 		T shape2;
 		int i; int j;
 		
 		for(i = typeI; i < arrayLengths.length; i++){
 			for(j = shapeI + 1; j < arrayLengths[i]; j++){
-				shape2 = rawArray[i][j];
+				shape2 = (T) rawArray[i][j];
 				
 				shape1.expandHitbox(dt);
 				shape2.expandHitbox(dt);
@@ -120,12 +117,17 @@ public class CollisionHandler<T extends Shape.CollisionHandler<T>> extends BaseO
 					shape1.collide(shape2);
 					shape2.collide(shape1);
 				}
-				shape1.resetHitbox();
-				shape2.resetHitbox();
 			}
 		}
 	}
 
+	private void clearArrays() {
+		for(int i = 0; i < arrayLengths.length ; i++){
+			for(int j = 0; j < arrayLengths[i]; j++){
+				((T) rawArray[i][j]).clear();
+			}
+		}
+	}
 
 	@Override
 	public void reset() {
