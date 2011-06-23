@@ -5,6 +5,7 @@ import java.io.InvalidObjectException;
 import android.util.Log;
 
 import com.liongrid.gameengine.tools.FixedSizeArray;
+import com.liongrid.gameengine.tools.Vector2;
 import com.liongrid.infectosaurus.Main;
 
 /**
@@ -23,6 +24,7 @@ public class CollisionHandler<T extends Shape.CollisionHandler<T>> extends BaseO
 	 * This is used to faster access the elements in types
 	 */
 	private Object[][] rawArray;
+	private int count;
 	/**
 	 * This is used to fast get the length of the sublists of types.
 	 */
@@ -30,6 +32,7 @@ public class CollisionHandler<T extends Shape.CollisionHandler<T>> extends BaseO
 	
 	
 	public CollisionHandler(int typeCnt, int capacity) {
+		count = 0;
 		arrayLengths = new int[typeCnt];
 		rawArray = new Object[typeCnt][];
 		
@@ -84,14 +87,17 @@ public class CollisionHandler<T extends Shape.CollisionHandler<T>> extends BaseO
 
 	@Override
 	public void update(float dt, BaseObject parent) {
+		commitUpdates();
+		
+		count = 0;
 		int i; int j;
 		for(i = 0; i < arrayLengths.length; i++){
 			FixedSizeArray<T> shapes = types.get(i);
 			arrayLengths[i] = shapes.getCount();
+			count += arrayLengths[i];
 			rawArray[i]	= shapes.getArray();
 		}
 		
-		commitUpdates();
 		clearArrays();
 		
 		for(i = 0; i < arrayLengths.length; i++){
@@ -128,9 +134,36 @@ public class CollisionHandler<T extends Shape.CollisionHandler<T>> extends BaseO
 			}
 		}
 	}
+	
+	public T getClosest(Vector2 pos, int[] types){
+		if(count == 0) return null;
+		T returnO = null;
+		float closestDistance = 0; int type; int shape;
+		for(int i = 0; i < types.length; i ++){
+			type = types[i];
+			for(shape = 0; shape < arrayLengths[type]; shape++){
+				if(returnO == null) {
+					returnO = (T) rawArray[type][shape];
+					closestDistance = pos.distance2(returnO.getPos());
+					continue;
+				}
+				float distance = pos.distance2(((T) rawArray[type][shape]).getPos());
+				if(distance < closestDistance) {
+					closestDistance = distance;
+					returnO = (T) rawArray[type][shape];
+				}
+			}
+		}
+		return returnO;
+	}
 
 	@Override
 	public void reset() {
 		
+	}
+
+
+	public int getCount() {
+		return count;
 	}
 }

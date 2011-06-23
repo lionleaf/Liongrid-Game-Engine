@@ -89,4 +89,8 @@ public class ObjectHandler <T extends BaseObject> extends BaseObject
 	public FixedSizeArray<T> getObjects() {
 		return objects;
 	}
+
+	public int getCount() {
+		return objects.getCount();
+	}
 }

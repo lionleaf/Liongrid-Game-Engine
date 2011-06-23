@@ -17,5 +17,6 @@ public interface ObjectHandlerInterface<T>{
 	public void remove(T o) throws IllegalObjectException;
 	public void commitUpdates();
 	public void update(float dt, BaseObject parent);
+	public int getCount();
 	public FixedSizeArray<T> getObjects();
 }

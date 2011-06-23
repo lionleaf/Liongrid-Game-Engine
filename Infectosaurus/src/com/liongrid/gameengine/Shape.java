@@ -7,7 +7,6 @@ public abstract interface Shape {
 	public static final int CIRCLE = 1;
 	public static final int SQUARE = 2;
 	
-	
 	/**
 	 * @return the center position of the shape
 	 */
