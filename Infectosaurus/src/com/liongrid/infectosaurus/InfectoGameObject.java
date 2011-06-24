@@ -1,6 +1,7 @@
 package com.liongrid.infectosaurus;
 
 import com.liongrid.gameengine.BaseObject;
+import com.liongrid.gameengine.Collision;
 import com.liongrid.gameengine.Shape;
 import com.liongrid.gameengine.GameObject;
 import com.liongrid.gameengine.Shape.CHCircle;
@@ -11,6 +12,7 @@ public class InfectoGameObject extends GameObject<InfectoGameObject>
 		implements CHCircle<InfectoGameObject>{
 
 	
+	private static final int COLLISION_ARR_LENGTH = 5;
 	public Team team = Team.Human; //Default team
 	public boolean alive = true;
 	public Vector2 pos = new Vector2(0,0);
@@ -18,10 +20,14 @@ public class InfectoGameObject extends GameObject<InfectoGameObject>
 	public float speed = 10;
 	public int hp = 1;
 	public boolean infectable = true; // Tells if the object can be infected
+	public InfectoGameObject[] collisions;
+	public float radius = 0;
 	
-	protected float hitboxR = 0;
-	protected float radius = 0;
-	protected FixedSizeArray<InfectoGameObject> collisions;
+	private int count = 0;
+	
+	public InfectoGameObject() {
+		collisions = new InfectoGameObject[COLLISION_ARR_LENGTH];
+	}
 	
 	
 	
@@ -39,11 +45,18 @@ public class InfectoGameObject extends GameObject<InfectoGameObject>
 	}
 
 	public void collide(InfectoGameObject o) {
-		
+		if(count >= collisions.length) return;
+		if(Collision.collides(this, o)){
+			collisions[count] = o;
+			count++;
+		}
 	}
 
 	public void clear() {
-		
+		count = 0;
+		for(int i = 0; i < collisions.length; i++){
+			collisions[i] = null;
+		}
 	}
 
 	public int getType() {
@@ -55,18 +68,10 @@ public class InfectoGameObject extends GameObject<InfectoGameObject>
 	}
 
 	public float getRadius() {
-		return hitboxR;
+		return radius;
 	}
 
 	public int getShape() {
 		return Shape.CIRCLE;
-	}
-
-	public void expandHitbox(float dt) {
-		hitboxR = radius*speed*dt;
-	}
-
-	public void resetHitbox() {
-		hitboxR = radius;
 	}
 }

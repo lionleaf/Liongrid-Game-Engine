@@ -3,6 +3,7 @@ package com.liongrid.gameengine;
 import android.util.Log;
 
 import com.liongrid.gameengine.tools.Vector2;
+import com.liongrid.infectosaurus.Main;
 
 public class Collision {
 	private static final int CIRCLE = Shape.CIRCLE;
@@ -18,7 +19,6 @@ public class Collision {
 	
 	private static boolean collides(Shape.Circle circle1, 
 			Shape.Circle circle2){
-		
 		Vector2 pos1 = circle1.getPos();
 		Vector2 pos2 = circle2.getPos();
 		float distance = circle1.getRadius() + circle2.getRadius();;

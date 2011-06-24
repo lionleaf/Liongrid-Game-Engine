@@ -7,13 +7,11 @@ import android.util.Log;
 
 import com.liongrid.gameengine.tools.FixedSizeArray;
 import com.liongrid.gameengine.tools.Vector2;
+import com.liongrid.infectosaurus.InfectoGameObject;
 import com.liongrid.infectosaurus.Main;
 
 /**
  * @author Lastis
- * This class extends ObjectHandler. This is because CollisionArea shares all of the
- * methods that ObjectHandler contains, even though all of the methods have been 
- * overridden. 
  */
 public class LargeObjectCollider<T extends Shape.Collideable<T>> extends BaseObject 
 		implements ObjectHandlerInterface<T>{
@@ -140,6 +138,19 @@ public class LargeObjectCollider<T extends Shape.Collideable<T>> extends BaseObj
 		}
 	}
 	
+	public T getClosest(Vector2 pos, int type) {
+		T returnO = null;
+		int shape; float closestDistance = Float.MAX_VALUE;
+		for(shape = 0; shape < arrayLengths[type]; shape++){
+			float distance = pos.distance2(((T) rawArray[type][shape]).getPos());
+			if(distance < closestDistance) {
+				closestDistance = distance;
+				returnO = (T) rawArray[type][shape];
+			}
+		}
+		return returnO;
+	}
+	
 	/**
 	 * @param pos - the position
 	 * @param types - the types of the objects to return
@@ -148,15 +159,10 @@ public class LargeObjectCollider<T extends Shape.Collideable<T>> extends BaseObj
 	public T getClosest(Vector2 pos, int[] types){
 		if(arrayCnt == 0) return null;
 		T returnO = null;
-		float closestDistance = 0; int type; int shape;
+		float closestDistance = Float.MAX_VALUE; int type; int shape;
 		for(int i = 0; i < types.length; i ++){
 			type = types[i];
 			for(shape = 0; shape < arrayLengths[type]; shape++){
-				if(returnO == null) {
-					returnO = (T) rawArray[type][shape];
-					closestDistance = pos.distance2(returnO.getPos());
-					continue;
-				}
 				float distance = pos.distance2(((T) rawArray[type][shape]).getPos());
 				if(distance < closestDistance) {
 					closestDistance = distance;

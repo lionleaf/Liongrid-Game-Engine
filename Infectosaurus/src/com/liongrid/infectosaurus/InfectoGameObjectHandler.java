@@ -19,7 +19,7 @@ public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
 	
 	static final int NUMBER_OF_HUMANS = 30;
 
-	private LargeObjectCollider<InfectoGameObject> ca;
+	public LargeObjectCollider<InfectoGameObject> ca;
 	public InfectoGameObjectHandler(){
 		super(DEFAULT_CAPACITY);
 		Human human;
@@ -116,7 +116,6 @@ public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
 				closest = currentObject;
 			}
 		}
-		
 		return closest;
 	}
 	

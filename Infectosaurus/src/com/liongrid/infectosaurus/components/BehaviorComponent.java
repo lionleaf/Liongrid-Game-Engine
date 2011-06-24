@@ -62,6 +62,12 @@ public class BehaviorComponent extends Component<InfectoGameObject>{
 	
 	public void addBehaviorFunction(BehaviorFunction func){
 		behaviors.add(func);
+		try {
+			this.wait();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Override

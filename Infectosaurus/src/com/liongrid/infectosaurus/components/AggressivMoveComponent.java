@@ -6,6 +6,7 @@ import com.liongrid.gameengine.GameObject;
 import com.liongrid.infectosaurus.GameActivity;
 import com.liongrid.infectosaurus.InfectoGameObject;
 import com.liongrid.infectosaurus.InfectoGameObjectHandler;
+import com.liongrid.infectosaurus.Team;
 
 public class AggressivMoveComponent extends Component<InfectoGameObject>{
 	
@@ -17,8 +18,9 @@ public class AggressivMoveComponent extends Component<InfectoGameObject>{
 
 	@Override
 	public void update(float dt, InfectoGameObject parent) {
-		InfectoGameObject target = 
-			gameObjHandler.getClosest(parent, parent.pos, parent.team.Human);
+		InfectoGameObject target =
+			gameObjHandler.getClosest(parent, parent.pos, Team.Human);
+			//gameObjHandler.ca.getClosest(parent.pos, Team.Human.ordinal());
 		if(target != null){
 			parent.vel.set(target.pos);
 			parent.vel.subtract(parent.pos);
