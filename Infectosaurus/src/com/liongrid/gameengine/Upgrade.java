@@ -8,70 +8,70 @@ package com.liongrid.gameengine;
  * It`s probably not necessary to pool this, 
  * and therefore it does not support it atm.
  * 
- * If the rank is 0, the upgrade should do nothing!
+ * If the mRank is 0, the upgrade should do nothing!
  * 
- * To make it "infinitely" upgradeable, set rank = Integer.MAX_VALUE;
+ * To make it "infinitely" upgradeable, set mRank = Integer.MAX_VALUE;
  *  
  * @param <T> The type that the upgrade can be applied to
  */
 public abstract class Upgrade<T extends BaseObject>{
 	
-	protected int rank = 0;
-	protected int maxRank;
+	protected int mRank = 0;
+	protected int mMaxRank;
 	
 	public Upgrade(int maxRank){
-		this.maxRank = maxRank;
+		this.mMaxRank = maxRank;
 	}
 	
 	/**
-	 * @return the current rank of the upgrade
+	 * @return the current mRank of the upgrade
 	 */
 	public int getRank(){
-		return rank;
+		return mRank;
 	}
 	
 	/**
-	 * Set`s the rank. BEWARE, if rank is out of bounds, it does nothing.
-	 * @param rank - the new rank
-	 * @return - True if the rank was set, 
-	 * 		false if rank was greater than maxRank or less than zero
+	 * Set`s the mRank. BEWARE, if mRank is out of bounds, it does nothing.
+	 * @param mRank - the new mRank
+	 * @return - True if the mRank was set, 
+	 * 		false if mRank was greater than mMaxRank or less than zero
 	 */
 	public boolean setRank(int rank){
-		if(rank > maxRank || rank < 0){
+		if(rank > mMaxRank || rank < 0){
 			return false;
 		}
 		
-		this.rank = rank;
+		this.mRank = rank;
 		return true;
 	}
 	
 	/**
-	 * Increases the current rank by 1, unless current rank == max rank
-	 * @return true if the rank was changed
+	 * Increases the current mRank by 1, unless current mRank == max mRank
+	 * @return true if the mRank was changed
 	 */
 	public boolean incrementRank(){
-		if(rank == maxRank) return false;
+		if(mRank == mMaxRank) return false;
 		
-		rank++;
+		mRank++;
 		return true;
 	}
 	
 	/**
-	 * Decreases the current rank by 1, unless current rank = 0
-	 * @return true if the rank was changed
+	 * Decreases the current mRank by 1, unless current mRank = 0
+	 * @return true if the mRank was changed
 	 */
 	public boolean decrementRank(){
-		if(rank == 0) return false;
+		if(mRank == 0) return false;
 		
-		rank--;
+		mRank--;
 		return true;
 	}
 	
 	/**
-	 * Sets the rank back to 0 and thereby disables the upgrade
+	 * Sets the mRank back to 0 and thereby disables the upgrade
 	 */
 	public void resetRank(){
-		rank = 0;
+		mRank = 0;
 	}
 	
 	/**
@@ -86,8 +86,12 @@ public abstract class Upgrade<T extends BaseObject>{
 	
 	
 	/**
-	 * @return the cost to upgrade this upgrade to the next rank.
+	 * @return the cost to upgrade this upgrade to the next mRank.
 	 */
 	public abstract int getUpgradePrice();
+
+	public int getMaxRank() {
+		return mMaxRank;
+	}
 	
 }

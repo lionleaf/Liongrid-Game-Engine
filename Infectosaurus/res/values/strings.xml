@@ -4,4 +4,6 @@
     <string name="app_name">infectosaurus</string>
     <string name="startGame">Start Game</string>
     <string name="exit">Exit</string>
+    <string name="upgrade">Upgrade the Infectosaurus</string>
+    <string name="speedUpgrade">Speed Upgrade</string>
 </resources>

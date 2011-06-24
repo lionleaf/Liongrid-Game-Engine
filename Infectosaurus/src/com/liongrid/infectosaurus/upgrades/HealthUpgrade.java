@@ -11,12 +11,12 @@ public class HealthUpgrade extends Upgrade<Infectosaurus> {
 
 	@Override
 	public void apply(Infectosaurus target) {
-		target.hp += 5*rank;
+		target.hp += 5*mRank;
 	}
 
 	@Override
 	public int getUpgradePrice() {
-		return (rank+1)*100;
+		return (mRank+1)*100;
 	}
 
 }

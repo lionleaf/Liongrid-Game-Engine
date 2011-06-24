@@ -64,7 +64,9 @@ public class Infectosaurus extends InfectoGameObject {
 		addComponent(new AggressivMoveComponent());
 		addComponent(sprite);
 		addComponent(new MoveComponent());
-		speed = 100;
+		
+		speed = 80;
+		
 		team = Team.Alien;
 		
 		

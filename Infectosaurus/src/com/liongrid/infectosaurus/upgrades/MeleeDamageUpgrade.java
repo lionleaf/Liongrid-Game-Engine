@@ -17,7 +17,7 @@ public class MeleeDamageUpgrade extends Upgrade<Infectosaurus> {
 			(InfMeleeAttackComponent) target.findComponentOfType(InfMeleeAttackComponent.class);	
 		if(c == null) return;
 		
-		c.addToDamage(rank);
+		c.addToDamage(mRank);
 	}
 
 	@Override

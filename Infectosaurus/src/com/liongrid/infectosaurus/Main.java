@@ -30,6 +30,18 @@ public class Main extends Activity {
         	
         });
         
+        View upgradeButton = findViewById(R.id.upgradeButton);
+        upgradeButton.setOnClickListener(new OnClickListener(){
+
+			public void onClick(View v) {
+				Intent i;
+		        i = new Intent(v.getContext(), UpgradeActivity.class);
+		        startActivity(i);
+			}
+        	
+        });
+        
+        
         View exitButton = findViewById(R.id.exitGameButton);
         exitButton.setOnClickListener(new OnClickListener(){
         	

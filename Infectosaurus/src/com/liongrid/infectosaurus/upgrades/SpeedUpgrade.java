@@ -11,13 +11,13 @@ public class SpeedUpgrade extends Upgrade<Infectosaurus> {
 
 	@Override
 	public void apply(Infectosaurus target) {
-		target.speed += 5*rank;
+		target.speed += 5*mRank;
 		
 	}
 
 	@Override
 	public int getUpgradePrice() {
-		return (rank+1)*100;
+		return (mRank+1)*100;
 	}
 
 }
