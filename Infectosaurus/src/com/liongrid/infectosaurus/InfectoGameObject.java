@@ -42,6 +42,7 @@ public class InfectoGameObject extends GameObject<InfectoGameObject>
 	
 	protected void die(){
 		GameActivity.infectoPointers.gameObjectHandler.remove(this);
+		GameActivity.infectoPointers.gameObjectHandler.ca.remove(this);
 	}
 
 	public void collide(InfectoGameObject o) {
