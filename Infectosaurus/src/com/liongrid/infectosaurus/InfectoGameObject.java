@@ -1,5 +1,7 @@
 package com.liongrid.infectosaurus;
 
+import android.util.Log;
+
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Collision;
 import com.liongrid.gameengine.Shape;
@@ -21,9 +23,9 @@ public class InfectoGameObject extends GameObject<InfectoGameObject>
 	public int hp = 1;
 	public boolean infectable = true; // Tells if the object can be infected
 	public InfectoGameObject[] collisions;
+	public int collideCnt = 0;
 	public float radius = 0;
 	
-	private int count = 0;
 	
 	public InfectoGameObject() {
 		collisions = new InfectoGameObject[COLLISION_ARR_LENGTH];
@@ -46,15 +48,15 @@ public class InfectoGameObject extends GameObject<InfectoGameObject>
 	}
 
 	public void collide(InfectoGameObject o) {
-		if(count >= collisions.length) return;
+		if(collideCnt >= collisions.length) return;
 		if(Collision.collides(this, o)){
-			collisions[count] = o;
-			count++;
+			collisions[collideCnt] = o;
+			collideCnt++;
 		}
 	}
 
 	public void clear() {
-		count = 0;
+		collideCnt = 0;
 		for(int i = 0; i < collisions.length; i++){
 			collisions[i] = null;
 		}

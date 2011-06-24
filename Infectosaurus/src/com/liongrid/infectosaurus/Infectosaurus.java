@@ -41,11 +41,12 @@ public class Infectosaurus extends InfectoGameObject {
 		DrawableBitmap[] dbs = new DrawableBitmap[4];
 		
 		Texture tex = texLib.allocateTexture(R.drawable.spheremonster01);
-		
-		dbs[0] = new DrawableBitmap(tex, 16*3, 16*3);
-		dbs[1] = new DrawableBitmap(tex, 16*3+3, 16*3+3);
-		dbs[2] = new DrawableBitmap(tex, 16*3+6, 16*3+6);
-		dbs[3] = new DrawableBitmap(tex, 16*3+3, 16*3+3);
+		int size = 16*3;
+		radius = (float) (size/2.0);
+		dbs[0] = new DrawableBitmap(tex, size, size);
+		dbs[1] = new DrawableBitmap(tex, size+3, size+3);
+		dbs[2] = new DrawableBitmap(tex, size+6, size+6);
+		dbs[3] = new DrawableBitmap(tex, size+3, size+3);
 		
 		DrawableBitmap[] attackBmps = new DrawableBitmap[1];
 		
@@ -90,6 +91,17 @@ public class Infectosaurus extends InfectoGameObject {
 			us[i].get().apply(this);
 		}
 		
+	}
+	
+	@Override
+	public void collide(InfectoGameObject o) {
+		super.collide(o);
+		if(collideCnt != 0){
+			for(int i = 0; i < collideCnt; i++){
+				Log.d(Main.TAG, "Infecto collided with Team = " + 
+						collisions[i].team.toString());
+			}
+		}
 	}
 
 	@Override
