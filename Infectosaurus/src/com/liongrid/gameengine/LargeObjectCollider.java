@@ -2,6 +2,7 @@ package com.liongrid.gameengine;
 
 import java.io.InvalidObjectException;
 
+import android.R.raw;
 import android.util.Log;
 
 import com.liongrid.gameengine.tools.FixedSizeArray;
@@ -25,7 +26,7 @@ public class LargeObjectCollider<T extends Shape.Collideable<T>> extends BaseObj
 	 * This is used to faster access the elements in types
 	 */
 	private Object[][] rawArray;
-	private int count;
+	private int arrayCnt;
 	/**
 	 * This is used to fast get the length of the sublists of types.
 	 */
@@ -33,7 +34,7 @@ public class LargeObjectCollider<T extends Shape.Collideable<T>> extends BaseObj
 	
 	
 	public LargeObjectCollider(int typeCnt, int capacity) {
-		count = 0;
+		arrayCnt = 0;
 		arrayLengths = new int[typeCnt];
 		rawArray = new Object[typeCnt][];
 		
@@ -92,12 +93,12 @@ public class LargeObjectCollider<T extends Shape.Collideable<T>> extends BaseObj
 		commitUpdates();
 		int typeLessCnt = typeLess.getCount();
 		
-		count = 0;
+		arrayCnt = 0;
 		int i; int j;
 		for(i = 0; i < arrayLengths.length; i++){
 			FixedSizeArray<T> shapes = types.get(i);
 			arrayLengths[i] = shapes.getCount();
-			count += arrayLengths[i];
+			arrayCnt += arrayLengths[i];
 			rawArray[i]	= shapes.getArray();
 		}
 		
@@ -139,8 +140,13 @@ public class LargeObjectCollider<T extends Shape.Collideable<T>> extends BaseObj
 		}
 	}
 	
+	/**
+	 * @param pos - the position
+	 * @param types - the types of the objects to return
+	 * @return The closest object
+	 */
 	public T getClosest(Vector2 pos, int[] types){
-		if(count == 0) return null;
+		if(arrayCnt == 0) return null;
 		T returnO = null;
 		float closestDistance = 0; int type; int shape;
 		for(int i = 0; i < types.length; i ++){
@@ -161,10 +167,30 @@ public class LargeObjectCollider<T extends Shape.Collideable<T>> extends BaseObj
 		return returnO;
 	}
 	
-	public T[] getClose(Vector2 pos, float withIn, int[] type){
-		T[] returnO = null;
-		return returnO;
+	/**
+	 * @param pos - position
+	 * @param withIn - Get all objects within this distance
+	 * @param types - The types of the objects to be search for
+	 * @param array - An array to copy the objects found to.
+	 * @return array
+	 */
+	public T[] getClose(Vector2 pos, float withIn, int[] types, T[] array){
+		if(arrayCnt == 0) return null;
+		int type; int shape; int count = 0; float dis2;
+		for(int i = 0; i < types.length; i ++){
+			type = types[i];
+			for(shape = 0; shape < arrayLengths[type]; shape++){
+				if(count < array.length) return array;
+				dis2 = pos.distance2(((T) rawArray[shape][type]).getPos());
+				if(dis2 < withIn * withIn){
+					array[count] = (T) rawArray[type][shape];
+					count ++;
+				}
+			}
+		}
+		return array;
 	}
+			
 
 	@Override
 	public void reset() {
@@ -173,6 +199,6 @@ public class LargeObjectCollider<T extends Shape.Collideable<T>> extends BaseObj
 
 
 	public int getCount() {
-		return count;
+		return arrayCnt;
 	}
 }
