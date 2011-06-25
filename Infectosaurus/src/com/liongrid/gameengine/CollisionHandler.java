@@ -13,7 +13,7 @@ import com.liongrid.infectosaurus.Main;
 /**
  * @author Lastis
  */
-public class LargeObjectCollider<T extends Shape.Collideable<T>> extends BaseObject 
+public class CollisionHandler<T extends Shape.Collideable<T>> extends BaseObject 
 		implements ObjectHandlerInterface<T>{
 	
 	private FixedSizeArray<FixedSizeArray<T>> types;
@@ -31,7 +31,7 @@ public class LargeObjectCollider<T extends Shape.Collideable<T>> extends BaseObj
 	private static int[] arrayLengths;
 	
 	
-	public LargeObjectCollider(int typeCnt, int capacity) {
+	public CollisionHandler(int typeCnt, int capacity) {
 		arrayCnt = 0;
 		arrayLengths = new int[typeCnt];
 		rawArray = new Object[typeCnt][];

@@ -3,7 +3,7 @@ package com.liongrid.infectosaurus;
 import android.util.Log;
 
 import com.liongrid.gameengine.BaseObject;
-import com.liongrid.gameengine.LargeObjectCollider;
+import com.liongrid.gameengine.CollisionHandler;
 import com.liongrid.gameengine.IllegalObjectException;
 import com.liongrid.gameengine.ObjectHandler;
 import com.liongrid.gameengine.tools.FixedSizeArray;
@@ -17,29 +17,39 @@ import com.liongrid.gameengine.tools.Vector2;
 public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
 	private static final int DEFAULT_CAPACITY = 256;
 	
-	static final int NUMBER_OF_HUMANS = 30;
+	static final int NUMBER_OF_HUMANS = 5;
 
-	public LargeObjectCollider<InfectoGameObject> ca;
+	public CollisionHandler<InfectoGameObject> mCH;
 	public InfectoGameObjectHandler(){
 		super(DEFAULT_CAPACITY);
 		Human human;
-		ca = new LargeObjectCollider<InfectoGameObject>
+		mCH = new CollisionHandler<InfectoGameObject>
 					(Team.values().length, DEFAULT_CAPACITY);
 		
 		for (int i = 0; i < NUMBER_OF_HUMANS; i++) {
 			human = new Human();
 			human.pos.set(0,0);
 			Human newHuman = new Human();
-			objects.add(newHuman);
-			ca.add(newHuman);
+			add(newHuman);
 		}
+	}
+	
+	@Override
+	public void add(InfectoGameObject object) {
+		super.add(object);
+		mCH.add(object);
+	}
+	
+	@Override
+	public void remove(InfectoGameObject object) {
+		super.remove(object);
+		mCH.remove(object);
 	}
 	
 	@Override
 	public void update(float dt, BaseObject parent){
 		
 		commitUpdates();
-		ca.update(dt, parent);
 		
 		//For speed, we get the raw array. We have to be careful to only read		
 		Object[] objectArray = objects.getArray();
@@ -48,6 +58,8 @@ public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
 		for(int i = 0; i < count; i++){
 			((BaseObject)objectArray[i]).update(dt, this);
 		}
+		
+		mCH.update(dt, parent);
 	}
 
 	/**

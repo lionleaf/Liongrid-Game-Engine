@@ -1,6 +1,7 @@
 package com.liongrid.infectosaurus;
 
 import com.liongrid.gameengine.BaseObject;
+import com.liongrid.gameengine.Collision;
 import com.liongrid.gameengine.DrawableBitmap;
 import com.liongrid.gameengine.GameObject;
 import com.liongrid.gameengine.Panel;
@@ -95,11 +96,19 @@ public class Infectosaurus extends InfectoGameObject {
 	
 	@Override
 	public void collide(InfectoGameObject o) {
-		super.collide(o);
-		if(collideCnt != 0){
-			for(int i = 0; i < collideCnt; i++){
-				Log.d(Main.TAG, "Infecto collided with Team = " + 
-						collisions[i].team.toString());
+		if(Collision.collides(this, o)){
+			if(o.pos.x < pos.x) pos.x = (float) 
+				(o.pos.x + pos.x/(Math.sqrt(o.pos.distance2(pos))));
+			else {
+				pos.x = (float) 
+				(o.pos.x - pos.x/(Math.sqrt(o.pos.distance2(pos))));
+			}
+			
+			if(o.pos.y < pos.y) pos.y = (float) 
+				(o.pos.y + pos.y/(Math.sqrt(o.pos.distance2(pos))));
+			else {
+				pos.y = (float) 
+				(o.pos.y - pos.y/(Math.sqrt(o.pos.distance2(pos))));
 			}
 		}
 	}

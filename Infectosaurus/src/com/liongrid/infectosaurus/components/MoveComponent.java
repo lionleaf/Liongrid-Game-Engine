@@ -6,12 +6,12 @@ import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Component;
 import com.liongrid.gameengine.GameObject;
 import com.liongrid.infectosaurus.InfectoGameObject;
+import com.liongrid.infectosaurus.Team;
 
 public class MoveComponent extends Component<InfectoGameObject> {
 	@Override
 	public void update(float dt, InfectoGameObject parent) {
 		parent.pos.add(parent.vel.x * dt, parent.vel.y * dt);
-		
 	}
-
+	
 }

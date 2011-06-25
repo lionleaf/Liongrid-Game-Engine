@@ -32,7 +32,6 @@ public class InfectoGameObject extends GameObject<InfectoGameObject>
 	}
 	
 	
-	
 	@Override
 	public void update(float dt, BaseObject parent) {
 		if(hp <= 0) { // Temp death function!!! TODO RREMOVE
@@ -44,7 +43,6 @@ public class InfectoGameObject extends GameObject<InfectoGameObject>
 	
 	protected void die(){
 		GameActivity.infectoPointers.gameObjectHandler.remove(this);
-		GameActivity.infectoPointers.gameObjectHandler.ca.remove(this);
 	}
 
 	public void collide(InfectoGameObject o) {

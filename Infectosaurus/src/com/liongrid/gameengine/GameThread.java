@@ -115,7 +115,6 @@ public class GameThread extends Thread {
 				Infectosaurus inf = new Infectosaurus();
 				BaseObject.gamePointers.currentSaurus = inf;
 				GameActivity.infectoPointers.gameObjectHandler.add(inf);
-				GameActivity.infectoPointers.gameObjectHandler.ca.add(inf);
 			}
 			
 			float y = (BaseObject.gamePointers.panel.getHeight() - event.getY()) / Camera.scale;
