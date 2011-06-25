@@ -6,4 +6,5 @@
     <string name="exit">Exit</string>
     <string name="upgrade">Upgrade the Infectosaurus</string>
     <string name="speedUpgrade">Speed Upgrade</string>
+    <string name="speedUpgradeDescription">Increases the speed of the infectosaurus by 5 per upgrade.</string>
 </resources>

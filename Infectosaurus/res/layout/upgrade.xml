@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
-  android:orientation="vertical"
+  android:orientation="horizontal"
   android:layout_width="fill_parent"
   android:layout_height="fill_parent">
-    <TableLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/tableLayout1">
-        <TableRow android:id="@+id/tableRow1" android:layout_width="wrap_content" android:layout_height="wrap_content">
-            <com.liongrid.infectosaurus.UpgradeTreeButton android:text="UpgradeTreeButton" android:id="@+id/upgradeTreeButton1" android:layout_width="wrap_content" android:layout_height="wrap_content"></com.liongrid.infectosaurus.UpgradeTreeButton>
-        </TableRow>
-        <TableRow android:id="@+id/tableRow2" android:layout_width="wrap_content" android:layout_height="wrap_content"></TableRow>
-        <TableRow android:id="@+id/tableRow3" android:layout_width="wrap_content" android:layout_height="wrap_content"></TableRow>
-        <TableRow android:id="@+id/tableRow4" android:layout_width="wrap_content" android:layout_height="wrap_content"></TableRow>
-    </TableLayout>
+    <ScrollView android:layout_height="fill_parent" android:layout_width="wrap_content" android:id="@+id/scrollView1">
+        <LinearLayout android:id="@+id/linearLayout1" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <com.liongrid.infectosaurus.UpgradeTreeGroup android:id="@+id/upgradeTreeGroup" android:layout_height="wrap_content" android:layout_width="wrap_content">
+                <com.liongrid.infectosaurus.UpgradeTreeButton android:text="UpgradeTreeButton" android:id="@+id/upgradeTreeButton1"></com.liongrid.infectosaurus.UpgradeTreeButton>
+                <com.liongrid.infectosaurus.UpgradeTreeButton android:text="UpgradeTreeButton" android:id="@+id/upgradeTreeButton2"></com.liongrid.infectosaurus.UpgradeTreeButton>
+                <com.liongrid.infectosaurus.UpgradeTreeButton android:text="UpgradeTreeButton" android:id="@+id/upgradeTreeButton3"></com.liongrid.infectosaurus.UpgradeTreeButton>
+            </com.liongrid.infectosaurus.UpgradeTreeGroup>
+        </LinearLayout>
+    </ScrollView>
+    <LinearLayout android:layout_height="fill_parent" android:layout_width="wrap_content" android:id="@+id/linearLayout2" android:orientation="vertical">
+        <TextView android:textAppearance="?android:attr/textAppearanceLarge" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="TextView" android:id="@+id/upgradeDescriptionText"></TextView>
+    </LinearLayout>
 
     
 </LinearLayout>

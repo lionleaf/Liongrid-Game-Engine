@@ -16,30 +16,31 @@ import android.widget.RadioButton;
 
 public class UpgradeTreeButton extends RadioButton {
 	
-	Upgrade mUpgrade = InfectosaurusUpgrades.speedUpgrade.get();
+	private Upgrade<?> mUpgrade = InfectosaurusUpgrades.SpeedUpgrade.get();
 	private boolean mUpgradeable;
 	
 	
 	public UpgradeTreeButton(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		init();
+		init(attrs);
 	}
 	
 	
 	public UpgradeTreeButton(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		init();
+		init(attrs);
 	}
 
-	private void init(){
+	private void init(AttributeSet attrs){
 		setButtonDrawable(R.drawable.gressbusk2);
+		//attrs.getAttributeValue("", "");
 	}
 		
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 		
-		if(mUpgradeable){
+		if(isChecked()){
 			Rect r = new Rect();
 			getDrawingRect(r);
 			
@@ -65,10 +66,7 @@ public class UpgradeTreeButton extends RadioButton {
 	@Override
 	public void toggle() {
 		mUpgrade.incrementRank();
-		setChecked(!isChecked());
-		if(isChecked()){
-			setEnabled(false);
-		}
+		super.toggle();
 	}
 	
 	/**
@@ -90,6 +88,10 @@ public class UpgradeTreeButton extends RadioButton {
 			mUpgradeable = upgradeable;
 			refreshDrawableState();
 		}
+	}
+	
+	public Upgrade<?> getUpgrade(){
+		return mUpgrade;
 	}
 	
 }

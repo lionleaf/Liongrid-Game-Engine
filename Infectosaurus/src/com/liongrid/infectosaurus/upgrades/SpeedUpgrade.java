@@ -2,11 +2,13 @@ package com.liongrid.infectosaurus.upgrades;
 
 import com.liongrid.gameengine.Upgrade;
 import com.liongrid.infectosaurus.Infectosaurus;
+import com.liongrid.infectosaurus.R;
 
 public class SpeedUpgrade extends Upgrade<Infectosaurus> {
 
 	public SpeedUpgrade() {
 		super(Integer.MAX_VALUE);
+		mDescriptionResID = R.string.speedUpgradeDescription;
 	}
 
 	@Override

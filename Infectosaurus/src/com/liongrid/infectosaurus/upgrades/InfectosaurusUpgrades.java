@@ -4,9 +4,9 @@ import com.liongrid.gameengine.Upgrade;
 import com.liongrid.infectosaurus.Infectosaurus;
 
 public enum InfectosaurusUpgrades {
-	healthUpgrade(new HealthUpgrade()),
-	speedUpgrade(new SpeedUpgrade()),
-	meleeDmgUpgrade(new MeleeDamageUpgrade());
+	HealthUpgrade(new HealthUpgrade()),
+	SpeedUpgrade(new SpeedUpgrade()),
+	MeleeDamageUpgrade(new MeleeDamageUpgrade());
 	
 	Upgrade<Infectosaurus> upgrade;
 	
