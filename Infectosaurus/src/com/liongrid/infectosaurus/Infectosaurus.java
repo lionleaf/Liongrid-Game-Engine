@@ -17,7 +17,7 @@ import com.liongrid.infectosaurus.components.RandomWalkerComponent;
 import com.liongrid.infectosaurus.components.SpriteComponent;
 import com.liongrid.infectosaurus.components.SpriteComponent.SpriteState;
 import com.liongrid.infectosaurus.effects.DelayedDamageEffect;
-import com.liongrid.infectosaurus.upgrades.InfectosaurusUpgrades;
+import com.liongrid.infectosaurus.upgrades.InfectosaurusUpgrade;
 
 
 import android.content.Context;
@@ -83,7 +83,7 @@ public class Infectosaurus extends InfectoGameObject {
 	}
 	
 	private void applyUpgrades() {
-		InfectosaurusUpgrades[] us = InfectosaurusUpgrades.values();
+		InfectosaurusUpgrade[] us = InfectosaurusUpgrade.values();
 		
 		int len = us.length;
 		

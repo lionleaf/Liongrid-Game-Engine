@@ -1,9 +1,11 @@
 package com.liongrid.infectosaurus;
 
 import com.liongrid.gameengine.Upgrade;
-import com.liongrid.infectosaurus.upgrades.InfectosaurusUpgrades;
+import com.liongrid.infectosaurus.upgrades.InfectosaurusUpgrade;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -16,7 +18,7 @@ import android.widget.RadioButton;
 
 public class UpgradeTreeButton extends RadioButton {
 	
-	private Upgrade<?> mUpgrade = InfectosaurusUpgrades.SpeedUpgrade.get();
+	private Upgrade<?> mUpgrade = InfectosaurusUpgrade.SpeedUpgrade.get();
 	private boolean mUpgradeable;
 	
 	
@@ -33,7 +35,12 @@ public class UpgradeTreeButton extends RadioButton {
 
 	private void init(AttributeSet attrs){
 		setButtonDrawable(R.drawable.gressbusk2);
-		//attrs.getAttributeValue("", "");
+		TypedArray a = 
+			getContext().obtainStyledAttributes(attrs,R.styleable.UpgradeTreeButton);
+		
+		String upgradeValue = a.getString(R.styleable.UpgradeTreeButton_upgrade);
+		InfectosaurusUpgrade infUp = InfectosaurusUpgrade.valueOf(upgradeValue);
+		mUpgrade = infUp.get();
 	}
 		
 	@Override

@@ -2,13 +2,13 @@ package com.liongrid.infectosaurus.upgrades;
 
 import com.liongrid.gameengine.Upgrade;
 import com.liongrid.infectosaurus.Infectosaurus;
+import com.liongrid.infectosaurus.R;
 import com.liongrid.infectosaurus.components.InfMeleeAttackComponent;
 
 public class MeleeDamageUpgrade extends Upgrade<Infectosaurus> {
 
 	public MeleeDamageUpgrade() {
 		super(Integer.MAX_VALUE);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -24,6 +24,11 @@ public class MeleeDamageUpgrade extends Upgrade<Infectosaurus> {
 	public int getUpgradePrice() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public int getDescriptionRes() {
+		return R.string.meleeDamageUpgradeDescription;
 	}
 
 }

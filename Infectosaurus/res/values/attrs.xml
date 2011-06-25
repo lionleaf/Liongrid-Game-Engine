@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name = "UpgradeTreeButton">
+    	<attr name="upgrade" format="string"/>
+    	<attr name="tier" format="integer"/>
+    	<attr name="icon" format="integer"/>
+    </declare-styleable>
+</resources>

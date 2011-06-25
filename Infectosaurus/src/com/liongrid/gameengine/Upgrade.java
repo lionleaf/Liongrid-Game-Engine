@@ -18,7 +18,6 @@ public abstract class Upgrade<T extends BaseObject>{
 	
 	protected int mRank = 0;
 	protected int mMaxRank;
-	protected int mDescriptionResID;
 	
 	public Upgrade(int maxRank){
 		this.mMaxRank = maxRank;
@@ -95,8 +94,6 @@ public abstract class Upgrade<T extends BaseObject>{
 		return mMaxRank;
 	}
 
-	public int getDescriptionRes() {
-		return mDescriptionResID;
-	}
+	public abstract int getDescriptionRes();
 	
 }

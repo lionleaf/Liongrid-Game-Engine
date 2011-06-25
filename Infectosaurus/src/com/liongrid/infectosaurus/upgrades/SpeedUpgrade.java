@@ -8,7 +8,6 @@ public class SpeedUpgrade extends Upgrade<Infectosaurus> {
 
 	public SpeedUpgrade() {
 		super(Integer.MAX_VALUE);
-		mDescriptionResID = R.string.speedUpgradeDescription;
 	}
 
 	@Override
@@ -20,6 +19,11 @@ public class SpeedUpgrade extends Upgrade<Infectosaurus> {
 	@Override
 	public int getUpgradePrice() {
 		return (mRank+1)*100;
+	}
+
+	@Override
+	public int getDescriptionRes() {
+		return  R.string.speedUpgradeDescription;
 	}
 
 }
