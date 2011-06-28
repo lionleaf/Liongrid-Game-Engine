@@ -16,18 +16,18 @@ package com.liongrid.gameengine;
  */
 public abstract class Upgrade<T extends BaseObject>{
 	
-	public static interface OnRankChangedListener<T extends BaseObject>{
+	public static interface OnRankChangedListener{
 		/**
 		 * Called when the rank changes.
 		 * @param upgrade - Pointer to the upgrade where the rank changed
 		 * @param newRank - the new rank
 		 */
-		public void onRankChanged(Upgrade<T> upgrade, int newRank);
+		public void onRankChanged(Upgrade<?> upgrade, int newRank);
 	}
 	
 	
 	
-	private OnRankChangedListener<T> mOnRankChangedListener;
+	private OnRankChangedListener mOnRankChangedListener;
 	protected int mRank = 0;
 	
 	protected int mMaxRank;
@@ -114,7 +114,7 @@ public abstract class Upgrade<T extends BaseObject>{
 		return true;
 	}
 	
-	public void setOnRankChangedListener(OnRankChangedListener<T> listener){
+	public void setOnRankChangedListener(OnRankChangedListener listener){
 		mOnRankChangedListener = listener;
 	}
 	

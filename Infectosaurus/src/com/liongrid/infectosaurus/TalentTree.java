@@ -23,12 +23,19 @@ public class TalentTree extends TableLayout {
 
 	private int mSelectedId = -1;
 	private CompoundButton.OnCheckedChangeListener mChildOnCheckedChangeListener;
+
 	private OnSelectedChangeListener mOnSelectedChangeListener;
+
 	private PassThroughHierarchyChangeListener mPassThroughListener;
+
+	private RankChangeListener mRankChangeListener;
+	
 	/**
 	 * Used to avoid infinite recursions.
 	 */
 	private boolean mProtectFromCheckedChange;
+	
+	private int mRanksPerTier = 5;
 
 
 	public TalentTree(Context context, AttributeSet attrs) {
@@ -36,22 +43,30 @@ public class TalentTree extends TableLayout {
 		init();
 	}
 
-	public void init(){
-		mChildOnCheckedChangeListener = new CheckedStateTracker();
-		mPassThroughListener = new PassThroughHierarchyChangeListener();
-		super.setOnHierarchyChangeListener(mPassThroughListener);
+	private void addIcon(TalentIcon icon){		
+		int id = icon.getId();
+		// generates an id if it's missing
+		if (id == View.NO_ID) {
+			id = icon.hashCode();
+			icon.setId(id);
+		}
+		
+		if(mSelectedId == -1){
+			mSelectedId = id;
+		}
+		
+		if (icon.isChecked()) {
+			mProtectFromCheckedChange = true;
+			if (mSelectedId != -1) {
+				setCheckedStateForView(mSelectedId, false);
+			}
+			mProtectFromCheckedChange = false;
+			setSelectedId(icon.getId());
+		}
+		
+		icon.setOnRankChangedListener(mRankChangeListener);
+		icon.setOnCheckedChangeListener(mChildOnCheckedChangeListener);
 	}
-	
-	@Override
-	public void setOnHierarchyChangeListener(OnHierarchyChangeListener listener) {
-		// the user listener is delegated to our pass-through listener
-		mPassThroughListener.mOnHierarchyChangeListener = listener;
-	}
-	
-	public void upgradeCurrent(){
-
-	}
-
 
 	@Override
 	public void addView(View child) {
@@ -60,24 +75,113 @@ public class TalentTree extends TableLayout {
 		super.addView(child);
 	}
 
+
 	@Override
 	public void addView(View child, int width, int height) {
 		viewAdded(child);
 
 		super.addView(child, width, height);
 	}
-
+	
 	@Override
 	public void addView(View child, int index, ViewGroup.LayoutParams params) {
 		viewAdded(child);
 
 		super.addView(child, index, params);
 	}
+	
+	
 
+	public int getSelectedId(){
+		return mSelectedId;
+	}
 
-	private void viewAdded(View child){
+	public void init(){
+		mChildOnCheckedChangeListener = new CheckedStateTracker();
+		mPassThroughListener = new PassThroughHierarchyChangeListener();
+		mRankChangeListener = new RankChangeListener();
+		super.setOnHierarchyChangeListener(mPassThroughListener);
+	}
+
+	@Override
+	protected void onFinishInflate() {
+		super.onFinishInflate();
 		
+		// checks the appropriate radio button as requested in the XML file
+        if (mSelectedId != -1) {
+            mProtectFromCheckedChange = true;
+            setCheckedStateForView(mSelectedId, true);
+            mProtectFromCheckedChange = false;
+            setSelectedId(mSelectedId);
+        }
+        
+        updateUpgradabilityStates();
+		
+	}
+	
+	private void setCheckedStateForView(int viewId, boolean checked) {
+		View checkedView = findViewById(viewId);
+		if (checkedView != null && checkedView instanceof TalentIcon) {
+			((TalentIcon) checkedView).setChecked(checked);
+		}
+	}
+
+	@Override
+	public void setOnHierarchyChangeListener(OnHierarchyChangeListener listener) {
+		// the user listener is delegated to our pass-through listener
+		mPassThroughListener.mOnHierarchyChangeListener = listener;
+	}
+
+	/**
+	 * <p>Register a callback to be invoked when the selected talent
+	 * changes in this tree.</p>
+	 *
+	 * @param listener the callback to call on selected state change
+	 */
+	public void setOnSelectedChangeListener(OnSelectedChangeListener listener) {
+		mOnSelectedChangeListener = listener;
+	}
+
+	private void setSelectedId(int id) {
+		mSelectedId = id;
+		if(mOnSelectedChangeListener != null){
+			mOnSelectedChangeListener.onSelectedChanged(this, id);
+		}
+	}
+
+	private void updateUpgradabilityStates(){
+		// First implementation uses "Brute force"
+		
+		boolean upgradeable = true;
+		
+		int nrOfChildren = getChildCount();
+		for (int i = 0; i < nrOfChildren; i++) {
+			View child = getChildAt(i);
+			if(child instanceof ViewGroup){
+				int tierRank = 0;
+				
+				ViewGroup childGroup = (ViewGroup) child;
+				int nrOfGChildren = childGroup.getChildCount();
+				for (int j = 0; j < nrOfGChildren; j++) {
+					View grandChild = childGroup.getChildAt(j);
+					if(grandChild instanceof TalentIcon){
+						((TalentIcon) grandChild).setUpgradeable(upgradeable);
+						if(!upgradeable) continue;
+						int rank = ((TalentIcon) grandChild).getUpgrade().getRank();
+						tierRank += rank;
+					}
+				}
+				
+				//Set whether next tier is upgradeable;
+				upgradeable = upgradeable ? tierRank >= mRanksPerTier : false;
+				
+			}
+		}
+	}
+	
+	private void viewAdded(View child){
 		if(child instanceof TalentTier){
+			
 			ViewGroup childGroup = ((ViewGroup) child);
 			int childCount = childGroup.getChildCount();
 			for (int i = 0; i < childCount; i++) {
@@ -90,43 +194,6 @@ public class TalentTree extends TableLayout {
 		
 	}
 	
-	private void addIcon(TalentIcon icon){		
-		int id = icon.getId();
-		// generates an id if it's missing
-		if (id == View.NO_ID) {
-			id = icon.hashCode();
-			icon.setId(id);
-		}
-		
-		if (icon.isChecked()) {
-			mProtectFromCheckedChange = true;
-			if (mSelectedId != -1) {
-				setCheckedStateForView(mSelectedId, false);
-			}
-			mProtectFromCheckedChange = false;
-			setSelectedId(icon.getId());
-		}
-		
-		icon.setOnCheckedChangeListener(mChildOnCheckedChangeListener);
-	}
-	
-	
-
-	public int getSelectedId(){
-		return mSelectedId;
-	}
-
-	public interface OnSelectedChangeListener{
-
-		/**
-		 * Called when another talent is selected in the TalentTree
-		 * 
-		 * @param tTree - The tree where the selection changed
-		 * @param selectedId - the unique id of the new selection 
-		 * 	(for findViewById() use)
-		 */
-		public void onSelectedChanged(TalentTree tTree, int selectedId);
-	}
 
 	private class CheckedStateTracker implements CompoundButton.OnCheckedChangeListener{
 
@@ -150,47 +217,17 @@ public class TalentTree extends TableLayout {
 
 
 	}
-	
-	@Override
-	protected void onFinishInflate() {
-		super.onFinishInflate();
-		
-		// checks the appropriate radio button as requested in the XML file
-        if (mSelectedId != -1) {
-            mProtectFromCheckedChange = true;
-            setCheckedStateForView(mSelectedId, true);
-            mProtectFromCheckedChange = false;
-            setSelectedId(mSelectedId);
-        }
-		
+	public interface OnSelectedChangeListener{
+
+		/**
+		 * Called when another talent is selected in the TalentTree
+		 * 
+		 * @param tTree - The tree where the selection changed
+		 * @param selectedId - the unique id of the new selection 
+		 * 	(for findViewById() use)
+		 */
+		public void onSelectedChanged(TalentTree tTree, int selectedId);
 	}
-
-	private void setCheckedStateForView(int viewId, boolean checked) {
-		View checkedView = findViewById(viewId);
-		if (checkedView != null && checkedView instanceof TalentIcon) {
-			((TalentIcon) checkedView).setChecked(checked);
-		}
-	}
-
-	private void setSelectedId(int id) {
-		mSelectedId = id;
-		if(mOnSelectedChangeListener != null){
-			mOnSelectedChangeListener.onSelectedChanged(this, id);
-		}
-	}
-
-	/**
-	 * <p>Register a callback to be invoked when the selected talent
-	 * changes in this tree.</p>
-	 *
-	 * @param listener the callback to call on selected state change
-	 */
-	public void setOnSelectedChangeListener(OnSelectedChangeListener listener) {
-		mOnSelectedChangeListener = listener;
-	}
-
-	
-
 	/**
 	 * <p>A pass-through listener acts upon the events and dispatches them
 	 * to another listener. This allows the table layout to set its own internal
@@ -222,6 +259,15 @@ public class TalentTree extends TableLayout {
 				mOnHierarchyChangeListener.onChildViewRemoved(parent, child);
 			}
 		}
+	}
+	
+	private class RankChangeListener implements 
+	Upgrade.OnRankChangedListener{
+
+		public void onRankChanged(Upgrade<?> upgrade, int newRank) {
+			updateUpgradabilityStates();
+		}
+
 	}
 
 }

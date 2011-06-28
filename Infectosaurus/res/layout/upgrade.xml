@@ -17,11 +17,20 @@
             	android:layout_height="wrap_content">
             	
                 <com.liongrid.infectosaurus.TalentTier android:id="@+id/talentTier1">
-                    <com.liongrid.infectosaurus.TalentIcon android:text="TalentIcon" android:id="@+id/talentIcon3"></com.liongrid.infectosaurus.TalentIcon>
+                    <com.liongrid.infectosaurus.TalentIcon 
+                    	android:text="Speed" 
+                    	android:id="@+id/talentIcon3"
+                    	infecto:upgrade="SpeedUpgrade"></com.liongrid.infectosaurus.TalentIcon>
                 </com.liongrid.infectosaurus.TalentTier>
 				<com.liongrid.infectosaurus.TalentTier android:id="@+id/talentTier2">
-					<com.liongrid.infectosaurus.TalentIcon android:id="@+id/talentIcon2" android:text="TalentIcon"></com.liongrid.infectosaurus.TalentIcon>
-					<com.liongrid.infectosaurus.TalentIcon android:id="@+id/talentIcon1" android:text="TalentIcon"></com.liongrid.infectosaurus.TalentIcon>
+					<com.liongrid.infectosaurus.TalentIcon 
+						android:id="@+id/talentIcon2" 
+						infecto:upgrade="MeleeDamageUpgrade"
+						android:text="Damage"></com.liongrid.infectosaurus.TalentIcon>
+					<com.liongrid.infectosaurus.TalentIcon 
+						android:id="@+id/talentIcon1" 
+						infecto:upgrade="HealthUpgrade"
+						android:text="Health"></com.liongrid.infectosaurus.TalentIcon>
                 </com.liongrid.infectosaurus.TalentTier>
             </com.liongrid.infectosaurus.TalentTree>
             
