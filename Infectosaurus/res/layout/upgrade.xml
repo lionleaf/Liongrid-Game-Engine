@@ -6,17 +6,60 @@
   android:layout_width="fill_parent"
   android:layout_height="fill_parent">
     <ScrollView android:layout_height="fill_parent" android:layout_width="wrap_content" android:id="@+id/scrollView1">
-        <LinearLayout android:id="@+id/linearLayout1" android:layout_width="fill_parent" android:layout_height="fill_parent">
-            <com.liongrid.infectosaurus.UpgradeTreeGroup android:id="@+id/upgradeTreeGroup" android:layout_height="wrap_content" android:layout_width="wrap_content">
-                <com.liongrid.infectosaurus.UpgradeTreeButton android:text="UpgradeTreeButton" android:id="@+id/upgradeTreeButton1" infecto:upgrade="SpeedUpgrade"></com.liongrid.infectosaurus.UpgradeTreeButton>
-                <com.liongrid.infectosaurus.UpgradeTreeButton android:text="UpgradeTreeButton" android:id="@+id/upgradeTreeButton2" infecto:upgrade="HealthUpgrade"></com.liongrid.infectosaurus.UpgradeTreeButton>
-                <com.liongrid.infectosaurus.UpgradeTreeButton android:text="UpgradeTreeButton" android:id="@+id/upgradeTreeButton3" infecto:upgrade="MeleeDamageUpgrade"></com.liongrid.infectosaurus.UpgradeTreeButton>
-            </com.liongrid.infectosaurus.UpgradeTreeGroup>
-        </LinearLayout>
+        <LinearLayout 
+        	android:id="@+id/linearLayout1" 
+        	android:layout_width="fill_parent" 
+        	android:layout_height="fill_parent">
+        	
+            <com.liongrid.infectosaurus.TalentTree 
+            	android:id="@+id/talentTree1" 
+            	android:layout_width="wrap_content" 
+            	android:layout_height="wrap_content">
+            	
+                <com.liongrid.infectosaurus.TalentTier android:id="@+id/talentTier1">
+                    <com.liongrid.infectosaurus.TalentIcon android:text="TalentIcon" android:id="@+id/talentIcon3"></com.liongrid.infectosaurus.TalentIcon>
+                </com.liongrid.infectosaurus.TalentTier>
+				<com.liongrid.infectosaurus.TalentTier android:id="@+id/talentTier2">
+					<com.liongrid.infectosaurus.TalentIcon android:id="@+id/talentIcon2" android:text="TalentIcon"></com.liongrid.infectosaurus.TalentIcon>
+					<com.liongrid.infectosaurus.TalentIcon android:id="@+id/talentIcon1" android:text="TalentIcon"></com.liongrid.infectosaurus.TalentIcon>
+                </com.liongrid.infectosaurus.TalentTier>
+            </com.liongrid.infectosaurus.TalentTree>
+            
+            </LinearLayout>
     </ScrollView>
-    <LinearLayout android:layout_height="fill_parent" android:layout_width="wrap_content" android:id="@+id/linearLayout2" android:orientation="vertical">
-        <TextView android:textAppearance="?android:attr/textAppearanceLarge" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="TextView" android:id="@+id/upgradeDescriptionText"></TextView>
-    </LinearLayout>
+    
+    
+    <RelativeLayout 
+    	android:layout_alignBaseline="@+id/RelativeLayout1" 
+    	android:layout_height="fill_parent" 
+    	android:layout_width="fill_parent" 
+    	android:id="@+id/RelativeLayout1" >
+        
+        <TextView 
+        	android:id="@+id/upgradeDescriptionText" 
+        	android:text="@string/upgradeDefaultDescription"
+        	android:layout_alignParentLeft="true" 
+        	android:layout_alignParentTop="true" 
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"></TextView>
+        
+        <TextView 
+        	android:id="@+id/upgradeInfoText" 
+        	android:text="TextView" 
+        	android:layout_alignParentLeft="true"
+        	android:layout_alignParentBottom="true"
+        	android:layout_width="wrap_content" 
+        	android:layout_height="wrap_content"></TextView>
+        
+        <Button 
+        	android:id="@+id/purchaseUpgradeButton" 
+        	android:text="@string/upgrade"
+        	android:layout_alignParentRight="true"
+        	android:layout_alignParentBottom="true" 
+        	android:layout_width="wrap_content" 
+        	android:layout_height="wrap_content" ></Button>
+    
+    </RelativeLayout>
 
     
 </LinearLayout>

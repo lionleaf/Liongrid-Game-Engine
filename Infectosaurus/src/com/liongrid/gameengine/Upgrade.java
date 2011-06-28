@@ -16,62 +16,24 @@ package com.liongrid.gameengine;
  */
 public abstract class Upgrade<T extends BaseObject>{
 	
+	public static interface OnRankChangedListener<T extends BaseObject>{
+		/**
+		 * Called when the rank changes.
+		 * @param upgrade - Pointer to the upgrade where the rank changed
+		 * @param newRank - the new rank
+		 */
+		public void onRankChanged(Upgrade<T> upgrade, int newRank);
+	}
+	
+	
+	
+	private OnRankChangedListener<T> mOnRankChangedListener;
 	protected int mRank = 0;
+	
 	protected int mMaxRank;
 	
 	public Upgrade(int maxRank){
 		this.mMaxRank = maxRank;
-	}
-	
-	/**
-	 * @return the current mRank of the upgrade
-	 */
-	public int getRank(){
-		return mRank;
-	}
-	
-	/**
-	 * Set`s the mRank. BEWARE, if mRank is out of bounds, it does nothing.
-	 * @param mRank - the new mRank
-	 * @return - True if the mRank was set, 
-	 * 		false if mRank was greater than mMaxRank or less than zero
-	 */
-	public boolean setRank(int rank){
-		if(rank > mMaxRank || rank < 0){
-			return false;
-		}
-		
-		this.mRank = rank;
-		return true;
-	}
-	
-	/**
-	 * Increases the current mRank by 1, unless current mRank == max mRank
-	 * @return true if the mRank was changed
-	 */
-	public boolean incrementRank(){
-		if(mRank == mMaxRank) return false;
-		
-		mRank++;
-		return true;
-	}
-	
-	/**
-	 * Decreases the current mRank by 1, unless current mRank = 0
-	 * @return true if the mRank was changed
-	 */
-	public boolean decrementRank(){
-		if(mRank == 0) return false;
-		
-		mRank--;
-		return true;
-	}
-	
-	/**
-	 * Sets the mRank back to 0 and thereby disables the upgrade
-	 */
-	public void resetRank(){
-		mRank = 0;
 	}
 	
 	/**
@@ -85,15 +47,75 @@ public abstract class Upgrade<T extends BaseObject>{
 	public abstract void apply(T target);
 	
 	
+	
 	/**
-	 * @return the cost to upgrade this upgrade to the next mRank.
+	 * Decreases the current rank by 1, unless current rank == 0
+	 * @return true if the rank was changed
 	 */
-	public abstract int getUpgradePrice();
-
+	public boolean decrementRank(){
+		return setRank(mRank-1);
+	}
+	
+	public abstract int getDescriptionRes();
+	
 	public int getMaxRank() {
 		return mMaxRank;
 	}
+	
+	/**
+	 * @return the current rank of the upgrade
+	 */
+	public int getRank(){
+		return mRank;
+	}
+	
+	
+	/**
+	 * @return the cost to upgrade this upgrade to the next rank.
+	 */
+	public abstract int getUpgradePrice();
 
-	public abstract int getDescriptionRes();
+	/**
+	 * Increases the current rank by 1, unless current rank == max rank
+	 * @return true if the rank was changed
+	 */
+	public boolean incrementRank(){
+		return setRank(mRank+1);
+	}
+
+	/**
+	 * Sets the rank back to 0 and thereby disables the upgrade
+	 */
+	public void resetRank(){
+		setRank(0);
+	}
+	
+	/**
+	 * Set`s the mRank. BEWARE, if rank is out of bounds, it does nothing.
+	 * This will notify any OnRankChangedListeners. 
+	 * DO NOT CHANGE THE RANK ELSEWHERE
+	 * 
+	 * @param mRank - the new rank
+	 * @return - True if the rank was set, 
+	 * 		false if rank was greater than MaxRank or less than zero
+	 */
+	private boolean setRank(int rank){
+		if(rank > mMaxRank || rank < 0){
+			return false;
+		}
+		
+		if(mRank != rank){
+			this.mRank = rank;
+			
+			if(mOnRankChangedListener != null){
+				mOnRankChangedListener.onRankChanged(this, rank);
+			}
+		}
+		return true;
+	}
+	
+	public void setOnRankChangedListener(OnRankChangedListener<T> listener){
+		mOnRankChangedListener = listener;
+	}
 	
 }

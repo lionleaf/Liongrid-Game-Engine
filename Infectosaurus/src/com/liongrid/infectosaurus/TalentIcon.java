@@ -13,22 +13,23 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.PaintDrawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 
-public class UpgradeTreeButton extends RadioButton {
+public class TalentIcon extends RadioButton {
 	
 	private Upgrade<?> mUpgrade = InfectosaurusUpgrade.SpeedUpgrade.get();
-	private boolean mUpgradeable;
+	private boolean mUpgradeable = true;
 	
 	
-	public UpgradeTreeButton(Context context, AttributeSet attrs) {
-		super(context, attrs);
+	public TalentIcon(Context context, AttributeSet attrs) {
+		super(context, attrs, android.R.attr.radioButtonStyle);
 		init(attrs);
 	}
 	
 	
-	public UpgradeTreeButton(Context context, AttributeSet attrs, int defStyle) {
+	public TalentIcon(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init(attrs);
 	}
@@ -39,10 +40,17 @@ public class UpgradeTreeButton extends RadioButton {
 			getContext().obtainStyledAttributes(attrs,R.styleable.UpgradeTreeButton);
 		
 		String upgradeValue = a.getString(R.styleable.UpgradeTreeButton_upgrade);
-		InfectosaurusUpgrade infUp = InfectosaurusUpgrade.valueOf(upgradeValue);
-		mUpgrade = infUp.get();
+		try {
+			InfectosaurusUpgrade infUp = InfectosaurusUpgrade.valueOf(upgradeValue);
+			mUpgrade = infUp.get();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-		
+
+	
+	
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
@@ -72,7 +80,6 @@ public class UpgradeTreeButton extends RadioButton {
 	
 	@Override
 	public void toggle() {
-		mUpgrade.incrementRank();
 		super.toggle();
 	}
 	
