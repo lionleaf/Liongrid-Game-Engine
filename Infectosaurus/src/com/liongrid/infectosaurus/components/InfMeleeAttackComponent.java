@@ -20,7 +20,8 @@ public class InfMeleeAttackComponent extends Component<InfectoGameObject> {
 	InfectoGameObjectHandler gameObjHandler;
 	static final int CLOSE_CAPACITY = 20;
 	FixedSizeArray<InfectoGameObject> close;
-	int mReach = 100; //Square of the actual mReach 100 means 10 px
+	int radius = 16*4+35;
+	int mReach = (2*radius)^2; //Square of the actual mReach 100 means 10 px
 	private int mDamage = 1;
 	private float mDelay = 0.5f; //sec
 	private float mDelayCountDown = 0;

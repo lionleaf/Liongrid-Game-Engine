@@ -26,6 +26,8 @@ import android.view.Window;
  */
 public class GameActivity extends Activity implements GameActivityInterface{
 	
+	public static Context CONTEXT;
+	
 	//To keep screen alive
 	private PowerManager.WakeLock wl;
 	
@@ -63,6 +65,8 @@ public class GameActivity extends Activity implements GameActivityInterface{
 		preLoadTextures();
 		
 		setContentView(panel);
+		
+		CONTEXT = this;
 	}
 
 	private void init() {

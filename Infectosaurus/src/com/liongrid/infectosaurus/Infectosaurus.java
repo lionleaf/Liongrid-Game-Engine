@@ -18,6 +18,8 @@ import com.liongrid.infectosaurus.components.MoveComponent;
 import com.liongrid.infectosaurus.components.RandomWalkerComponent;
 import com.liongrid.infectosaurus.components.SpriteComponent;
 import com.liongrid.infectosaurus.components.SpriteComponent.SpriteState;
+import com.liongrid.infectosaurus.components.TiltMovementComponent;
+import com.liongrid.infectosaurus.effects.DOTEffect;
 import com.liongrid.infectosaurus.effects.DelayedDamageEffect;
 import com.liongrid.infectosaurus.upgrades.InfectosaurusUpgrade;
 
@@ -64,7 +66,7 @@ public class Infectosaurus extends InfectoGameObject {
 		
 		
 		addComponent(new InfMeleeAttackComponent());
-		addComponent(new AggressivMoveComponent());
+		addComponent(new TiltMovementComponent());
 		addComponent(sprite);
 		addComponent(new MoveComponent());
 		addComponent(new HpBarComponent());
@@ -74,11 +76,11 @@ public class Infectosaurus extends InfectoGameObject {
 		
 		
 		//Temp stuff to die in x sec
-		DelayedDamageEffect e = new DelayedDamageEffect();
-		e.set(20,500);
+		DOTEffect e = new DOTEffect();
+		e.set(Float.MAX_VALUE, 1, 1f);
 		afflict(e);
 		
-		
+		mMaxHp = 15;
 		
 		applyUpgrades();
 		
