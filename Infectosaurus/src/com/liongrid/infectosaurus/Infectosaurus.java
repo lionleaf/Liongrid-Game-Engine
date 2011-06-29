@@ -11,6 +11,7 @@ import com.liongrid.gameengine.Upgrade;
 import com.liongrid.gameengine.tools.FixedSizeArray;
 import com.liongrid.infectosaurus.R;
 import com.liongrid.infectosaurus.components.AggressivMoveComponent;
+import com.liongrid.infectosaurus.components.HpBarComponent;
 import com.liongrid.infectosaurus.components.LAnimation;
 import com.liongrid.infectosaurus.components.InfMeleeAttackComponent;
 import com.liongrid.infectosaurus.components.MoveComponent;
@@ -66,7 +67,7 @@ public class Infectosaurus extends InfectoGameObject {
 		addComponent(new AggressivMoveComponent());
 		addComponent(sprite);
 		addComponent(new MoveComponent());
-		
+		addComponent(new HpBarComponent());
 		speed = 80;
 		
 		team = Team.Alien;
@@ -91,11 +92,16 @@ public class Infectosaurus extends InfectoGameObject {
 		for(int i = 0; i < len; i++){
 			us[i].get().apply(this);
 		}
-		
+		postApplyUpgrades();
+	}
+	
+	private void postApplyUpgrades(){
+		mHp = mMaxHp;
 	}
 	
 	@Override
 	public void collide(InfectoGameObject o) {
+		/* Bugged to hell!
 		if(Collision.collides(this, o)){
 			if(o.pos.x < pos.x) pos.x = (float) 
 				(o.pos.x + pos.x/(Math.sqrt(o.pos.distance2(pos))));
@@ -110,7 +116,7 @@ public class Infectosaurus extends InfectoGameObject {
 				pos.y = (float) 
 				(o.pos.y - pos.y/(Math.sqrt(o.pos.distance2(pos))));
 			}
-		}
+		}*/
 	}
 
 	@Override

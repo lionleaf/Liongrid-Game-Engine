@@ -29,7 +29,7 @@ public class DelayedDamageEffect extends Effect<InfectoGameObject> {
 	public void onRemove(InfectoGameObject target) {
 		//Time to roll!
 		
-		target.hp -= dmg;
+		target.mHp -= dmg;
 		
 	}
 

@@ -48,10 +48,10 @@ public class InfectedDamageEffect extends Effect<InfectoGameObject> {
 
 	@Override
 	public void onApply(InfectoGameObject target) {
-		target.hp -= mDamage;
-		if(target.infectable && target.hp <= 0){
+		target.mHp -= mDamage;
+		if(target.infectable && target.mHp <= 0){
 			float check = random.nextFloat();
-			if(check < mInfectChance){
+			if(check <= mInfectChance){
 				Infectosaurus inf = new Infectosaurus();
 				inf.pos.set(target.pos);
 				GameActivity.infectoPointers.gameObjectHandler.add(inf);

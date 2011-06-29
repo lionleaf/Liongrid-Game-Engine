@@ -40,7 +40,7 @@ public abstract class Upgrade<T extends BaseObject>{
 	 * Should be called upon spawning the object 
 	 * that the upgrade should be applied to.
 	 * 
-	 * (You can change hp, dmg, components etc etc)
+	 * (You can change mHp, dmg, components etc etc)
 	 * 
 	 * @param target - Pointer to the target of the upgrade
 	 */

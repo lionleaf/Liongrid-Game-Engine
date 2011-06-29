@@ -12,6 +12,7 @@ import com.liongrid.gameengine.Texture;
 import com.liongrid.gameengine.TextureLibrary;
 import com.liongrid.infectosaurus.R;
 import com.liongrid.infectosaurus.components.BehaviorComponent;
+import com.liongrid.infectosaurus.components.HpBarComponent;
 import com.liongrid.infectosaurus.components.LAnimation;
 import com.liongrid.infectosaurus.components.MoveComponent;
 import com.liongrid.infectosaurus.components.RandomWalkerComponent;
@@ -21,7 +22,8 @@ import com.liongrid.infectosaurus.components.SpriteComponent.SpriteState;
 public class Human extends InfectoGameObject{
 	static Random rand = new Random();
 	public Human() {
-		hp = 2;
+		mMaxHp = 10;
+		mHp = mMaxHp;
 		
 		TextureLibrary texLib = gamePointers.textureLib;
 		DrawableBitmap[] dbs = new DrawableBitmap[2];
@@ -42,6 +44,7 @@ public class Human extends InfectoGameObject{
 		
 		addComponent(sprite); 
 		addComponent(new BehaviorComponent());
+		addComponent(new HpBarComponent());
 		
 		speed = rand.nextInt(20)+20;
 		

@@ -21,6 +21,7 @@ public class SpriteComponent extends Component<InfectoGameObject> {
 	SpriteState defaultState = SpriteState.idle; 
 	SpriteState currentState = defaultState;
 	LAnimation lastAnimation = null;
+	DrawableObject lastDrawing = null;
 	DrawableObject defaultDrawing;
 
 	LAnimation[] animations = new LAnimation[SpriteState.values().length];
@@ -76,6 +77,7 @@ public class SpriteComponent extends Component<InfectoGameObject> {
 		x -= 0.5 * toDraw.getWidth();
 		y -= 0.5 * toDraw.getHeight();
 		
+		lastDrawing = toDraw;
 		BaseObject.gamePointers.renderSystem.scheduleForDraw(toDraw, x, y);
 	}
 	

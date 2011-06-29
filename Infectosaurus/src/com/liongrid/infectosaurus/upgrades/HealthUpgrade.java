@@ -12,7 +12,7 @@ public class HealthUpgrade extends Upgrade<Infectosaurus> {
 
 	@Override
 	public void apply(Infectosaurus target) {
-		target.hp += 5*mRank;
+		target.mMaxHp += 2*mRank;
 	}
 
 	@Override
@@ -27,7 +27,7 @@ public class HealthUpgrade extends Upgrade<Infectosaurus> {
 
 	@Override
 	public String getCurrentStateDescription() {
-		return "Current hp-bonus: " + 5*mRank;
+		return "Current mHp-bonus: " + 2*mRank;
 	}
 
 }

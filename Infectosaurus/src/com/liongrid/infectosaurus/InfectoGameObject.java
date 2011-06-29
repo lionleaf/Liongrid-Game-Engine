@@ -20,7 +20,8 @@ public class InfectoGameObject extends GameObject<InfectoGameObject>
 	public Vector2 pos = new Vector2(0,0);
 	public Vector2 vel = new Vector2(0,0);
 	public float speed = 10;
-	public int hp = 1;
+	public int mMaxHp = 1;
+	public int mHp = mMaxHp;
 	public boolean infectable = true; // Tells if the object can be infected
 	public InfectoGameObject[] collisions;
 	public int collideCnt = 0;
@@ -34,7 +35,7 @@ public class InfectoGameObject extends GameObject<InfectoGameObject>
 	
 	@Override
 	public void update(float dt, BaseObject parent) {
-		if(hp <= 0) { // Temp death function!!! TODO RREMOVE
+		if(mHp <= 0) { // Temp death function!!! TODO RREMOVE
 			die();
 			return;
 		}

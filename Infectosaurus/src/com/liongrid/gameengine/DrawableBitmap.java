@@ -154,6 +154,22 @@ public class DrawableBitmap extends BaseObject implements DrawableObject {
 		mCrop[2] = width;
 		mCrop[3] = -height;
 	}
+	
+	/**
+	 * Set`s the width of the drawable bitmap. Rescales it.
+	 * @param width - the new width
+	 */
+	public void setWidth(int width){
+		mWidth = width;
+	}
+	
+	/**
+	 * Set`s the height of the drawable bitmap. Rescales it.
+	 * @param height - the new height
+	 */
+	public void setHeight(int height){
+		mHeight= height;
+	}
 
 	@Override
 	public void update(float dt, BaseObject parent) {
