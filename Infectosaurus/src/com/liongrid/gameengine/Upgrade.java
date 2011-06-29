@@ -58,6 +58,8 @@ public abstract class Upgrade<T extends BaseObject>{
 	
 	public abstract int getDescriptionRes();
 	
+	public abstract String getCurrentStateDescription();
+	
 	public int getMaxRank() {
 		return mMaxRank;
 	}

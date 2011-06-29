@@ -26,4 +26,9 @@ public class SpeedUpgrade extends Upgrade<Infectosaurus> {
 		return  R.string.speedUpgradeDescription;
 	}
 
+	@Override
+	public String getCurrentStateDescription() {
+		return "Current speed bonus: "+5*mRank;
+	}
+
 }

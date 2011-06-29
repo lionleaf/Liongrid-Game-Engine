@@ -21,6 +21,8 @@ public class TalentIcon extends RadioButton {
 	private Upgrade.OnRankChangedListener mOnRankChangedListener;
 
 	private rankChangeListener mRankListener = new rankChangeListener();
+	private int mIconRes;
+	private int mDefaultIcon = R.drawable.gressbusk1;
 
 
 	public TalentIcon(Context context, AttributeSet attrs) {
@@ -41,11 +43,10 @@ public class TalentIcon extends RadioButton {
 
 
 	private void init(AttributeSet attrs){
-		setButtonDrawable(R.drawable.gressbusk2);
 		TypedArray a = 
-			getContext().obtainStyledAttributes(attrs,R.styleable.UpgradeTreeButton);
+			getContext().obtainStyledAttributes(attrs,R.styleable.TalentIcon);
 
-		String upgradeValue = a.getString(R.styleable.UpgradeTreeButton_upgrade);
+		String upgradeValue = a.getString(R.styleable.TalentIcon_upgrade);
 		try {
 			InfectosaurusUpgrade infUp = InfectosaurusUpgrade.valueOf(upgradeValue);
 			mUpgrade = infUp.get();
@@ -53,7 +54,15 @@ public class TalentIcon extends RadioButton {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
+		int iconRes = a.getResourceId(R.styleable.TalentIcon_icon, -1);
+		if(iconRes != -1){
+			mIconRes = iconRes;
+		}else{
+			mIconRes = mDefaultIcon ;
+		}
+		setButtonDrawable(mIconRes);
+		
 		mUpgrade.setOnRankChangedListener(mRankListener);
 
 	}
@@ -70,16 +79,27 @@ public class TalentIcon extends RadioButton {
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 
+		
+		
 		if(isChecked()){
-			Rect r = new Rect();
-			getDrawingRect(r);
-
 			Paint p = new Paint();
 			p.setColor(Color.RED);
 			p.setStyle(Paint.Style.STROKE);
 			p.setStrokeWidth(5f);
+			Rect r = new Rect();
+			getDrawingRect(r);
 
 			canvas.drawRect(r,p);
+		}
+		
+		if(!isUpgradeable()){
+			Paint p = new Paint();
+			p.setColor(Color.RED);
+			p.setStyle(Paint.Style.STROKE);
+			
+			//Paint cross
+			canvas.drawLine(getScrollX(), getScrollY(), getWidth(), getHeight(), p);
+			canvas.drawLine(getScrollX(), getHeight(), getWidth(), getScrollY(), p);
 		}
 
 		String txt = mUpgrade.getRank()+"/";
@@ -91,6 +111,7 @@ public class TalentIcon extends RadioButton {
 		p.setTypeface(Typeface.DEFAULT_BOLD);
 		canvas.drawText(txt,10, getHeight() ,p );
 	}
+	
 
 	/**
 	 * Changes the upgradeable state of this button
@@ -101,7 +122,7 @@ public class TalentIcon extends RadioButton {
 	public void setUpgradeable(boolean upgradeable){
 		if (mUpgradeable != upgradeable) {
 			mUpgradeable = upgradeable;
-			refreshDrawableState();
+			postInvalidate();
 		}
 	}
 	
@@ -113,10 +134,11 @@ public class TalentIcon extends RadioButton {
 	public void setOnRankChangedListener(Upgrade.OnRankChangedListener listener){
 		mOnRankChangedListener = listener;
 	}
-
+	
 	@Override
-	public void toggle() {
-		super.toggle();
+	public void setChecked(boolean checked) {
+		super.setChecked(checked);
+		postInvalidate();
 	}
 
 	private class rankChangeListener implements 

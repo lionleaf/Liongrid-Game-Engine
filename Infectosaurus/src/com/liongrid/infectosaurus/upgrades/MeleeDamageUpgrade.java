@@ -31,4 +31,9 @@ public class MeleeDamageUpgrade extends Upgrade<Infectosaurus> {
 		return R.string.meleeDamageUpgradeDescription;
 	}
 
+	@Override
+	public String getCurrentStateDescription() {
+		return "Current damage bonus: "+mRank;
+	}
+
 }

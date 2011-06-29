@@ -3,6 +3,7 @@ package com.liongrid.infectosaurus;
 import com.liongrid.gameengine.Upgrade;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -40,7 +41,7 @@ public class TalentTree extends TableLayout {
 
 	public TalentTree(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		init();
+		init(attrs);
 	}
 
 	private void addIcon(TalentIcon icon){		
@@ -49,10 +50,6 @@ public class TalentTree extends TableLayout {
 		if (id == View.NO_ID) {
 			id = icon.hashCode();
 			icon.setId(id);
-		}
-		
-		if(mSelectedId == -1){
-			mSelectedId = id;
 		}
 		
 		if (icon.isChecked()) {
@@ -96,10 +93,20 @@ public class TalentTree extends TableLayout {
 		return mSelectedId;
 	}
 
-	public void init(){
+	public void init(AttributeSet attrs){
 		mChildOnCheckedChangeListener = new CheckedStateTracker();
 		mPassThroughListener = new PassThroughHierarchyChangeListener();
 		mRankChangeListener = new RankChangeListener();
+		
+		TypedArray a = 
+			getContext().obtainStyledAttributes(attrs,R.styleable.TalentTree);
+		
+		int xmlRanksPerTier = a.getInteger(R.styleable.TalentTree_ranks_per_tier, -1);
+		if(xmlRanksPerTier >= 0){
+			mRanksPerTier = xmlRanksPerTier;
+		}
+		
+		
 		super.setOnHierarchyChangeListener(mPassThroughListener);
 	}
 
@@ -107,13 +114,14 @@ public class TalentTree extends TableLayout {
 	protected void onFinishInflate() {
 		super.onFinishInflate();
 		
-		// checks the appropriate radio button as requested in the XML file
+		/*
         if (mSelectedId != -1) {
             mProtectFromCheckedChange = true;
             setCheckedStateForView(mSelectedId, true);
             mProtectFromCheckedChange = false;
             setSelectedId(mSelectedId);
         }
+        */
         
         updateUpgradabilityStates();
 		
@@ -203,14 +211,15 @@ public class TalentTree extends TableLayout {
 			if(mProtectFromCheckedChange){
 				return;
 			}
-
+			int id = buttonView.getId();
+			
 			mProtectFromCheckedChange = true;
-			if(mSelectedId != -1){
+			if(mSelectedId != -1 && mSelectedId != id){
 				setCheckedStateForView(mSelectedId, false);
 			}
 			mProtectFromCheckedChange = false;
 
-			int id = buttonView.getId();
+			
 			setSelectedId(id);
 		}
 

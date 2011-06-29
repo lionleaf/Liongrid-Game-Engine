@@ -5,7 +5,7 @@ import com.liongrid.infectosaurus.Infectosaurus;
 import com.liongrid.infectosaurus.R;
 
 public class HealthUpgrade extends Upgrade<Infectosaurus> {
-
+	
 	public HealthUpgrade() {
 		super(Integer.MAX_VALUE);
 	}
@@ -23,6 +23,11 @@ public class HealthUpgrade extends Upgrade<Infectosaurus> {
 	@Override
 	public int getDescriptionRes() {
 		return R.string.healthUpgradeDescription;
+	}
+
+	@Override
+	public String getCurrentStateDescription() {
+		return "Current hp-bonus: " + 5*mRank;
 	}
 
 }
