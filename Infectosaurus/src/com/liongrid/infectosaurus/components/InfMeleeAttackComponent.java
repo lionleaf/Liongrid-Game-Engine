@@ -20,11 +20,11 @@ public class InfMeleeAttackComponent extends Component<InfectoGameObject> {
 	InfectoGameObjectHandler gameObjHandler;
 	static final int CLOSE_CAPACITY = 20;
 	FixedSizeArray<InfectoGameObject> close;
-	int reach = 100; //Square of the actual reach 100 means 10 px
-	private int damage = 1;
-	private float delay = 0.5f; //sec
-	private float delayCountDown = 0;
-	private InfectoGameObject lastTarget = null;
+	int mReach = 100; //Square of the actual mReach 100 means 10 px
+	private int mDamage = 1;
+	private float mDelay = 0.5f; //sec
+	private float mDelayCountDown = 0;
+	private float mInfectChance = 0f;
 	
 	
 	public InfMeleeAttackComponent(){
@@ -39,34 +39,32 @@ public class InfMeleeAttackComponent extends Component<InfectoGameObject> {
 	}
 	
 	public void addToDamage(int value){
-		damage += value;
+		mDamage += value;
 	}
 	
 	@Override
 	public void update(float dt, InfectoGameObject parent) {
 		
-		delayCountDown -= dt;
-		if(delayCountDown > 0) return;
+		mDelayCountDown -= dt;
+		if(mDelayCountDown > 0) return;
 		
 		InfectoGameObject target =	gameObjHandler.getClosest(
 				parent, parent.pos, parent.team == Team.Human ? Team.Alien : Team.Human);
 
 		
 		if(target == null || 
-				target.pos.distance2(parent.pos) > reach){
+				target.pos.distance2(parent.pos) > mReach){
 			return;
 		}
+			
 		
-		lastTarget = target;
-		
-		
-		delayCountDown = delay;
+		mDelayCountDown = mDelay;
 		
 		
 		//TODO pool this!!
 		
 		InfectedDamageEffect eff = new InfectedDamageEffect();
-		eff.set(damage);
+		eff.set(mDamage, mInfectChance );
 		target.afflict(eff);
 		
 		SpeedBuffEffect speed = new SpeedBuffEffect();
@@ -81,6 +79,15 @@ public class InfMeleeAttackComponent extends Component<InfectoGameObject> {
 		}
 		
 		spr.currentState = SpriteState.attacking;
+		
+	}
+
+	/**
+	 * Sets the infect chance
+	 * @param infectChance - 1 = 100% infect chance.
+	 */
+	public void setInfectChance(float infectChance) {
+		this.mInfectChance = infectChance;
 		
 	}
 }

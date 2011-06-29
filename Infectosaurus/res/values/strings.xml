@@ -10,4 +10,5 @@
     <string name="healthUpgradeDescription">Increases the hp of the infectosaurus</string>
     <string name="meleeDamageUpgradeDescription">Increases the melee attack damage of the infectosaurus</string>
     <string name="upgradeDefaultDescription">Welcome to the upgrade facility. Please choose an icon.</string>
+    <string name="infectUpgradeDescription">Increases the chance that when the infectosaurus kills something, a new infectosaurus will spawn</string>
 </resources>

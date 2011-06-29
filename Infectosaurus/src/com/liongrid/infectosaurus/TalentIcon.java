@@ -92,6 +92,17 @@ public class TalentIcon extends RadioButton {
 			canvas.drawRect(r,p);
 		}
 		
+		if(isFocused()){
+			Paint p = new Paint();
+			p.setColor(Color.YELLOW);
+			p.setStyle(Paint.Style.STROKE);
+			p.setStrokeWidth(2.5f);
+			Rect r = new Rect();
+			getDrawingRect(r);
+
+			canvas.drawRect(r,p);
+		}
+		
 		if(!isUpgradeable()){
 			Paint p = new Paint();
 			p.setColor(Color.RED);

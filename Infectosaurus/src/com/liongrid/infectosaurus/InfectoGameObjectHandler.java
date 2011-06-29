@@ -63,12 +63,12 @@ public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
 	}
 
 	/**
-	 * Finds all gameobjects within reach of gObject
+	 * Finds all gameobjects within mReach of gObject
 	 * 
 	 * @param gObject - The object who wants something close
-	 * @param reach - How far you want to search
+	 * @param mReach - How far you want to search
 	 * @return - A FixedSizeArray with the results. (Remember to release it!) 
-	 * Or null if there is nothing within reach. It will not return itself.
+	 * Or null if there is nothing within mReach. It will not return itself.
 	 */ 
 	public FixedSizeArray<InfectoGameObject> getClose(InfectoGameObject gObject, 
 			Vector2 pos, int reach, Team team) {

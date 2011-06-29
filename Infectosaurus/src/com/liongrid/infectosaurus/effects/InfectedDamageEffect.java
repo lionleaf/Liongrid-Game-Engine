@@ -13,8 +13,8 @@ import com.liongrid.infectosaurus.Infectosaurus;
 
 public class InfectedDamageEffect extends Effect<InfectoGameObject> {
 	
-	private int damage;
-	private float infectChance = 33f/100;
+	private int mDamage;
+	private float mInfectChance;
 	private static Random random = new Random();
 	
 	public InfectedDamageEffect(){
@@ -22,13 +22,15 @@ public class InfectedDamageEffect extends Effect<InfectoGameObject> {
 	}
 	
 	/**
-	 * @param damage - damage to be done
+	 * @param damage - mDamage to be done
+	 * @param infectChance 
 	 */
-	public void set(int damage){
+	public void set(int damage, float infectChance){
 		//instant, so we set duration to 0
 		super.set(0);
 		
-		this.damage = damage;
+		this.mInfectChance = infectChance;
+		this.mDamage = damage;
 	}
 	
 	
@@ -40,16 +42,16 @@ public class InfectedDamageEffect extends Effect<InfectoGameObject> {
 	@Override
 	public void reset() {
 		super.reset();
-		damage = 0;
+		mDamage = 0;
 
 	}
 
 	@Override
 	public void onApply(InfectoGameObject target) {
-		target.hp -= damage;
+		target.hp -= mDamage;
 		if(target.infectable && target.hp <= 0){
 			float check = random.nextFloat();
-			if(check < infectChance){
+			if(check < mInfectChance){
 				Infectosaurus inf = new Infectosaurus();
 				inf.pos.set(target.pos);
 				GameActivity.infectoPointers.gameObjectHandler.add(inf);

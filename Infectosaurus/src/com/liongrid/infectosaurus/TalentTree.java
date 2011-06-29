@@ -27,8 +27,6 @@ public class TalentTree extends TableLayout {
 
 	private OnSelectedChangeListener mOnSelectedChangeListener;
 
-	private PassThroughHierarchyChangeListener mPassThroughListener;
-
 	private RankChangeListener mRankChangeListener;
 	
 	/**
@@ -58,7 +56,7 @@ public class TalentTree extends TableLayout {
 				setCheckedStateForView(mSelectedId, false);
 			}
 			mProtectFromCheckedChange = false;
-			setSelectedId(icon.getId());
+			setSelectedId(id);
 		}
 		
 		icon.setOnRankChangedListener(mRankChangeListener);
@@ -95,7 +93,7 @@ public class TalentTree extends TableLayout {
 
 	public void init(AttributeSet attrs){
 		mChildOnCheckedChangeListener = new CheckedStateTracker();
-		mPassThroughListener = new PassThroughHierarchyChangeListener();
+
 		mRankChangeListener = new RankChangeListener();
 		
 		TypedArray a = 
@@ -107,7 +105,7 @@ public class TalentTree extends TableLayout {
 		}
 		
 		
-		super.setOnHierarchyChangeListener(mPassThroughListener);
+
 	}
 
 	@Override
@@ -134,12 +132,6 @@ public class TalentTree extends TableLayout {
 		}
 	}
 
-	@Override
-	public void setOnHierarchyChangeListener(OnHierarchyChangeListener listener) {
-		// the user listener is delegated to our pass-through listener
-		mPassThroughListener.mOnHierarchyChangeListener = listener;
-	}
-
 	/**
 	 * <p>Register a callback to be invoked when the selected talent
 	 * changes in this tree.</p>
@@ -161,13 +153,15 @@ public class TalentTree extends TableLayout {
 		// First implementation uses "Brute force"
 		
 		boolean upgradeable = true;
+		int totalRank = 0;
+		int currentTier = 0;
 		
 		int nrOfChildren = getChildCount();
 		for (int i = 0; i < nrOfChildren; i++) {
+			currentTier++;
+			
 			View child = getChildAt(i);
 			if(child instanceof ViewGroup){
-				int tierRank = 0;
-				
 				ViewGroup childGroup = (ViewGroup) child;
 				int nrOfGChildren = childGroup.getChildCount();
 				for (int j = 0; j < nrOfGChildren; j++) {
@@ -176,12 +170,13 @@ public class TalentTree extends TableLayout {
 						((TalentIcon) grandChild).setUpgradeable(upgradeable);
 						if(!upgradeable) continue;
 						int rank = ((TalentIcon) grandChild).getUpgrade().getRank();
-						tierRank += rank;
+						totalRank += rank;
 					}
 				}
 				
 				//Set whether next tier is upgradeable;
-				upgradeable = upgradeable ? tierRank >= mRanksPerTier : false;
+				upgradeable = upgradeable ? 
+						totalRank >= mRanksPerTier*currentTier : false;
 				
 			}
 		}
@@ -192,6 +187,7 @@ public class TalentTree extends TableLayout {
 			
 			ViewGroup childGroup = ((ViewGroup) child);
 			int childCount = childGroup.getChildCount();
+			Log.d("TalentTree", "View added, children: "+childCount);
 			for (int i = 0; i < childCount; i++) {
 				View grandChild = childGroup.getChildAt(i);
 				if(grandChild instanceof TalentIcon){
@@ -207,10 +203,13 @@ public class TalentTree extends TableLayout {
 
 		public void onCheckedChanged(CompoundButton buttonView,
 				boolean isChecked) {
+			
+			
 			//Avoid infinite recursion
 			if(mProtectFromCheckedChange){
 				return;
 			}
+			Log.d("TalentTree", "onCheckChanged "+buttonView.getId());
 			int id = buttonView.getId();
 			
 			mProtectFromCheckedChange = true;
@@ -237,38 +236,7 @@ public class TalentTree extends TableLayout {
 		 */
 		public void onSelectedChanged(TalentTree tTree, int selectedId);
 	}
-	/**
-	 * <p>A pass-through listener acts upon the events and dispatches them
-	 * to another listener. This allows the table layout to set its own internal
-	 * hierarchy change listener without preventing the user to setup his.</p>
-	 */
-	private class PassThroughHierarchyChangeListener implements
-	ViewGroup.OnHierarchyChangeListener {
-		private ViewGroup.OnHierarchyChangeListener mOnHierarchyChangeListener;
 
-		/**
-		 * {@inheritDoc}
-		 */
-		public void onChildViewAdded(View parent, View child) {			
-			if (mOnHierarchyChangeListener != null) {
-				mOnHierarchyChangeListener.onChildViewAdded(parent, child);
-			}
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		public void onChildViewRemoved(View parent, View child) {
-			if (parent.getParent() == TalentTree.this && 
-					child instanceof TalentIcon) {
-				((TalentIcon) child).setOnCheckedChangeListener(null);
-			}
-
-			if (mOnHierarchyChangeListener != null) {
-				mOnHierarchyChangeListener.onChildViewRemoved(parent, child);
-			}
-		}
-	}
 	
 	private class RankChangeListener implements 
 	Upgrade.OnRankChangedListener{
