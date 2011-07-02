@@ -22,7 +22,8 @@
                     <com.liongrid.infectosaurus.TalentIcon 
                     	android:text="Speed" 
                     	android:id="@+id/talentIcon3"
-                    	infecto:upgrade="SpeedUpgrade"></com.liongrid.infectosaurus.TalentIcon>
+                    	infecto:upgrade="SpeedUpgrade">
+                    	</com.liongrid.infectosaurus.TalentIcon>
                 </com.liongrid.infectosaurus.TalentTier>
 				
 				<com.liongrid.infectosaurus.TalentTier android:id="@+id/talentTier2">
