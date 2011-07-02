@@ -139,7 +139,6 @@ public class TileSetSaxParser extends DefaultHandler {
 				"[^01]\\s", "").toCharArray();
 		
 		int l = realch.length;
-		Log.d("wooho","length: "+l);
 		for (int i = start; i < l + start; i++) {
 			currentBlocked[currentMType.ordinal()][i%blockDimensions][i/blockDimensions]
 			                = (ch[i] == '1');

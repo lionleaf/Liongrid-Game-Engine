@@ -22,22 +22,22 @@ public class TileType extends DrawableBitmap{
 	 * 
 	 * 
 	 * The tile is divided into n equal squares, each with its local
-	 * coordinate (x,y). To check whether a part of the tile is blocked
+	 * coordinate (x,y). To check whether a part of the tile is mBlocked
 	 * check:
 	 * 
-	 * blocked[MovementType.ordinal()][local x][local y]
+	 * mBlocked[MovementType.ordinal()][local x][local y]
 	 * 
 	 * So if a square is divided in 4, there is 4 valid coordinates:
 	 * (0,0), (1,0), (0,1), and (1,1);
 	 * 
 	 * Made public for speed, DO NOT ALTER!
 	 */
-	public boolean[][][] blocked;
+	public boolean[][][] mBlocked;
 	
 	
 	/**
 	 * @param resource - The resource ID. Get it from XML or R.drawable
-	 * @param blocked - @see{blocked}
+	 * @param mBlocked - @see{mBlocked}
 	 * @param size - The size of the tile. Should probably be the same for all of them,
 	 *  as calculations depend upon it
 	 * @param context - gamePointer.panel;
@@ -45,9 +45,11 @@ public class TileType extends DrawableBitmap{
 	public TileType(Texture texture, boolean[][][] blocked){
 		super(texture, Level.TILE_SIZE, Level.TILE_SIZE);
 		
-		this.blocked = blocked;	
+		this.mBlocked = blocked;	
 		
-		for(boolean[][] barr : blocked){
+		
+		/* For debugging
+		 * for(boolean[][] barr : mBlocked){
 			for(boolean[] ba : barr){
 				for(boolean b : ba){
 					if(b){
@@ -55,7 +57,7 @@ public class TileType extends DrawableBitmap{
 					}
 				}
 			}
-		}
+		}*/
 		
 	}
 }

@@ -9,7 +9,6 @@ import com.liongrid.gameengine.tools.FixedSizeArray;
 import com.liongrid.infectosaurus.InfectoGameObject;
 import com.liongrid.infectosaurus.crowd.State;
 import com.liongrid.infectosaurus.crowd.StateList;
-import com.liongrid.infectosaurus.crowd.behaviorfunctions.AvoidEdgeBehaviour;
 import com.liongrid.infectosaurus.crowd.behaviorfunctions.AvoidObstacles;
 import com.liongrid.infectosaurus.crowd.behaviorfunctions.AvoidTargetCollission;
 import com.liongrid.infectosaurus.crowd.behaviorfunctions.BehaviorFunction;

@@ -69,7 +69,7 @@ public class Level extends BaseObject{
 		
 		for (int y = 0; y < mapSize.y; y++) {
 			for (int x = 0; x < mapSize.x; x++) {
-				renderQueue[x][mapSize.y-1-y] = tiles[x][y].tileType; 
+				renderQueue[x][y] = tiles[x][y].tileType; 
 			}
 		}
 	}
@@ -119,7 +119,10 @@ public class Level extends BaseObject{
 				for (int x = 0; x < mapSize.x; x++) {
 					tileID = reader.read(); 
 					index = gamePointers.tileSet.tileIDtoIndexMap.get(tileID);
-					tiles[x][y] = new Tile(tileTypes[index]);
+					
+					//Fix the fucked up way the maps are saved. origo is saved as 
+					//top-right, but here it`s bottom left...
+					tiles[x][mapSize.y-y-1] = new Tile(tileTypes[index]);
 				}
 			}
 		} catch (IOException e) {
@@ -171,7 +174,7 @@ public class Level extends BaseObject{
 	public boolean isPositionBlocked(int x, int y, MovementType mType){
 		int xIndex = x/TILE_SIZE;
 		int yIndex = y/TILE_SIZE;
-		//outside the map is blocked for all!
+		//outside the map is mBlocked for all!
 		if(xIndex >= tiles.length || yIndex >= tiles[0].length 
 				|| x < 0 || y < 0){
 			return true;

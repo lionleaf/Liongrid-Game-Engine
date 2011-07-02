@@ -2,7 +2,7 @@ package com.liongrid.infectosaurus.crowd.behaviorfunctions;
 
 import com.liongrid.infectosaurus.crowd.State;
 import com.liongrid.infectosaurus.crowd.StateList;
-
+/*
 public class AvoidEdgeBehaviour extends BehaviorFunction {
 
 	@Override
@@ -29,3 +29,4 @@ public class AvoidEdgeBehaviour extends BehaviorFunction {
 	}
 
 }
+*/
