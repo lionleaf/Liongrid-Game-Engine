@@ -27,6 +27,7 @@ import com.liongrid.infectosaurus.upgrades.InfectosaurusUpgrade;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.hardware.Camera.Size;
 import android.util.Log;
 
 /**
@@ -36,6 +37,8 @@ import android.util.Log;
  */
 public class Infectosaurus extends InfectoGameObject {
 	
+	private int mSize;
+
 	public Infectosaurus() {
 		Log.d(Main.TAG, "Infectosaurus construct");
 		Panel panel = BaseObject.gamePointers.panel;
@@ -45,12 +48,12 @@ public class Infectosaurus extends InfectoGameObject {
 		DrawableBitmap[] dbs = new DrawableBitmap[4];
 		
 		Texture tex = texLib.allocateTexture(R.drawable.spheremonster01);
-		int size = 16*3;
-		radius = (float) (size/2.0);
-		dbs[0] = new DrawableBitmap(tex, size, size);
-		dbs[1] = new DrawableBitmap(tex, size+3, size+3);
-		dbs[2] = new DrawableBitmap(tex, size+6, size+6);
-		dbs[3] = new DrawableBitmap(tex, size+3, size+3);
+		mSize = 16*3;
+		radius = (float) (mSize/2.0);
+		dbs[0] = new DrawableBitmap(tex, mSize, mSize);
+		dbs[1] = new DrawableBitmap(tex, mSize+3, mSize+3);
+		dbs[2] = new DrawableBitmap(tex, mSize+6, mSize+6);
+		dbs[3] = new DrawableBitmap(tex, mSize+3, mSize+3);
 		
 		DrawableBitmap[] attackBmps = new DrawableBitmap[1];
 		
@@ -66,7 +69,7 @@ public class Infectosaurus extends InfectoGameObject {
 		
 		
 		addComponent(new InfMeleeAttackComponent());
-		addComponent(new TiltMovementComponent());
+		addComponent(new AggressivMoveComponent());
 		addComponent(sprite);
 		addComponent(new MoveComponent());
 		addComponent(new HpBarComponent());
@@ -103,22 +106,15 @@ public class Infectosaurus extends InfectoGameObject {
 	
 	@Override
 	public void collide(InfectoGameObject o) {
-		/* Bugged to hell!
 		if(Collision.collides(this, o)){
-			if(o.pos.x < pos.x) pos.x = (float) 
-				(o.pos.x + pos.x/(Math.sqrt(o.pos.distance2(pos))));
-			else {
-				pos.x = (float) 
-				(o.pos.x - pos.x/(Math.sqrt(o.pos.distance2(pos))));
-			}
+			float[] AB = {pos.x - o.pos.x, pos.y - o.pos.y};
+			float absAB = (float) Math.sqrt(AB[0] * AB[0] + AB[1] * AB[1]);
+			float cosPhi = AB[0] / absAB;
+			float sinPhi = AB[1] / absAB;
 			
-			if(o.pos.y < pos.y) pos.y = (float) 
-				(o.pos.y + pos.y/(Math.sqrt(o.pos.distance2(pos))));
-			else {
-				pos.y = (float) 
-				(o.pos.y - pos.y/(Math.sqrt(o.pos.distance2(pos))));
-			}
-		}*/
+			pos.x = o.pos.x + cosPhi * o.radius + cosPhi * radius;
+			pos.y = o.pos.y + sinPhi * o.radius + sinPhi * radius;
+		}
 	}
 
 	@Override

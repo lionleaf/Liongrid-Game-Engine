@@ -17,7 +17,7 @@ import com.liongrid.gameengine.tools.Vector2;
 public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
 	private static final int DEFAULT_CAPACITY = 256;
 	
-	static final int NUMBER_OF_HUMANS = 5;
+	static final int NUMBER_OF_HUMANS = 15;
 
 	public CollisionHandler<InfectoGameObject> mCH;
 	public InfectoGameObjectHandler(){
