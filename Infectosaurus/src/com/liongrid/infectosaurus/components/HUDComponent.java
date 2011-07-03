@@ -4,8 +4,9 @@ import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Component;
 import com.liongrid.gameengine.DrawableObject;
 import com.liongrid.gameengine.GameObject;
+import com.liongrid.infectosaurus.InfectoGameObject;
 
-public class HUDComponent extends Component<GameObject>{
+public class HUDComponent extends Component<InfectoGameObject>{
 
 	private DrawableObject defaultDrawing;
 	private int mY;
@@ -18,9 +19,9 @@ public class HUDComponent extends Component<GameObject>{
 	}
 	
 	@Override
-	public void update(float dt, GameObject parent) {
+	public void update(float dt, InfectoGameObject parent) {
 		DrawableObject toDraw = defaultDrawing;
-		BaseObject.gamePointers.renderSystem.scheduleForDraw(toDraw, mX, mY);
+		BaseObject.gamePointers.renderSystem.scheduleForDraw(toDraw, mX, mY);		
 	}
 
 }

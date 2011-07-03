@@ -1,6 +1,7 @@
 package com.liongrid.infectosaurus;
 
 import com.liongrid.gameengine.BaseObject;
+import com.liongrid.gameengine.Camera;
 import com.liongrid.gameengine.Collision;
 import com.liongrid.gameengine.DrawableBitmap;
 import com.liongrid.gameengine.GameObject;
@@ -11,6 +12,7 @@ import com.liongrid.gameengine.Upgrade;
 import com.liongrid.gameengine.tools.FixedSizeArray;
 import com.liongrid.infectosaurus.R;
 import com.liongrid.infectosaurus.components.AggressivMoveComponent;
+import com.liongrid.infectosaurus.components.HUDComponent;
 import com.liongrid.infectosaurus.components.HpBarComponent;
 import com.liongrid.infectosaurus.components.LAnimation;
 import com.liongrid.infectosaurus.components.InfMeleeAttackComponent;
@@ -49,7 +51,9 @@ public class Infectosaurus extends InfectoGameObject {
 		TextureLibrary texLib = gamePointers.textureLib;
 		Texture tex = texLib.allocateTexture(R.drawable.spheremonster01);
 		SpriteComponent sprite = loadAnimations(tex);
-		
+		addComponent(new HUDComponent(new DrawableBitmap(tex, mSize, mSize, true), 
+				Camera.screenWidth-mSize, 
+				Camera.screenHeight - mSize));
 		addComponent(new InfMeleeAttackComponent());
 		addComponent(new AggressivMoveComponent());
 		addComponent(sprite);

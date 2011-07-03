@@ -5,6 +5,8 @@ import java.io.Serializable;
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Camera;
 import com.liongrid.gameengine.GameActivityInterface;
+import com.liongrid.gameengine.GameObject;
+import com.liongrid.gameengine.ObjectHandler;
 import com.liongrid.gameengine.Panel;
 import com.liongrid.gameengine.TextureLibrary;
 import com.liongrid.infectosaurus.map.Level;
@@ -71,7 +73,9 @@ public class GameActivity extends Activity implements GameActivityInterface{
 
 	private void init() {
 		infectoPointers.gameObjectHandler = new InfectoGameObjectHandler();
-		panel.addToRoot(infectoPointers.gameObjectHandler);	
+		infectoPointers.HUDObjectHandler = new HUDObjectHandler();
+		panel.addToRoot(infectoPointers.gameObjectHandler);
+		panel.addToRoot(infectoPointers.HUDObjectHandler);
 	}
 
 
