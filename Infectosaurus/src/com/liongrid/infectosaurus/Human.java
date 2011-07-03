@@ -33,8 +33,8 @@ public class Human extends InfectoGameObject{
 		
 		int size = 32*(rand.nextInt(4)+1);
 		radius = (float) (size/2.0);
-		dbs[0] = new DrawableBitmap(f1, size , size);
-		dbs[1] = new DrawableBitmap(f2, size, size);
+		dbs[0] = new DrawableBitmap(f1, size, size, false);
+		dbs[1] = new DrawableBitmap(f2, size, size, false);
 		
 		LAnimation moveAnimation =new LAnimation(dbs, 0.2f);
 

@@ -71,7 +71,7 @@ public class GameActivity extends Activity implements GameActivityInterface{
 
 	private void init() {
 		infectoPointers.gameObjectHandler = new InfectoGameObjectHandler();
-		panel.addToRoot(infectoPointers.gameObjectHandler);		
+		panel.addToRoot(infectoPointers.gameObjectHandler);	
 	}
 
 

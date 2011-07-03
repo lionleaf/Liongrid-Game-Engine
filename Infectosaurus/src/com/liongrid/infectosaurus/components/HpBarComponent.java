@@ -16,9 +16,9 @@ public class HpBarComponent extends Component<InfectoGameObject> {
 	
 	public HpBarComponent() {
 		mBarBackground = new DrawableBitmap
-		(gamePointers.textureLib.allocateTexture(R.drawable.red),mWidth,mHeight);
+		(gamePointers.textureLib.allocateTexture(R.drawable.red),mWidth,mHeight,false);
 		mBarForeground = new DrawableBitmap
-		(gamePointers.textureLib.allocateTexture(R.drawable.green),0,mHeight);
+		(gamePointers.textureLib.allocateTexture(R.drawable.green),0,mHeight,false);
 		
 	}
 	

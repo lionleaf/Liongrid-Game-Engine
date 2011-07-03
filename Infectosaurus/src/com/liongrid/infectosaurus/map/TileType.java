@@ -43,7 +43,7 @@ public class TileType extends DrawableBitmap{
 	 * @param context - gamePointer.panel;
 	 */
 	public TileType(Texture texture, boolean[][][] blocked){
-		super(texture, Level.TILE_SIZE, Level.TILE_SIZE);
+		super(texture, Level.TILE_SIZE, Level.TILE_SIZE, false);
 		
 		this.mBlocked = blocked;	
 		

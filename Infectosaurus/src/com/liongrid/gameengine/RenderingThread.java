@@ -100,11 +100,15 @@ public class RenderingThread implements Panel.Renderer {
 								"Last count was " + count + " Now it is "+ objects.getCount());
 						continue;
 					}
-					elem.drawable.draw(gl, 
-									   elem.x - cameraX, 
-									   elem.y - cameraY, 
-									   scale, 
-									   scale);
+					if(!elem.drawable.isCameraRelative()){
+						elem.drawable.draw(gl, 
+								elem.x - cameraX, 
+								elem.y - cameraY, 
+								scale, 
+								scale);
+					} else {
+						elem.drawable.draw(gl, elem.x, elem.y, scale, scale);
+					}
 				}
 			}
 			DrawableBitmap.endDrawing(gl);

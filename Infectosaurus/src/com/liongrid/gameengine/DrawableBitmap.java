@@ -9,6 +9,7 @@ import javax.microedition.khronos.opengles.GL11Ext;
  *
  */
 public class DrawableBitmap extends BaseObject implements DrawableObject {
+	public boolean mCameraRelative;
 	private Texture mTexture;
 	private int mWidth;
 	private int mHeight;
@@ -20,8 +21,11 @@ public class DrawableBitmap extends BaseObject implements DrawableObject {
 	 * @param width - width of the object to be drawn in in-game coordinates
 	 * @param height - height of the object to be drawn in in-game coordinates
 	 */
-	public DrawableBitmap(Texture texture, int width, int height) {
+	public DrawableBitmap(Texture texture, int width, int height, 
+			boolean cameraRelative) {
+		
 		super();
+		mCameraRelative = cameraRelative;
 		mTexture = texture;
 		mWidth = width;
 		mHeight = height;
@@ -174,5 +178,9 @@ public class DrawableBitmap extends BaseObject implements DrawableObject {
 	@Override
 	public void update(float dt, BaseObject parent) {
 		// This is just here so to make it a base object
+	}
+
+	public boolean isCameraRelative() {
+		return mCameraRelative;
 	}
 }

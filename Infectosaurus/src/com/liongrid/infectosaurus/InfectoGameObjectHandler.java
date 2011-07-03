@@ -26,6 +26,8 @@ public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
 		mCH = new CollisionHandler<InfectoGameObject>
 					(Team.values().length, DEFAULT_CAPACITY);
 		
+		
+		
 		for (int i = 0; i < NUMBER_OF_HUMANS; i++) {
 			human = new Human();
 			human.pos.set(0,0);

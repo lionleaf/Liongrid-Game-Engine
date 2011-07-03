@@ -23,6 +23,7 @@ public interface DrawableObject {
 	 * @return the current height (unscaled, but you should probably not scale)
 	 */
 	public int getHeight();
+	public boolean isCameraRelative();
 
 	public Texture getTexture();
 	

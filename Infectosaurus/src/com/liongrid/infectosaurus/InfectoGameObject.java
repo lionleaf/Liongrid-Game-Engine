@@ -17,7 +17,6 @@ public class InfectoGameObject extends GameObject<InfectoGameObject>
 	private static final int COLLISION_ARR_LENGTH = 5;
 	public Team team = Team.Human; //Default team
 	public boolean alive = true;
-	public Vector2 pos = new Vector2(0,0);
 	public Vector2 vel = new Vector2(0,0);
 	public float speed = 10;
 	public int mMaxHp = 1;

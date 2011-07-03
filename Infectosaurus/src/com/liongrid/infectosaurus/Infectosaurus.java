@@ -43,30 +43,12 @@ public class Infectosaurus extends InfectoGameObject {
 		Log.d(Main.TAG, "Infectosaurus construct");
 		Panel panel = BaseObject.gamePointers.panel;
 		
-		
-		TextureLibrary texLib = gamePointers.textureLib;
-		DrawableBitmap[] dbs = new DrawableBitmap[4];
-		
-		Texture tex = texLib.allocateTexture(R.drawable.spheremonster01);
 		mSize = 16*3;
 		radius = (float) (mSize/2.0);
-		dbs[0] = new DrawableBitmap(tex, mSize, mSize);
-		dbs[1] = new DrawableBitmap(tex, mSize+3, mSize+3);
-		dbs[2] = new DrawableBitmap(tex, mSize+6, mSize+6);
-		dbs[3] = new DrawableBitmap(tex, mSize+3, mSize+3);
 		
-		DrawableBitmap[] attackBmps = new DrawableBitmap[1];
-		
-		attackBmps[0] = new DrawableBitmap(tex, 16*3+25, 16*3+25);
-		
-		LAnimation moveAnimation = new LAnimation(dbs, 0.1f);
-		LAnimation attackAnimation = new LAnimation(attackBmps, 0.1f, false);
-		
-		SpriteComponent sprite = new SpriteComponent();
-		sprite.setAnimation(SpriteState.idle, moveAnimation);
-		sprite.setAnimation(SpriteState.attacking, attackAnimation);
-		
-		
+		TextureLibrary texLib = gamePointers.textureLib;
+		Texture tex = texLib.allocateTexture(R.drawable.spheremonster01);
+		SpriteComponent sprite = loadAnimations(tex);
 		
 		addComponent(new InfMeleeAttackComponent());
 		addComponent(new AggressivMoveComponent());
@@ -89,6 +71,28 @@ public class Infectosaurus extends InfectoGameObject {
 		
 	}
 	
+	private SpriteComponent loadAnimations(Texture tex) {
+		SpriteComponent sprite = new SpriteComponent();
+		DrawableBitmap[] dbs = new DrawableBitmap[4];
+		DrawableBitmap[] attackBmps = new DrawableBitmap[1];
+		
+		
+		dbs[0] = new DrawableBitmap(tex, mSize,   mSize, false);
+		dbs[1] = new DrawableBitmap(tex, mSize+3, mSize+3, false);
+		dbs[2] = new DrawableBitmap(tex, mSize+6, mSize+6, false);
+		dbs[3] = new DrawableBitmap(tex, mSize+3, mSize+3, false);
+		
+		
+		attackBmps[0] = new DrawableBitmap(tex, 16*3+25, 16*3+25,false);
+		
+		LAnimation moveAnimation = new LAnimation(dbs, 0.1f);
+		LAnimation attackAnimation = new LAnimation(attackBmps, 0.1f, true);
+		
+		sprite.setAnimation(SpriteState.idle, moveAnimation);
+		sprite.setAnimation(SpriteState.attacking, attackAnimation);
+		return sprite;
+	}
+
 	private void applyUpgrades() {
 		InfectosaurusUpgrade[] us = InfectosaurusUpgrade.values();
 		
