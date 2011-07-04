@@ -4,13 +4,12 @@ import java.util.Comparator;
 
 import com.liongrid.gameengine.tools.Vector2;
 
-import android.util.Log;
-
 public class RenderElement extends BaseObject{
 	public DrawableObject drawable;
 	//public Vector2 pos;
 	public float x;
 	public float y;
+	public boolean cr;
 	
 	static class HeightComparer implements Comparator<RenderElement>{
 
@@ -38,17 +37,19 @@ public class RenderElement extends BaseObject{
 		y = 0;*/
 	}
 
-	public void set(DrawableObject object, Vector2 pos) {
+	public void set(DrawableObject object, Vector2 pos, boolean cameraRelative) {
 		this.drawable = object;
 		x = pos.x;
 		y = pos.y;
+		cr = cameraRelative;
 		
 	}
 	
-	public void set(DrawableObject drawable, int x, int y){
+	public void set(DrawableObject drawable, int x, int y, boolean cameraRelative){
 		this.drawable = drawable;
 		this.x = x;
 		this.y = y;
+		cr = cameraRelative;
 	}
 
 	@Override

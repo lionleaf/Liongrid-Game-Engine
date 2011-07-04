@@ -1,6 +1,5 @@
 package com.liongrid.infectosaurus;
 
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.GestureDetector.SimpleOnGestureListener;
 

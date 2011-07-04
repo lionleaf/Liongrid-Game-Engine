@@ -1,9 +1,6 @@
 package com.liongrid.infectosaurus.components;
 
 
-import java.util.Arrays;
-import java.util.List;
-
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -12,7 +9,6 @@ import android.hardware.SensorManager;
 import android.util.Log;
 
 import com.liongrid.gameengine.Component;
-import com.liongrid.infectosaurus.GameActivity;
 import com.liongrid.infectosaurus.InfectoGameObject;
 
 /**

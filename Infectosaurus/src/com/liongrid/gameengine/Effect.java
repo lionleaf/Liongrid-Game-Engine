@@ -1,7 +1,5 @@
 package com.liongrid.gameengine;
 
-import com.liongrid.infectosaurus.InfectoGameObject;
-
 /**
  * @author Liongrid
  *	

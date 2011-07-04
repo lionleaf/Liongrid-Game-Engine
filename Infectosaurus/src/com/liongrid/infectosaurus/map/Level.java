@@ -1,26 +1,14 @@
 package com.liongrid.infectosaurus.map;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Random;
-import java.util.Scanner;
-
 import android.content.res.AssetManager;
-import android.util.Log;
-
 import com.liongrid.gameengine.BaseObject;
-import com.liongrid.gameengine.Camera;
-import com.liongrid.gameengine.GameEnginePointers;
 import com.liongrid.gameengine.Panel;
 import com.liongrid.gameengine.tools.MovementType;
 import com.liongrid.gameengine.tools.Vector2Int;
 import com.liongrid.infectosaurus.R;
-import com.liongrid.infectosaurus.Main;
 
 public class Level extends BaseObject{
 

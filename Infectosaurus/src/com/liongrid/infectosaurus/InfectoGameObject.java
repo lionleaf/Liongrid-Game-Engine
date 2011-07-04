@@ -1,13 +1,10 @@
 package com.liongrid.infectosaurus;
 
-import android.util.Log;
-
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Collision;
 import com.liongrid.gameengine.Shape;
 import com.liongrid.gameengine.GameObject;
 import com.liongrid.gameengine.Shape.CHCircle;
-import com.liongrid.gameengine.tools.FixedSizeArray;
 import com.liongrid.gameengine.tools.Vector2;
 
 public class InfectoGameObject extends GameObject<InfectoGameObject> 

@@ -4,8 +4,6 @@ import com.liongrid.gameengine.tools.FixedSizeArray;
 import com.liongrid.gameengine.tools.ObjectPool;
 import com.liongrid.gameengine.tools.Vector2;
 
-import android.util.Log;
-
 
 public class RenderSystem {
 	private ObjectHandler<RenderElement>[] renderQueues;
@@ -36,24 +34,27 @@ public class RenderSystem {
      * @param object
      * @param pos
      */
-    public void scheduleForDraw(DrawableObject object, Vector2 pos) {
-    	scheduleForDraw(object, pos.x, pos.y);
+    @Deprecated
+	public void scheduleForDraw(DrawableObject object, Vector2 pos, 
+    		boolean cameraRelative) {
+    	scheduleForDraw(object, pos.x, pos.y, cameraRelative);
     }
     
- public void scheduleForDraw(DrawableObject object, float x, float y) {
+ public void scheduleForDraw(DrawableObject object, float x, float y,
+		 boolean cameraRelative) {
     	
-    	if(cull(object, x, y)) return;
+    	if(!cameraRelative) if(cull(object, x, y)) return;
     	
     	RenderElement element = rElementPool.allocate();
         if(element == null) return;
-        
         
         
         //Since this is done a lot, we want max speed, so we change
         //the public variables instead of calling set
         element.drawable = object;
         element.x = x;
-        element.y = y;   	
+        element.y = y;
+        element.cr = cameraRelative;
     	renderQueues[queueIndex].add(element);
     }
     
@@ -88,7 +89,7 @@ public class RenderSystem {
 		RenderElement rElement;
 		
 		for (int i = count - 1; i >= 0; i--) {
-			rElement = (RenderElement) objects.removeLast();
+			rElement = objects.removeLast();
 			rElementPool.release(rElement);
 		}
 	}

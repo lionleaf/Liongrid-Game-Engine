@@ -1,12 +1,8 @@
 package com.liongrid.infectosaurus;
 
-import java.io.Serializable;
-
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Camera;
 import com.liongrid.gameengine.GameActivityInterface;
-import com.liongrid.gameengine.GameObject;
-import com.liongrid.gameengine.ObjectHandler;
 import com.liongrid.gameengine.Panel;
 import com.liongrid.gameengine.TextureLibrary;
 import com.liongrid.infectosaurus.map.Level;
@@ -19,7 +15,6 @@ import android.util.Log;
 import android.view.Display;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
-import android.view.ViewGroup;
 import android.view.Window;
 
 /**

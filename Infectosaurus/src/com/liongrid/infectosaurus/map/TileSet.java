@@ -12,7 +12,6 @@ import org.xml.sax.SAXException;
 
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Panel;
-import com.liongrid.gameengine.tools.MovementType;
 import com.liongrid.infectosaurus.R;
 
 /**

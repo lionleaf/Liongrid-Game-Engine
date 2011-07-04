@@ -3,7 +3,6 @@ package com.liongrid.infectosaurus.components;
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Component;
 import com.liongrid.gameengine.DrawableObject;
-import com.liongrid.gameengine.GameObject;
 import com.liongrid.infectosaurus.InfectoGameObject;
 
 public class HUDComponent extends Component<InfectoGameObject>{
@@ -21,7 +20,6 @@ public class HUDComponent extends Component<InfectoGameObject>{
 	@Override
 	public void update(float dt, InfectoGameObject parent) {
 		DrawableObject toDraw = defaultDrawing;
-		BaseObject.gamePointers.renderSystem.scheduleForDraw(toDraw, mX, mY);		
+		BaseObject.gamePointers.renderSystem.scheduleForDraw(toDraw, mX, mY, true);		
 	}
-
 }

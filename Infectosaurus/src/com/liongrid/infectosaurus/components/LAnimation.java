@@ -1,12 +1,9 @@
 package com.liongrid.infectosaurus.components;
 
 import com.liongrid.gameengine.BaseObject;
-import com.liongrid.gameengine.Component;
 import com.liongrid.gameengine.DrawableBitmap;
 import com.liongrid.gameengine.DrawableObject;
-import com.liongrid.gameengine.Texture;
 import com.liongrid.gameengine.tools.Vector2;
-import com.liongrid.infectosaurus.InfectoGameObject;
 
 /**
  * @author Lionleaf

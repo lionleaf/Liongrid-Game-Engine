@@ -5,12 +5,9 @@ import com.liongrid.infectosaurus.TalentTree.OnSelectedChangeListener;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.RadioGroup;
-import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
 public class UpgradeActivity extends Activity {
@@ -20,6 +17,7 @@ public class UpgradeActivity extends Activity {
 	private TextView upgradeInfoText;
 	private TextView upgradeStateText;
 
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 

@@ -1,9 +1,5 @@
 package com.liongrid.infectosaurus.map;
 
-import android.content.Context;
-import android.util.Log;
-
-import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.DrawableBitmap;
 import com.liongrid.gameengine.Texture;
 
@@ -43,7 +39,7 @@ public class TileType extends DrawableBitmap{
 	 * @param context - gamePointer.panel;
 	 */
 	public TileType(Texture texture, boolean[][][] blocked){
-		super(texture, Level.TILE_SIZE, Level.TILE_SIZE, false);
+		super(texture, Level.TILE_SIZE, Level.TILE_SIZE);
 		
 		this.mBlocked = blocked;	
 		

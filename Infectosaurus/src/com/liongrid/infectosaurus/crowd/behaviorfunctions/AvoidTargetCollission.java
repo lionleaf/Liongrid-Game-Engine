@@ -1,12 +1,6 @@
 package com.liongrid.infectosaurus.crowd.behaviorfunctions;
 
-import com.liongrid.gameengine.BaseObject;
-import com.liongrid.gameengine.tools.FixedSizeArray;
 import com.liongrid.gameengine.tools.Vector2;
-import com.liongrid.infectosaurus.GameActivity;
-import com.liongrid.infectosaurus.InfectoGameObject;
-import com.liongrid.infectosaurus.InfectoGameObjectHandler;
-import com.liongrid.infectosaurus.Team;
 import com.liongrid.infectosaurus.crowd.State;
 import com.liongrid.infectosaurus.crowd.StateList;
 

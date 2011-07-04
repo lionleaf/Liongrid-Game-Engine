@@ -1,12 +1,6 @@
 package com.liongrid.infectosaurus.map;
 
-import com.liongrid.gameengine.BaseObject;
-import com.liongrid.gameengine.DrawableBitmap;
 import com.liongrid.gameengine.tools.MovementType;
-
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.util.Log;
 
 
 

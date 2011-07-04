@@ -6,7 +6,6 @@ import com.liongrid.infectosaurus.Main;
 
 import android.os.SystemClock;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 
 /**

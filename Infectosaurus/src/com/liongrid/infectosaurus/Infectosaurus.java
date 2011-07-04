@@ -1,35 +1,23 @@
 package com.liongrid.infectosaurus;
 
 import com.liongrid.gameengine.BaseObject;
-import com.liongrid.gameengine.Camera;
 import com.liongrid.gameengine.Collision;
 import com.liongrid.gameengine.DrawableBitmap;
-import com.liongrid.gameengine.GameObject;
 import com.liongrid.gameengine.Panel;
 import com.liongrid.gameengine.Texture;
 import com.liongrid.gameengine.TextureLibrary;
-import com.liongrid.gameengine.Upgrade;
-import com.liongrid.gameengine.tools.FixedSizeArray;
 import com.liongrid.infectosaurus.R;
 import com.liongrid.infectosaurus.components.AggressivMoveComponent;
-import com.liongrid.infectosaurus.components.HUDComponent;
 import com.liongrid.infectosaurus.components.HpBarComponent;
 import com.liongrid.infectosaurus.components.LAnimation;
 import com.liongrid.infectosaurus.components.InfMeleeAttackComponent;
 import com.liongrid.infectosaurus.components.MoveComponent;
-import com.liongrid.infectosaurus.components.RandomWalkerComponent;
 import com.liongrid.infectosaurus.components.SpriteComponent;
 import com.liongrid.infectosaurus.components.SpriteComponent.SpriteState;
-import com.liongrid.infectosaurus.components.TiltMovementComponent;
 import com.liongrid.infectosaurus.effects.DOTEffect;
-import com.liongrid.infectosaurus.effects.DelayedDamageEffect;
 import com.liongrid.infectosaurus.upgrades.InfectosaurusUpgrade;
 
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.hardware.Camera.Size;
 import android.util.Log;
 
 /**
@@ -51,9 +39,6 @@ public class Infectosaurus extends InfectoGameObject {
 		TextureLibrary texLib = gamePointers.textureLib;
 		Texture tex = texLib.allocateTexture(R.drawable.spheremonster01);
 		SpriteComponent sprite = loadAnimations(tex);
-		addComponent(new HUDComponent(new DrawableBitmap(tex, mSize, mSize, true), 
-				Camera.screenWidth-mSize, 
-				Camera.screenHeight - mSize));
 		addComponent(new InfMeleeAttackComponent());
 		addComponent(new AggressivMoveComponent());
 		addComponent(sprite);
@@ -81,13 +66,13 @@ public class Infectosaurus extends InfectoGameObject {
 		DrawableBitmap[] attackBmps = new DrawableBitmap[1];
 		
 		
-		dbs[0] = new DrawableBitmap(tex, mSize,   mSize, false);
-		dbs[1] = new DrawableBitmap(tex, mSize+3, mSize+3, false);
-		dbs[2] = new DrawableBitmap(tex, mSize+6, mSize+6, false);
-		dbs[3] = new DrawableBitmap(tex, mSize+3, mSize+3, false);
+		dbs[0] = new DrawableBitmap(tex, mSize,   mSize);
+		dbs[1] = new DrawableBitmap(tex, mSize+3, mSize+3);
+		dbs[2] = new DrawableBitmap(tex, mSize+6, mSize+6);
+		dbs[3] = new DrawableBitmap(tex, mSize+3, mSize+3);
 		
 		
-		attackBmps[0] = new DrawableBitmap(tex, 16*3+25, 16*3+25,false);
+		attackBmps[0] = new DrawableBitmap(tex, 16*3+25, 16*3+25);
 		
 		LAnimation moveAnimation = new LAnimation(dbs, 0.1f);
 		LAnimation attackAnimation = new LAnimation(attackBmps, 0.1f, false);

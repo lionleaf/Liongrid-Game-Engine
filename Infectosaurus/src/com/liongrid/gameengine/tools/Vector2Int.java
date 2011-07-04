@@ -19,7 +19,8 @@ public class Vector2Int {
 	        set(other);
 	    }
 	    
-	    public String toString(){
+	    @Override
+		public String toString(){
 	    	return "("+x+","+y+")";
 	    }
 	    

@@ -1,9 +1,5 @@
 package com.liongrid.gameengine;
 
-import com.liongrid.infectosaurus.Main;
-
-import android.util.Log;
-
 
 /**
  * An abstract class from which everything that is updateable 

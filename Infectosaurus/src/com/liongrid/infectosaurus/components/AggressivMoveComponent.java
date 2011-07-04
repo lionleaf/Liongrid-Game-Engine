@@ -1,14 +1,9 @@
 package com.liongrid.infectosaurus.components;
 
-import android.util.Log;
-
-import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Component;
-import com.liongrid.gameengine.GameObject;
 import com.liongrid.infectosaurus.GameActivity;
 import com.liongrid.infectosaurus.InfectoGameObject;
 import com.liongrid.infectosaurus.InfectoGameObjectHandler;
-import com.liongrid.infectosaurus.Main;
 import com.liongrid.infectosaurus.Team;
 
 public class AggressivMoveComponent extends Component<InfectoGameObject>{

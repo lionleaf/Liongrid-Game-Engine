@@ -2,7 +2,6 @@ package com.liongrid.gameengine;
 
 import java.io.Serializable;
 
-import com.liongrid.infectosaurus.InfectoGameObjectHandler;
 import com.liongrid.infectosaurus.Infectosaurus;
 import com.liongrid.infectosaurus.map.Level;
 import com.liongrid.infectosaurus.map.TileSet;

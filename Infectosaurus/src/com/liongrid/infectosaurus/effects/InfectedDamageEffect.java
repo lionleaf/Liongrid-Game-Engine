@@ -2,11 +2,7 @@ package com.liongrid.infectosaurus.effects;
 
 import java.util.Random;
 
-import android.util.Log;
-
-import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Effect;
-import com.liongrid.gameengine.GameObject;
 import com.liongrid.infectosaurus.GameActivity;
 import com.liongrid.infectosaurus.InfectoGameObject;
 import com.liongrid.infectosaurus.Infectosaurus;

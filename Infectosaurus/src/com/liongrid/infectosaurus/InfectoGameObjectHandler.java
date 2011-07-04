@@ -1,10 +1,7 @@
 package com.liongrid.infectosaurus;
 
-import android.util.Log;
-
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.CollisionHandler;
-import com.liongrid.gameengine.IllegalObjectException;
 import com.liongrid.gameengine.ObjectHandler;
 import com.liongrid.gameengine.tools.FixedSizeArray;
 import com.liongrid.gameengine.tools.Vector2;

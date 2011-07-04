@@ -2,9 +2,7 @@ package com.liongrid.infectosaurus.components;
 
 import android.util.Log;
 
-import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Component;
-import com.liongrid.gameengine.GameObject;
 import com.liongrid.gameengine.tools.FixedSizeArray;
 import com.liongrid.infectosaurus.GameActivity;
 import com.liongrid.infectosaurus.InfectoGameObjectHandler;

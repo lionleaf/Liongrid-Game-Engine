@@ -9,7 +9,6 @@ import javax.microedition.khronos.opengles.GL11Ext;
  *
  */
 public class DrawableBitmap extends BaseObject implements DrawableObject {
-	public boolean mCameraRelative;
 	private Texture mTexture;
 	private int mWidth;
 	private int mHeight;
@@ -21,11 +20,9 @@ public class DrawableBitmap extends BaseObject implements DrawableObject {
 	 * @param width - width of the object to be drawn in in-game coordinates
 	 * @param height - height of the object to be drawn in in-game coordinates
 	 */
-	public DrawableBitmap(Texture texture, int width, int height, 
-			boolean cameraRelative) {
+	public DrawableBitmap(Texture texture, int width, int height) {
 		
 		super();
-		mCameraRelative = cameraRelative;
 		mTexture = texture;
 		mWidth = width;
 		mHeight = height;
@@ -34,6 +31,7 @@ public class DrawableBitmap extends BaseObject implements DrawableObject {
 		setCrop(0, height, width, height);
 	}
 
+	@Override
 	public void reset() {
 		mTexture = null;
 		mOpacity = 1.0f;
@@ -108,8 +106,8 @@ public class DrawableBitmap extends BaseObject implements DrawableObject {
 			((GL11Ext) gl).glDrawTexfOES(Math.round(x*scaleX), 
 					Math.round(y*scaleY), 
 					0, 
-					(float) mWidth *scaleX, 
-					(float) mHeight*scaleY); 
+					mWidth *scaleX, 
+					mHeight*scaleY); 
 		}
 	}
 
@@ -178,9 +176,5 @@ public class DrawableBitmap extends BaseObject implements DrawableObject {
 	@Override
 	public void update(float dt, BaseObject parent) {
 		// This is just here so to make it a base object
-	}
-
-	public boolean isCameraRelative() {
-		return mCameraRelative;
 	}
 }

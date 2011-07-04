@@ -2,18 +2,13 @@ package com.liongrid.gameengine;
 
 import java.io.Serializable;
 
-import com.liongrid.infectosaurus.InfectoGameObjectHandler;
 import com.liongrid.infectosaurus.Main;
-import com.liongrid.infectosaurus.R;
-import com.liongrid.infectosaurus.R.drawable;
 import com.liongrid.infectosaurus.map.Level;
 import com.liongrid.infectosaurus.map.TileSet;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.util.Log;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 
 public class Panel extends GLSurfaceView implements SurfaceHolder.Callback, 

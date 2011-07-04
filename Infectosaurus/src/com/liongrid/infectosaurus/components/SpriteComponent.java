@@ -1,15 +1,9 @@
 package com.liongrid.infectosaurus.components;
 
-import android.util.Log;
-
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Component;
 import com.liongrid.gameengine.DrawableObject;
-import com.liongrid.gameengine.GameObject;
-import com.liongrid.gameengine.tools.Vector2;
 import com.liongrid.infectosaurus.InfectoGameObject;
-import com.liongrid.infectosaurus.components.SpriteComponent.SpriteState;
-import com.liongrid.infectosaurus.map.Level;
 
 public class SpriteComponent extends Component<InfectoGameObject> {
 	public static enum SpriteState{
@@ -78,7 +72,7 @@ public class SpriteComponent extends Component<InfectoGameObject> {
 		y -= 0.5 * toDraw.getHeight();
 		
 		lastDrawing = toDraw;
-		BaseObject.gamePointers.renderSystem.scheduleForDraw(toDraw, x, y);
+		BaseObject.gamePointers.renderSystem.scheduleForDraw(toDraw, x, y, false);
 	}
 	
 }

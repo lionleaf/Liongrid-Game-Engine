@@ -1,14 +1,7 @@
 package com.liongrid.gameengine;
 
-import java.io.InvalidObjectException;
-
-import android.R.raw;
-import android.util.Log;
-
 import com.liongrid.gameengine.tools.FixedSizeArray;
 import com.liongrid.gameengine.tools.Vector2;
-import com.liongrid.infectosaurus.InfectoGameObject;
-import com.liongrid.infectosaurus.Main;
 
 /**
  * @author Lastis

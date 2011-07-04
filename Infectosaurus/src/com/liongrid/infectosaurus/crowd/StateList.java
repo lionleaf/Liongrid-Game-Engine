@@ -1,7 +1,5 @@
 package com.liongrid.infectosaurus.crowd;
 
-import com.liongrid.gameengine.tools.ObjectPool;
-
 public class StateList {
 	public static final int LIST_SIZE = 10;
 	private State[] list;

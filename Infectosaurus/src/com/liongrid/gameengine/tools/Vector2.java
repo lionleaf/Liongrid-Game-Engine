@@ -40,7 +40,8 @@ public final class Vector2 {
         set(other);
     }
     
-    public String toString(){
+    @Override
+	public String toString(){
     	return "("+x+","+y+")";
     }
     

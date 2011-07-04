@@ -8,10 +8,7 @@ import com.liongrid.infectosaurus.Main;
 import com.liongrid.infectosaurus.map.Level;
 import com.liongrid.infectosaurus.map.TileType;
 
-import android.opengl.GLU;
 import android.util.Log;
-import android.view.Display;
-import android.view.WindowManager;
 
 
 public class RenderingThread implements Panel.Renderer {
@@ -100,7 +97,7 @@ public class RenderingThread implements Panel.Renderer {
 								"Last count was " + count + " Now it is "+ objects.getCount());
 						continue;
 					}
-					if(!elem.drawable.isCameraRelative()){
+					if(!elem.cr){ // not camera relative (not a HUD image)
 						elem.drawable.draw(gl, 
 								elem.x - cameraX, 
 								elem.y - cameraY, 

@@ -2,20 +2,13 @@ package com.liongrid.infectosaurus;
 
 import java.util.Random;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-
-import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.DrawableBitmap;
-import com.liongrid.gameengine.GameObject;
 import com.liongrid.gameengine.Texture;
 import com.liongrid.gameengine.TextureLibrary;
 import com.liongrid.infectosaurus.R;
 import com.liongrid.infectosaurus.components.BehaviorComponent;
 import com.liongrid.infectosaurus.components.HpBarComponent;
 import com.liongrid.infectosaurus.components.LAnimation;
-import com.liongrid.infectosaurus.components.MoveComponent;
-import com.liongrid.infectosaurus.components.RandomWalkerComponent;
 import com.liongrid.infectosaurus.components.SpriteComponent;
 import com.liongrid.infectosaurus.components.SpriteComponent.SpriteState;
 
@@ -33,10 +26,10 @@ public class Human extends InfectoGameObject{
 		
 		int size = 32*(rand.nextInt(4)+1);
 		radius = (float) (size/2.0);
-		dbs[0] = new DrawableBitmap(f1, size, size, false);
-		dbs[1] = new DrawableBitmap(f2, size, size, false);
+		dbs[0] = new DrawableBitmap(f1, size, size);
+		dbs[1] = new DrawableBitmap(f2, size, size);
 		
-		LAnimation moveAnimation =new LAnimation(dbs, 0.2f);
+		LAnimation moveAnimation = new LAnimation(dbs, 0.2f);
 
 		
 		SpriteComponent sprite = new SpriteComponent();

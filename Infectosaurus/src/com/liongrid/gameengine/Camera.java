@@ -56,7 +56,7 @@ public class Camera {
 	public static void setUnitsPerWidth(int units){
 		Camera.UNITS_PER_WIDTH = units;
 		Camera.scale = 
-			Camera.screenWidth/((float)Camera.UNITS_PER_WIDTH*Camera.unit);
+			Camera.screenWidth/(Camera.UNITS_PER_WIDTH*Camera.unit);
 	}
 	
 	/**
@@ -67,6 +67,6 @@ public class Camera {
 	public static void setUnitsPerHeight(int units){
 		Camera.UNITS_PER_HEIGHT = units;
 		Camera.scale = 
-			Camera.screenHeight/((float)Camera.UNITS_PER_HEIGHT*Camera.unit);
+			Camera.screenHeight/(Camera.UNITS_PER_HEIGHT*Camera.unit);
 	}
 }
