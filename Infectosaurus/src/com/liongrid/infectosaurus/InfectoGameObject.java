@@ -72,4 +72,8 @@ public class InfectoGameObject extends GameObject<InfectoGameObject>
 	public int getShape() {
 		return Shape.CIRCLE;
 	}
+	
+	public float distance2(InfectoGameObject o){
+		return Collision.distance2(this, o);
+	}
 }

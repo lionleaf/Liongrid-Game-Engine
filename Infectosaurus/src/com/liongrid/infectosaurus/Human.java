@@ -24,7 +24,7 @@ public class Human extends InfectoGameObject{
 		Texture f1 = texLib.allocateTexture(R.drawable.manwalk_s_1);
 		Texture f2 = texLib.allocateTexture(R.drawable.manwalk_s_2);
 		
-		int size = 32*(rand.nextInt(4)+1);
+		int size = 64;
 		radius = (float) (size/2.0);
 		dbs[0] = new DrawableBitmap(f1, size, size);
 		dbs[1] = new DrawableBitmap(f2, size, size);
