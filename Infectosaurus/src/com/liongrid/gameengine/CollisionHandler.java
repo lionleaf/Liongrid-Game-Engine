@@ -1,7 +1,10 @@
 package com.liongrid.gameengine;
 
+import android.util.Log;
+
 import com.liongrid.gameengine.tools.FixedSizeArray;
 import com.liongrid.gameengine.tools.Vector2;
+import com.liongrid.infectosaurus.Main;
 
 /**
  * @author Lastis
@@ -17,16 +20,16 @@ public class CollisionHandler<T extends Shape.Collideable<T>> extends BaseObject
 	 * This is used to faster access the elements in types
 	 */
 	private Object[][] rawArray;
-	private int arrayCnt;
+	private int arrayCunt;
 	/**
 	 * This is used to fast get the length of the sublists of types.
 	 */
-	private static int[] arrayLengths;
+	private static int[] typeLengths;
 	
 	
 	public CollisionHandler(int typeCnt, int capacity) {
-		arrayCnt = 0;
-		arrayLengths = new int[typeCnt];
+		arrayCunt = 0;
+		typeLengths = new int[typeCnt];
 		rawArray = new Object[typeCnt][];
 		
 		pendingAdditions = new FixedSizeArray<T>(capacity);
@@ -49,9 +52,7 @@ public class CollisionHandler<T extends Shape.Collideable<T>> extends BaseObject
 	}
 
 	public void commitUpdates() {
-		int i;
-		int j;
-		int length;
+		int i; int j; int length;
 		int type;
 		T shape;
 		
@@ -84,19 +85,17 @@ public class CollisionHandler<T extends Shape.Collideable<T>> extends BaseObject
 		commitUpdates();
 		int typeLessCnt = typeLess.getCount();
 		
-		arrayCnt = 0;
 		int i; int j;
-		for(i = 0; i < arrayLengths.length; i++){
+		for(i = 0; i < typeLengths.length; i++){
 			FixedSizeArray<T> shapes = types.get(i);
-			arrayLengths[i] = shapes.getCount();
-			arrayCnt += arrayLengths[i];
+			typeLengths[i] = shapes.getCount();
 			rawArray[i]	= shapes.getArray();
 		}
 		
 		clearArrays();
 		
-		for(i = 0; i < arrayLengths.length; i++){
-			for(j = 0; j < arrayLengths[i]; j++){
+		for(i = 0; i < typeLengths.length; i++){
+			for(j = 0; j < typeLengths[i]; j++){
 				if(typeLessCnt != 0){
 					Object[] typeLessArray = typeLess.getArray();
 					for(int k = 0; k < typeLessCnt; k++){
@@ -114,8 +113,8 @@ public class CollisionHandler<T extends Shape.Collideable<T>> extends BaseObject
 		T shape2;
 		int i; int j;
 		
-		for(i = typeI; i < arrayLengths.length; i++){
-			for(j = shapeI + 1; j < arrayLengths[i]; j++){
+		for(i = typeI; i < typeLengths.length; i++){
+			for(j = i == typeI ? shapeI + 1 : 0; j < typeLengths[i]; j++){
 				shape2 = (T) rawArray[i][j];
 				shape1.collide(shape2);
 				shape2.collide(shape1);
@@ -124,8 +123,8 @@ public class CollisionHandler<T extends Shape.Collideable<T>> extends BaseObject
 	}
 
 	private void clearArrays() {
-		for(int i = 0; i < arrayLengths.length ; i++){
-			for(int j = 0; j < arrayLengths[i]; j++){
+		for(int i = 0; i < typeLengths.length ; i++){
+			for(int j = 0; j < typeLengths[i]; j++){
 				((T) rawArray[i][j]).clear();
 			}
 		}
@@ -134,7 +133,7 @@ public class CollisionHandler<T extends Shape.Collideable<T>> extends BaseObject
 	public T getClosest(Vector2 pos, int type) {
 		T returnO = null;
 		int shape; float closestDistance = Float.MAX_VALUE;
-		for(shape = 0; shape < arrayLengths[type]; shape++){
+		for(shape = 0; shape < typeLengths[type]; shape++){
 			float distance = pos.distance2(((T) rawArray[type][shape]).getPos());
 			if(distance < closestDistance) {
 				closestDistance = distance;
@@ -150,12 +149,11 @@ public class CollisionHandler<T extends Shape.Collideable<T>> extends BaseObject
 	 * @return The closest object
 	 */
 	public T getClosest(Vector2 pos, int[] types){
-		if(arrayCnt == 0) return null;
 		T returnO = null;
 		float closestDistance = Float.MAX_VALUE; int type; int shape;
 		for(int i = 0; i < types.length; i ++){
 			type = types[i];
-			for(shape = 0; shape < arrayLengths[type]; shape++){
+			for(shape = 0; shape < typeLengths[type]; shape++){
 				float distance = pos.distance2(((T) rawArray[type][shape]).getPos());
 				if(distance < closestDistance) {
 					closestDistance = distance;
@@ -174,11 +172,11 @@ public class CollisionHandler<T extends Shape.Collideable<T>> extends BaseObject
 	 * @return array
 	 */
 	public T[] getClose(Vector2 pos, float withIn, int[] types, T[] array){
-		if(arrayCnt == 0) return null;
+		if(arrayCunt == 0) return null;
 		int type; int shape; int count = 0; float dis2;
 		for(int i = 0; i < types.length; i ++){
 			type = types[i];
-			for(shape = 0; shape < arrayLengths[type]; shape++){
+			for(shape = 0; shape < typeLengths[type]; shape++){
 				if(count < array.length) return array;
 				dis2 = pos.distance2(((T) rawArray[shape][type]).getPos());
 				if(dis2 < withIn * withIn){
@@ -198,6 +196,6 @@ public class CollisionHandler<T extends Shape.Collideable<T>> extends BaseObject
 
 
 	public int getCount() {
-		return arrayCnt;
+		return 0;
 	}
 }

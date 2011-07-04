@@ -71,6 +71,8 @@ public class GameActivity extends Activity implements GameActivityInterface{
 		infectoPointers.HUDObjectHandler = new HUDObjectHandler();
 		panel.addToRoot(infectoPointers.gameObjectHandler);
 		panel.addToRoot(infectoPointers.HUDObjectHandler);
+		
+		
 	}
 
 
