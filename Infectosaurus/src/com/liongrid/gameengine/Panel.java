@@ -41,8 +41,6 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback,
 	    gamePointers.gameThread = new GameThread();
 	    BaseObject.gamePointers.renderThread = new RenderingThread();
 	    
-	    
-	    
 	}
 	
 	public void addToRoot(BaseObject object){

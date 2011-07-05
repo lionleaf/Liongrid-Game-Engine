@@ -6,6 +6,7 @@ import com.liongrid.gameengine.CollisionHandler;
 public class GameStatus extends BaseObject{
 
 	public boolean gameStarted = false;
+	public int coinsGained = 0;
 	private CollisionHandler<InfectoGameObject> collisionHandler;
 	private GameActivity gameActivity;
 
@@ -25,20 +26,28 @@ public class GameStatus extends BaseObject{
 
 	private void checkAliensLeft() {
 		if(collisionHandler.getCount(Team.Alien.ordinal()) <= 0 && gameStarted){
-			gameActivity.finish();
+			finishGame();
 		}
 	}
 
 	private void checkHumansLeft() {
-		if(collisionHandler.getCount(Team.Human.ordinal()) <= 0 && gameStarted){
-			gameActivity.finish();
+		if(collisionHandler.getCount(Team.Human.ordinal()) <= 0){
+			finishGame();
 		}
+	}
+	
+	private void finishGame() {
+		gameActivity.finish();
 	}
 
 	@Override
 	public void reset() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void gainCoins(int coins){
+		coinsGained += coins;
 	}
 
 }
