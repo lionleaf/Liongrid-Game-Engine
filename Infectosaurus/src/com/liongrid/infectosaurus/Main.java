@@ -27,13 +27,17 @@ public class Main extends Activity {
         final TextView diffText = (TextView) findViewById(R.id.difficultyLabel);
         
         diffBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
-			
+        	
 			public void onStopTrackingTouch(SeekBar seekBar) {}
 			
 			public void onStartTrackingTouch(SeekBar seekBar) {}
 			
 			public void onProgressChanged(SeekBar seekBar, int progress,
 					boolean fromUser) {
+				if(progress == 0){
+					seekBar.setProgress(1);
+					return;
+				}
 				diffText.setText(progress+"");
 				
 			}
