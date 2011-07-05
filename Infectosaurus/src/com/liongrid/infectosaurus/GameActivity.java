@@ -57,7 +57,7 @@ public class GameActivity extends Activity implements GameActivityInterface{
 			BaseObject.gamePointers.panel = panel;
 		}
 		
-		
+
 		
 		panel.startGame();
 		panel.setRender();
@@ -65,9 +65,14 @@ public class GameActivity extends Activity implements GameActivityInterface{
 		
 		setContentView(panel);
 		
+		Bundle extras = getIntent().getExtras();
+		int difficulty = extras.getInt("com.liongrid.infectosaurus.difficulty");
+		infectoPointers.difficulty = difficulty;
+		
+		//TODO try catch and alert!!!!! on getint
 		CONTEXT = this;
 		BaseObject.gamePointers.level.spawnNPCs(
-	    		GameActivity.infectoPointers.NUMBER_OF_HUMANS);
+	    		GameActivity.infectoPointers.NUMBER_OF_HUMANS,  difficulty);
 		
 		
 	}

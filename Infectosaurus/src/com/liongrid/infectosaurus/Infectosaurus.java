@@ -48,10 +48,10 @@ public class Infectosaurus extends InfectoGameObject {
 		
 		team = Team.Alien;
 		
-		
+		int diff = GameActivity.infectoPointers.difficulty;
 		//Temp stuff to die in x sec
 		DOTEffect e = new DOTEffect();
-		e.set(Float.MAX_VALUE, 1, 1f);
+		e.set(Float.MAX_VALUE, diff, 1f);
 		afflict(e);
 		
 		mMaxHp = 15;

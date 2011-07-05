@@ -20,7 +20,7 @@ public abstract class BehaviorFunction extends BaseObject{
 	static final float INDIFFERENT = 0;
 	static final float LOW = -1.4f;
 	static final float VERY_LOW = -5;
-	static final float EXTREMLY_LOW = -10;
+	static final float EXTREMELY_LOW = -10;
 	
 	/**
 	 * @param s - An array of States. Will be casted! BE CAREFUL!

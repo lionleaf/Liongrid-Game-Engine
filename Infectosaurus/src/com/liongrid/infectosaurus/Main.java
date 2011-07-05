@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.TextView;
 
 public class Main extends Activity {
 	public static final String TAG = "Infectosaurus";
@@ -20,11 +23,28 @@ public class Main extends Activity {
         setContentView(R.layout.main);
         
         View startButton = findViewById(R.id.startGameButton);
+        final SeekBar diffBar = (SeekBar) findViewById(R.id.difficultyBar);
+        final TextView diffText = (TextView) findViewById(R.id.difficultyLabel);
+        
+        diffBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+			
+			public void onStopTrackingTouch(SeekBar seekBar) {}
+			
+			public void onStartTrackingTouch(SeekBar seekBar) {}
+			
+			public void onProgressChanged(SeekBar seekBar, int progress,
+					boolean fromUser) {
+				diffText.setText(progress+"");
+				
+			}
+		});
+        
         startButton.setOnClickListener(new OnClickListener(){
 
 			public void onClick(View v) {
 				Intent i;
 		        i = new Intent(v.getContext(), GameActivity.class);
+		        i.putExtra("com.liongrid.infectosaurus.difficulty", diffBar.getProgress());
 		        startActivity(i);
 			}
         	

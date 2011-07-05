@@ -188,12 +188,13 @@ public class Level extends BaseObject{
 	}
 	
 	
-	public void spawnNPCs(int nr){
+	public void spawnNPCs(int nr, int difficulty){
 		InfectoGameObjectHandler handler = GameActivity.infectoPointers.gameObjectHandler;
 		for (int i = 0; i < nr; i++){
 			Human newHuman = new Human();
 			handler.add(newHuman);
-			
+			newHuman.mMaxHp = 2 * difficulty;
+			newHuman.mHp = 2 * difficulty;
 			
 
 		}
