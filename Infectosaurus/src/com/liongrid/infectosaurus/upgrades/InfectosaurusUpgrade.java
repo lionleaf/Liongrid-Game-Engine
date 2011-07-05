@@ -7,7 +7,9 @@ public enum InfectosaurusUpgrade {
 	HealthUpgrade(new HealthUpgrade()),
 	SpeedUpgrade(new SpeedUpgrade()),
 	MeleeDamageUpgrade(new MeleeDamageUpgrade()),
-	InfectUpgrade(new InfectUpgrade());
+	InfectUpgrade(new InfectUpgrade()),
+	ReachUpgrade(new ReachUpgrade());
+	
 	
 	Upgrade<Infectosaurus> upgrade;
 	
