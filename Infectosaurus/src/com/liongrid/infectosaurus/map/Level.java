@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Random;
 import android.content.res.AssetManager;
-import android.util.Log;
 
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Panel;

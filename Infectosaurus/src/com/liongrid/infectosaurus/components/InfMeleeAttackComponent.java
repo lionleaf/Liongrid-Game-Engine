@@ -94,6 +94,5 @@ public class InfMeleeAttackComponent extends Component<InfectoGameObject> {
 	 */
 	public void setInfectChance(float infectChance) {
 		this.mInfectChance = infectChance;
-		
 	}
 }
