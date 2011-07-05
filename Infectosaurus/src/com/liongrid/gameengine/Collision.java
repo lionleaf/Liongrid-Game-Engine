@@ -34,6 +34,8 @@ public class Collision {
 	private static float distance2(Shape.Circle circle1, Shape.Circle circle2){
 		Vector2 pos1 = circle1.getPos();
 		Vector2 pos2 = circle2.getPos();
-		return pos1.distance2(pos2) - circle1.getRadius() - circle2.getRadius();
+		float r1 = circle1.getRadius();
+		float r2 = circle2.getRadius();
+		return pos1.distance2(pos2) - (r1+r2)*(r1+r2);
 	}
 }

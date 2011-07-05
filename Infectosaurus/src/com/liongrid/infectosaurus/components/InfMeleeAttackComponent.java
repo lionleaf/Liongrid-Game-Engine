@@ -18,7 +18,7 @@ public class InfMeleeAttackComponent extends Component<InfectoGameObject> {
 	InfectoGameObjectHandler gameObjHandler;
 	static final int CLOSE_CAPACITY = 20;
 	FixedSizeArray<InfectoGameObject> close;
-	int mReach = 80^2; //Square of the actual mReach 100 means 10 px
+	private int mReach = 10 * 10; //Square of the actual mReach 100 means 10 px
 	private int mDamage = 1;
 	private float mDelay = 0.5f; //sec
 	private float mDelayCountDown = 0;
@@ -36,6 +36,14 @@ public class InfMeleeAttackComponent extends Component<InfectoGameObject> {
 		gameObjHandler = GameActivity.infectoPointers.gameObjectHandler;
 	}
 	
+	public void setReach(int reach){
+		mReach = reach * reach;
+	}
+	
+	public int getReach(){
+		return (int) Math.sqrt(mReach);
+	}
+	
 	public void addToDamage(int value){
 		mDamage += value;
 	}
@@ -51,7 +59,9 @@ public class InfMeleeAttackComponent extends Component<InfectoGameObject> {
 
 		
 		if(target == null || 
-				target.pos.distance2(parent.pos) > mReach){
+				target.distance2(parent) > mReach){
+			Log.d("Melee", "Distance2 = "+target.distance2(parent));
+			Log.d("Melee", "reach = "+mReach);
 			return;
 		}
 			
