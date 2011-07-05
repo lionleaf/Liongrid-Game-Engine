@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 import com.liongrid.infectosaurus.Main;
+import com.liongrid.infectosaurus.crowd.State;
 
 import android.util.Log;
 
@@ -158,6 +159,14 @@ public class FixedSizeArray<T> {
         mCount = 0;
         mSorted = false;
     }
+    
+    /**
+     * Sets the count to 0, but doesn't set elements to null. Use when you soon will overwrite.
+     */
+    public void clearWithoutReleasing(){
+    	mCount = 0;
+    	mSorted = false;
+    }
        
     /**
      * Returns an entry from the array at the specified index.
@@ -264,7 +273,7 @@ public class FixedSizeArray<T> {
         return mCount;
     }
     
-    /** Returns the maximum number of objects that can be inserted inot this array. */
+    /** Returns the maximum number of objects that can be inserted into this array. */
     public int getCapacity() {
         return mContents.length;
     }
@@ -291,4 +300,26 @@ public class FixedSizeArray<T> {
     public abstract class Sorter<Type> {
         public abstract void sort(Type[] array, int count, Comparator<Type> comparator);
     }
+
+	/**
+	 * Appends another FixedSizeArray to the end of this array
+	 * @param appendee - the array to add to the end
+	 * @return - false if this would be out of bounds, 
+	 * 	in that case nothing is done, true if it is added
+	 */
+	public boolean append(FixedSizeArray<T> appendee) {
+		int appendeeCount = appendee.getCount(); 
+		if(mCount + appendee.getCount() > getCapacity()){
+			Log.w("FixedSizeArray", "Index out of bounds during an append:" + mCount+
+					" + "+ appendee.getCount()+ " > " + getCapacity()+ " , returning false");
+			return false;
+		}
+		
+		Object[] rawArray = appendee.getArray();
+		for (int i = 0; i < appendeeCount; i++) {
+			add((T)rawArray[i]);
+		}
+		return true;
+		
+	}
 }

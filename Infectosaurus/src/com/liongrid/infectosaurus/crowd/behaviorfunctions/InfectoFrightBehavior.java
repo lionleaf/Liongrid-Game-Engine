@@ -1,8 +1,11 @@
 package com.liongrid.infectosaurus.crowd.behaviorfunctions;
 
+import android.util.Log;
+
 import com.liongrid.gameengine.tools.Vector2;
 import com.liongrid.infectosaurus.Infectosaurus;
-import com.liongrid.infectosaurus.crowd.State;
+import com.liongrid.infectosaurus.crowd.*;
+import com.liongrid.infectosaurus.crowd.actions.*;
 import com.liongrid.infectosaurus.crowd.StateList;
 
 public class InfectoFrightBehavior extends BehaviorFunction {
@@ -11,9 +14,10 @@ public class InfectoFrightBehavior extends BehaviorFunction {
 	float alpha = 10;
 	
 	@Override
-	protected float evaluate(State s, StateList lastStates) {
+	protected double evaluate(State s, StateList lastStates) {
 		inf = gamePointers.currentSaurus;
-		if(inf == null) return 0;
+		if(inf == null) return INDIFFERENT;
+		if(s.action instanceof Stand) return Double.NaN;
 		
 		vec.set(inf.pos);
 		vec.subtract(lastStates.get(1).pos);
@@ -36,11 +40,11 @@ public class InfectoFrightBehavior extends BehaviorFunction {
 		}
 		
 		if(newVelAngle < lastVelAngle){
-			return -5;
+			return VERY_LOW;
 		}else if(newVelAngle == lastVelAngle){
-			return 2;
+			return HIGH;
 		}else{//Better outcome!
-			return 5;
+			return VERY_HIGH;
 		}
 		
 		
@@ -54,7 +58,7 @@ public class InfectoFrightBehavior extends BehaviorFunction {
 	 * @see com.liongrid.infectosaurus.crowd.behaviorfunctions.BehaviorFunction#sigmoid(float)
 	 */
 	@Override
-	protected float sigmoid(float r) {
+	protected double sigmoid(double r) {
 		// TODO Auto-generated method stub
 		return sigmoid(r, alpha);
 	}

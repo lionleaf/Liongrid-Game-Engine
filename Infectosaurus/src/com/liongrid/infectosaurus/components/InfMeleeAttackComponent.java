@@ -60,8 +60,6 @@ public class InfMeleeAttackComponent extends Component<InfectoGameObject> {
 		
 		if(target == null || 
 				target.distance2(parent) > mReach){
-			Log.d("Melee", "Distance2 = "+target.distance2(parent));
-			Log.d("Melee", "reach = "+mReach);
 			return;
 		}
 			

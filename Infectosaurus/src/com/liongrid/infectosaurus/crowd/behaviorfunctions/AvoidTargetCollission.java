@@ -9,7 +9,7 @@ public class AvoidTargetCollission extends BehaviorFunction{
 	private Vector2 vec = new Vector2();
 
 	@Override
-	protected float evaluate(State s, StateList lastStates) {
+	protected double evaluate(State s, StateList lastStates) {
 //		InfectoGameObjectHandler goh = 
 //			GameActivity.infectoPointers.gameObjectHandler;
 //		

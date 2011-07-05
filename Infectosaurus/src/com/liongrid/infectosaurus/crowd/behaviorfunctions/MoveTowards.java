@@ -12,8 +12,8 @@ public class MoveTowards extends BehaviorFunction{
 	}
 
 	@Override
-	protected float evaluate(State s, StateList lastStates) {
-		return 1f;
+	protected double evaluate(State s, StateList lastStates) {
+		return 1;
 		//return s.turnAngle > 0 ? 3f : -3f;
 	}
 

@@ -1,5 +1,7 @@
 package com.liongrid.infectosaurus.crowd.behaviorfunctions;
 
+import android.util.Log;
+
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.tools.FixedSizeArray;
 import com.liongrid.infectosaurus.crowd.State;
@@ -25,23 +27,26 @@ public abstract class BehaviorFunction extends BaseObject{
 	 * @param prob
 	 */
 	public void update(FixedSizeArray<State> s, 
-					   float[] prob, 
+					   double[] prob, 
 					   StateList prevStates){
 		int i;
-		float x;
+		double x;
 		Object[] o = s.getArray();
 		int length = s.getCount();
 		for(i = 0; i < length; i++){
 			x = evaluate((State)o[i], prevStates);
+			if(x == Double.NaN){
+				prob[i] = 0;
+			}
 			prob[i] *= sigmoid(x); 
 		}
 	}
 
-	protected float sigmoid(float r,float alpha) {
-		return (float) (1/(1 + Math.exp(-r*alpha)));
+	protected double sigmoid(double r,double alpha) {
+		return (1/(1 + Math.exp(-r*alpha)));
 	}
 	
-	protected float sigmoid(float r){
+	protected double sigmoid(double r){
 		return sigmoid(r, 1);
 	}
 	/**
@@ -50,7 +55,7 @@ public abstract class BehaviorFunction extends BaseObject{
 	 * @param s the state to have its probability calculated
 	 * @return any real number. Probable values should be between about -5 and 5.
 	 */
-	protected abstract float evaluate(State s, StateList prevStates);
+	protected abstract double evaluate(State s, StateList prevStates);
 	
 	@Override
 	public void reset() {
