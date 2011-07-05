@@ -195,11 +195,7 @@ public class Level extends BaseObject{
 			Human newHuman = new Human();
 			handler.add(newHuman);
 			
-			int width = gamePointers.level.getWidth();
-			int height = gamePointers.level.getHeight();
 			
-			newHuman.pos.x = rand.nextInt(width);
-			newHuman.pos.y = rand.nextInt(height); 
 
 		}
 	}

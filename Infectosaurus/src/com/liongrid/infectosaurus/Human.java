@@ -35,6 +35,12 @@ public class Human extends InfectoGameObject{
 		SpriteComponent sprite = new SpriteComponent();
 		sprite.setAnimation(SpriteState.idle, moveAnimation);
 		
+		int width = gamePointers.level.getWidth();
+		int height = gamePointers.level.getHeight();
+		
+		pos.x = rand.nextInt(width);
+		pos.y = rand.nextInt(height); 
+		
 		addComponent(sprite); 
 		addComponent(new BehaviorComponent(this));
 		addComponent(new HpBarComponent());

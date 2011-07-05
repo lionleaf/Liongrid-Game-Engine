@@ -18,7 +18,8 @@ public class InfectoFrightBehavior extends BehaviorFunction {
 		inf = gamePointers.currentSaurus;
 		if(inf == null) return INDIFFERENT;
 		//if(s.action instanceof Stand) return Double.NaN;
-		
+		if(inf.pos.distance2(s.pos) > 150*150) return INDIFFERENT;
+		if(s.action instanceof Stand) return VERY_LOW;
 		vec.set(inf.pos);
 		vec.subtract(lastStates.get(1).pos);
 		float angToInf = vec.getAngle();
