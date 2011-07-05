@@ -70,4 +70,9 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback,
 		super.onResume();
 		BaseObject.gamePointers.gameThread.onResume();
 	}
+
+	public void finish() {
+		BaseObject.gamePointers.gameThread.stopRunning();
+		
+	}
 }

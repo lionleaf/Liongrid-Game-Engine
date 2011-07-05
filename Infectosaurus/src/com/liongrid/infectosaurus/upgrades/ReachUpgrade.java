@@ -31,7 +31,7 @@ public class ReachUpgrade extends Upgrade<Infectosaurus>{
 
 	@Override
 	public int getUpgradePrice() {
-		return 100*mRank;
+		return 100*(mRank+1);
 	}
 
 }

@@ -16,6 +16,7 @@ public class UpgradeActivity extends Activity {
 	private Button upgradeButton;
 	private TextView upgradeInfoText;
 	private TextView upgradeStateText;
+	private TextView coinText;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -28,7 +29,7 @@ public class UpgradeActivity extends Activity {
 		upgradeButton = (Button) findViewById(R.id.purchaseUpgradeButton);
 		upgradeInfoText = (TextView) findViewById(R.id.upgradeInfoText);
 		upgradeStateText = (TextView) findViewById(R.id.currentUpgradeStateText);
-
+		coinText = (TextView) findViewById(R.id.coinText);
 		talentTree.setOnSelectedChangeListener(new SelectedChangeListener());
 
 		upgradeButton.setOnClickListener(new ClickListener());
@@ -42,17 +43,21 @@ public class UpgradeActivity extends Activity {
 
 		Upgrade<?> upgrade = uTB.getUpgrade();
 
+		int coins = InfectoPointers.coins;
+		int price = upgrade.getUpgradePrice();
+		
 		//Set the description text
 		upgradeText.setText(upgrade.getDescriptionRes());
 
 		//Make sure player can`t get awesome upgrades 
 		//until they have enough others.
-		upgradeButton.setEnabled(uTB.isUpgradeable());
+		upgradeButton.setEnabled(uTB.isUpgradeable() && coins >= price );
 
-		upgradeInfoText.setText("Price: "+upgrade.getUpgradePrice());
+		upgradeInfoText.setText("Price: "+price);
 		
 		upgradeStateText.setText(upgrade.getCurrentStateDescription());
 		
+		coinText.setText("Coins: " + coins);
 	}
 	
 
@@ -73,8 +78,10 @@ public class UpgradeActivity extends Activity {
 			TalentIcon uTB = (TalentIcon) findViewById(checkedID);
 			if(uTB == null) return;
 			Upgrade<?> upgrade = uTB.getUpgrade();
-
+			
+			InfectoPointers.coins -= upgrade.getUpgradePrice();
 			upgrade.incrementRank();
+			
 			updateRightPanel();
 		}
 		

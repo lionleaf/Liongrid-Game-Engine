@@ -125,6 +125,12 @@ public class GameActivity extends Activity implements GameActivityInterface{
 	}
 
 	@Override
+	public void finish() {
+		panel.finish();
+		super.finish();
+	}
+	
+	@Override
 	protected void onPause(){
 		super.onPause();
 		Log.d("Infectosaurus", "onPause()");

@@ -23,7 +23,7 @@ public class MeleeDamageUpgrade extends Upgrade<Infectosaurus> {
 	@Override
 	public int getUpgradePrice() {
 		// TODO Auto-generated method stub
-		return 0;
+		return 100*(mRank+1);
 	}
 
 	@Override

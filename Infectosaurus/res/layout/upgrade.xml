@@ -88,6 +88,7 @@
         	android:layout_alignParentBottom="true"
         	android:layout_width="wrap_content" 
         	android:layout_height="wrap_content"></TextView>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="TextView" android:layout_above="@+id/upgradeInfoText" android:layout_alignLeft="@+id/upgradeInfoText" android:layout_alignRight="@+id/upgradeInfoText" android:id="@+id/coinText"></TextView>
         
         <Button 
         	android:id="@+id/purchaseUpgradeButton" 

@@ -127,6 +127,13 @@ public class GameThread extends Thread {
 		paused = true;
 	}
 	
+	/**
+	 * Stops the thread!
+	 */
+	public void stopRunning(){
+		running = false;
+	}
+	
 	public void onResume(){
 		paused = false;
 		synchronized(this){
