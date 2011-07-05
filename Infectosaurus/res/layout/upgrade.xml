@@ -33,6 +33,12 @@
 						infecto:upgrade="MeleeDamageUpgrade"
 						infecto:icon="@drawable/sand"
 						android:text="Damage"></com.liongrid.infectosaurus.TalentIcon>
+						
+					<com.liongrid.infectosaurus.TalentIcon 
+						android:id="@+id/talentIcon5" 
+						infecto:upgrade="ReachUpgrade"
+						infecto:icon="@drawable/sand"
+						android:text="Reach"></com.liongrid.infectosaurus.TalentIcon>
 					
 					
                 </com.liongrid.infectosaurus.TalentTier>
