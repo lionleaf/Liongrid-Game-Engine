@@ -42,11 +42,13 @@ public class BehaviorComponent extends Component<InfectoGameObject>{
 	private boolean PRINTPROB = false;
 	
 	
-	public BehaviorComponent() {
+	public BehaviorComponent(InfectoGameObject parent) {
 		prevStates = new StateList();
 		addDefaultBehaviours();	
 		curState = new State();
+		curState.pos.set(parent.pos);
 		curState.action = createDefaultActionTree();
+		mLastParent = parent;
 	}
 	
 	
@@ -56,8 +58,8 @@ public class BehaviorComponent extends Component<InfectoGameObject>{
 	private Action createDefaultActionTree(){
 		Action walk = new Walk();
 		Action stand = new Stand();
-		walk.linkAction(stand,0.05);
-		stand.linkAction(walk, 0.07);
+		walk.linkAction(stand,0.0015);
+		stand.linkAction(walk, 0.007);
 		return walk;
 	}
 	

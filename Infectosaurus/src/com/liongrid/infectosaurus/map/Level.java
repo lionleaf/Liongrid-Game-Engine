@@ -4,10 +4,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Random;
 import android.content.res.AssetManager;
+import android.util.Log;
+
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Panel;
 import com.liongrid.gameengine.tools.MovementType;
 import com.liongrid.gameengine.tools.Vector2Int;
+import com.liongrid.infectosaurus.GameActivity;
+import com.liongrid.infectosaurus.Human;
+import com.liongrid.infectosaurus.InfectoGameObjectHandler;
 import com.liongrid.infectosaurus.R;
 
 public class Level extends BaseObject{
@@ -182,7 +187,24 @@ public class Level extends BaseObject{
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	
+	public void spawnNPCs(int nr){
+		InfectoGameObjectHandler handler = GameActivity.infectoPointers.gameObjectHandler;
+		for (int i = 0; i < nr; i++){
+			Human newHuman = new Human();
+			handler.add(newHuman);
+			
+			int width = gamePointers.level.getWidth();
+			int height = gamePointers.level.getHeight();
+			
+			newHuman.pos.x = rand.nextInt(width);
+			newHuman.pos.y = rand.nextInt(height); 
+			
+			Log.d("Infectosaurus","Human pos: "+newHuman.pos);
+		}
+	}
+	
 	@Override
 	public void update(float dt, BaseObject parent) {
 		// TODO Auto-generated method stub

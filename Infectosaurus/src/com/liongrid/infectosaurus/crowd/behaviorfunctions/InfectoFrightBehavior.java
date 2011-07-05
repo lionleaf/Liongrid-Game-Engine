@@ -17,7 +17,7 @@ public class InfectoFrightBehavior extends BehaviorFunction {
 	protected double evaluate(State s, StateList lastStates) {
 		inf = gamePointers.currentSaurus;
 		if(inf == null) return INDIFFERENT;
-		if(s.action instanceof Stand) return Double.NaN;
+		//if(s.action instanceof Stand) return Double.NaN;
 		
 		vec.set(inf.pos);
 		vec.subtract(lastStates.get(1).pos);

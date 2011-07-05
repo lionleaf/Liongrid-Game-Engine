@@ -36,26 +36,13 @@ public class Human extends InfectoGameObject{
 		sprite.setAnimation(SpriteState.idle, moveAnimation);
 		
 		addComponent(sprite); 
-		addComponent(new BehaviorComponent());
+		addComponent(new BehaviorComponent(this));
 		addComponent(new HpBarComponent());
 		
 		speed = rand.nextInt(20)+20;
 		
-		int width = gamePointers.panel.getWidth();
-		int height = gamePointers.panel.getHeight();
-		if(width <= 0 || height <= 0) return;
 		
 		
-		pos.x = rand.nextInt(width);
-		pos.y = rand.nextInt(height); 
-		
-	}
-	
-	//TODO remove! This is only for testing
-	@Override
-	protected void die() {
-		super.die();
-	}
-	
+	}	
 	
 }

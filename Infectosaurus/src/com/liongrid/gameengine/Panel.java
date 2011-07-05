@@ -2,6 +2,7 @@ package com.liongrid.gameengine;
 
 import java.io.Serializable;
 
+import com.liongrid.infectosaurus.GameActivity;
 import com.liongrid.infectosaurus.Main;
 import com.liongrid.infectosaurus.map.Level;
 import com.liongrid.infectosaurus.map.TileSet;
@@ -40,6 +41,8 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback,
 	    gamePointers.gameThread = new GameThread();
 	    BaseObject.gamePointers.renderThread = new RenderingThread();
 	    
+	    
+	    
 	}
 	
 	public void addToRoot(BaseObject object){
@@ -47,7 +50,9 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback,
 	}
 	
 	public void startGame(){
+		
 		BaseObject.gamePointers.gameThread.start();
+		
 	}
 	
 	public void setRender(){

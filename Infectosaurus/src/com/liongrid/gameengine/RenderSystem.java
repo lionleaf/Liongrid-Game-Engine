@@ -40,10 +40,15 @@ public class RenderSystem {
     	scheduleForDraw(object, pos.x, pos.y, cameraRelative);
     }
     
- public void scheduleForDraw(DrawableObject object, float x, float y,
-		 boolean cameraRelative) {
+    public void scheduleForDraw(DrawableObject object, float x, float y,
+		 boolean cameraRelative){
+    	scheduleForDraw(object, x, y, cameraRelative, 1f, -1,-1);
+    }
+    
+    public void scheduleForDraw(DrawableObject object, float x, float y,
+		 boolean cameraRelative, float scale, int width, int height) {
     	
-    	if(!cameraRelative) if(cull(object, x, y)) return;
+    	if(!cameraRelative && cull(object, x, y)) return;
     	
     	RenderElement element = rElementPool.allocate();
         if(element == null) return;
@@ -51,10 +56,11 @@ public class RenderSystem {
         
         //Since this is done a lot, we want max speed, so we change
         //the public variables instead of calling set
+        element.scale = scale;
         element.drawable = object;
         element.x = x;
         element.y = y;
-        element.cr = cameraRelative;
+        element.cameraRelative = cameraRelative;
     	renderQueues[queueIndex].add(element);
     }
     

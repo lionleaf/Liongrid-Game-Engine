@@ -14,13 +14,16 @@ import com.liongrid.infectosaurus.R;
 import com.liongrid.infectosaurus.Team;
 
 public class HUDScore extends HUDObject{
-	
+
 	private DrawableBitmap drawing;
 	private int mHumansLeft;
-	private InfectoGameObjectHandler oh;
-	private RenderSystem rs;
-	private int sw;
-	private int sh;
+	private InfectoGameObjectHandler objectHandler;
+	private RenderSystem renderSystem;
+	private int screenWidth;
+	private int screenHeight;
+	private final int fontSize = 20;
+	private final int paddingTop = 30;
+
 	private DrawableBitmap d0;
 	private DrawableBitmap d1;
 	private DrawableBitmap d2;
@@ -35,8 +38,8 @@ public class HUDScore extends HUDObject{
 	public HUDScore() {
 		TextureLibrary texLib = gamePointers.textureLib;
 		Texture tex = texLib.allocateTexture(R.drawable.humans_killed);
-		allocateNumbers(64, 64);
-		drawing = new DrawableBitmap(tex, 256*2, 32*2);
+		allocateNumbers(fontSize, fontSize);
+		drawing = new DrawableBitmap(tex, 8*fontSize, fontSize);
 	}
 
 
@@ -52,7 +55,7 @@ public class HUDScore extends HUDObject{
 		Texture tex7 = texLib.allocateTexture(R.drawable.d7);
 		Texture tex8 = texLib.allocateTexture(R.drawable.d8);
 		Texture tex9 = texLib.allocateTexture(R.drawable.d9);
-		
+
 		d0 = new DrawableBitmap(tex0,width, height);
 		d1 = new DrawableBitmap(tex1,width, height);
 		d2 = new DrawableBitmap(tex2,width, height);
@@ -68,25 +71,58 @@ public class HUDScore extends HUDObject{
 
 	@Override
 	public void update(float dt, BaseObject parent) {
-		rs = BaseObject.gamePointers.renderSystem; 
-		oh = GameActivity.infectoPointers.gameObjectHandler;
-		sh = Camera.screenHeight;
-		sw = Camera.screenWidth;
-		
-		rs.scheduleForDraw(drawing, sw - 300, 
-									sh - 64, true);
-		drawScore(oh.NUMBER_OF_HUMANS - oh.mCH.getCount(Team.Human.ordinal()));
+		renderSystem = BaseObject.gamePointers.renderSystem; 
+		objectHandler = GameActivity.infectoPointers.gameObjectHandler;
+		screenHeight = Camera.screenHeight;
+		screenWidth = Camera.screenWidth;
+
+		renderSystem.scheduleForDraw(drawing, screenWidth - 200, 
+				screenHeight - paddingTop, true);
+		drawScore(GameActivity.infectoPointers.NUMBER_OF_HUMANS - objectHandler.mCH.getCount(Team.Human.ordinal()));
 	}
 
 	private void drawScore(int count) {
-		rs.scheduleForDraw(d0, sw - 172 + 64, sh - 64, true);
-		rs.scheduleForDraw(d0, sw - 172 + 64*2, sh - 64, true);
-		rs.scheduleForDraw(d0, sw - 172 + 64*3, sh - 64, true);
+
+		DrawableBitmap firstDigit = getDigit(count%10);
+		DrawableBitmap secondDigit = getDigit((count/10)%10);
+		DrawableBitmap thirdDigit = getDigit((count/100)%10);;
+
+		renderSystem.scheduleForDraw(thirdDigit, screenWidth - 200 + 8*fontSize , screenHeight - paddingTop, true);
+		renderSystem.scheduleForDraw(secondDigit, screenWidth - 200 + 8*fontSize + fontSize / 2, screenHeight - paddingTop, true);
+		renderSystem.scheduleForDraw(firstDigit, screenWidth - 200 + 8*fontSize + fontSize, screenHeight - paddingTop, true);
 	}
+
+	private DrawableBitmap getDigit(int i) {
+		switch(i){
+		case 0:
+			return d0;
+		case 1:
+			return d1;
+		case 2:
+			return d2;
+		case 3:
+			return d3;
+		case 4:
+			return d4;
+		case 5:
+			return d5;
+		case 6:
+			return d6;
+		case 7:
+			return d7;
+		case 8:
+			return d8;
+		case 9:
+			return d9;
+		default:
+			return null;
+		}
+	}
+
 
 	@Override
 	public void reset() {
-		
+
 	}
 
 }

@@ -9,7 +9,8 @@ public class RenderElement extends BaseObject{
 	//public Vector2 pos;
 	public float x;
 	public float y;
-	public boolean cr;
+	public boolean cameraRelative;
+	public float scale;
 	
 	static class HeightComparer implements Comparator<RenderElement>{
 
@@ -41,7 +42,7 @@ public class RenderElement extends BaseObject{
 		this.drawable = object;
 		x = pos.x;
 		y = pos.y;
-		cr = cameraRelative;
+		cameraRelative = cameraRelative;
 		
 	}
 	
@@ -49,7 +50,7 @@ public class RenderElement extends BaseObject{
 		this.drawable = drawable;
 		this.x = x;
 		this.y = y;
-		cr = cameraRelative;
+		cameraRelative = cameraRelative;
 	}
 
 	@Override

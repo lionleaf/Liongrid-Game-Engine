@@ -47,8 +47,8 @@ public class GameActivity extends Activity implements GameActivityInterface{
 		
 		setScreenDimensionsAndScale();
 
-		panel = new Panel(this);
 		
+		panel = new Panel(this);
 		if(savedInstanceState == null){
 			panel.init();
 			init();
@@ -57,6 +57,8 @@ public class GameActivity extends Activity implements GameActivityInterface{
 			BaseObject.gamePointers.panel = panel;
 		}
 		
+		
+		
 		panel.startGame();
 		panel.setRender();
 		preLoadTextures();
@@ -64,6 +66,10 @@ public class GameActivity extends Activity implements GameActivityInterface{
 		setContentView(panel);
 		
 		CONTEXT = this;
+		BaseObject.gamePointers.level.spawnNPCs(
+	    		GameActivity.infectoPointers.NUMBER_OF_HUMANS);
+		
+		
 	}
 
 	private void init() {

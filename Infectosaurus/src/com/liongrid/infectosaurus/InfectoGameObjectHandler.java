@@ -1,8 +1,11 @@
 package com.liongrid.infectosaurus;
 
+import java.util.Random;
+
 import android.util.Log;
 
 import com.liongrid.gameengine.BaseObject;
+import com.liongrid.gameengine.Camera;
 import com.liongrid.gameengine.CollisionHandler;
 import com.liongrid.gameengine.ObjectHandler;
 
@@ -14,22 +17,15 @@ import com.liongrid.gameengine.ObjectHandler;
 public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
 	private static final int DEFAULT_CAPACITY = 256;
 	
-	public static final int NUMBER_OF_HUMANS = 1;
-
+	
+	
 	public CollisionHandler<InfectoGameObject> mCH;
 	public InfectoGameObjectHandler(){
 		super(DEFAULT_CAPACITY);
-		Human human;
+		
 		mCH = new CollisionHandler<InfectoGameObject>(Team.values().length, DEFAULT_CAPACITY);
 		
 		
-		
-		for (int i = 0; i < NUMBER_OF_HUMANS; i++) {
-			human = new Human();
-			human.pos.set(0,0);
-			Human newHuman = new Human();
-			add(newHuman);
-		}
 	}
 	
 	@Override
