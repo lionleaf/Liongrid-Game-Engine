@@ -200,8 +200,7 @@ public class Level extends BaseObject{
 			
 			newHuman.pos.x = rand.nextInt(width);
 			newHuman.pos.y = rand.nextInt(height); 
-			
-			Log.d("Infectosaurus","Human pos: "+newHuman.pos);
+
 		}
 	}
 	
