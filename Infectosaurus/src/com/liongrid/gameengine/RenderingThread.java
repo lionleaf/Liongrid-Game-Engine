@@ -104,7 +104,7 @@ public class RenderingThread implements Panel.Renderer {
 								scale, 
 								scale);
 					} else {
-						elem.drawable.draw(gl, elem.x, elem.y, scale, scale);
+						elem.drawable.draw(gl, elem.x, elem.y, 1, 1);
 					}
 				}
 			}

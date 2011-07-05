@@ -5,8 +5,6 @@ import android.util.Log;
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.CollisionHandler;
 import com.liongrid.gameengine.ObjectHandler;
-import com.liongrid.gameengine.tools.FixedSizeArray;
-import com.liongrid.gameengine.tools.Vector2;
 
 /**
  * @author Lastis
@@ -16,14 +14,13 @@ import com.liongrid.gameengine.tools.Vector2;
 public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
 	private static final int DEFAULT_CAPACITY = 256;
 	
-	static final int NUMBER_OF_HUMANS = 15;
+	public static final int NUMBER_OF_HUMANS = 15;
 
 	public CollisionHandler<InfectoGameObject> mCH;
 	public InfectoGameObjectHandler(){
 		super(DEFAULT_CAPACITY);
 		Human human;
-		mCH = new CollisionHandler<InfectoGameObject>
-					(Team.values().length, DEFAULT_CAPACITY);
+		mCH = new CollisionHandler<InfectoGameObject>(Team.values().length, DEFAULT_CAPACITY);
 		
 		
 		

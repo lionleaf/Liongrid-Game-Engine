@@ -99,8 +99,6 @@ public class Infectosaurus extends InfectoGameObject {
 	
 	@Override
 	public void collide(InfectoGameObject o) {
-		Log.d(Main.TAG, "Collided");
-		if(o instanceof Human) Log.d(Main.TAG, "Found a human");
 		if(Collision.collides(this, o)){
 			float[] AB = {pos.x - o.pos.x, pos.y - o.pos.y};
 			float absAB = (float) Math.sqrt(AB[0] * AB[0] + AB[1] * AB[1]);

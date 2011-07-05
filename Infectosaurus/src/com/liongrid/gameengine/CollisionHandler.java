@@ -20,7 +20,6 @@ public class CollisionHandler<T extends Shape.Collideable<T>> extends BaseObject
 	 * This is used to faster access the elements in types
 	 */
 	private Object[][] rawArray;
-	private int arrayCunt;
 	/**
 	 * This is used to fast get the length of the sublists of types.
 	 */
@@ -28,7 +27,6 @@ public class CollisionHandler<T extends Shape.Collideable<T>> extends BaseObject
 	
 	
 	public CollisionHandler(int typeCnt, int capacity) {
-		arrayCunt = 0;
 		typeLengths = new int[typeCnt];
 		rawArray = new Object[typeCnt][];
 		
@@ -172,7 +170,6 @@ public class CollisionHandler<T extends Shape.Collideable<T>> extends BaseObject
 	 * @return array
 	 */
 	public T[] getClose(Vector2 pos, float withIn, int[] types, T[] array){
-		if(arrayCunt == 0) return null;
 		int type; int shape; int count = 0; float dis2;
 		for(int i = 0; i < types.length; i ++){
 			type = types[i];
@@ -196,6 +193,14 @@ public class CollisionHandler<T extends Shape.Collideable<T>> extends BaseObject
 
 
 	public int getCount() {
-		return 0;
+		int cnt = 0;
+		for (int i = 0; i < typeLengths.length; i++) {
+			cnt += typeLengths[i];
+		}
+		return cnt;
+	}
+	
+	public int getCount(int type){
+		return typeLengths[type];
 	}
 }

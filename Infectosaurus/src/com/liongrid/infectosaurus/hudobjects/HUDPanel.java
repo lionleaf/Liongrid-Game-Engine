@@ -1,9 +1,12 @@
-package com.liongrid.infectosaurus;
+package com.liongrid.infectosaurus.hudobjects;
 
 import com.liongrid.gameengine.BaseObject;
-import com.liongrid.gameengine.GameObject;
 
-public class HUDObject extends BaseObject{
+public class HUDPanel extends HUDObject{
+	
+	public HUDPanel() {
+		
+	}
 
 	@Override
 	public void update(float dt, BaseObject parent) {
