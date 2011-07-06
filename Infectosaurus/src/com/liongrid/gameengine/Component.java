@@ -2,6 +2,7 @@ package com.liongrid.gameengine;
 
 
 public abstract class Component<TARGET_OBJECT extends GameObject> extends BaseObject{
+	
 	public Component() {
 		super();
 	}

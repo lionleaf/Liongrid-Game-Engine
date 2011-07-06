@@ -30,6 +30,7 @@ public class Infectosaurus extends InfectoGameObject {
 	private int mSize;
 	private SpriteComponent sprite;
 	private boolean addedAttack = false;
+	InfMeleeAttackComponent mAttackComponent;
 
 	public Infectosaurus() {
 		Log.d(Main.TAG, "Infectosaurus construct");
@@ -42,7 +43,9 @@ public class Infectosaurus extends InfectoGameObject {
 		Texture tex = texLib.allocateTexture(R.drawable.spheremonster01);
 		sprite = loadAnimations(tex);
 		sprite.setSpriteState(SpriteState.spawning);
-		
+		mAttackComponent = new InfMeleeAttackComponent();
+		mAttackComponent.setEnabled(false);
+		addComponent(mAttackComponent);
 		addComponent(new AggressivMoveComponent());
 		addComponent(sprite);
 		addComponent(new MoveComponent());
@@ -67,7 +70,8 @@ public class Infectosaurus extends InfectoGameObject {
 	public void update(float dt, BaseObject parent) {
 		//Make it not attack untill spawning is done!
 		if(!addedAttack && sprite.getSpriteState() != SpriteState.spawning){
-			addComponent(new InfMeleeAttackComponent());
+			mAttackComponent.setEnabled(true);
+			addedAttack = true;
 		}
 		super.update(dt, parent);
 	}

@@ -23,7 +23,7 @@ public class InfMeleeAttackComponent extends Component<InfectoGameObject> {
 	private float mDelay = 2f; //sec
 	private float mDelayCountDown = 0;
 	private float mInfectChance = 0f;
-	
+	private boolean mEnabled = true;
 	
 	public InfMeleeAttackComponent(){
 		super();
@@ -50,7 +50,7 @@ public class InfMeleeAttackComponent extends Component<InfectoGameObject> {
 	
 	@Override
 	public void update(float dt, InfectoGameObject parent) {
-		
+		if(!mEnabled) return;
 		mDelayCountDown -= dt;
 		if(mDelayCountDown > 0) return;
 		
@@ -102,5 +102,10 @@ public class InfMeleeAttackComponent extends Component<InfectoGameObject> {
 	
 	public void addToReach(int reach) {
 		mReach = (int) ((Math.sqrt(mReach)+reach)*(Math.sqrt(mReach)+reach));
+	}
+
+	public void setEnabled(boolean value) {
+		mEnabled = value;
+		
 	}
 }
