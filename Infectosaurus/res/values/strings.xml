@@ -12,4 +12,5 @@
     <string name="upgradeDefaultDescription">Welcome to the upgrade facility. Please choose an icon.</string>
     <string name="infectUpgradeDescription">Increases the chance that when the infectosaurus kills something, a new infectosaurus will spawn</string>
     <string name="reachUpgradeDescription">Increases the reach of the infectosaurus with 5 per rank.</string>
+    <string name="meleeSpeedUpgradeDescription">Increases the attack speed by 20% per upgrade.</string>
 </resources>

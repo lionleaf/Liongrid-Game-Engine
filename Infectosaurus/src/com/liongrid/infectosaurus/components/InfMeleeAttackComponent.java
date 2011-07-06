@@ -18,9 +18,9 @@ public class InfMeleeAttackComponent extends Component<InfectoGameObject> {
 	InfectoGameObjectHandler gameObjHandler;
 	static final int CLOSE_CAPACITY = 20;
 	FixedSizeArray<InfectoGameObject> close;
-	private int mReach = 10 * 10; //Square of the actual mReach 100 means 10 px
+	private int mReach = 15 * 15; //Square of the actual mReach 100 means 10 px
 	private int mDamage = 1;
-	private float mDelay = 0.5f; //sec
+	private float mDelay = 2f; //sec
 	private float mDelayCountDown = 0;
 	private float mInfectChance = 0f;
 	
@@ -96,7 +96,11 @@ public class InfMeleeAttackComponent extends Component<InfectoGameObject> {
 		this.mInfectChance = infectChance;
 	}
 
+	public void setDelay(float delay){
+		mDelay = delay;
+	}
+	
 	public void addToReach(int reach) {
-		mReach += reach;
+		mReach = (int) ((Math.sqrt(mReach)+reach)*(Math.sqrt(mReach)+reach));
 	}
 }
