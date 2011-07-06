@@ -23,7 +23,7 @@ public class UpgradeActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.upgrade);
-		
+
 		talentTree = (TalentTree) findViewById(R.id.talentTree1);
 		upgradeText = (TextView) findViewById(R.id.upgradeDescriptionText);
 		upgradeButton = (Button) findViewById(R.id.purchaseUpgradeButton);
@@ -35,7 +35,7 @@ public class UpgradeActivity extends Activity {
 		upgradeButton.setOnClickListener(new ClickListener());
 
 	}
-	
+
 	private void updateRightPanel(){
 		int checkedID = talentTree.getSelectedId();
 		TalentIcon uTB = (TalentIcon) findViewById(checkedID);
@@ -45,7 +45,7 @@ public class UpgradeActivity extends Activity {
 
 		int coins = InfectoPointers.coins;
 		int price = upgrade.getUpgradePrice();
-		
+
 		//Set the description text
 		upgradeText.setText(upgrade.getDescriptionRes());
 
@@ -54,12 +54,12 @@ public class UpgradeActivity extends Activity {
 		upgradeButton.setEnabled(uTB.isUpgradeable() && coins >= price );
 
 		upgradeInfoText.setText("Price: "+price);
-		
+
 		upgradeStateText.setText(upgrade.getCurrentStateDescription());
-		
+
 		coinText.setText("Coins: " + coins);
 	}
-	
+
 
 
 	private class SelectedChangeListener implements OnSelectedChangeListener{
@@ -69,22 +69,34 @@ public class UpgradeActivity extends Activity {
 		}
 
 	}
-	
+
 	private class ClickListener implements OnClickListener{
 
 		public void onClick(View arg0) {
-			
+
 			int checkedID = talentTree.getSelectedId();
 			TalentIcon uTB = (TalentIcon) findViewById(checkedID);
 			if(uTB == null) return;
 			Upgrade<?> upgrade = uTB.getUpgrade();
-			
+
 			InfectoPointers.coins -= upgrade.getUpgradePrice();
 			upgrade.incrementRank();
-			
+
 			updateRightPanel();
 		}
-		
+
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		GameActivity.saveData(getApplicationContext());
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		GameActivity.loadData(getApplicationContext());
 	}
 
 }

@@ -39,6 +39,7 @@ public class Infectosaurus extends InfectoGameObject {
 		TextureLibrary texLib = gamePointers.textureLib;
 		Texture tex = texLib.allocateTexture(R.drawable.spheremonster01);
 		SpriteComponent sprite = loadAnimations(tex);
+		sprite.setSpriteState(SpriteState.spawning);
 		addComponent(new InfMeleeAttackComponent());
 		addComponent(new AggressivMoveComponent());
 		addComponent(sprite);
@@ -64,6 +65,7 @@ public class Infectosaurus extends InfectoGameObject {
 		SpriteComponent sprite = new SpriteComponent();
 		DrawableBitmap[] dbs = new DrawableBitmap[4];
 		DrawableBitmap[] attackBmps = new DrawableBitmap[1];
+		DrawableBitmap[] spawnBmps = new DrawableBitmap[5];
 		
 		
 		dbs[0] = new DrawableBitmap(tex, mSize,   mSize);
@@ -72,13 +74,22 @@ public class Infectosaurus extends InfectoGameObject {
 		dbs[3] = new DrawableBitmap(tex, mSize+3, mSize+3);
 		
 		
+		spawnBmps[0] = new DrawableBitmap(tex, mSize/6, mSize/6);
+		spawnBmps[1] = new DrawableBitmap(tex, 2*mSize/6, 2*mSize/6);
+		spawnBmps[2] = new DrawableBitmap(tex, 3*mSize/6, 3*mSize/6);
+		spawnBmps[3] = new DrawableBitmap(tex, 4*mSize/6, 4*mSize/6);
+		spawnBmps[4] = new DrawableBitmap(tex, 5*mSize/6, 5*mSize/6);
+		
+		
 		attackBmps[0] = new DrawableBitmap(tex, 16*3+25, 16*3+25);
 		
 		LAnimation moveAnimation = new LAnimation(dbs, 0.1f);
 		LAnimation attackAnimation = new LAnimation(attackBmps, 0.1f, false);
+		LAnimation spawnAnimation = new LAnimation(spawnBmps, 0.1f, false);
 		
 		sprite.setAnimation(SpriteState.idle, moveAnimation);
 		sprite.setAnimation(SpriteState.attacking, attackAnimation);
+		sprite.setAnimation(SpriteState.spawning, spawnAnimation);
 		return sprite;
 	}
 

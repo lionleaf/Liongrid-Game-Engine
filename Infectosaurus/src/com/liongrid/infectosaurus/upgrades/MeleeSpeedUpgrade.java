@@ -35,12 +35,12 @@ public class MeleeSpeedUpgrade extends Upgrade<Infectosaurus> {
 
 	
 	private float calculateDelay(){
-		return (float) (2*Math.pow(0.8, mRank));
+		return (float) (2*Math.pow(0.95, mRank));
 	}
 	
 	@Override
 	public int getUpgradePrice() {
-		return 100*mRank;
+		return 100*(mRank+1);
 	}
 
 }

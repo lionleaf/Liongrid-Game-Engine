@@ -84,7 +84,7 @@ public class InfMeleeAttackComponent extends Component<InfectoGameObject> {
 			return;
 		}
 		
-		spr.currentState = SpriteState.attacking;
+		spr.setSpriteState(SpriteState.attacking);
 		
 	}
 

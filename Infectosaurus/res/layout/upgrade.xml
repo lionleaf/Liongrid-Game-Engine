@@ -42,7 +42,7 @@
 					<com.liongrid.infectosaurus.TalentIcon 
 						android:text="Reach" 
 						android:id="@+id/reachIcon"
-						infecto:upgrade="MeleeDamageUpgrade"></com.liongrid.infectosaurus.TalentIcon>
+						infecto:upgrade="ReachUpgrade"></com.liongrid.infectosaurus.TalentIcon>
 					
 					
                 </com.liongrid.infectosaurus.TalentTier>

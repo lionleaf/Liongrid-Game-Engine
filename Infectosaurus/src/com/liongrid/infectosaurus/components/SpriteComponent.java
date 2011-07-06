@@ -9,11 +9,12 @@ public class SpriteComponent extends Component<InfectoGameObject> {
 	public static enum SpriteState{
 		idle,
 		moving,
-		attacking;
+		attacking, 
+		spawning;
 	}
 	
 	SpriteState defaultState = SpriteState.idle; 
-	SpriteState currentState = defaultState;
+	private SpriteState currentState = defaultState;
 	LAnimation lastAnimation = null;
 	DrawableObject lastDrawing = null;
 	DrawableObject defaultDrawing;
@@ -25,6 +26,9 @@ public class SpriteComponent extends Component<InfectoGameObject> {
 		
 	}
 	
+	public void setSpriteState(SpriteState state){
+		currentState = state;
+	}
 	
 	public SpriteComponent(DrawableObject drawing){
 		this.defaultDrawing = drawing;

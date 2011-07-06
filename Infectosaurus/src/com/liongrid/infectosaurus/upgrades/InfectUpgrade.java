@@ -36,7 +36,7 @@ public class InfectUpgrade extends Upgrade<Infectosaurus> {
 
 	@Override
 	public int getUpgradePrice() {
-		return 100*mRank*mRank;
+		return 100*(mRank+1)*(mRank+1);
 	}
 
 }

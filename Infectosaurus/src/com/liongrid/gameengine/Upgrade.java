@@ -101,7 +101,7 @@ public abstract class Upgrade<T extends BaseObject>{
 	 * @return - True if the rank was set, 
 	 * 		false if rank was greater than MaxRank or less than zero
 	 */
-	private boolean setRank(int rank){
+	public boolean setRank(int rank){
 		if(rank > mMaxRank || rank < 0){
 			return false;
 		}

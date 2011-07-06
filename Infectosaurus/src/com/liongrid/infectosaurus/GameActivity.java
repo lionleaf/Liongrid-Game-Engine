@@ -5,10 +5,13 @@ import com.liongrid.gameengine.Camera;
 import com.liongrid.gameengine.GameActivityInterface;
 import com.liongrid.gameengine.Panel;
 import com.liongrid.gameengine.TextureLibrary;
+import com.liongrid.gameengine.Upgrade;
 import com.liongrid.infectosaurus.map.Level;
+import com.liongrid.infectosaurus.upgrades.InfectosaurusUpgrade;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.util.Log;
@@ -23,6 +26,8 @@ import android.view.Window;
  */
 public class GameActivity extends Activity implements GameActivityInterface{
 	
+	private static final String SAVE_PREF_NAME = "infectoSave";
+
 	public static Context CONTEXT;
 	
 	//To keep screen alive
@@ -77,6 +82,42 @@ public class GameActivity extends Activity implements GameActivityInterface{
 		
 	}
 
+	
+	
+	public static void loadData(Context context){
+		
+		SharedPreferences data = context.getSharedPreferences(SAVE_PREF_NAME, 0);
+		InfectosaurusUpgrade[] upgrades = InfectosaurusUpgrade.values();
+		int upgradeCount = upgrades.length; 
+		for (int i = 0; i < upgradeCount; i++) {
+			Upgrade upgrade = upgrades[i].get();
+			int newRank = data.getInt(upgrades[i].name(), -1);
+			if(newRank < 0) continue;
+			upgrade.setRank(newRank);
+		}
+		
+		int coins = data.getInt("coins", -1);
+		if(coins != -1){
+			InfectoPointers.coins = data.getInt("coins", 0);
+		}
+		
+	}
+	
+	public static void saveData(Context context){
+		SharedPreferences data = context.getSharedPreferences(SAVE_PREF_NAME, 0);
+		SharedPreferences.Editor editor = data.edit();
+		
+		editor.putInt("coins", InfectoPointers.coins);
+		
+		InfectosaurusUpgrade[] upgrades = InfectosaurusUpgrade.values();
+		int upgradeCount = upgrades.length; 
+		for (int i = 0; i < upgradeCount; i++) {
+			Upgrade upgrade = upgrades[i].get();
+			editor.putInt(upgrades[i].name(), upgrade.getRank());
+		}
+		editor.commit();
+	}
+	
 	private void init() {
 		infectoPointers.gameObjectHandler = new InfectoGameObjectHandler();
 		infectoPointers.HUDObjectHandler = new HUDObjectHandler();
@@ -136,6 +177,7 @@ public class GameActivity extends Activity implements GameActivityInterface{
 		Log.d("Infectosaurus", "onPause()");
 		wl.release();
 		panel.onPause();
+		saveData(getApplicationContext());
 	}
 
 	@Override
@@ -144,5 +186,6 @@ public class GameActivity extends Activity implements GameActivityInterface{
 		Log.d("Infectosaurus", "onResume()"); 
 		wl.acquire();
 		panel.onResume();
+		loadData(getApplicationContext());
 	}
 }

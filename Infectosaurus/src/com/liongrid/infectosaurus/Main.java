@@ -76,4 +76,16 @@ public class Main extends Activity {
         });
         
     }
+    
+    @Override
+    protected void onPause() {
+    	super.onPause();
+    	GameActivity.saveData(getApplicationContext());
+    }
+    
+    @Override
+    protected void onResume() {
+    	super.onResume();
+    	GameActivity.loadData(getApplicationContext());
+    }
 }
