@@ -18,19 +18,31 @@
             	infecto:ranks_per_tier="5" >
             	
                 <com.liongrid.infectosaurus.TalentTier android:id="@+id/talentTier1">
-                    <com.liongrid.infectosaurus.TalentIcon android:text="Health" android:id="@+id/talentIcon1"></com.liongrid.infectosaurus.TalentIcon>
-                    <com.liongrid.infectosaurus.TalentIcon android:text="Speed" android:id="@+id/talentIcon3"></com.liongrid.infectosaurus.TalentIcon>
+                    
+                    <com.liongrid.infectosaurus.TalentIcon 
+                    	android:text="Health" 
+                    	android:id="@+id/hpIcon" 
+                    	infecto:upgrade = "HealthUpgrade"></com.liongrid.infectosaurus.TalentIcon>
+                    
+                    <com.liongrid.infectosaurus.TalentIcon 
+                    	android:text="Speed" 
+                    	android:id="@+id/speedIcon" 
+                    	infecto:upgrade = "SpeedUpgrade"></com.liongrid.infectosaurus.TalentIcon>
                     	
                 </com.liongrid.infectosaurus.TalentTier>
 				
 				<com.liongrid.infectosaurus.TalentTier android:id="@+id/talentTier2">
 					
 					<com.liongrid.infectosaurus.TalentIcon 
-						android:id="@+id/talentIcon2" 
+						android:id="@+id/dmgIcon" 
 						infecto:upgrade="MeleeDamageUpgrade"
 						infecto:icon="@drawable/sand"
 						android:text="Damage"></com.liongrid.infectosaurus.TalentIcon>
-					<com.liongrid.infectosaurus.TalentIcon android:text="Reach" android:id="@+id/talentIcon5"></com.liongrid.infectosaurus.TalentIcon>
+					
+					<com.liongrid.infectosaurus.TalentIcon 
+						android:text="Reach" 
+						android:id="@+id/reachIcon"
+						infecto:upgrade="MeleeDamageUpgrade"></com.liongrid.infectosaurus.TalentIcon>
 					
 					
                 </com.liongrid.infectosaurus.TalentTier>
@@ -40,7 +52,10 @@
                 	
                     
                     	
-                    <com.liongrid.infectosaurus.TalentIcon android:text="Attackspeed" android:id="@+id/attackSpeedIcon"></com.liongrid.infectosaurus.TalentIcon>
+                    <com.liongrid.infectosaurus.TalentIcon 
+                    	android:text="Attackspeed" 
+                    	android:id="@+id/attackSpeedIcon"
+                    	infecto:upgrade="MeleeSpeedUpgrade"></com.liongrid.infectosaurus.TalentIcon>
                 
                 </com.liongrid.infectosaurus.TalentTier>
                 
@@ -48,7 +63,7 @@
                 	android:id="@+id/talentTier4">
                 	<com.liongrid.infectosaurus.TalentIcon 
                     	android:text="Infect" 
-                    	android:id="@+id/talentIcon4"
+                    	android:id="@+id/infectIcon"
                     	infecto:icon="@drawable/midtutenstripe"
                     	infecto:upgrade="InfectUpgrade"></com.liongrid.infectosaurus.TalentIcon>
                 </com.liongrid.infectosaurus.TalentTier>
