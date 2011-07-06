@@ -78,7 +78,7 @@ public class HUDScore extends HUDObject{
 
 		renderSystem.scheduleForDraw(drawing, screenWidth - 200, 
 				screenHeight - paddingTop, true);
-		drawScore(GameActivity.infectoPointers.NUMBER_OF_HUMANS - objectHandler.mCH.getCount(Team.Human.ordinal()));
+		drawScore(GameActivity.infectoPointers.NumberOfHumans - objectHandler.mCH.getCount(Team.Human.ordinal()));
 	}
 
 	private void drawScore(int count) {

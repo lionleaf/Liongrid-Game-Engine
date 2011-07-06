@@ -27,6 +27,8 @@ public class Main extends Activity {
         View startButton = findViewById(R.id.startGameButton);
         final SeekBar diffBar = (SeekBar) findViewById(R.id.difficultyBar);
         final TextView diffText = (TextView) findViewById(R.id.difficultyLabel);
+        final SeekBar popBar = (SeekBar) findViewById(R.id.popBar);
+        final TextView popText = (TextView) findViewById(R.id.popTextView);
         
         diffBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
         	
@@ -45,12 +47,32 @@ public class Main extends Activity {
 			}
 		});
         
+        popBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+        	
+			public void onStopTrackingTouch(SeekBar seekBar) {}
+			
+			public void onStartTrackingTouch(SeekBar seekBar) {}
+			
+			public void onProgressChanged(SeekBar seekBar, int progress,
+					boolean fromUser) {
+				if(progress == 0){
+					seekBar.setProgress(1);
+					return;
+				}
+				popText.setText(progress+"");
+				
+			}
+		});
+
+        
+        
         startButton.setOnClickListener(new OnClickListener(){
 
 			public void onClick(View v) {
 				Intent i;
 		        i = new Intent(v.getContext(), GameActivity.class);
 		        i.putExtra("com.liongrid.infectosaurus.difficulty", diffBar.getProgress());
+		        i.putExtra("com.liongrid.infectosaurus.population", popBar.getProgress());
 		        startActivity(i);
 			}
         	

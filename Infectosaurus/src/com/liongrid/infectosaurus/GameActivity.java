@@ -57,7 +57,6 @@ public class GameActivity extends Activity implements GameActivityInterface{
 		if(savedInstanceState == null){
 			panel.init();
 			init();
-			
 		}else{
 			BaseObject.gamePointers.panel = panel;
 		}
@@ -72,12 +71,13 @@ public class GameActivity extends Activity implements GameActivityInterface{
 		
 		Bundle extras = getIntent().getExtras();
 		int difficulty = extras.getInt("com.liongrid.infectosaurus.difficulty");
+		int pop = extras.getInt("com.liongrid.infectosaurus.population");
 		infectoPointers.difficulty = difficulty;
+		GameActivity.infectoPointers.NumberOfHumans = pop;
 		
 		//TODO try catch and alert!!!!! on getint
 		CONTEXT = this;
-		BaseObject.gamePointers.level.spawnNPCs(
-	    		GameActivity.infectoPointers.NUMBER_OF_HUMANS,  difficulty);
+		BaseObject.gamePointers.level.spawnNPCs(pop,  difficulty);
 		
 		
 	}
