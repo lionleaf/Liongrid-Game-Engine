@@ -15,11 +15,11 @@
             	android:id="@+id/talentTree1" 
             	android:layout_width="wrap_content" 
             	android:layout_height="wrap_content"
-            	infecto:ranks_per_tier="6" >
+            	infecto:ranks_per_tier="5" >
             	
                 <com.liongrid.infectosaurus.TalentTier android:id="@+id/talentTier1">
                     <com.liongrid.infectosaurus.TalentIcon android:text="Health" android:id="@+id/talentIcon1"></com.liongrid.infectosaurus.TalentIcon>
-                    <com.liongrid.infectosaurus.TalentIcon android:text="Reach" android:id="@+id/talentIcon5"></com.liongrid.infectosaurus.TalentIcon>
+                    <com.liongrid.infectosaurus.TalentIcon android:text="Speed" android:id="@+id/talentIcon3"></com.liongrid.infectosaurus.TalentIcon>
                     	
                 </com.liongrid.infectosaurus.TalentTier>
 				
@@ -30,7 +30,7 @@
 						infecto:upgrade="MeleeDamageUpgrade"
 						infecto:icon="@drawable/sand"
 						android:text="Damage"></com.liongrid.infectosaurus.TalentIcon>
-					<com.liongrid.infectosaurus.TalentIcon android:text="Speed" android:id="@+id/talentIcon3"></com.liongrid.infectosaurus.TalentIcon>
+					<com.liongrid.infectosaurus.TalentIcon android:text="Reach" android:id="@+id/talentIcon5"></com.liongrid.infectosaurus.TalentIcon>
 					
 					
                 </com.liongrid.infectosaurus.TalentTier>
