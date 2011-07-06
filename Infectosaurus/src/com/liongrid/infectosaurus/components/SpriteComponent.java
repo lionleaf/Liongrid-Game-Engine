@@ -78,5 +78,10 @@ public class SpriteComponent extends Component<InfectoGameObject> {
 		lastDrawing = toDraw;
 		BaseObject.gamePointers.renderSystem.scheduleForDraw(toDraw, x, y, false);
 	}
+
+	public SpriteState getSpriteState() {
+		return currentState;
+		
+	}
 	
 }

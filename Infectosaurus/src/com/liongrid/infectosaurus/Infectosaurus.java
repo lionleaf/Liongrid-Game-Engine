@@ -28,6 +28,8 @@ import android.util.Log;
 public class Infectosaurus extends InfectoGameObject {
 	
 	private int mSize;
+	private SpriteComponent sprite;
+	private boolean addedAttack = false;
 
 	public Infectosaurus() {
 		Log.d(Main.TAG, "Infectosaurus construct");
@@ -38,9 +40,9 @@ public class Infectosaurus extends InfectoGameObject {
 		
 		TextureLibrary texLib = gamePointers.textureLib;
 		Texture tex = texLib.allocateTexture(R.drawable.spheremonster01);
-		SpriteComponent sprite = loadAnimations(tex);
+		sprite = loadAnimations(tex);
 		sprite.setSpriteState(SpriteState.spawning);
-		addComponent(new InfMeleeAttackComponent());
+		
 		addComponent(new AggressivMoveComponent());
 		addComponent(sprite);
 		addComponent(new MoveComponent());
@@ -59,6 +61,15 @@ public class Infectosaurus extends InfectoGameObject {
 		
 		applyUpgrades();
 		
+	}
+	
+	@Override
+	public void update(float dt, BaseObject parent) {
+		//Make it not attack untill spawning is done!
+		if(!addedAttack && sprite.getSpriteState() != SpriteState.spawning){
+			addComponent(new InfMeleeAttackComponent());
+		}
+		super.update(dt, parent);
 	}
 	
 	private SpriteComponent loadAnimations(Texture tex) {
@@ -85,7 +96,7 @@ public class Infectosaurus extends InfectoGameObject {
 		
 		LAnimation moveAnimation = new LAnimation(dbs, 0.1f);
 		LAnimation attackAnimation = new LAnimation(attackBmps, 0.1f, false);
-		LAnimation spawnAnimation = new LAnimation(spawnBmps, 0.1f, false);
+		LAnimation spawnAnimation = new LAnimation(spawnBmps, 0.06f, false);
 		
 		sprite.setAnimation(SpriteState.idle, moveAnimation);
 		sprite.setAnimation(SpriteState.attacking, attackAnimation);
