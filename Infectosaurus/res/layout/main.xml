@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout android:id="@+id/LinearLayout1" xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-    <TableLayout android:id="@+id/tableLayout1" android:layout_width="fill_parent" android:layout_height="wrap_content" android:stretchColumns="1">
+    <TableLayout android:layout_alignParentLeft="true" android:layout_alignParentTop="true" android:id="@+id/tableLayout1" android:layout_width="fill_parent" android:layout_height="wrap_content" android:stretchColumns="1">
         <TableRow android:id="@+id/tableRow1" android:layout_width="fill_parent" android:layout_height="wrap_content">
             <TextView android:text="Difficulty: " android:layout_height="wrap_content" android:id="@+id/textView1" android:layout_width="wrap_content"></TextView>
             <SeekBar android:layout_height="wrap_content" android:id="@+id/difficultyBar" android:layout_width="wrap_content" android:progress="1" android:paddingLeft="5dip" android:paddingRight="5dip"></SeekBar>
@@ -12,6 +12,7 @@
         </TableRow>
         <Button android:layout_width="wrap_content" android:id="@+id/startGameButton" android:layout_height="wrap_content" android:layout_gravity="top" android:layout_weight="1" android:text="@string/startGame"></Button>
         <Button android:layout_width="wrap_content" android:id="@+id/upgradeButton" android:layout_height="wrap_content" android:text="@string/upgrade"></Button>
-        <Button android:layout_width="wrap_content" android:id="@+id/exitGameButton" android:layout_height="wrap_content" android:layout_gravity="bottom" android:text="@string/exit"></Button>
+        <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/exitGameButton" android:text="@string/exit"></Button>
     </TableLayout>
-</LinearLayout>
+    <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/resetButton" android:text="Reset progress" android:layout_alignParentBottom="true"></Button>
+</RelativeLayout>
