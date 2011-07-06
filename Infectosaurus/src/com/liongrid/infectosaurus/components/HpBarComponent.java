@@ -21,8 +21,9 @@ public class HpBarComponent extends Component<InfectoGameObject> {
 	
 	@Override
 	public void update(float dt, InfectoGameObject parent) {
-		 mBarForeground.setWidth(
-				 Math.round(mWidth*(parent.mHp/(float)parent.mMaxHp)));
+		float width =  mWidth*(parent.mHp/(float)parent.mMaxHp);
+		width = width < 0? 0 : width;
+		mBarForeground.setWidth(Math.round(width));
 		
 		 
 		 SpriteComponent sprite = (SpriteComponent) parent.findComponentOfType(SpriteComponent.class);
