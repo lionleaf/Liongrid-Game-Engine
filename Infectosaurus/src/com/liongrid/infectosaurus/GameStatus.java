@@ -61,7 +61,7 @@ public class GameStatus extends BaseObject{
 				
 			}
 		});*/
-		gameActivity.finish();
+		gameActivity.roundOver();
 
 	}
 

@@ -78,7 +78,7 @@ public class DrawableBitmap extends BaseObject implements DrawableObject {
 		gl.glPopMatrix();
 		gl.glMatrixMode(GL10.GL_MODELVIEW);
 		gl.glPopMatrix();
-	}
+	} 
 
 	/**
      * Draw the bitmap at a given x,y position, expressed in pixels, with the

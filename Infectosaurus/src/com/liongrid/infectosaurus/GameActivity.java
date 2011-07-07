@@ -3,6 +3,7 @@ package com.liongrid.infectosaurus;
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Camera;
 import com.liongrid.gameengine.GameActivityInterface;
+import com.liongrid.gameengine.GameThread;
 import com.liongrid.gameengine.Panel;
 import com.liongrid.gameengine.TextureLibrary;
 import com.liongrid.gameengine.Upgrade;
@@ -12,13 +13,18 @@ import com.liongrid.infectosaurus.upgrades.InfectosaurusUpgrade;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.util.Log;
 import android.view.Display;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.Button;
 
 /**
  * @author Lastis
@@ -187,5 +193,39 @@ public class GameActivity extends Activity implements GameActivityInterface{
 		wl.acquire();
 		panel.onResume();
 		loadData(getApplicationContext());
+	}
+
+
+
+	public void roundOver() {
+		
+		BaseObject.gamePointers.gameThread.stopRunning();
+		BaseObject.gamePointers.renderThread.screenshot = true;
+		while(BaseObject.gamePointers.renderThread.lastScreenshot == null){
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		runOnUiThread(new Runnable() {
+			
+			public void run() {
+				setContentView(R.layout.round_over);
+				View mainView = findViewById(R.id.roundOverMainLayout);
+				Bitmap bmp = BaseObject.gamePointers.renderThread.lastScreenshot;
+				if(bmp != null){
+					mainView.setBackgroundDrawable(new BitmapDrawable(bmp));
+				}
+				Button backButton = (Button) findViewById(R.id.returnButton);
+				backButton.setOnClickListener(new OnClickListener() {
+					public void onClick(View v) {
+						finish();
+					}
+				});
+			}
+		});
+		
 	}
 }

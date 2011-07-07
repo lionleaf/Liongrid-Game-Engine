@@ -1,5 +1,9 @@
 package com.liongrid.gameengine;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.ShortBuffer;
+
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
@@ -8,6 +12,7 @@ import com.liongrid.infectosaurus.Main;
 import com.liongrid.infectosaurus.map.Level;
 import com.liongrid.infectosaurus.map.TileType;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
 
@@ -17,6 +22,10 @@ public class RenderingThread implements Panel.Renderer {
     private ObjectHandler drawQueue;
 	private Object drawLock;
 	private boolean drawQueueChanged;
+
+	public boolean screenshot = false;
+
+	public Bitmap lastScreenshot;
     
  
     public RenderingThread() {
@@ -56,64 +65,78 @@ public class RenderingThread implements Panel.Renderer {
 			float scale = Camera.scale;
 			
 			
+			
 			DrawableBitmap.beginDrawing(gl, mWidth, mHeight);
 			
 			//Draw tiles
-			Level level = BaseObject.gamePointers.level;
-			TileType[][] bgTiles = level.renderQueue;
-			
-			if(bgTiles != null && bgTiles.length > 0){
-				int tilesX =  (int)(cameraX + cameraWidth/scale)/TILE_SIZE + 1;
-				if(tilesX > Level.mapSize.x) tilesX = Level.mapSize.x;
-				int tilesY =  (int)(cameraY + cameraHeight/scale)/TILE_SIZE + 1;
-				if(tilesY > Level.mapSize.y) tilesY = Level.mapSize.y;
-				for (int i = cameraX / Level.TILE_SIZE; i < tilesX; i++) {
-					for (int j = cameraY / Level.TILE_SIZE; j < tilesY; j++) {
-						int x = Level.TILE_SIZE*i;
-						int y = Level.TILE_SIZE*j;
-						//Check if element is outside the screen view
-				        if(x + Level.TILE_SIZE < cameraX/scale) continue;
-				    	if(x > cameraX + cameraWidth/scale) continue;
-				        if(y + Level.TILE_SIZE < cameraY) continue;
-				    	if(y > cameraY + cameraHeight/scale) continue;
-				    	
-						bgTiles[i][j].draw(gl, x - cameraX
-								, y - cameraY, scale, scale);
-					}
-				}
-			}
+			drawTiles(gl, cameraX, cameraY, cameraWidth, cameraHeight, scale);
 			
 			if (drawQueue != null && drawQueue.getObjects().getCount() > 0 ){
-				FixedSizeArray<RenderElement> objects = drawQueue.getObjects();
-				final int count = objects.getCount();
-				Object[] elems = objects.getArray();
-				objects.sort(true);
-
-				for (int i = 0; i < count; i++){	
-					RenderElement elem = (RenderElement)elems[i];
-					
-					if(elems[i] == null){ 
-						Log.d(Main.TAG, "elem in drawBGQueue is " + elem + 
-								"Last count was " + count + " Now it is "+ objects.getCount());
-						continue;
-					}
-					if(!elem.cameraRelative){ // not camera relative (not a HUD image)
-						elem.drawable.draw(gl, 
-								elem.x - cameraX, 
-								elem.y - cameraY, 
-								scale, 
-								scale);
-					} else {
-						
-						elem.drawable.draw(gl, elem.x, elem.y, elem.scale, elem.scale);
-					}
-				}
+				drawObjects(gl, cameraX, cameraY, cameraWidth, cameraHeight, scale);
 			}
+			
 			DrawableBitmap.endDrawing(gl);
+			
+			if(screenshot){                     
+                snapScreenshot(gl, mWidth, mHeight);
+            }
 		}
 	}
 
 
+	private void drawObjects(GL10 gl, int cameraX, int cameraY, int cameraWidth, float cameraHeight, float scale){
+		FixedSizeArray<RenderElement> objects = drawQueue.getObjects();
+		final int count = objects.getCount();
+		Object[] elems = objects.getArray();
+		objects.sort(true);
+
+		for (int i = 0; i < count; i++){	
+			RenderElement elem = (RenderElement)elems[i];
+			
+			if(elems[i] == null){ 
+				Log.d(Main.TAG, "elem in drawBGQueue is " + elem + 
+						"Last count was " + count + " Now it is "+ objects.getCount());
+				continue;
+			}
+			if(!elem.cameraRelative){ // not camera relative (not a HUD image)
+				elem.drawable.draw(gl, 
+						elem.x - cameraX, 
+						elem.y - cameraY, 
+						scale, 
+						scale);
+			} else {
+				
+				elem.drawable.draw(gl, elem.x, elem.y, elem.scale, elem.scale);
+			}
+		}
+	}
+	
+	private void drawTiles(GL10 gl, int cameraX, int cameraY, int cameraWidth, float cameraHeight, float scale){
+		Level level = BaseObject.gamePointers.level;
+		TileType[][] bgTiles = level.renderQueue;
+		
+		if(bgTiles != null && bgTiles.length > 0){
+			int tilesX =  (int)(cameraX + cameraWidth/scale)/TILE_SIZE + 1;
+			if(tilesX > Level.mapSize.x) tilesX = Level.mapSize.x;
+			int tilesY =  (int)(cameraY + cameraHeight/scale)/TILE_SIZE + 1;
+			if(tilesY > Level.mapSize.y) tilesY = Level.mapSize.y;
+			for (int i = cameraX / Level.TILE_SIZE; i < tilesX; i++) {
+				for (int j = cameraY / Level.TILE_SIZE; j < tilesY; j++) {
+					int x = Level.TILE_SIZE*i;
+					int y = Level.TILE_SIZE*j;
+					//Check if element is outside the screen view
+			        if(x + Level.TILE_SIZE < cameraX/scale) continue;
+			    	if(x > cameraX + cameraWidth/scale) continue;
+			        if(y + Level.TILE_SIZE < cameraY) continue;
+			    	if(y > cameraY + cameraHeight/scale) continue;
+			    	
+					bgTiles[i][j].draw(gl, x - cameraX
+							, y - cameraY, scale, scale);
+				}
+			}
+		}
+	}
+	
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
 		gl.glViewport(0, 0, width, height);
         
@@ -133,6 +156,34 @@ public class RenderingThread implements Panel.Renderer {
 	}
 
 
+	private void snapScreenshot(GL10 gl, int width, int height){
+		int screenshotSize = width * height;
+        ByteBuffer bb = ByteBuffer.allocateDirect(screenshotSize * 4);
+        bb.order(ByteOrder.nativeOrder());
+        gl.glReadPixels(0, 0, width, height, GL10.GL_RGBA, GL10.GL_UNSIGNED_BYTE, bb);
+        int pixelsBuffer[] = new int[screenshotSize];
+        bb.asIntBuffer().get(pixelsBuffer);
+        bb = null;
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+        bitmap.setPixels(pixelsBuffer, screenshotSize-width, -width, 0, 0, width, height);
+        pixelsBuffer = null;
+
+        short sBuffer[] = new short[screenshotSize];
+        ShortBuffer sb = ShortBuffer.wrap(sBuffer);
+        bitmap.copyPixelsToBuffer(sb);
+
+        //Making created bitmap (from OpenGL points) compatible with Android bitmap
+        for (int i = 0; i < screenshotSize; ++i) {                  
+            short v = sBuffer[i];
+            sBuffer[i] = (short) (((v&0x1f) << 11) | (v&0x7e0) | ((v&0xf800) >> 11));
+        }
+        sb.rewind();
+        bitmap.copyPixelsFromBuffer(sb);
+        lastScreenshot = bitmap;
+
+        screenshot = false;
+	}
+	
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 		
 		 /*
