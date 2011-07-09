@@ -9,4 +9,5 @@ public class HUDObjectHandler extends ObjectHandler<HUDObject>{
 	public HUDObjectHandler() {
 		add(new HUDScore());
 	}
+	
 }

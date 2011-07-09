@@ -1,7 +1,5 @@
 package com.liongrid.infectosaurus.hudobjects;
 
-import android.util.Log;
-
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Camera;
 import com.liongrid.gameengine.DrawableBitmap;
@@ -23,6 +21,7 @@ public class HUDScore extends HUDObject{
 	private int screenHeight;
 	private final int fontSize = 20;
 	private final int paddingTop = 30;
+	private final int paddingRight = 200;
 
 	private DrawableBitmap d0;
 	private DrawableBitmap d1;
@@ -76,8 +75,8 @@ public class HUDScore extends HUDObject{
 		screenHeight = Camera.screenHeight;
 		screenWidth = Camera.screenWidth;
 
-		renderSystem.scheduleForDraw(drawing, screenWidth - 200, 
-				screenHeight - paddingTop, true);
+		renderSystem.scheduleForDraw(drawing, screenWidth - paddingRight, 
+											  screenHeight - paddingTop, true);
 		drawScore(GameActivity.infectoPointers.NumberOfHumans - objectHandler.mCH.getCount(Team.Human.ordinal()));
 	}
 
@@ -87,9 +86,9 @@ public class HUDScore extends HUDObject{
 		DrawableBitmap secondDigit = getDigit((count/10)%10);
 		DrawableBitmap thirdDigit = getDigit((count/100)%10);;
 
-		renderSystem.scheduleForDraw(thirdDigit, screenWidth - 200 + 8*fontSize , screenHeight - paddingTop, true);
-		renderSystem.scheduleForDraw(secondDigit, screenWidth - 200 + 8*fontSize + fontSize / 2, screenHeight - paddingTop, true);
-		renderSystem.scheduleForDraw(firstDigit, screenWidth - 200 + 8*fontSize + fontSize, screenHeight - paddingTop, true);
+		renderSystem.scheduleForDraw(thirdDigit, screenWidth - paddingRight + 8*fontSize , screenHeight - paddingTop, true);
+		renderSystem.scheduleForDraw(secondDigit, screenWidth - paddingRight + 8*fontSize + fontSize / 2, screenHeight - paddingTop, true);
+		renderSystem.scheduleForDraw(firstDigit, screenWidth - paddingRight + 8*fontSize + fontSize, screenHeight - paddingTop, true);
 	}
 
 	private DrawableBitmap getDigit(int i) {

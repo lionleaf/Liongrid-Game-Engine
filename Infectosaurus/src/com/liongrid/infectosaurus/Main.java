@@ -43,7 +43,6 @@ public class Main extends Activity {
 					return;
 				}
 				diffText.setText(progress+"");
-				
 			}
 		});
         
@@ -86,7 +85,6 @@ public class Main extends Activity {
 		        i = new Intent(v.getContext(), UpgradeActivity.class);
 		        startActivity(i);
 			}
-        	
         });
         
         

@@ -1,30 +1,27 @@
 package com.liongrid.infectosaurus;
 
 import android.view.MotionEvent;
-import android.view.GestureDetector.SimpleOnGestureListener;
 
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Camera;
+import com.liongrid.gameengine.InputGame;
 import com.liongrid.infectosaurus.map.Level;
 
-public class InputSystem extends SimpleOnGestureListener{
-
+public class InputInfectosaurus extends InputGame{
 	@Override
 	public boolean onSingleTapUp(MotionEvent event) {
 		BaseObject.gamePointers.gameThread.registerScreenTouch(event);
 		return true;
 	}
-	
+
 	@Override
 	public boolean onDown(MotionEvent e) {
-		// This must be here for the gesture listener to work!!!!!
 		return false;
 	}
-	
+
 	@Override
-	public boolean onScroll(MotionEvent e1, MotionEvent e2, 
-			float distanceX, float distanceY) {
-		
+	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
+			float distanceY) {
 		BaseObject.gamePointers.renderThread.waitDrawingComplete();
 		
 		//Make sure not to put any value into the camera that 
@@ -49,4 +46,5 @@ public class InputSystem extends SimpleOnGestureListener{
 		}
 		return true;
 	}
+
 }

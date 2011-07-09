@@ -4,6 +4,7 @@ import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Camera;
 import com.liongrid.gameengine.GameActivityInterface;
 import com.liongrid.gameengine.GameThread;
+import com.liongrid.gameengine.Input;
 import com.liongrid.gameengine.Panel;
 import com.liongrid.gameengine.TextureLibrary;
 import com.liongrid.gameengine.Upgrade;
@@ -51,7 +52,10 @@ public class GameActivity extends Activity implements GameActivityInterface{
         wl = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
 		
 		infectoPointers = new InfectoPointers();
-		gestureDetector = new GestureDetector(this, new InputSystem());
+		InputInfectosaurus gameInput = new InputInfectosaurus();
+		InputInfectoHUD hudInput = new InputInfectoHUD();
+		gestureDetector = 
+			new GestureDetector(this, new Input(hudInput,gameInput));
 		
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		Log.d(Main.TAG,"In GameActivity onCreate");
@@ -106,7 +110,6 @@ public class GameActivity extends Activity implements GameActivityInterface{
 		if(coins != -1){
 			InfectoPointers.coins = data.getInt("coins", 0);
 		}
-		
 	}
 	
 	public static void saveData(Context context){

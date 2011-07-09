@@ -78,8 +78,6 @@ public class TalentIcon extends RadioButton {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-
-		
 		
 		if(isChecked()){
 			Paint p = new Paint();

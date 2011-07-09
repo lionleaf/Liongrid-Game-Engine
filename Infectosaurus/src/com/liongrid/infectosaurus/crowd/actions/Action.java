@@ -22,9 +22,9 @@ public abstract class Action {
 	
 	
 	public void linkAction(Action a, double chance){
-		int currentCunt = mLinkedActions.getCount();
+		int currentCnt = mLinkedActions.getCount();
 		mLinkedActions.add(a);
-		mDefaultLinkedProb[currentCunt] = chance;
+		mDefaultLinkedProb[currentCnt] = chance;
 		mStateNumber = getNumberOfStates();
 	}
 	
