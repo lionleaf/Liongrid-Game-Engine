@@ -91,16 +91,23 @@ public class CollisionHandler<T extends Shape.Collideable<T>> extends BaseObject
 		}
 		
 		clearArrays();
+		if(typeLessCnt == 0){
+			for(i = 0; i < typeLengths.length; i++){
+				for(j = 0; j < typeLengths[i]; j++){
+					collides(i, j, dt);
+				}
+			}
+		}
 		
-		for(i = 0; i < typeLengths.length; i++){
-			for(j = 0; j < typeLengths[i]; j++){
-				if(typeLessCnt != 0){
+		else{
+			for(i = 0; i < typeLengths.length; i++){
+				for(j = 0; j < typeLengths[i]; j++){
 					Object[] typeLessArray = typeLess.getArray();
 					for(int k = 0; k < typeLessCnt; k++){
 						((T) typeLessArray[k]).collide((T) rawArray[i][j]);
 					}
+					collides(i, j, dt);
 				}
-				collides(i, j, dt);
 			}
 		}
 	}
