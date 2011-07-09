@@ -9,10 +9,10 @@ import com.liongrid.infectosaurus.map.Level;
 
 public class Input extends SimpleOnGestureListener{
 
-	private InputInfectosaurus gameInput;
-	private InputInfectoHUD hudInput;
+	private InputGame gameInput;
+	private InputHUD hudInput;
 
-	public Input(InputInfectoHUD hudInput, InputInfectosaurus gameInput) {
+	public Input(InputHUD hudInput, InputGame gameInput) {
 		this.gameInput = gameInput;
 		this.hudInput = hudInput;
 	}
@@ -30,6 +30,12 @@ public class Input extends SimpleOnGestureListener{
 		if(hudInput.onDown(e)) return true;
 		if(gameInput.onDown(e)) return true;
 		return false;
+	}
+	
+	@Override
+	public void onShowPress(MotionEvent e) {
+		if(hudInput.onShowPress(e)) return;
+		if(gameInput.onShowPress(e)) return;
 	}
 	
 	@Override

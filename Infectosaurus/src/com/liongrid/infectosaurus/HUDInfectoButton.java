@@ -1,6 +1,7 @@
 package com.liongrid.infectosaurus;
 
 import android.util.Log;
+import android.view.MotionEvent;
 
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Camera;
@@ -58,7 +59,7 @@ public class HUDInfectoButton extends HUDButton implements Shape.Circle{
 	}
 
 	@Override
-	public void onPress() {
+	public void onSingleTapUp() {
 		isPressed = isPressed ? false : true;
 	}
 
@@ -69,6 +70,15 @@ public class HUDInfectoButton extends HUDButton implements Shape.Circle{
 
 	public float getRadius() {
 		return (float) (width/2.0);
+	}
+
+	@Override
+	public void onDown() {
+		
+	}
+
+	@Override
+	public void onShowPress() {
 	}
 
 	

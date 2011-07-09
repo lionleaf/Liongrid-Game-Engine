@@ -47,4 +47,9 @@ public class InputInfectosaurus extends InputGame{
 		return true;
 	}
 
+	@Override
+	public boolean onShowPress(MotionEvent e) {
+		return false;
+	}
+
 }

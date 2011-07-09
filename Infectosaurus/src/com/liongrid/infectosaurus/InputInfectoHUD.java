@@ -15,7 +15,7 @@ public class InputInfectoHUD extends InputHUD{
 		HUDButton button = hudObjectHandler.getButtonAt(event.getX(), 
 				Camera.screenHeight - event.getY());
 		if(button == null) return false;
-		button.onPress();
+		button.onSingleTapUp();
 		return false;
 	}
 
@@ -29,6 +29,15 @@ public class InputInfectoHUD extends InputHUD{
 	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
 			float distanceY) {
 		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean onShowPress(MotionEvent event) {
+		HUDObjectHandler hudObjectHandler = GameActivity.infectoPointers.HUDObjectHandler;
+		HUDButton button = hudObjectHandler.getButtonAt(event.getX(), 
+				Camera.screenHeight - event.getY());
+		if(button == null) return false;
+		button.onShowPress();
 		return false;
 	}
 
