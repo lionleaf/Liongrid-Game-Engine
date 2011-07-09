@@ -7,12 +7,12 @@ public class Camera {
 	/**
 	 * Default units per width is 12. 
 	 */
-	public static float UNITS_PER_WIDTH = 12;
+	private static float UNITS_PER_WIDTH = 12;
 	
 	/**
 	 * Dafault units per height is 6.
 	 */
-	public static float UNITS_PER_HEIGHT = 6;
+	private static float UNITS_PER_HEIGHT = 6;
 	
 	/**
 	 * Position of the camera in in-game coordinates. 

@@ -1,6 +1,9 @@
 package com.liongrid.gameengine;
 
+import android.util.Log;
+
 import com.liongrid.gameengine.tools.Vector2;
+import com.liongrid.infectosaurus.Main;
 
 public class Collision {
 	private static final int POINT = Shape.POINT;
@@ -10,6 +13,13 @@ public class Collision {
 	public static boolean collides(Vector2 point, Shape shape){
 		if(shape.getShape() == CIRCLE){
 			return collides(point, (Shape.Circle) shape);
+		}
+		return false;
+	}
+	
+	public static boolean collides(float x, float y, Shape shape){
+		if(shape.getShape() == CIRCLE){
+			return collides(x, y, (Shape.Circle) shape);
 		}
 		return false;
 	}
@@ -45,6 +55,18 @@ public class Collision {
 		Vector2 pos2 = circle.getPos();
 		float radius = circle.getRadius();
 		if(pos1.distance2(pos2) < radius * radius) return true;
+		return false;
+	}
+	
+	private static boolean collides(float x, float y, Shape.Circle circle){
+		Vector2 pos = circle.getPos();
+		Log.d(Main.TAG, "x = " + x);
+		Log.d(Main.TAG, "y = " + y);
+		float distance2 = pos.distance2(x, y);
+		float radius = circle.getRadius();
+		Log.d(Main.TAG, "distance2 = " + distance2);
+		Log.d(Main.TAG, "radius2 = " + radius * radius);
+		if(distance2 < radius * radius) return true;
 		return false;
 	}
 	

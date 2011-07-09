@@ -24,6 +24,7 @@ public class Input extends SimpleOnGestureListener{
 		return false;
 	}
 	
+	
 	@Override
 	public boolean onDown(MotionEvent e) {
 		if(hudInput.onDown(e)) return true;

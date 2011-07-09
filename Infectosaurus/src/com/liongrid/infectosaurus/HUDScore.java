@@ -12,7 +12,6 @@ import com.liongrid.infectosaurus.R;
 public class HUDScore extends HUDObject{
 
 	private DrawableBitmap drawing;
-	private int mHumansLeft;
 	private InfectoGameObjectHandler objectHandler;
 	private RenderSystem renderSystem;
 	private int screenWidth;
