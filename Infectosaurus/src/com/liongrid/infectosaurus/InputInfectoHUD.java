@@ -14,7 +14,6 @@ public class InputInfectoHUD extends InputHUD{
 		HUDObjectHandler hudObjectHandler = GameActivity.infectoPointers.HUDObjectHandler;
 		HUDButton button = hudObjectHandler.getButtonAt(event.getX(), 
 				Camera.screenHeight - event.getY());
-		Log.d(Main.TAG, "Button = " + button);
 		if(button == null) return false;
 		button.onPress();
 		return false;

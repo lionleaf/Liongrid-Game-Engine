@@ -60,12 +60,8 @@ public class Collision {
 	
 	private static boolean collides(float x, float y, Shape.Circle circle){
 		Vector2 pos = circle.getPos();
-		Log.d(Main.TAG, "x = " + x);
-		Log.d(Main.TAG, "y = " + y);
 		float distance2 = pos.distance2(x, y);
 		float radius = circle.getRadius();
-		Log.d(Main.TAG, "distance2 = " + distance2);
-		Log.d(Main.TAG, "radius2 = " + radius * radius);
 		if(distance2 < radius * radius) return true;
 		return false;
 	}
