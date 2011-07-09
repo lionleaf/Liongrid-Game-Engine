@@ -1,6 +1,5 @@
-package com.liongrid.infectosaurus.hudobjects;
+package com.liongrid.gameengine;
 
-import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.tools.Vector2Int;
 
 public abstract class HUDObject extends BaseObject{

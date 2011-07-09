@@ -1,15 +1,13 @@
-package com.liongrid.infectosaurus.hudobjects;
+package com.liongrid.infectosaurus;
 
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Camera;
 import com.liongrid.gameengine.DrawableBitmap;
+import com.liongrid.gameengine.HUDObject;
 import com.liongrid.gameengine.RenderSystem;
 import com.liongrid.gameengine.Texture;
 import com.liongrid.gameengine.TextureLibrary;
-import com.liongrid.infectosaurus.GameActivity;
-import com.liongrid.infectosaurus.InfectoGameObjectHandler;
 import com.liongrid.infectosaurus.R;
-import com.liongrid.infectosaurus.Team;
 
 public class HUDScore extends HUDObject{
 
