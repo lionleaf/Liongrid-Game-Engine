@@ -61,7 +61,7 @@ public class GameStatus extends BaseObject{
 				
 			}
 		});*/
-		gameActivity.roundOver();
+		gameActivity.roundOver(InfectoPointers.NumberOfHumans - mLastHumanCount, mCoinsGained);
 
 	}
 

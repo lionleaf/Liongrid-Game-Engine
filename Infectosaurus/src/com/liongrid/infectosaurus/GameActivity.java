@@ -26,43 +26,46 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.TextView;
 
 /**
  * @author Lastis
  *		This activity is the upper class for the whole game play
  */
 public class GameActivity extends Activity implements GameActivityInterface{
-	
+
 	private static final String SAVE_PREF_NAME = "infectoSave";
 
 	public static Context CONTEXT;
-	
+
 	//To keep screen alive
 	private PowerManager.WakeLock wl;
-	
+
 	Panel panel;
 	private GestureDetector gestureDetector;
+
+	private boolean useScreenshot;
 	public static InfectoPointers infectoPointers;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        wl = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
-		
+		wl = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
+
 		infectoPointers = new InfectoPointers();
 		InputInfectosaurus gameInput = new InputInfectosaurus();
 		InputInfectoHUD hudInput = new InputInfectoHUD();
 		gestureDetector = 
 			new GestureDetector(this, new Input(hudInput,gameInput));
-		
+
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		Log.d(Main.TAG,"In GameActivity onCreate");
-		
+
 		setScreenDimensionsAndScale();
 
-		
+
 		panel = new Panel(this);
 		if(savedInstanceState == null){
 			panel.init();
@@ -70,32 +73,32 @@ public class GameActivity extends Activity implements GameActivityInterface{
 		}else{
 			BaseObject.gamePointers.panel = panel;
 		}
-		
 
-		
+
+
 		panel.startGame();
 		panel.setRender();
 		preLoadTextures();
-		
+
 		setContentView(panel);
-		
+
 		Bundle extras = getIntent().getExtras();
 		int difficulty = extras.getInt("com.liongrid.infectosaurus.difficulty");
 		int pop = extras.getInt("com.liongrid.infectosaurus.population");
 		infectoPointers.difficulty = difficulty;
 		GameActivity.infectoPointers.NumberOfHumans = pop;
-		
+
 		//TODO try catch and alert!!!!! on getint
 		CONTEXT = this;
 		BaseObject.gamePointers.level.spawnNPCs(pop,  difficulty);
-		
-		
+
+
 	}
 
-	
-	
+
+
 	public static void loadData(Context context){
-		
+
 		SharedPreferences data = context.getSharedPreferences(SAVE_PREF_NAME, 0);
 		InfectosaurusUpgrade[] upgrades = InfectosaurusUpgrade.values();
 		int upgradeCount = upgrades.length; 
@@ -105,19 +108,19 @@ public class GameActivity extends Activity implements GameActivityInterface{
 			if(newRank < 0) continue;
 			upgrade.setRank(newRank);
 		}
-		
+
 		int coins = data.getInt("coins", -1);
 		if(coins != -1){
 			InfectoPointers.coins = data.getInt("coins", 0);
 		}
 	}
-	
+
 	public static void saveData(Context context){
 		SharedPreferences data = context.getSharedPreferences(SAVE_PREF_NAME, 0);
 		SharedPreferences.Editor editor = data.edit();
-		
+
 		editor.putInt("coins", InfectoPointers.coins);
-		
+
 		InfectosaurusUpgrade[] upgrades = InfectosaurusUpgrade.values();
 		int upgradeCount = upgrades.length; 
 		for (int i = 0; i < upgradeCount; i++) {
@@ -126,7 +129,7 @@ public class GameActivity extends Activity implements GameActivityInterface{
 		}
 		editor.commit();
 	}
-	
+
 	private void init() {
 		infectoPointers.gameObjectHandler = new InfectoGameObjectHandler();
 		infectoPointers.HUDObjectHandler = new HUDObjectHandler();
@@ -135,7 +138,7 @@ public class GameActivity extends Activity implements GameActivityInterface{
 		panel.addToRoot(infectoPointers.gameObjectHandler);
 		panel.addToRoot(infectoPointers.HUDObjectHandler);
 		panel.addToRoot(infectoPointers.gameStatus);
-		
+
 	}
 
 
@@ -144,7 +147,7 @@ public class GameActivity extends Activity implements GameActivityInterface{
 		super.onSaveInstanceState(outState);
 		//outState.putSerializable("GamePointers", (Serializable) BaseObject.gamePointers);
 	}
-	
+
 	/**
 	 * This should be placed somewhere else later. 
 	 * But you have to load the textures to be used in a level!
@@ -155,22 +158,22 @@ public class GameActivity extends Activity implements GameActivityInterface{
 		tLib.allocateTexture(R.drawable.spheremonster01);
 		tLib.allocateTexture(R.drawable.mann1);
 	}
-	
+
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		// Gesture detection
-        if (gestureDetector.onTouchEvent(event)) {
-            return true;
-        }
-        return false;
+		if (gestureDetector.onTouchEvent(event)) {
+			return true;
+		}
+		return false;
 	}
 
 	public void setScreenDimensionsAndScale() {
 		Display display = getWindowManager().getDefaultDisplay(); 
 		/* Now we can retrieve all display-related infos */
 		Camera.init(display.getHeight(), 
-					display.getWidth(), 
-					Level.TILE_SIZE);
+				display.getWidth(), 
+				Level.TILE_SIZE);
 		Camera.setUnitsPerHeight(12);
 	}
 
@@ -179,7 +182,7 @@ public class GameActivity extends Activity implements GameActivityInterface{
 		panel.finish();
 		super.finish();
 	}
-	
+
 	@Override
 	protected void onPause(){
 		super.onPause();
@@ -200,35 +203,50 @@ public class GameActivity extends Activity implements GameActivityInterface{
 
 
 
-	public void roundOver() {
-		
-		BaseObject.gamePointers.gameThread.stopRunning();
-		BaseObject.gamePointers.renderThread.screenshot = true;
-		while(BaseObject.gamePointers.renderThread.lastScreenshot == null){
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+	public void roundOver(final int humansKilled, final int coinsGained) {
+
+		if(useScreenshot){
+			BaseObject.gamePointers.renderThread.screenshot = true;
+			while(BaseObject.gamePointers.renderThread.lastScreenshot == null){
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 		}
-		
+
+
+		BaseObject.gamePointers.gameThread.stopRunning();
+
+
 		runOnUiThread(new Runnable() {
-			
+
 			public void run() {
 				setContentView(R.layout.round_over);
-				View mainView = findViewById(R.id.roundOverMainLayout);
-				Bitmap bmp = BaseObject.gamePointers.renderThread.lastScreenshot;
-				if(bmp != null){
-					mainView.setBackgroundDrawable(new BitmapDrawable(bmp));
+				
+				if(useScreenshot){
+					View mainView = findViewById(R.id.roundOverMainLayout);
+					Bitmap bmp = BaseObject.gamePointers.renderThread.lastScreenshot;
+					if(bmp != null){
+						mainView.setBackgroundDrawable(new BitmapDrawable(bmp));
+					}
 				}
+				
 				Button backButton = (Button) findViewById(R.id.returnButton);
 				backButton.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
 						finish();
 					}
 				});
+				
+				TextView roundOverText = (TextView) findViewById(R.id.roundOverText);
+				int totalCoins =  InfectoPointers.coins;
+				roundOverText.setText("Round over! Humans killed: "+humansKilled+
+						" Coins gained: " + coinsGained +
+						". Total coins: " + totalCoins+". ");
 			}
 		});
-		
+
 	}
 }
