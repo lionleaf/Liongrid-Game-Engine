@@ -2,6 +2,8 @@ package com.liongrid.infectosaurus.effects;
 
 import java.util.Random;
 
+import android.util.Log;
+
 import com.liongrid.gameengine.Effect;
 import com.liongrid.infectosaurus.GameActivity;
 import com.liongrid.infectosaurus.InfectoGameObject;
@@ -44,8 +46,10 @@ public class InfectedDamageEffect extends Effect<InfectoGameObject> {
 
 	@Override
 	public void onApply(InfectoGameObject target) {
+		//Only spawn if this is the killing blow!
+		boolean startedWithHp = target.mHp > 0;
 		target.mHp -= mDamage;
-		if(target.infectable && target.mHp <= 0){
+		if(target.mHp <= 0 && startedWithHp && target.infectable){
 			float check = random.nextFloat();
 			if(check <= mInfectChance){
 				Infectosaurus inf = new Infectosaurus();

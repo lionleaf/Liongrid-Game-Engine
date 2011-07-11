@@ -44,7 +44,7 @@ public class GameActivity extends Activity implements GameActivityInterface{
 	Panel panel;
 	private GestureDetector gestureDetector;
 
-	private boolean useScreenshot;
+	private static final boolean useScreenshot = false;
 	public static InfectoPointers infectoPointers;
 
 	@Override
@@ -206,7 +206,7 @@ public class GameActivity extends Activity implements GameActivityInterface{
 	public void roundOver(final int humansKilled, final int coinsGained) {
 
 		if(useScreenshot){
-			BaseObject.gamePointers.renderThread.screenshot = true;
+			BaseObject.gamePointers.renderThread.takeScreenShot();
 			while(BaseObject.gamePointers.renderThread.lastScreenshot == null){
 				try {
 					Thread.sleep(10);

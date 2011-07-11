@@ -23,7 +23,7 @@ public class RenderingThread implements Panel.Renderer {
 	private Object drawLock;
 	private boolean drawQueueChanged;
 
-	public boolean screenshot = false;
+	private boolean screenshot = false;
 
 	public Bitmap lastScreenshot;
     
@@ -31,6 +31,10 @@ public class RenderingThread implements Panel.Renderer {
     public RenderingThread() {
     	Log.d(Main.TAG,"In RThread");
     	drawLock = new Object();
+    }
+    
+    public synchronized void takeScreenShot(){
+    	screenshot = true;
     }
 
 	public void onDrawFrame(GL10 gl) { 

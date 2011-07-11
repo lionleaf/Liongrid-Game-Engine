@@ -68,12 +68,13 @@ public class Infectosaurus extends InfectoGameObject {
 	
 	@Override
 	public void update(float dt, BaseObject parent) {
-		//Make it not attack untill spawning is done!
+		//Make it not attack until spawning is done!
 		if(!addedAttack && sprite.getSpriteState() != SpriteState.spawning){
 			mAttackComponent.setEnabled(true);
 			addedAttack = true;
 		}
 		super.update(dt, parent);
+		
 	}
 	
 	private SpriteComponent loadAnimations(Texture tex) {
@@ -128,8 +129,17 @@ public class Infectosaurus extends InfectoGameObject {
 		if(Collision.collides(this, o)){
 			float[] AB = {pos.x - o.pos.x, pos.y - o.pos.y};
 			float absAB = (float) Math.sqrt(AB[0] * AB[0] + AB[1] * AB[1]);
-			float cosPhi = AB[0] / absAB;
-			float sinPhi = AB[1] / absAB;
+			
+			float cosPhi;
+			float sinPhi;
+			if(absAB != 0){
+				cosPhi = AB[0] / absAB;
+				sinPhi = AB[1] / absAB;
+			}else{ // If it`s zero, just teleport to the side instead of getting NaN
+				cosPhi = 1;
+				sinPhi = 0;
+			}
+			 
 			
 			pos.x = o.pos.x + cosPhi * o.radius + cosPhi * radius;
 			pos.y = o.pos.y + sinPhi * o.radius + sinPhi * radius;

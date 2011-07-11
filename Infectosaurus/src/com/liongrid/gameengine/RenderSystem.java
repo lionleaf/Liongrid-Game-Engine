@@ -48,6 +48,8 @@ public class RenderSystem {
     public void scheduleForDraw(DrawableObject object, float x, float y,
 		 boolean cameraRelative, float scale, int width, int height) {
     	
+    	
+    	
     	if(!cameraRelative && cull(object, x, y)) return;
     	
     	RenderElement element = rElementPool.allocate();

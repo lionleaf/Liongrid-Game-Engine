@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 public class UpgradeActivity extends Activity {
@@ -17,6 +18,7 @@ public class UpgradeActivity extends Activity {
 	private TextView upgradeInfoText;
 	private TextView upgradeStateText;
 	private TextView coinText;
+	private CheckBox cheatBox;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,7 @@ public class UpgradeActivity extends Activity {
 		upgradeInfoText = (TextView) findViewById(R.id.upgradeInfoText);
 		upgradeStateText = (TextView) findViewById(R.id.currentUpgradeStateText);
 		coinText = (TextView) findViewById(R.id.coinText);
+		cheatBox = (CheckBox) findViewById(R.id.cheatCheck);
 		talentTree.setOnSelectedChangeListener(new SelectedChangeListener());
 
 		upgradeButton.setOnClickListener(new ClickListener());
@@ -51,7 +54,7 @@ public class UpgradeActivity extends Activity {
 
 		//Make sure player can`t get awesome upgrades 
 		//until they have enough others.
-		upgradeButton.setEnabled(uTB.isUpgradeable() && coins >= price );
+		upgradeButton.setEnabled(cheatBox.isChecked() || (uTB.isUpgradeable() && coins >= price));
 
 		upgradeInfoText.setText("Price: "+price);
 
@@ -78,8 +81,9 @@ public class UpgradeActivity extends Activity {
 			TalentIcon uTB = (TalentIcon) findViewById(checkedID);
 			if(uTB == null) return;
 			Upgrade<?> upgrade = uTB.getUpgrade();
-
-			InfectoPointers.coins -= upgrade.getUpgradePrice();
+			if(!cheatBox.isChecked()){
+				InfectoPointers.coins -= upgrade.getUpgradePrice();
+			}
 			upgrade.incrementRank();
 
 			updateRightPanel();

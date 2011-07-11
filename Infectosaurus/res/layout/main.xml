@@ -7,12 +7,12 @@
     <TableLayout android:layout_alignParentLeft="true" android:layout_alignParentTop="true" android:id="@+id/tableLayout1" android:layout_width="fill_parent" android:layout_height="wrap_content" android:stretchColumns="1">
         <TableRow android:id="@+id/tableRow1" android:layout_width="fill_parent" android:layout_height="wrap_content">
             <TextView android:text="Difficulty: " android:layout_height="wrap_content" android:id="@+id/textView1" android:layout_width="wrap_content"></TextView>
-            <SeekBar android:layout_height="wrap_content" android:id="@+id/difficultyBar" android:layout_width="wrap_content" android:progress="1" android:paddingLeft="5dip" android:paddingRight="5dip"></SeekBar>
+            <SeekBar android:layout_height="wrap_content" android:id="@+id/difficultyBar" android:layout_width="wrap_content" android:progress="1" android:paddingLeft="5dip" android:paddingRight="5dip" android:max="100"></SeekBar>
             <TextView android:text="1" android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/difficultyLabel"></TextView>
         </TableRow>
         <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/TableRow01">
             <TextView android:text="Population: " android:id="@+id/TextView01" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
-            <SeekBar android:id="@+id/popBar" android:progress="15" android:layout_height="wrap_content" android:layout_width="wrap_content" android:paddingRight="5dip" android:paddingLeft="5dip"></SeekBar>
+            <SeekBar android:id="@+id/popBar" android:progress="15" android:layout_height="wrap_content" android:layout_width="wrap_content" android:paddingRight="5dip" android:paddingLeft="5dip" android:max="100"></SeekBar>
             <TextView android:text="15" android:id="@+id/popTextView" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
         </TableRow>
         <Button android:layout_width="wrap_content" android:id="@+id/startGameButton" android:layout_height="wrap_content" android:layout_gravity="top" android:layout_weight="1" android:text="@string/startGame"></Button>

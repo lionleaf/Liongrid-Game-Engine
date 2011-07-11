@@ -33,24 +33,25 @@ public class RenderElement extends BaseObject{
 	public void reset() {
 		//This data is always set again when reused.
 		//So no use in reseting it.
-		/*drawable = null;
+		drawable = null;
 		x = 0;
-		y = 0;*/
+		y = 0;
+		scale = 1f;
+		cameraRelative = false;
 	}
 
 	public void set(DrawableObject object, Vector2 pos, boolean cameraRelative) {
 		this.drawable = object;
 		x = pos.x;
 		y = pos.y;
-		cameraRelative = cameraRelative;
-		
+		this.cameraRelative = cameraRelative;
 	}
 	
 	public void set(DrawableObject drawable, int x, int y, boolean cameraRelative){
 		this.drawable = drawable;
 		this.x = x;
 		this.y = y;
-		cameraRelative = cameraRelative;
+		this.cameraRelative = cameraRelative;
 	}
 
 	@Override
