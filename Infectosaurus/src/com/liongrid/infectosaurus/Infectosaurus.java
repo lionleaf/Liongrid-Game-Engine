@@ -97,7 +97,7 @@ public class Infectosaurus extends InfectoGameObject {
 		spawnBmps[4] = new DrawableBitmap(tex, 5*mSize/6, 5*mSize/6);
 		
 		
-		attackBmps[0] = new DrawableBitmap(tex, 16*3+25, 16*3+25);
+		attackBmps[0] = new DrawableBitmap(tex, mSize+25, mSize+25);
 		
 		LAnimation moveAnimation = new LAnimation(dbs, 0.1f);
 		LAnimation attackAnimation = new LAnimation(attackBmps, 0.1f, false);

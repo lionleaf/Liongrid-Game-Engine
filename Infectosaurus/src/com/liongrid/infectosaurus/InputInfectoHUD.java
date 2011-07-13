@@ -16,7 +16,7 @@ public class InputInfectoHUD extends InputHUD{
 				Camera.screenHeight - event.getY());
 		if(button == null) return false;
 		button.onSingleTapUp();
-		return false;
+		return true;
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class InputInfectoHUD extends InputHUD{
 				Camera.screenHeight - event.getY());
 		if(button == null) return false;
 		button.onShowPress();
-		return false;
+		return true;
 	}
 
 }
