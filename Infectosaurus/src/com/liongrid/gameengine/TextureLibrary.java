@@ -90,6 +90,8 @@ public class TextureLibrary extends BaseObject {
 		texture.width  = width;
 		texture.x = left;
 		texture.y = bot;
+		texture.initialX = left;
+		texture.initialY = bot;
 		texture.loadWholeBitmap = false;
 
 		return texture;
@@ -200,21 +202,28 @@ public class TextureLibrary extends BaseObject {
 				mCropWorkspace[1] = bitmap.getHeight();
 				mCropWorkspace[2] = bitmap.getWidth();
 				mCropWorkspace[3] = -bitmap.getHeight();
+				
+				texture.id = textureName;
+				texture.width = bitmap.getWidth();
+				texture.height = bitmap.getHeight();
+				texture.bitmapWidth = bitmap.getWidth();
+				texture.bitmapHeight = bitmap.getHeight();
 			}
 			else{
 				mCropWorkspace[0] = texture.x;
 				mCropWorkspace[1] = bitmap.getHeight() - texture.y;
 				mCropWorkspace[2] = texture.width;
 				mCropWorkspace[3] = - texture.height;
+				
+				texture.id = textureName;
+				texture.bitmapWidth = bitmap.getWidth();
+				texture.bitmapHeight = bitmap.getHeight();
 			}
 				
 
 			((GL11) gl).glTexParameteriv(GL10.GL_TEXTURE_2D, GL11Ext.GL_TEXTURE_CROP_RECT_OES,
 					mCropWorkspace, 0);
 
-			texture.id = textureName;
-			texture.width = bitmap.getWidth();
-			texture.height = bitmap.getHeight();
 
 			bitmap.recycle();
 

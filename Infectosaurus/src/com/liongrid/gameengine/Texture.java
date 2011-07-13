@@ -17,6 +17,10 @@ public class Texture {
     public boolean loadWholeBitmap = true;
     public int x = 0;
     public int y = 0;
+	public int bitmapWidth;
+	public int bitmapHeight;
+	public int initialX;
+	public int initialY;
 
     public Texture() {
         super();
