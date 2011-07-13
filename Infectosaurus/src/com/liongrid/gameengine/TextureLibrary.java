@@ -80,6 +80,20 @@ public class TextureLibrary extends BaseObject {
 
 		return texture;
 	}
+	
+	public Texture allocateTexture(int resourceID, int left, int bot, int width, int height){
+		Texture texture = getTextureByResource(resourceID);
+		if (texture == null) {
+			texture = addTexture(resourceID, -1, 0, 0);
+		}
+		texture.height = height;
+		texture.width  = width;
+		texture.x = left;
+		texture.y = bot;
+		texture.loadWholeBitmap = false;
+
+		return texture;
+	}
 
 	/** Loads a single texture into memory.  Does nothing if the texture is already loaded. */
 	public Texture loadTexture(Context context, GL10 gl, int resourceID) {
@@ -181,11 +195,19 @@ public class TextureLibrary extends BaseObject {
 			}
 
 			assert error == GL10.GL_NO_ERROR;
-
-			mCropWorkspace[0] = 0;
-			mCropWorkspace[1] = bitmap.getHeight();
-			mCropWorkspace[2] = bitmap.getWidth();
-			mCropWorkspace[3] = -bitmap.getHeight();
+			if(texture.loadWholeBitmap){
+				mCropWorkspace[0] = 0;
+				mCropWorkspace[1] = bitmap.getHeight();
+				mCropWorkspace[2] = bitmap.getWidth();
+				mCropWorkspace[3] = -bitmap.getHeight();
+			}
+			else{
+				mCropWorkspace[0] = texture.x;
+				mCropWorkspace[1] = bitmap.getHeight() - texture.y;
+				mCropWorkspace[2] = texture.width;
+				mCropWorkspace[3] = - texture.height;
+			}
+				
 
 			((GL11) gl).glTexParameteriv(GL10.GL_TEXTURE_2D, GL11Ext.GL_TEXTURE_CROP_RECT_OES,
 					mCropWorkspace, 0);

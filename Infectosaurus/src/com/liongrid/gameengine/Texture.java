@@ -12,6 +12,11 @@ public class Texture {
     public int width;
     public int height;
     public boolean loaded = false;
+    
+    // Variables used for cropping
+    public boolean loadWholeBitmap = true;
+    public int x = 0;
+    public int y = 0;
 
     public Texture() {
         super();

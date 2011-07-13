@@ -2,7 +2,9 @@ package com.liongrid.infectosaurus.components;
 
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Component;
+import com.liongrid.gameengine.DrawableBitmap;
 import com.liongrid.gameengine.DrawableObject;
+import com.liongrid.infectosaurus.EasyBitmapCropper;
 import com.liongrid.infectosaurus.InfectoGameObject;
 
 public class SpriteComponent extends Component<InfectoGameObject> {
