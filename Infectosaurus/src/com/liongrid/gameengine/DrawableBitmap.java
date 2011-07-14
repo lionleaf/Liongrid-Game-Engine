@@ -32,7 +32,7 @@ public class DrawableBitmap extends BaseObject implements DrawableObject {
 		mCrop = new int[4];
 		mOpacity = 1.0f;
 		croppedImage = false;
-		setCrop(0, height, width, height);
+		setDimensions(0, height, width, height);
 	}
 	
 	public DrawableBitmap(Texture texture, int width, int height, int[] cropWorkspace) {
@@ -43,7 +43,7 @@ public class DrawableBitmap extends BaseObject implements DrawableObject {
 		mCrop = new int[4];
 		mOpacity = 1.0f;
 		croppedImage = true;
-		setCrop(0, height, width, height);
+		setDimensions(0, height, width, height);
 		mCropWorkspace = cropWorkspace;
 	}
 
@@ -143,7 +143,7 @@ public class DrawableBitmap extends BaseObject implements DrawableObject {
     }
     
     protected final void setFlip(boolean horzFlip, boolean vertFlip) {
-        setCrop(horzFlip ? mWidth : 0,
+        setDimensions(horzFlip ? mWidth : 0,
                 vertFlip ? 0 : mHeight,
                 horzFlip ? -mWidth : mWidth,
                 vertFlip ? -mHeight : mHeight);
@@ -170,7 +170,7 @@ public class DrawableBitmap extends BaseObject implements DrawableObject {
 	 * @param width
 	 * @param height
 	 */
-	public void setCrop(int left, int bottom, int width, int height) {
+	public void setDimensions(int left, int bottom, int width, int height) {
 		// Negative width and height values will flip the image.
 		mCrop[0] = left;
 		mCrop[1] = bottom;
