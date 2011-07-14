@@ -13,12 +13,6 @@ public class Texture {
     public int height;
     public boolean loaded = false;
     
-    // Variables used for cropping
-    public int x = 0;
-    public int y = 0;
-	public int initialX;
-	public int initialY;
-
     public Texture() {
         super();
         reset();
@@ -38,10 +32,5 @@ public class Texture {
     	tex.width = width;
     	tex.height = height;
     	tex.loaded = loaded;
-    	
-    	tex.x = x;
-    	tex.y = y;
-    	tex.initialX = initialX;
-    	tex.initialY = initialY;
     }
 }

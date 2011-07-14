@@ -1,6 +1,7 @@
 package com.liongrid.gameengine;
 
 import javax.microedition.khronos.opengles.GL10;
+import javax.microedition.khronos.opengles.GL11;
 import javax.microedition.khronos.opengles.GL11Ext;
 
 
@@ -14,6 +15,8 @@ public class DrawableBitmap extends BaseObject implements DrawableObject {
 	private int mHeight;
 	private int mCrop[];
 	private float mOpacity;
+	private int[] mCropWorkspace;
+	private boolean croppedImage;
 
 	/**
 	 * @param texture - texture of the bitmap
@@ -28,7 +31,20 @@ public class DrawableBitmap extends BaseObject implements DrawableObject {
 		mHeight = height;
 		mCrop = new int[4];
 		mOpacity = 1.0f;
+		croppedImage = false;
 		setCrop(0, height, width, height);
+	}
+	
+	public DrawableBitmap(Texture texture, int width, int height, int[] cropWorkspace) {
+		super();
+		mTexture = texture;
+		mWidth = width;
+		mHeight = height;
+		mCrop = new int[4];
+		mOpacity = 1.0f;
+		croppedImage = true;
+		setCrop(0, height, width, height);
+		mCropWorkspace = cropWorkspace;
 	}
 
 	@Override
@@ -98,6 +114,11 @@ public class DrawableBitmap extends BaseObject implements DrawableObject {
 			// we need to do it again so the saved textureID will be loaded a second time
 			// the bitmap is drawn.
 			gl.glBindTexture(GL10.GL_TEXTURE_2D, mTexture.id);
+			
+			if(croppedImage){
+				((GL11) gl).glTexParameteriv(GL10.GL_TEXTURE_2D, GL11Ext.GL_TEXTURE_CROP_RECT_OES,
+						mCropWorkspace, 0);
+			}
 			
 			// This is necessary because we could be drawing the same texture with different
             // crop (say, flipped horizontally) on the same frame.

@@ -55,16 +55,15 @@ public class GameActivity extends Activity implements GameActivityInterface{
 		wl = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
 
 		infectoPointers = new InfectoPointers();
+		
 		InputInfectosaurus gameInput = new InputInfectosaurus();
 		InputInfectoHUD hudInput = new InputInfectoHUD();
-		gestureDetector = 
-			new GestureDetector(this, new Input(hudInput,gameInput));
+		gestureDetector = new GestureDetector(this, new Input(hudInput,gameInput));
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		Log.d(Main.TAG,"In GameActivity onCreate");
 
 		setScreenDimensionsAndScale();
-
 
 		panel = new Panel(this);
 		if(savedInstanceState == null){
@@ -157,6 +156,7 @@ public class GameActivity extends Activity implements GameActivityInterface{
 		TextureLibrary tLib = BaseObject.gamePointers.textureLib;
 		tLib.allocateTexture(R.drawable.spheremonster01);
 		tLib.allocateTexture(R.drawable.mann1);
+		tLib.allocateTexture(R.drawable.ants);
 	}
 
 	@Override
