@@ -4,7 +4,7 @@ import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Component;
 import com.liongrid.gameengine.DrawableBitmap;
 import com.liongrid.gameengine.DrawableObject;
-import com.liongrid.gameengine.tools.EasyBitmapCropper;
+import com.liongrid.gameengine.EasyBitmapCropper;
 import com.liongrid.infectosaurus.InfectoGameObject;
 
 public class SpriteComponent extends Component<InfectoGameObject> {

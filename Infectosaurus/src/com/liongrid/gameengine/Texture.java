@@ -14,11 +14,8 @@ public class Texture {
     public boolean loaded = false;
     
     // Variables used for cropping
-    public boolean loadWholeBitmap = true;
     public int x = 0;
     public int y = 0;
-	public int bitmapWidth;
-	public int bitmapHeight;
 	public int initialX;
 	public int initialY;
 
@@ -33,5 +30,18 @@ public class Texture {
         width = 0;
         height = 0;
         loaded = false;
+    }
+    
+    public void copyTo(Texture tex){
+    	tex.resource = resource;
+    	tex.id = id;
+    	tex.width = width;
+    	tex.height = height;
+    	tex.loaded = loaded;
+    	
+    	tex.x = x;
+    	tex.y = y;
+    	tex.initialX = initialX;
+    	tex.initialY = initialY;
     }
 }
