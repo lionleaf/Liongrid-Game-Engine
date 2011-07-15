@@ -25,8 +25,6 @@ import javax.microedition.khronos.opengles.GL10;
 import javax.microedition.khronos.opengles.GL11;
 import javax.microedition.khronos.opengles.GL11Ext;
 
-import com.liongrid.infectosaurus.Main;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -77,19 +75,9 @@ public class TextureLibrary extends BaseObject {
 	public Texture allocateTexture(int resourceID) {
 		Texture texture = getTextureByResource(resourceID);
 		if (texture == null) {
-			texture = addTexture(resourceID, -1, 0, 0, 0, 0);
+			texture = addTexture(resourceID, -1, 0, 0);
 		}
 
-		return texture;
-	}
-	
-	public Texture allocateTexture(int resourceID, int left, int bottom, 
-			int width, int height){
-		Texture texture = getTextureByResource(resourceID);
-		if (texture == null) {
-			texture = addTexture(resourceID, -1, left, bottom, width, height);
-		}
-		
 		return texture;
 	}
 
@@ -193,27 +181,18 @@ public class TextureLibrary extends BaseObject {
 			}
 
 			assert error == GL10.GL_NO_ERROR;
-			
-			
-			mCropWorkspace[0] = texture.x;
-			mCropWorkspace[1] = bitmap.getHeight() - texture.y;
-			if(texture.width != 0) mCropWorkspace[2] = texture.width;
-			else {
-				mCropWorkspace[2] = bitmap.getWidth();
-				texture.width = bitmap.getWidth();
-			}
-			if(texture.height != 0) mCropWorkspace[3] = -texture.height;
-			else {
-				mCropWorkspace[3] = -bitmap.getHeight();
-				texture.height = bitmap.getHeight();
-			}
-				
 
-			texture.id = textureName;
-				
+			mCropWorkspace[0] = 0;
+			mCropWorkspace[1] = bitmap.getHeight();
+			mCropWorkspace[2] = bitmap.getWidth();
+			mCropWorkspace[3] = -bitmap.getHeight();
 
 			((GL11) gl).glTexParameteriv(GL10.GL_TEXTURE_2D, GL11Ext.GL_TEXTURE_CROP_RECT_OES,
 					mCropWorkspace, 0);
+
+			texture.id = textureName;
+			texture.width = bitmap.getWidth();
+			texture.height = bitmap.getHeight();
 
 			bitmap.recycle();
 
@@ -279,8 +258,7 @@ public class TextureLibrary extends BaseObject {
 	}
 
 	/** Inserts a texture into the hash */
-	protected Texture addTexture(int id, int name, 
-			int left, int bottom, int width, int height) {
+	protected Texture addTexture(int id, int name, int width, int height) {
 		int index = findFirstKey(getHashIndex(id), -1);
 		Texture texture = null;
 		assert index != -1;
@@ -288,12 +266,8 @@ public class TextureLibrary extends BaseObject {
 		if (index != -1) {
 			mTextureHash[index].resource = id;
 			mTextureHash[index].id = name;
-			mTextureHash[index].x = left;
-			mTextureHash[index].y = bottom;
 			mTextureHash[index].width = width;
 			mTextureHash[index].height = height;
-			mTextureHash[index].initialX = left;
-			mTextureHash[index].initialY = bottom;
 			texture = mTextureHash[index];
 		}
 
