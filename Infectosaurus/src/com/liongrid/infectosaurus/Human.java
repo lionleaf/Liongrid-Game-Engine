@@ -35,8 +35,8 @@ public class Human extends InfectoGameObject{
 		SpriteComponent sprite = new SpriteComponent();
 		sprite.setAnimation(SpriteState.idle, moveAnimation);
 		
-		int width = gamePointers.level.getWidth();
-		int height = gamePointers.level.getHeight();
+		int width = gamePointers.map.getWidth();
+		int height = gamePointers.map.getHeight();
 		
 		pos.x = rand.nextInt(width);
 		pos.y = rand.nextInt(height); 

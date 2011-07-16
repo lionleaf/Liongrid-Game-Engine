@@ -12,7 +12,7 @@ public class AvoidObstacles extends BehaviorFunction{
 	@Override
 	protected double evaluate(State s, StateList lastStates) {
 		
-		if(gamePointers.level.isPositionBlocked(
+		if(gamePointers.map.isPositionBlocked(
 				(int)s.pos.x, (int)s.pos.y, MovementType.Walk)){
 			return Double.NaN;
 		}

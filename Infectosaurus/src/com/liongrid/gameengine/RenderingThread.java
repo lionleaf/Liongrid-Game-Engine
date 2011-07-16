@@ -116,7 +116,7 @@ public class RenderingThread implements Panel.Renderer {
 	}
 	
 	private void drawTiles(GL10 gl, int cameraX, int cameraY, int cameraWidth, float cameraHeight, float scale){
-		Map level = BaseObject.gamePointers.level;
+		Map level = BaseObject.gamePointers.map;
 		TileType[][] bgTiles = level.renderQueue;
 		
 		if(bgTiles != null && bgTiles.length > 0){

@@ -19,7 +19,7 @@ public class GameEnginePointers implements Serializable {
 	public RenderSystem renderSystem;
 	public RenderingThread renderThread;
 	public Panel panel;
-	public Map level;
+	public Map map;
 	public TileSet tileSet;
 	public Infectosaurus currentSaurus;
 	public TextureLibrary textureLib;

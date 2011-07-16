@@ -89,7 +89,7 @@ public class GameActivity extends Activity implements GameActivityInterface{
 
 		//TODO try catch and alert!!!!! on getint
 		CONTEXT = this;
-		BaseObject.gamePointers.level.spawnNPCs(pop,  difficulty);
+		BaseObject.gamePointers.map.spawnNPCs(pop,  difficulty);
 
 
 	}
