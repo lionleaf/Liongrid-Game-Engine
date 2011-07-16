@@ -8,6 +8,7 @@ import com.liongrid.gameengine.EasyBitmapCropper;
 import com.liongrid.infectosaurus.InfectoGameObject;
 
 public class SpriteComponent extends Component<InfectoGameObject> {
+	
 	public static enum SpriteState{
 		idle,
 		moving,

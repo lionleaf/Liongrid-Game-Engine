@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import com.liongrid.infectosaurus.GameActivity;
 import com.liongrid.infectosaurus.Main;
-import com.liongrid.infectosaurus.map.Level;
+import com.liongrid.infectosaurus.map.Map;
 import com.liongrid.infectosaurus.map.TileSet;
 
 import android.content.Context;
@@ -37,7 +37,7 @@ public class Panel extends GLSurfaceView implements SurfaceHolder.Callback,
 	    gamePointers.panel = this;
 	    gamePointers.root = new ObjectHandler();
 	    gamePointers.tileSet = new TileSet();
-	    gamePointers.level = new Level();
+	    gamePointers.level = new Map();
 	    gamePointers.gameThread = new GameThread();
 	    BaseObject.gamePointers.renderThread = new RenderingThread();
 	    

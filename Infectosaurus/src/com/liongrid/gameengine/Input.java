@@ -5,7 +5,7 @@ import android.view.GestureDetector.SimpleOnGestureListener;
 
 import com.liongrid.infectosaurus.InputInfectoHUD;
 import com.liongrid.infectosaurus.InputInfectosaurus;
-import com.liongrid.infectosaurus.map.Level;
+import com.liongrid.infectosaurus.map.Map;
 
 public class Input extends SimpleOnGestureListener{
 

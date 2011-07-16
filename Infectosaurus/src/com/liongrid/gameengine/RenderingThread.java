@@ -9,7 +9,7 @@ import javax.microedition.khronos.opengles.GL10;
 
 import com.liongrid.gameengine.tools.FixedSizeArray;
 import com.liongrid.infectosaurus.Main;
-import com.liongrid.infectosaurus.map.Level;
+import com.liongrid.infectosaurus.map.Map;
 import com.liongrid.infectosaurus.map.TileType;
 
 import android.graphics.Bitmap;
@@ -17,7 +17,7 @@ import android.util.Log;
 
 
 public class RenderingThread implements Panel.Renderer {
-	static final int TILE_SIZE = Level.TILE_SIZE;
+	static final int TILE_SIZE = Map.TILE_SIZE;
 	
     private ObjectHandler drawQueue;
 	private Object drawLock;
@@ -116,22 +116,22 @@ public class RenderingThread implements Panel.Renderer {
 	}
 	
 	private void drawTiles(GL10 gl, int cameraX, int cameraY, int cameraWidth, float cameraHeight, float scale){
-		Level level = BaseObject.gamePointers.level;
+		Map level = BaseObject.gamePointers.level;
 		TileType[][] bgTiles = level.renderQueue;
 		
 		if(bgTiles != null && bgTiles.length > 0){
 			int tilesX =  (int)(cameraX + cameraWidth/scale)/TILE_SIZE + 1;
-			if(tilesX > Level.mapSize.x) tilesX = Level.mapSize.x;
+			if(tilesX > Map.mapSize.x) tilesX = Map.mapSize.x;
 			int tilesY =  (int)(cameraY + cameraHeight/scale)/TILE_SIZE + 1;
-			if(tilesY > Level.mapSize.y) tilesY = Level.mapSize.y;
-			for (int i = cameraX / Level.TILE_SIZE; i < tilesX; i++) {
-				for (int j = cameraY / Level.TILE_SIZE; j < tilesY; j++) {
-					int x = Level.TILE_SIZE*i;
-					int y = Level.TILE_SIZE*j;
+			if(tilesY > Map.mapSize.y) tilesY = Map.mapSize.y;
+			for (int i = cameraX / Map.TILE_SIZE; i < tilesX; i++) {
+				for (int j = cameraY / Map.TILE_SIZE; j < tilesY; j++) {
+					int x = Map.TILE_SIZE*i;
+					int y = Map.TILE_SIZE*j;
 					//Check if element is outside the screen view
-			        if(x + Level.TILE_SIZE < cameraX/scale) continue;
+			        if(x + Map.TILE_SIZE < cameraX/scale) continue;
 			    	if(x > cameraX + cameraWidth/scale) continue;
-			        if(y + Level.TILE_SIZE < cameraY) continue;
+			        if(y + Map.TILE_SIZE < cameraY) continue;
 			    	if(y > cameraY + cameraHeight/scale) continue;
 			    	
 					bgTiles[i][j].draw(gl, x - cameraX

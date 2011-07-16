@@ -8,7 +8,7 @@ import com.liongrid.gameengine.Input;
 import com.liongrid.gameengine.Panel;
 import com.liongrid.gameengine.TextureLibrary;
 import com.liongrid.gameengine.Upgrade;
-import com.liongrid.infectosaurus.map.Level;
+import com.liongrid.infectosaurus.map.Map;
 import com.liongrid.infectosaurus.upgrades.InfectosaurusUpgrade;
 
 import android.app.Activity;
@@ -173,7 +173,7 @@ public class GameActivity extends Activity implements GameActivityInterface{
 		/* Now we can retrieve all display-related infos */
 		Camera.init(display.getHeight(), 
 				display.getWidth(), 
-				Level.TILE_SIZE);
+				Map.TILE_SIZE);
 		Camera.setUnitsPerHeight(12);
 	}
 

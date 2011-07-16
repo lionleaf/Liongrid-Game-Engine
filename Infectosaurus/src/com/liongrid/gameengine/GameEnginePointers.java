@@ -3,7 +3,7 @@ package com.liongrid.gameengine;
 import java.io.Serializable;
 
 import com.liongrid.infectosaurus.Infectosaurus;
-import com.liongrid.infectosaurus.map.Level;
+import com.liongrid.infectosaurus.map.Map;
 import com.liongrid.infectosaurus.map.TileSet;
 
 /**
@@ -19,7 +19,7 @@ public class GameEnginePointers implements Serializable {
 	public RenderSystem renderSystem;
 	public RenderingThread renderThread;
 	public Panel panel;
-	public Level level;
+	public Map level;
 	public TileSet tileSet;
 	public Infectosaurus currentSaurus;
 	public TextureLibrary textureLib;

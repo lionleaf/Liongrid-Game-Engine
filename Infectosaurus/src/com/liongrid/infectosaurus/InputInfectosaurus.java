@@ -5,7 +5,7 @@ import android.view.MotionEvent;
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Camera;
 import com.liongrid.gameengine.InputGame;
-import com.liongrid.infectosaurus.map.Level;
+import com.liongrid.infectosaurus.map.Map;
 
 public class InputInfectosaurus extends InputGame{
 	@Override
@@ -28,9 +28,9 @@ public class InputInfectosaurus extends InputGame{
 		//we are not sure are valid
 		float tempX = Camera.pos.x + distanceX / Camera.scale;
 		if(tempX  < 0) Camera.pos.x = 0;
-		else if(tempX + Camera.screenWidth/Camera.scale > Level.mapSizePx.x) 
+		else if(tempX + Camera.screenWidth/Camera.scale > Map.mapSizePx.x) 
 			Camera.pos.x = Math.max(0, 
-					Level.mapSizePx.x - (int)( Camera.screenWidth/Camera.scale));
+					Map.mapSizePx.x - (int)( Camera.screenWidth/Camera.scale));
 		else{
 			Camera.pos.x = (int) tempX;
 		}
@@ -38,9 +38,9 @@ public class InputInfectosaurus extends InputGame{
 		float tempY = Camera.pos.y - distanceY / Camera.scale;
 		if(tempY  < 0){
 			Camera.pos.y = 0;
-		}else if(tempY  + Camera.screenHeight/Camera.scale > Level.mapSizePx.y){ 
+		}else if(tempY  + Camera.screenHeight/Camera.scale > Map.mapSizePx.y){ 
 			Camera.pos.y = Math.max(0, 
-					(Level.mapSizePx.y) - (int) (Camera.screenHeight/Camera.scale));
+					(Map.mapSizePx.y) - (int) (Camera.screenHeight/Camera.scale));
 		}else{
 			Camera.pos.y = (int) tempY;
 		}
