@@ -87,6 +87,18 @@ public class Main extends Activity {
 			}
         });
         
+        /*
+        View statButton = findViewById(R.id.statButton);
+        statButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent i;
+				i = new Intent(v.getContext(), StatActivity.class);
+				startActivity(i);
+			}
+		});*/
+        
         
         View exitButton = findViewById(R.id.exitGameButton);
         exitButton.setOnClickListener(new OnClickListener(){

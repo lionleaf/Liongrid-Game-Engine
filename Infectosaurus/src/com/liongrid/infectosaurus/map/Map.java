@@ -11,8 +11,10 @@ import com.liongrid.gameengine.tools.MovementType;
 import com.liongrid.gameengine.tools.Vector2Int;
 import com.liongrid.infectosaurus.GameActivity;
 import com.liongrid.infectosaurus.Human;
+import com.liongrid.infectosaurus.InfectoGameObject;
 import com.liongrid.infectosaurus.InfectoGameObjectHandler;
 import com.liongrid.infectosaurus.R;
+import com.liongrid.infectosaurus.SpawnPool;
 
 public class Map extends BaseObject{
 
@@ -191,12 +193,8 @@ public class Map extends BaseObject{
 	public void spawnNPCs(int nr, int difficulty){
 		InfectoGameObjectHandler handler = GameActivity.infectoPointers.gameObjectHandler;
 		for (int i = 0; i < nr; i++){
-			Human newHuman = new Human();
+			InfectoGameObject newHuman = SpawnPool.spawnHuman(-1,-1,2*difficulty);
 			handler.add(newHuman);
-			newHuman.mMaxHp = 2 * difficulty;
-			newHuman.mHp = 2 * difficulty;
-			
-
 		}
 	}
 	

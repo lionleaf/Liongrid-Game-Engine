@@ -7,5 +7,6 @@ public class InfectoPointers {
 	public int difficulty;
 	public GameStatus gameStatus;
 	public GameActivity curGameActivity;
-	public static int coins = 0;
+	public static int coins = 0; 
+	public SpawnPool spawnPool;
 }

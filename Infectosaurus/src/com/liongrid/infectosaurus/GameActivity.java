@@ -82,12 +82,13 @@ public class GameActivity extends Activity implements GameActivityInterface{
 		setContentView(panel);
 
 		Bundle extras = getIntent().getExtras();
+		//TODO try catch and alert!!!!! on getint
 		int difficulty = extras.getInt("com.liongrid.infectosaurus.difficulty");
 		int pop = extras.getInt("com.liongrid.infectosaurus.population");
 		infectoPointers.difficulty = difficulty;
 		GameActivity.infectoPointers.NumberOfHumans = pop;
 
-		//TODO try catch and alert!!!!! on getint
+		
 		CONTEXT = this;
 		BaseObject.gamePointers.map.spawnNPCs(pop,  difficulty);
 
@@ -133,6 +134,7 @@ public class GameActivity extends Activity implements GameActivityInterface{
 		infectoPointers.gameObjectHandler = new InfectoGameObjectHandler();
 		infectoPointers.HUDObjectHandler = new HUDObjectHandler();
 		infectoPointers.gameStatus = new GameStatus();
+		infectoPointers.spawnPool = new SpawnPool();
 		infectoPointers.curGameActivity = this;
 		panel.addToRoot(infectoPointers.gameObjectHandler);
 		panel.addToRoot(infectoPointers.HUDObjectHandler);
