@@ -11,17 +11,24 @@ import org.xml.sax.SAXException;
 
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Panel;
+import com.liongrid.infectosaurus.R;
 
 public class Level {
 	
 	public Map map;
 	public int difficulty;
 	public int population;
+	public int id;
+	public String name;
+	
+	public Level() {
+		loadLevelFromFile(1);
+	}
 	
 	
-	public void loadLevelFromFile(int res){
+	public void loadLevelFromFile(int level){
 		Panel panel = BaseObject.gamePointers.panel;
-		InputStream inputStream = panel.getResources().openRawResource(res);
+		InputStream inputStream = panel.getResources().openRawResource(R.raw.levels);
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 	    try {
 	            SAXParser parser = factory.newSAXParser();

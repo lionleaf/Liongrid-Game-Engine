@@ -1,5 +1,7 @@
 package com.liongrid.infectosaurus.map;
 
+import java.lang.reflect.Field;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -17,6 +19,11 @@ public class LevelSaxParser extends DefaultHandler {
 			Attributes attributes) throws SAXException {
 		
 		super.startElement(uri, localName, qName, attributes);
+		if(localName.equalsIgnoreCase("level")){
+			level.id = Integer.parseInt(attributes.getValue("id"));
+			level.population = Integer.parseInt(attributes.getValue("population"));
+			level.difficulty = Integer.parseInt(attributes.getValue("difficulty"));
+		}
 		
 	}
 	
@@ -32,5 +39,22 @@ public class LevelSaxParser extends DefaultHandler {
 	public void endDocument() throws SAXException {
 		super.endDocument();
 		
+	}
+	
+	/**
+	 * Dangerous! Using undocumented API, might change!
+	 * 
+	 * @param variableName
+	 * @param c
+	 * @return
+	 */
+	private int getResId(String variableName, Class<?> c) {
+	    try {
+	        Field idField = c.getDeclaredField(variableName.toLowerCase());
+	        return idField.getInt(idField);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return -1;
+	    } 
 	}
 }
