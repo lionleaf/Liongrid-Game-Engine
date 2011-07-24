@@ -54,8 +54,8 @@ public class InfMeleeAttackComponent extends Component<InfectoGameObject> {
 		mDelayCountDown -= dt;
 		if(mDelayCountDown > 0) return;
 		
-		InfectoGameObject target =	gameObjHandler.mCH.getClosest(parent.pos, 
-			parent.team == Team.Human ? Team.Alien.ordinal() : Team.Human.ordinal());
+		InfectoGameObject target =	(InfectoGameObject) gameObjHandler.mCollisionHandler.getClosest(parent.pos, 
+			parent.team == Team.Human ? Team.Alien.ordinal() : Team.Human.ordinal()).owner;
 
 		
 		if(target == null || 

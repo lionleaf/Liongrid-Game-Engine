@@ -19,11 +19,11 @@ public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
 	
 	
 	
-	public CollisionHandler<InfectoGameObject> mCH;
+	public CollisionHandler mCollisionHandler;
 	public InfectoGameObjectHandler(){
 		super(DEFAULT_CAPACITY);
 		
-		mCH = new CollisionHandler<InfectoGameObject>(Team.values().length, DEFAULT_CAPACITY);
+		mCollisionHandler = new CollisionHandler(Team.values().length, DEFAULT_CAPACITY);
 		
 		
 	}
@@ -31,13 +31,17 @@ public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
 	@Override
 	public void add(InfectoGameObject object) {
 		super.add(object);
-		mCH.add(object);
+		if(object.collisionObject != null){
+			mCollisionHandler.add(object.collisionObject);
+		}
 	}
 	
 	@Override
 	public void remove(InfectoGameObject object) {
 		super.remove(object);
-		mCH.remove(object);
+		if(object.collisionObject != null){
+			mCollisionHandler.remove(object.collisionObject);
+		}
 	}
 	
 	@Override
@@ -52,7 +56,7 @@ public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
 			((BaseObject)objectArray[i]).update(dt, this);
 		}
 		
-		mCH.update(dt, parent);
+		mCollisionHandler.update(dt, parent);
 	}
 
 //	/**

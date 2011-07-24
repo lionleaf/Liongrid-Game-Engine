@@ -2,16 +2,12 @@ package com.liongrid.infectosaurus;
 
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Collision;
-import com.liongrid.gameengine.Shape;
+import com.liongrid.gameengine.CollisionObject;
 import com.liongrid.gameengine.GameObject;
-import com.liongrid.gameengine.Shape.CHCircle;
 import com.liongrid.gameengine.tools.Vector2;
 
-public class InfectoGameObject extends GameObject<InfectoGameObject> 
-		implements CHCircle<InfectoGameObject>{
-
+public class InfectoGameObject extends GameObject<InfectoGameObject>{
 	
-	private static final int COLLISION_ARR_LENGTH = 5;
 	public Team team = Team.Human; //Default team
 	public boolean alive = true;
 	public Vector2 vel = new Vector2(0,0);
@@ -19,13 +15,11 @@ public class InfectoGameObject extends GameObject<InfectoGameObject>
 	public int mMaxHp = 1;
 	public int mHp = mMaxHp;
 	public boolean infectable = true; // Tells if the object can be infected
-	public InfectoGameObject[] collisions;
-	public int collideCnt = 0;
-	public float radius = 0;
+	public CollisionObject collisionObject;
 	
 	
 	public InfectoGameObject() {
-		collisions = new InfectoGameObject[COLLISION_ARR_LENGTH];
+		
 	}
 	
 	
@@ -42,38 +36,7 @@ public class InfectoGameObject extends GameObject<InfectoGameObject>
 		GameActivity.infectoPointers.gameObjectHandler.remove(this);
 	}
 
-	public void collide(InfectoGameObject o) {
-		if(collideCnt >= collisions.length) return;
-		if(Collision.collides(this, o)){
-			collisions[collideCnt] = o;
-			collideCnt++;
-		}
-	}
-
-	public void clear() {
-		collideCnt = 0;
-		for(int i = 0; i < collisions.length; i++){
-			collisions[i] = null;
-		}
-	}
-
-	public int getType() {
-		return team.ordinal();
-	}
-
-	public Vector2 getPos() {
-		return pos;
-	}
-
-	public float getRadius() {
-		return radius;
-	}
-
-	public int getShape() {
-		return Shape.CIRCLE;
-	}
-	
 	public float distance2(InfectoGameObject o){
-		return Collision.distance2(this, o);
+		return Collision.distance2(collisionObject, o.collisionObject);
 	}
 }

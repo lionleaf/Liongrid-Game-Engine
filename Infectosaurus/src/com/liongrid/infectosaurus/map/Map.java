@@ -10,7 +10,6 @@ import com.liongrid.gameengine.Panel;
 import com.liongrid.gameengine.tools.MovementType;
 import com.liongrid.gameengine.tools.Vector2Int;
 import com.liongrid.infectosaurus.GameActivity;
-import com.liongrid.infectosaurus.Human;
 import com.liongrid.infectosaurus.InfectoGameObject;
 import com.liongrid.infectosaurus.InfectoGameObjectHandler;
 import com.liongrid.infectosaurus.R;

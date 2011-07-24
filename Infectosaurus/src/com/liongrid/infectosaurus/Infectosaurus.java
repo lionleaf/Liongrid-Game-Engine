@@ -2,12 +2,14 @@ package com.liongrid.infectosaurus;
 
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Collision;
+import com.liongrid.gameengine.CollisionCircle;
 import com.liongrid.gameengine.DrawableBitmap;
 import com.liongrid.gameengine.Panel;
 import com.liongrid.gameengine.Texture;
 import com.liongrid.gameengine.TextureLibrary;
 import com.liongrid.infectosaurus.R;
 import com.liongrid.infectosaurus.components.AggressivMoveComponent;
+import com.liongrid.infectosaurus.components.CollisionComponent;
 import com.liongrid.infectosaurus.components.HpBarComponent;
 import com.liongrid.infectosaurus.components.LAnimation;
 import com.liongrid.infectosaurus.components.InfMeleeAttackComponent;
@@ -33,11 +35,10 @@ public class Infectosaurus extends InfectoGameObject {
 	InfMeleeAttackComponent mAttackComponent;
 
 	public Infectosaurus() {
-		Log.d(Main.TAG, "Infectosaurus construct");
-		Panel panel = BaseObject.gamePointers.panel;
 		
 		mSize = 16*3;
-		radius = (float) (mSize/2.0);
+		float radius = (float) (mSize/2.0);
+		collisionObject = new CollisionCircle(Team.Alien.ordinal(), pos, this, radius);
 		
 		TextureLibrary texLib = gamePointers.textureLib;
 		Texture tex = texLib.allocateTexture(R.drawable.spheremonster01);
@@ -45,6 +46,7 @@ public class Infectosaurus extends InfectoGameObject {
 		sprite.setSpriteState(SpriteState.spawning);
 		mAttackComponent = new InfMeleeAttackComponent();
 		mAttackComponent.setEnabled(false);
+		addComponent(new CollisionComponent());
 		addComponent(mAttackComponent);
 		addComponent(new AggressivMoveComponent());
 		addComponent(sprite);
@@ -124,28 +126,6 @@ public class Infectosaurus extends InfectoGameObject {
 		mHp = mMaxHp;
 	}
 	
-	@Override
-	public void collide(InfectoGameObject o) {
-		if(Collision.collides(this, o)){
-			float[] AB = {pos.x - o.pos.x, pos.y - o.pos.y};
-			float absAB = (float) Math.sqrt(AB[0] * AB[0] + AB[1] * AB[1]);
-			
-			float cosPhi;
-			float sinPhi;
-			if(absAB != 0){
-				cosPhi = AB[0] / absAB;
-				sinPhi = AB[1] / absAB;
-			}else{ // If it`s zero, just teleport to the side instead of getting NaN
-				cosPhi = 1;
-				sinPhi = 0;
-			}
-			 
-			
-			pos.x = o.pos.x + cosPhi * o.radius + cosPhi * radius;
-			pos.y = o.pos.y + sinPhi * o.radius + sinPhi * radius;
-		}
-	}
-
 	@Override
 	protected void die() {
 		super.die();

@@ -4,7 +4,6 @@ import com.liongrid.gameengine.tools.Vector2;
 
 public abstract interface Shape {
 	
-	public static final int POINT = 0;
 	public static final int CIRCLE = 1;
 	public static final int SQUARE = 2;
 	
@@ -29,33 +28,4 @@ public abstract interface Shape {
 		
 	}
 	
-	public interface CHCircle<T extends Shape> 
-		extends Shape.Collideable<T>, Shape.Circle {
-		
-	}
-	
-	public interface CHSquare<T extends Shape>
-		extends Shape.Collideable<T>, Shape.Square {
-		
-	}
-	
-	public abstract interface Collideable<T extends Shape> extends Shape{
-		final static int TYPE_LESS = -1;
-		/**
-		 * Tells the object that it collides with a shape. 
-		 * @param object - The shape that the Collideable collides with.  
-		 */
-		public void collide(T object);
-		
-		/**
-		 * Erases old history and makes the shape ready for new collisions.
-		 * This is usually called before a set of .collides(shape) calls.
-		 */
-		public void clear();
-		
-		/**
-		 * @return the index of the type the object represents.
-		 */
-		public int getType();
-	}
 }

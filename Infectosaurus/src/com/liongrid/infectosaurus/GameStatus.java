@@ -9,14 +9,14 @@ public class GameStatus extends BaseObject{
 
 	public boolean gameStarted = false;
 	public int mCoinsGained = 0;
-	private CollisionHandler<InfectoGameObject> collisionHandler;
+	private CollisionHandler collisionHandler;
 	private GameActivity gameActivity;
 	private int mLastHumanCount = -1;
 
 
 	@Override
 	public void update(float dt, BaseObject parent) {
-		collisionHandler = GameActivity.infectoPointers.gameObjectHandler.mCH;
+		collisionHandler = GameActivity.infectoPointers.gameObjectHandler.mCollisionHandler;
 		gameActivity = GameActivity.infectoPointers.curGameActivity;
 
 		checkGameStarted();

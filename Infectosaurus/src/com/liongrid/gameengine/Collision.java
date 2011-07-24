@@ -6,7 +6,6 @@ import com.liongrid.gameengine.tools.Vector2;
 import com.liongrid.infectosaurus.Main;
 
 public class Collision {
-	private static final int POINT = Shape.POINT;
 	private static final int CIRCLE = Shape.CIRCLE;
 	private static final int SQUARE = Shape.SQUARE;
 	
@@ -35,8 +34,7 @@ public class Collision {
 	
 	public static float distance2(Shape shape1, Shape shape2){
 		if(shape1.getShape() == CIRCLE && shape2.getShape() == CIRCLE){
-			return distance2((Shape.Circle) shape1, 
-					(Shape.Circle) shape2);
+			return distance2((Shape.Circle) shape1, (Shape.Circle) shape2);
 		}
 		return Float.NaN;
 	}
