@@ -1,11 +1,14 @@
 package com.liongrid.infectosaurus.components;
 
+import android.util.Log;
+
 import com.liongrid.gameengine.CollisionCircle;
 import com.liongrid.gameengine.CollisionObject;
 import com.liongrid.gameengine.Component;
 import com.liongrid.gameengine.Shape;
 import com.liongrid.gameengine.tools.Vector2;
 import com.liongrid.infectosaurus.InfectoGameObject;
+import com.liongrid.infectosaurus.Main;
 
 /**
  * @author Lastis

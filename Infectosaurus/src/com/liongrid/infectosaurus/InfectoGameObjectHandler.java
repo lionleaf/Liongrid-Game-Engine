@@ -7,6 +7,7 @@ import android.util.Log;
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Camera;
 import com.liongrid.gameengine.CollisionHandler;
+import com.liongrid.gameengine.CollisionObject;
 import com.liongrid.gameengine.ObjectHandler;
 import com.liongrid.gameengine.tools.Vector2;
 import com.liongrid.infectosaurus.map.Map;
@@ -42,9 +43,6 @@ public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
 	@Override
 	public void add(InfectoGameObject object) {
 		super.add(object);
-		if(object.collisionObject != null){
-			mCollisionHandler.add(object.collisionObject);
-		}
 	}
 	
 	@Override
@@ -59,28 +57,30 @@ public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
 		//For speed, we get the raw array. We have to be careful to only read		
 		Object[] objectArray = objects.getArray();
 		int count = objects.getCount();
-		
 		for(int i = 0; i < count; i++){
 			((BaseObject)objectArray[i]).update(dt, this);
 		}
 		
-		updateCollisionAreas(count, objectArray);
-		mCollisionHandler.update(dt, parent);
+		updateCollisionAreas(count, objectArray, parent, dt);
 	}
 
 	/**
-	 * Clears the collisionHandler and adds them again.
-	 * @param count
-	 * @param objectArray
+	 * Does three things. Clears the collision handlers, inserts the collision objects
+	 * to their appropriate handlers and updates the handlers.
 	 */
-	private void updateCollisionAreas(int count, Object[] objectArray) {
+	private void updateCollisionAreas(int count, Object[] objectArray, 
+			BaseObject parent, float dt) {
+		//Clear
 		mCollisionHandler.clear();
+		//Add
 		for(int i = 0; i < count; i++){
-			InfectoGameObject infectoObject = (InfectoGameObject)objectArray[i]; 
+			InfectoGameObject infectoObject = (InfectoGameObject)objectArray[i];
+			if(infectoObject.collisionObject == null) return;
 			mCollisionHandler.add(infectoObject.collisionObject);
-			
 //			moveToCorrectCollisionHandler((InfectoGameObject)objectArray[i]);
 		}
+		//Update
+		mCollisionHandler.update(dt, parent);
 	}
 
 	private void moveToCorrectCollisionHandler(InfectoGameObject gameObject) {
