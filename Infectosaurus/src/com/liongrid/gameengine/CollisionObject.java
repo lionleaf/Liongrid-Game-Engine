@@ -10,7 +10,7 @@ import com.liongrid.gameengine.tools.Vector2;
  */
 public abstract class CollisionObject implements Shape{
 	
-	public static final int DEFAULT_MAX_COLLISIONS = 3;
+	public static final int DEFAULT_MAX_COLLISIONS = 10;
 	
 	public int collisionCnt;
 	public CollisionObject[] collisions;
