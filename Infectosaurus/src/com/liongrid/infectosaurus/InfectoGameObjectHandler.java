@@ -50,9 +50,6 @@ public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
 	@Override
 	public void remove(InfectoGameObject infectoGameObject) {
 		super.remove(infectoGameObject);
-		if(infectoGameObject.collisionObject != null){
-			mCollisionHandler.remove(infectoGameObject.collisionObject);
-		}
 	}
 	
 	@Override
@@ -66,13 +63,23 @@ public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
 		for(int i = 0; i < count; i++){
 			((BaseObject)objectArray[i]).update(dt, this);
 		}
-//		updateCollisionAreas(count, objectArray);
+		
+		updateCollisionAreas(count, objectArray);
 		mCollisionHandler.update(dt, parent);
 	}
 
+	/**
+	 * Clears the collisionHandler and adds them again.
+	 * @param count
+	 * @param objectArray
+	 */
 	private void updateCollisionAreas(int count, Object[] objectArray) {
+		mCollisionHandler.clear();
 		for(int i = 0; i < count; i++){
-			moveToCorrectCollisionHandler((InfectoGameObject)objectArray[i]);
+			InfectoGameObject infectoObject = (InfectoGameObject)objectArray[i]; 
+			mCollisionHandler.add(infectoObject.collisionObject);
+			
+//			moveToCorrectCollisionHandler((InfectoGameObject)objectArray[i]);
 		}
 	}
 

@@ -1,9 +1,14 @@
 package com.liongrid.infectosaurus.components;
 
+import android.util.Log;
+
+import com.liongrid.gameengine.CollisionHandler;
+import com.liongrid.gameengine.CollisionObject;
 import com.liongrid.gameengine.Component;
 import com.liongrid.infectosaurus.GameActivity;
 import com.liongrid.infectosaurus.InfectoGameObject;
 import com.liongrid.infectosaurus.InfectoGameObjectHandler;
+import com.liongrid.infectosaurus.Main;
 import com.liongrid.infectosaurus.Team;
 
 public class AggressivMoveComponent extends Component<InfectoGameObject>{
@@ -16,14 +21,17 @@ public class AggressivMoveComponent extends Component<InfectoGameObject>{
 
 	@Override
 	public void update(float dt, InfectoGameObject parent) {
-		InfectoGameObject target =
-			(InfectoGameObject) //gameObjHandler.getClosest(parent, parent.pos, Team.Human);
-		gameObjHandler.mCollisionHandler.getClosest(parent.pos, Team.Human.ordinal()).owner;
-		if(target != null){
-			parent.vel.set(target.pos);
-			parent.vel.subtract(parent.pos);
-			parent.vel.normalize();
-			parent.vel.multiply(parent.speed);
-		}
+		CollisionHandler collisionHandler = gameObjHandler.mCollisionHandler;
+		
+		CollisionObject collisionObject = 
+			collisionHandler.getClosest(parent.pos, Team.Human.ordinal());
+		Log.d(Main.TAG, "count = " + collisionHandler.getCount());
+		Log.d(Main.TAG, "target = " + collisionObject);
+		if(collisionObject == null) return;
+		InfectoGameObject target = (InfectoGameObject) collisionObject.owner;
+		parent.vel.set(target.pos);
+		parent.vel.subtract(parent.pos);
+		parent.vel.normalize();
+		parent.vel.multiply(parent.speed);
 	}
 }
