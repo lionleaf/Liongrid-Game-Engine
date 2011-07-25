@@ -48,7 +48,7 @@ public class CollisionComponent extends Component<InfectoGameObject>{
 				cosPhi = 1;
 				sinPhi = 0;
 			}
-			 
+			
 			pos1.x = pos2.x + cosPhi * radius1 + cosPhi * radius2;
 			pos1.y = pos2.y + sinPhi * radius1 + sinPhi * radius2;
 		}
