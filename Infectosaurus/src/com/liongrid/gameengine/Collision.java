@@ -9,9 +9,15 @@ public class Collision {
 	private static final int CIRCLE = Shape.CIRCLE;
 	private static final int SQUARE = Shape.SQUARE;
 	
+	/**
+	 * Checks if a shape collides with a point.
+	 * @param point
+	 * @param shape
+	 * @return true if collides. False if the shape is not supported.
+	 */
 	public static boolean collides(Vector2 point, Shape shape){
 		if(shape.getShape() == CIRCLE){
-			return collides(point, (Shape.Circle) shape);
+			return collides(point.x, point.y, (Shape.Circle) shape);
 		}
 		return false;
 	}
@@ -32,6 +38,12 @@ public class Collision {
 		return false;
 	}
 	
+	/**
+	 * Returns the closest distance between two shapes. The distance is squared.
+	 * @param shape1
+	 * @param shape2
+	 * @return distance squared
+	 */
 	public static float distance2(Shape shape1, Shape shape2){
 		if(shape1.getShape() == CIRCLE && shape2.getShape() == CIRCLE){
 			return distance2((Shape.Circle) shape1, (Shape.Circle) shape2);
@@ -45,14 +57,6 @@ public class Collision {
 		float radi = circle1.getRadius() + circle2.getRadius();
 		
 		if(pos1.distance2(pos2) < (radi)*(radi)) return true;
-		return false;
-	}
-	
-	private static boolean collides(Vector2 point, Shape.Circle circle){
-		Vector2 pos1 = point;
-		Vector2 pos2 = circle.getPos();
-		float radius = circle.getRadius();
-		if(pos1.distance2(pos2) < radius * radius) return true;
 		return false;
 	}
 	
