@@ -123,6 +123,7 @@ public class GameThread extends Thread {
 					y + Camera.pos.y);
 		}
 	}
+	
 
 	public void onPause() {
 		paused = true;
