@@ -39,22 +39,33 @@ public class RenderSystem {
     		boolean cameraRelative) {
     	scheduleForDraw(object, pos.x, pos.y, cameraRelative);
     }
-    
+    /**
+     * @param object - the drawable object to be drawn.
+     * @param x - position x in pixels
+     * @param y - position y in pixels
+     * @param cameraRelative - True sets the drawable a fixed position on the camera.
+     */
     public void scheduleForDraw(DrawableObject object, float x, float y,
 		 boolean cameraRelative){
     	scheduleForDraw(object, x, y, cameraRelative, 1f, -1,-1);
     }
     
+    /**
+     * @param object - the drawable object to be drawn.
+     * @param x - position x in pixels
+     * @param y - position y in pixels
+     * @param cameraRelative - True sets the drawable a fixed position on the camera.
+     * @param scale - scale factor
+     * @param width - width in pixels
+     * @param height - height in pixels
+     */
     public void scheduleForDraw(DrawableObject object, float x, float y,
 		 boolean cameraRelative, float scale, int width, int height) {
-    	
-    	
     	
     	if(!cameraRelative && cull(object, x, y)) return;
     	
     	RenderElement element = rElementPool.allocate();
         if(element == null) return;
-        
         
         //Since this is done a lot, we want max speed, so we change
         //the public variables instead of calling set
@@ -67,6 +78,13 @@ public class RenderSystem {
     }
     
     
+    /**
+     * Checks if the drawable object is outside the camera view.
+     * @param object - the drawable
+     * @param x - position x
+     * @param y - position y
+     * @return true if the whole drawable is outside the camera view
+     */
     public boolean cull(DrawableObject object, float x, float y){
     	if(x + object.getWidth() < Camera.pos.x) return true;
     	if(x > Camera.pos.x + Camera.screenWidth/Camera.scale) return true;
