@@ -25,8 +25,6 @@ public class AggressivMoveComponent extends Component<InfectoGameObject>{
 		
 		CollisionObject collisionObject = 
 			collisionHandler.getClosest(parent.pos, Team.Human.ordinal());
-		Log.d(Main.TAG, "count = " + collisionHandler.getCount());
-		Log.d(Main.TAG, "target = " + collisionObject);
 		if(collisionObject == null) return;
 		InfectoGameObject target = (InfectoGameObject) collisionObject.owner;
 		parent.vel.set(target.pos);
