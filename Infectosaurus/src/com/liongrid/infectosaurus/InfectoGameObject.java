@@ -17,7 +17,6 @@ public class InfectoGameObject extends GameObject<InfectoGameObject>{
 	public boolean infectable = true; // Tells if the object can be infected
 	public CollisionObject collisionObject;
 	
-	
 	public InfectoGameObject() {
 		
 	}

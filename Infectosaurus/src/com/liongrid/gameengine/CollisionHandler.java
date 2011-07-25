@@ -222,4 +222,10 @@ public class CollisionHandler extends BaseObject
 	public int getCount(int type){
 		return typeLengths[type];
 	}
+
+
+	public void clear() throws UnsupportedOperationException {
+		// TODO Auto-generated method stub
+		
+	}
 }

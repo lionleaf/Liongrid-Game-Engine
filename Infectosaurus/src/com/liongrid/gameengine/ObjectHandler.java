@@ -93,4 +93,8 @@ public class ObjectHandler <T extends BaseObject> extends BaseObject
 	public int getCount() {
 		return objects.getCount();
 	}
+
+	public void clear() throws UnsupportedOperationException {
+		
+	}
 }
