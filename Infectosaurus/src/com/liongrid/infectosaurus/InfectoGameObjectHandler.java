@@ -8,6 +8,8 @@ import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Camera;
 import com.liongrid.gameengine.CollisionHandler;
 import com.liongrid.gameengine.ObjectHandler;
+import com.liongrid.gameengine.tools.Vector2;
+import com.liongrid.infectosaurus.map.Map;
 
 /**
  * @author Lastis
@@ -15,17 +17,26 @@ import com.liongrid.gameengine.ObjectHandler;
  * components in a way that they can be done in the right order 
  */
 public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
+	public static final int UNITS_PER_COLLISION_AREA_X = 8;
+	public static final int UNITS_PER_COLLISION_AREA_Y = 8;
 	private static final int DEFAULT_CAPACITY = 256;
 	
-	
-	
 	public CollisionHandler mCollisionHandler;
+	private CollisionHandler[][] mCollisionAreas;
+	
 	public InfectoGameObjectHandler(){
 		super(DEFAULT_CAPACITY);
-		
 		mCollisionHandler = new CollisionHandler(Team.values().length, DEFAULT_CAPACITY);
 		
-		
+//		int areasX = (int) Math.ceil(Map.mapSizePx.x / UNITS_PER_COLLISION_AREA_X);
+//		int areasY = (int) Math.ceil(Map.mapSizePx.y / UNITS_PER_COLLISION_AREA_Y);
+//		mCollisionAreas = new CollisionHandler[areasX][areasY];
+//		for(int i = 0; i < areasX; i++){
+//			for(int j = 0; j < areasY; j++){
+//				mCollisionAreas[i][j] = 
+//					new CollisionHandler(Team.values().length, DEFAULT_CAPACITY);
+//			}
+//		}
 	}
 	
 	@Override
@@ -37,10 +48,10 @@ public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
 	}
 	
 	@Override
-	public void remove(InfectoGameObject object) {
-		super.remove(object);
-		if(object.collisionObject != null){
-			mCollisionHandler.remove(object.collisionObject);
+	public void remove(InfectoGameObject infectoGameObject) {
+		super.remove(infectoGameObject);
+		if(infectoGameObject.collisionObject != null){
+			mCollisionHandler.remove(infectoGameObject.collisionObject);
 		}
 	}
 	
@@ -55,8 +66,24 @@ public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
 		for(int i = 0; i < count; i++){
 			((BaseObject)objectArray[i]).update(dt, this);
 		}
-		
+//		updateCollisionAreas(count, objectArray);
 		mCollisionHandler.update(dt, parent);
+	}
+
+	private void updateCollisionAreas(int count, Object[] objectArray) {
+		for(int i = 0; i < count; i++){
+			moveToCorrectCollisionHandler((InfectoGameObject)objectArray[i]);
+		}
+	}
+
+	private void moveToCorrectCollisionHandler(InfectoGameObject gameObject) {
+		Vector2 pos = gameObject.pos;
+		int minX = (int) Math.ceil(pos.x/UNITS_PER_COLLISION_AREA_X);
+		int maxX = (int) Math.ceil(pos.x/UNITS_PER_COLLISION_AREA_X);
+		
+		int minY = (int) Math.ceil(pos.y/UNITS_PER_COLLISION_AREA_Y);
+		int maxY = (int) Math.ceil(pos.y/UNITS_PER_COLLISION_AREA_Y);
+		
 	}
 
 //	/**
