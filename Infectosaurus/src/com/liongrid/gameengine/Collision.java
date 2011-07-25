@@ -22,6 +22,13 @@ public class Collision {
 		return false;
 	}
 	
+	/**
+	 * Checks if a shape collides with a point.
+	 * @param x
+	 * @param y
+	 * @param shape
+	 * @return true if collides. False if the shape is not supported.
+	 */
 	public static boolean collides(float x, float y, Shape shape){
 		if(shape.getShape() == CIRCLE){
 			return collides(x, y, (Shape.Circle) shape);
@@ -29,8 +36,13 @@ public class Collision {
 		return false;
 	}
 	
+	/**
+	 * Checks if two shapes collide. Returns false if shape not supported.
+	 * @param shape1
+	 * @param shape2
+	 * @return true if collides. False if the shapes are not supported
+	 */
 	public static boolean collides(Shape shape1, Shape shape2){
-		
 		if(shape1.getShape() == CIRCLE && shape2.getShape() == CIRCLE){
 			return collides((Shape.Circle) shape1, 
 							(Shape.Circle) shape2);
