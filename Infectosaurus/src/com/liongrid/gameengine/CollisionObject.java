@@ -12,12 +12,12 @@ public abstract class CollisionObject implements Shape{
 	
 	public static final int DEFAULT_MAX_COLLISIONS = 10;
 	
+	// Made public for speed.
 	public int collisionCnt;
 	public CollisionObject[] collisions;
 	public Object owner;
-	
-	private int type;
-	private Vector2 pos;
+	public int type;
+	public Vector2 pos;
 	
 	/**
 	 * A CollisionObject is basically a shape with an array of all the other shapes 
@@ -63,13 +63,20 @@ public abstract class CollisionObject implements Shape{
 	 * @param object - The shape that the CollisionShape collides with.  
 	 */
 	public void collide(CollisionObject object){
-		if(collisionCnt >= collisions.length) return;
+		if(collisionCnt >= collisions.length || isInArray(object)) return;
 		if(Collision.collides(this, object)){
 			collisions[collisionCnt] = object;
 			collisionCnt++;
 		}
 	}
 	
+	public boolean isInArray(CollisionObject object) {
+		for(int i = 0; i < collisionCnt; i++){
+			if(collisions[i] == object) return true;
+		}
+		return true;
+	}
+
 	/**
 	 * Erases old history and makes the shape ready for new collisions.
 	 * This is usually called before a set of .collides(shape) calls.

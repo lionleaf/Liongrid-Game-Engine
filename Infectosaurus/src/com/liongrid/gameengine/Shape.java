@@ -4,6 +4,7 @@ import com.liongrid.gameengine.tools.Vector2;
 
 public abstract interface Shape {
 	
+	public static final int POINT  = 0;
 	public static final int CIRCLE = 1;
 	public static final int SQUARE = 2;
 	

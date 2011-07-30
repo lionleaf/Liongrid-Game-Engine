@@ -7,6 +7,7 @@ import android.util.Log;
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Camera;
 import com.liongrid.gameengine.CollisionHandler;
+import com.liongrid.gameengine.CollisionHandlerMultipleArrays;
 import com.liongrid.gameengine.CollisionObject;
 import com.liongrid.gameengine.ObjectHandler;
 import com.liongrid.gameengine.tools.Vector2;
@@ -18,26 +19,29 @@ import com.liongrid.infectosaurus.map.Map;
  * components in a way that they can be done in the right order 
  */
 public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
-	public static final int UNITS_PER_COLLISION_AREA_X = 8;
-	public static final int UNITS_PER_COLLISION_AREA_Y = 8;
+	public static int UNITS_PER_COLLISION_AREA_X;
+	public static int UNITS_PER_COLLISION_AREA_Y;
 	private static final int DEFAULT_CAPACITY = 256;
 	
-	public CollisionHandler mCollisionHandler;
+//	public CollisionHandler mCollisionHandler;
 	private CollisionHandler[][] mCollisionAreas;
+	public int mCollisionAreasLengthX;
+	public int mCollisionAreasLengthY;
 	
 	public InfectoGameObjectHandler(){
 		super(DEFAULT_CAPACITY);
-		mCollisionHandler = new CollisionHandler(Team.values().length, DEFAULT_CAPACITY);
-		
-//		int areasX = (int) Math.ceil(Map.mapSizePx.x / UNITS_PER_COLLISION_AREA_X);
-//		int areasY = (int) Math.ceil(Map.mapSizePx.y / UNITS_PER_COLLISION_AREA_Y);
-//		mCollisionAreas = new CollisionHandler[areasX][areasY];
-//		for(int i = 0; i < areasX; i++){
-//			for(int j = 0; j < areasY; j++){
-//				mCollisionAreas[i][j] = 
-//					new CollisionHandler(Team.values().length, DEFAULT_CAPACITY);
-//			}
-//		}
+//		mCollisionHandler = new CollisionHandler(Team.values().length, DEFAULT_CAPACITY);
+		UNITS_PER_COLLISION_AREA_X = Camera.unit * 8;
+		UNITS_PER_COLLISION_AREA_Y = Camera.unit * 8;
+		mCollisionAreasLengthX = Map.mapSizePx.x / UNITS_PER_COLLISION_AREA_X + 1;
+		mCollisionAreasLengthY = Map.mapSizePx.y / UNITS_PER_COLLISION_AREA_Y + 1;
+		mCollisionAreas = new CollisionHandler[mCollisionAreasLengthX][];
+		for(int i = 0; i < mCollisionAreasLengthX; i++){
+			mCollisionAreas[i] = new CollisionHandler[mCollisionAreasLengthY];
+			for(int j = 0; j < mCollisionAreasLengthY; j++){
+				mCollisionAreas[i][j] = new CollisionHandler(DEFAULT_CAPACITY);
+			}
+		}
 	}
 	
 	@Override
@@ -61,105 +65,100 @@ public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
 			((BaseObject)objectArray[i]).update(dt, this);
 		}
 		
+		refreshCollisionAreas(count, objectArray);
 		updateCollisionAreas(count, objectArray, parent, dt);
 	}
 
-	/**
-	 * Does three things. Clears the collision handlers, inserts the collision objects
-	 * to their appropriate handlers and updates the handlers.
-	 */
-	private void updateCollisionAreas(int count, Object[] objectArray, 
-			BaseObject parent, float dt) {
+	private void refreshCollisionAreas(int count, Object[] objectArray) {
 		//Clear
-		mCollisionHandler.clear();
+//		mCollisionHandler.clear();
+		for(int i = 0; i < mCollisionAreas.length; i++){
+			for(int j = 0; j < mCollisionAreas[i].length; j++){
+				mCollisionAreas[i][j].clear();
+			}
+		}
+		
 		//Add
 		for(int i = 0; i < count; i++){
 			InfectoGameObject infectoObject = (InfectoGameObject)objectArray[i];
 			if(infectoObject.collisionObject == null) return;
-			mCollisionHandler.add(infectoObject.collisionObject);
-//			moveToCorrectCollisionHandler((InfectoGameObject)objectArray[i]);
+//			mCollisionHandler.add(infectoObject.collisionObject);
+			addToCorrectCollisionHandler((InfectoGameObject)objectArray[i]);
 		}
-		//Update
-		mCollisionHandler.update(dt, parent);
+	}
+	
+	private void updateCollisionAreas(int count, Object[] objectArray,
+			BaseObject parent, float dt) {
+		for(int i = 0; i < mCollisionAreas.length; i++){
+			for(int j = 0; j < mCollisionAreas[i].length; j++){
+				mCollisionAreas[i][j].update(dt, parent);
+			}
+		}
 	}
 
-	private void moveToCorrectCollisionHandler(InfectoGameObject gameObject) {
+	private void addToCorrectCollisionHandler(InfectoGameObject gameObject) {
+		CollisionObject collisionObject = gameObject.collisionObject;
+		if(collisionObject == null) return;
 		Vector2 pos = gameObject.pos;
-		int minX = (int) Math.ceil(pos.x/UNITS_PER_COLLISION_AREA_X);
-		int maxX = (int) Math.ceil(pos.x/UNITS_PER_COLLISION_AREA_X);
+		float halfWidth = (float) (gameObject.width/2.0);
+		float halfHeight = (float) (gameObject.heigth/2.0);
 		
-		int minY = (int) Math.ceil(pos.y/UNITS_PER_COLLISION_AREA_Y);
-		int maxY = (int) Math.ceil(pos.y/UNITS_PER_COLLISION_AREA_Y);
+		int minX = (int) ((pos.x - halfWidth)/UNITS_PER_COLLISION_AREA_X);
+		int maxX = (int) ((pos.x + halfWidth)/UNITS_PER_COLLISION_AREA_X);
 		
+		int minY = (int) ((pos.y - halfHeight)/UNITS_PER_COLLISION_AREA_Y);
+		int maxY = (int) ((pos.y - halfHeight)/UNITS_PER_COLLISION_AREA_Y);
+		for(int i = minX; i <= maxX; i++){
+			for(int j = minY; j <= maxY; j++){
+				if(mCollisionAreas[i][j] == null) continue;
+				mCollisionAreas[i][j].add(collisionObject);
+			}
+		}
 	}
+	
+	public int getCount(Team team){
+		int count = 0;
+		int length = objects.getCount();
+		Object[] array = objects.getArray();
+		for(int i = 0; i < length; i++){
+			InfectoGameObject gObject = (InfectoGameObject) array[i];
+			if(gObject.team == team) count += 1;
+		}
+		return count;
+	}
+	
+	public InfectoGameObject getClosest(Vector2 pos, Team team){
+		int i; float closestDistance = Float.MAX_VALUE;
+		InfectoGameObject gObject = null;
+		int length = objects.getCount();
+		Object[] array = objects.getArray();
+		for(i = 0; i < length; i++){
+			gObject = (InfectoGameObject) array[i];
+			if(gObject.team != team) continue;
+			float distance = pos.distance2(gObject.pos);
+			if(distance < closestDistance) {
+				closestDistance = distance;
+			}
+		}
+		return gObject;
+	} 
+	
 
-//	/**
-//	 * Finds all gameobjects within mReach of gObject
-//	 * 
-//	 * @param gObject - The object who wants something close
-//	 * @param mReach - How far you want to search
-//	 * @return - A FixedSizeArray with the results. (Remember to release it!) 
-//	 * Or null if there is nothing within mReach. It will not return itself.
-//	 */ 
-//	public FixedSizeArray<InfectoGameObject> getClose(InfectoGameObject gObject, 
-//			Vector2 pos, int reach, Team team) {
-//		int length = objects.getCount();
-//		Object[] objectArr = objects.getArray();
-//		
-//		//TODO pool object arrays?!
-//		FixedSizeArray<InfectoGameObject> returnObjects = new FixedSizeArray<InfectoGameObject>(length);
-//		
-//		for (int i = 0; i < length; i++) {
-//			InfectoGameObject currentObject = (InfectoGameObject) objectArr[i];
-//			// If team == Team.All, always proceed
-//			if(currentObject.team != team) if(team != Team.All) continue;
-//			
-//			if(currentObject.pos.distance2(pos) <= reach 
-//					&& currentObject != gObject){
-//				returnObjects.add(currentObject);
-//			}
-//		}
-//		
-//		if(returnObjects.getCount() > 0) return returnObjects;
-//		return null;
-//		
-//	}
-//	
-//	/**
-//	 * Get the closest InfectoGameObject to the position given. The first argument
-//	 * is the searching gameObject. This is to prevent it returning itself as the 
-//	 * closest. 
-//	 * These are quite expensive and scale a lot with complexity, not good!
-//	 * @param gObject - the searching gameObject. Can be null.
-//	 * @param pos - get closest gameObject to this position.
-//	 * @param team - only return gameObjects from the given team. Se Team enum.
-//	 * @return the closest gameObject to pos, with given team.
-//	 */
-//	public InfectoGameObject getClosest(InfectoGameObject gObject,
-//			Vector2 pos, Team team){
-//		
-//		InfectoGameObject closest = null;
-//		float closestDistance = Float.MAX_VALUE;
-//		float currentDistance = 0;
-//		
-//		final int length = objects.getCount();
-//		
-//		Object[] objectArr = objects.getArray();
-//		
-//		for (int i = 0; i < length; i++) {
-//			InfectoGameObject currentObject = (InfectoGameObject) objectArr[i];
-//			
-//			// If team == Team.All, always proceed
-//			if(currentObject.team != team) if(team != Team.All) continue;
-//			
-//			currentDistance = currentObject.pos.distance2(pos);
-//			
-//			if(currentDistance < closestDistance && objectArr[i] != gObject){
-//				closestDistance = currentDistance;
-//				closest = currentObject;
-//			}
-//		}
-//		return closest;
-//	}
-//	
+	public InfectoGameObject[] getClose(Vector2 pos, float within, 
+			Team team, InfectoGameObject[] array){
+		int count = 0; float dis2;
+		int length = objects.getCount();
+		Object[] gArray = objects.getArray();
+		for(int i = 0; i < length; i++){
+			InfectoGameObject gObject = (InfectoGameObject) gArray[i];
+			if(gObject.team != team) continue;
+			if(count >= array.length) return array;
+			dis2 = pos.distance2(gObject.pos);
+			if(dis2 < within * within){
+				array[count] = gObject;
+				count ++;
+			}
+		}
+		return array;
+	}
 }

@@ -2,7 +2,7 @@ package com.liongrid.infectosaurus.components;
 
 import android.util.Log;
 
-import com.liongrid.gameengine.CollisionHandler;
+import com.liongrid.gameengine.CollisionHandlerMultipleArrays;
 import com.liongrid.gameengine.CollisionObject;
 import com.liongrid.gameengine.Component;
 import com.liongrid.gameengine.tools.FixedSizeArray;
@@ -56,13 +56,8 @@ public class InfMeleeAttackComponent extends Component<InfectoGameObject> {
 		mDelayCountDown -= dt;
 		if(mDelayCountDown > 0) return;
 		
-		CollisionHandler collisionHandler = gameObjHandler.mCollisionHandler;
 		Team team = parent.team == Team.Human ? Team.Alien: Team.Human;
-		CollisionObject collisionObject = 
-			collisionHandler.getClosest(parent.pos, team.ordinal());
-		
-		if(collisionObject == null) return;
-		InfectoGameObject target = (InfectoGameObject) collisionObject.owner;
+		InfectoGameObject target = gameObjHandler.getClosest(parent.pos, team);
 		
 		if(target == null || 
 				target.distance2(parent) > mReach){

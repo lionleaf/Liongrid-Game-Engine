@@ -10,23 +10,33 @@ import com.liongrid.infectosaurus.Main;
 /**
  * @author Lastis
  */
-public class CollisionHandler extends BaseObject 
+public class CollisionHandlerMultipleArrays extends BaseObject 
 		implements ObjectHandlerInterface<CollisionObject>{
 	
 	public static final int TYPE_LESS = -1;
 	public static final int DEFAULT_TYPELESS_CAPACITY = 5;
 	
-	private CollisionObject[] collisionObjects;
+	private CollisionObject[][] collisionObjects;
 	private CollisionObject[] typeLess;
-	private int collisionObjectCnt;
+	private int[] collisionObjectCnt;
 	private int typeLessCnt;
 	private FixedSizeArray<CollisionObject> pendingAdditions;
 	
 	
-	public CollisionHandler(int capacity) {
+	public CollisionHandlerMultipleArrays(int typeCnt, int capacity) {
 		pendingAdditions = new FixedSizeArray<CollisionObject>(capacity);
 		typeLess = new CollisionObject[DEFAULT_TYPELESS_CAPACITY];
-		collisionObjects = new CollisionObject[capacity];
+		typeLessCnt = 0;
+		
+		collisionObjects = new CollisionObject[typeCnt][];
+		for(int i = 0; i < collisionObjects.length; i++){
+			collisionObjects[i] = new CollisionObject[DEFAULT_CAPACITY];
+		}
+		
+		collisionObjectCnt = new int[typeCnt];
+		for(int i = 0; i < collisionObjectCnt.length; i++){
+			collisionObjectCnt[i] = 0;
+		}
 	}
 
 	public void add(CollisionObject o){
@@ -44,13 +54,15 @@ public class CollisionHandler extends BaseObject
 		int length = pendingAdditions.getCount();
 		for(int i = 0; i < length; i++){
 			collisionObject = (CollisionObject) rawArr[i];
-			if(collisionObject.getType() == TYPE_LESS){
+			type = collisionObject.getType();
+			if(type == TYPE_LESS){
 				typeLess[typeLessCnt] = collisionObject;
 				typeLessCnt += 1;
 				continue;
 			}
-			collisionObjects[collisionObjectCnt] = collisionObject;
-			collisionObjectCnt += 1;
+			int index = collisionObjectCnt[type];
+			collisionObjects[type][index] = collisionObject;
+			collisionObjectCnt[type] += 1;
 		}
 		pendingAdditions.clear();
 	}
@@ -67,36 +79,44 @@ public class CollisionHandler extends BaseObject
 		clearCollisionObjects();
 		
 		if(typeLessCnt == 0){
-			for(int i = 0; i < collisionObjectCnt; i++){
-				collides(i, dt);
+			for(int i = 0; i < collisionObjectCnt.length; i++){
+				for(int j = 0; j < collisionObjectCnt[i]; j++){
+					collides(i, j, dt);
+				}
 			}
 		}
 		
 		else{
-			for(int i = 0; i < collisionObjectCnt; i++){
-				for(int j = 0; j < typeLessCnt; j++){
-					typeLess[j].collide(collisionObjects[i]);
+			for(int i = 0; i < collisionObjectCnt.length; i++){
+				for(int j = 0; j < collisionObjectCnt[i]; j++){
+					for(int k = 0; k < typeLessCnt; k++){
+						typeLess[k].collide(collisionObjects[i][j]);
+					}
+					collides(i, j, dt);
 				}
-				collides(i, dt);
 			}
 		}
 	}
 	
 
-	private void collides(int index, float dt) {
-		CollisionObject shape1 = collisionObjects[index];
+	private void collides(int typeIndex, int shapeIndex, float dt) {
+		CollisionObject shape1 = collisionObjects[typeIndex][shapeIndex];
 		CollisionObject shape2;
 		
-		for(int i = index + 1; i < collisionObjectCnt; i++){
-			shape2 = collisionObjects[i];
-			shape1.collide(shape2);
-			shape2.collide(shape1);
+		for(int i = typeIndex; i < collisionObjectCnt.length; i++){
+			for(int j = i == typeIndex ? shapeIndex + 1 : 0; j < collisionObjectCnt[i]; j++){
+				shape2 = collisionObjects[i][j];
+				shape1.collide(shape2);
+				shape2.collide(shape1);
+			}
 		}
 	}
 
 	private void clearCollisionObjects() {
-		for(int i = 0; i < collisionObjectCnt; i++){
-			collisionObjects[i].clear();
+		for(int i = 0; i < collisionObjectCnt.length ; i++){
+			for(int j = 0; j < collisionObjectCnt[i]; j++){
+				collisionObjects[i][j].clear();
+			}
 		}
 	}
 	
@@ -107,13 +127,12 @@ public class CollisionHandler extends BaseObject
 	 */
 	public CollisionObject getClosest(Vector2 pos, int type) {
 		CollisionObject returnO = null;
-		int i; float closestDistance = Float.MAX_VALUE;
-		for(i = 0; i < collisionObjectCnt; i++){
-			if(collisionObjects[i].getType() != type) continue;
-			float distance = pos.distance2(collisionObjects[i].getPos());
+		int index; float closestDistance = Float.MAX_VALUE;
+		for(index = 0; index < collisionObjectCnt[type]; index++){
+			float distance = pos.distance2(collisionObjects[type][index].getPos());
 			if(distance < closestDistance) {
 				closestDistance = distance;
-				returnO = collisionObjects[i];
+				returnO = collisionObjects[type][index];
 			}
 		}
 		return returnO;
@@ -126,15 +145,14 @@ public class CollisionHandler extends BaseObject
 	 */
 	public CollisionObject getClosest(Vector2 pos, int[] types){
 		CollisionObject returnO = null;
-		float closestDistance = Float.MAX_VALUE; int type; int i;
-		for(int typeIndex = 0; typeIndex < types.length; typeIndex ++){
-			type = types[typeIndex];
-			for(i = 0; i < collisionObjectCnt; i++){
-				if(collisionObjects[typeIndex].getType() != type) continue;
-				float distance = pos.distance2(collisionObjects[i].getPos());
+		float closestDistance = Float.MAX_VALUE; int type; int index;
+		for(int i = 0; i < types.length; i ++){
+			type = types[i];
+			for(index = 0; index < collisionObjectCnt[type]; index++){
+				float distance = pos.distance2(collisionObjects[type][index].getPos());
 				if(distance < closestDistance) {
 					closestDistance = distance;
-					returnO = collisionObjects[i];
+					returnO = collisionObjects[type][index];
 				}
 			}
 		}
@@ -152,14 +170,13 @@ public class CollisionHandler extends BaseObject
 			int[] types, CollisionObject[] array){
 		
 		int type; int count = 0; float dis2;
-		for(int typeIndex = 0; typeIndex < types.length; typeIndex ++){
-			type = types[typeIndex];
-			for(int i = 0; i < collisionObjectCnt; i++){
+		for(int i = 0; i < types.length; i ++){
+			type = types[i];
+			for(int index = 0; index < collisionObjectCnt[type]; index++){
 				if(count >= array.length) return array;
-				if(collisionObjects[i].getType() != type) continue;
-				dis2 = pos.distance2(collisionObjects[i].getPos());
+				dis2 = pos.distance2(collisionObjects[type][index].getPos());
 				if(dis2 < withIn * withIn){
-					array[count] = collisionObjects[i];
+					array[count] = collisionObjects[type][index];
 					count ++;
 				}
 			}
@@ -178,12 +195,11 @@ public class CollisionHandler extends BaseObject
 			int type, CollisionObject[] array){
 		
 		int count = 0; float dis2;
-		for(int i = 0; i < collisionObjectCnt; i++){
-			if(collisionObjects[i].getType() != type) continue;
+		for(int index = 0; index < collisionObjectCnt[type]; index++){
 			if(count >= array.length) return array;
-			dis2 = pos.distance2(collisionObjects[i].getPos());
+			dis2 = pos.distance2(collisionObjects[type][index].getPos());
 			if(dis2 < withIn * withIn){
-				array[count] = collisionObjects[i];
+				array[count] = collisionObjects[type][index];
 				count ++;
 			}
 		}
@@ -198,20 +214,22 @@ public class CollisionHandler extends BaseObject
 
 
 	public int getCount() {
-		return collisionObjectCnt;
+		int cnt = 0;
+		for (int i = 0; i < collisionObjectCnt.length; i++) {
+			cnt += collisionObjectCnt[i];
+		}
+		return cnt;
 	}
 	
 	public int getCount(int type){
-		int count = 0;
-		for(int i = 0; i < collisionObjectCnt; i++){
-			if(collisionObjects[i].getType() == type) count++;
-		}
-		return count;
+		return collisionObjectCnt[type];
 	}
 
 
 	public void clear(){
-		collisionObjectCnt = 0;
+		for(int i = 0; i < collisionObjectCnt.length; i++){
+			collisionObjectCnt[i] = 0;
+		}
 		typeLessCnt = 0;
 	}
 

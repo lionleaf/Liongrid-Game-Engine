@@ -1,22 +1,23 @@
 package com.liongrid.infectosaurus;
 
+import android.util.Log;
 import android.widget.Toast;
 
 import com.liongrid.gameengine.BaseObject;
-import com.liongrid.gameengine.CollisionHandler;
+import com.liongrid.gameengine.CollisionHandlerMultipleArrays;
 
 public class GameStatus extends BaseObject{
 
 	public boolean gameStarted = false;
 	public int mCoinsGained = 0;
-	private CollisionHandler collisionHandler;
+	private InfectoGameObjectHandler gObjectHandler;
 	private GameActivity gameActivity;
 	private int mLastHumanCount = -1;
 
 
 	@Override
 	public void update(float dt, BaseObject parent) {
-		collisionHandler = GameActivity.infectoPointers.gameObjectHandler.mCollisionHandler;
+		gObjectHandler = GameActivity.infectoPointers.gameObjectHandler;
 		gameActivity = GameActivity.infectoPointers.curGameActivity;
 
 		checkGameStarted();
@@ -25,17 +26,17 @@ public class GameStatus extends BaseObject{
 	}
 
 	private void checkGameStarted() {
-		if(collisionHandler.getCount(Team.Alien.ordinal()) > 0) gameStarted = true;
+		if(gObjectHandler.getCount(Team.Alien) > 0) gameStarted = true;
 	}
 
 	private void checkAliensLeft() {
-		if(collisionHandler.getCount(Team.Alien.ordinal()) <= 0 && gameStarted){
+		if(gObjectHandler.getCount(Team.Alien) <= 0 && gameStarted){
 			finishGame();
 		}
 	}
 
 	private void checkHumansLeft() {
-		int humanCount = collisionHandler.getCount(Team.Human.ordinal());
+		int humanCount = gObjectHandler.getCount(Team.Human);
 		if(humanCount < mLastHumanCount){
 			int difficulty = GameActivity.infectoPointers.difficulty;
 			int deadHumans = mLastHumanCount - humanCount;
@@ -43,7 +44,7 @@ public class GameStatus extends BaseObject{
 		}
 		mLastHumanCount = humanCount;
 
-		if(humanCount <= 0){
+		if(humanCount <= 0 && gameStarted){
 			finishGame();
 		}
 	}

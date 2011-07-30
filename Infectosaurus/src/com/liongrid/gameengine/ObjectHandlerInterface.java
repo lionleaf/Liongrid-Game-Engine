@@ -6,6 +6,8 @@ public interface ObjectHandlerInterface<T>{
 	
 	static final int DEFAULT_CAPACITY = 64;
 	
+	public void commitUpdates();
+	public void update(float dt, BaseObject parent);
 	/**
 	 * Adds a BaseObject to a pending additions system. When update is called, the
 	 * pending additions system will add the pending additions before continuing the
@@ -15,9 +17,8 @@ public interface ObjectHandlerInterface<T>{
 	 */
 	public void add(T o) throws UnsupportedOperationException;
 	public void remove(T o) throws UnsupportedOperationException;
-	public void commitUpdates();
-	public void update(float dt, BaseObject parent);
 	public int getCount() throws UnsupportedOperationException;
 	public FixedSizeArray<T> getObjects() throws UnsupportedOperationException;
 	public void clear() throws UnsupportedOperationException;
+	public boolean isInArray(T object) throws UnsupportedOperationException;
 }

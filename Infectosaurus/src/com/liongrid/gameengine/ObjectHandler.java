@@ -97,4 +97,8 @@ public class ObjectHandler <T extends BaseObject> extends BaseObject
 	public void clear() throws UnsupportedOperationException {
 		throw new UnsupportedOperationException();
 	}
+
+	public boolean isInArray(T object) throws UnsupportedOperationException {
+		throw new UnsupportedOperationException();
+	}
 }

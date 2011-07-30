@@ -60,9 +60,10 @@ public class SpawnPool extends BaseObject{
 		Texture f1 = texLib.allocateTexture(R.drawable.manwalk_s_1);
 		Texture f2 = texLib.allocateTexture(R.drawable.manwalk_s_2);
 		
-		int size = 64;
-		dbs[0] = new DrawableBitmap(f1, size, size);
-		dbs[1] = new DrawableBitmap(f2, size, size);
+		object.heigth = 64;
+		object.width = 64;
+		dbs[0] = new DrawableBitmap(f1, object.width, object.heigth);
+		dbs[1] = new DrawableBitmap(f2, object.width, object.heigth);
 		
 		LAnimation moveAnimation = new LAnimation(dbs, 0.2f);
 
@@ -70,14 +71,14 @@ public class SpawnPool extends BaseObject{
 		SpriteComponent sprite = new SpriteComponent();
 		sprite.setAnimation(SpriteState.idle, moveAnimation);
 		
-		int width = gamePointers.map.getWidth();
-		int height = gamePointers.map.getHeight();
+		int mapWidth = gamePointers.map.getWidth();
+		int mapHeight = gamePointers.map.getHeight();
 		
-		object.pos.x = posX == -1? rand.nextInt(width) : posX;
-		object.pos.y = posY == -1? rand.nextInt(height): posY;
+		object.pos.x = posX == -1? rand.nextInt(mapWidth) : posX;
+		object.pos.y = posY == -1? rand.nextInt(mapHeight): posY;
 		
 		object.collisionObject = 
-			new CollisionCircle(Team.Human.ordinal(), object.pos, object, (float) (size/2.0));
+			new CollisionCircle(Team.Human.ordinal(), object.pos, object, (float) (mapHeight/2.0));
 		
 		object.addComponent(new CollisionComponent());
 		object.addComponent(sprite); 
