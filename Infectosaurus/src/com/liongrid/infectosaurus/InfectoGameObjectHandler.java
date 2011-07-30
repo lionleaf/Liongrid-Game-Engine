@@ -127,31 +127,33 @@ public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
 		return count;
 	}
 	
-	public InfectoGameObject getClosest(Vector2 pos, Team team){
+	public InfectoGameObject getClosest(Vector2 pos, Team team, InfectoGameObject self){
 		int i; float closestDistance = Float.MAX_VALUE;
-		InfectoGameObject gObject = null;
 		int length = objects.getCount();
 		Object[] array = objects.getArray();
+		InfectoGameObject closest = null;
+		InfectoGameObject curObject = null;
 		for(i = 0; i < length; i++){
-			gObject = (InfectoGameObject) array[i];
-			if(gObject.team != team) continue;
-			float distance = pos.distance2(gObject.pos);
+			curObject = (InfectoGameObject) array[i];
+			if(curObject.team != team || curObject == self) continue;
+			float distance = pos.distance2(curObject.pos);
 			if(distance < closestDistance) {
 				closestDistance = distance;
+				closest = curObject;
 			}
 		}
-		return gObject;
+		return closest;
 	} 
 	
 
 	public InfectoGameObject[] getClose(Vector2 pos, float within, 
-			Team team, InfectoGameObject[] array){
+			Team team, InfectoGameObject[] array, InfectoGameObject self){
 		int count = 0; float dis2;
 		int length = objects.getCount();
 		Object[] gArray = objects.getArray();
 		for(int i = 0; i < length; i++){
 			InfectoGameObject gObject = (InfectoGameObject) gArray[i];
-			if(gObject.team != team) continue;
+			if(gObject.team != team || gObject == self) continue;
 			if(count >= array.length) return array;
 			dis2 = pos.distance2(gObject.pos);
 			if(dis2 < within * within){
