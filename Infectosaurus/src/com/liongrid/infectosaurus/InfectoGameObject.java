@@ -9,10 +9,10 @@ import com.liongrid.gameengine.tools.Vector2;
 public class InfectoGameObject extends GameObject<InfectoGameObject>{
 	
 	public Team team = Team.Human; //Default team
-	public int width = 0;
-	public int heigth = 0;
+	public int mWidth = 0;
+	public int mHeigth = 0;
 	public boolean alive = true;
-	public Vector2 vel = new Vector2(0,0);
+	public Vector2 mVel = new Vector2(0,0);
 	public float speed = 10;
 	public int mMaxHp = 1;
 	public int mHp = mMaxHp;
@@ -38,6 +38,6 @@ public class InfectoGameObject extends GameObject<InfectoGameObject>{
 	}
 
 	public float distance2(InfectoGameObject o){
-		return Collision.distance2(collisionObject, o.collisionObject);
+		return (pos.x - o.pos.x)*(pos.x - o.pos.x) + (pos.y - o.pos.y)*(pos.y - o.pos.y);
 	}
 }

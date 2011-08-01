@@ -32,12 +32,12 @@ public class TiltMovementComponent extends Component<InfectoGameObject> {
 	@Override
 	public void update(float dt, InfectoGameObject parent) {
 		if(mLastValues == null) return;
-		parent.vel.x = mLastValues[1];
-		parent.vel.y = -mLastValues[0];
-		float speed = parent.speed * Math.min(2,parent.vel.length())/2f;
+		parent.mVel.x = mLastValues[1];
+		parent.mVel.y = -mLastValues[0];
+		float speed = parent.speed * Math.min(2,parent.mVel.length())/2f;
 		
-		parent.vel.normalize();
-		parent.vel.multiply(speed);
+		parent.mVel.normalize();
+		parent.mVel.multiply(speed);
 	}
 	
 	private class mListener implements SensorEventListener{

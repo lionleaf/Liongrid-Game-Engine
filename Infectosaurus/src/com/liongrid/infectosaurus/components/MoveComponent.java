@@ -9,7 +9,7 @@ import com.liongrid.infectosaurus.Main;
 public class MoveComponent extends Component<InfectoGameObject> {
 	@Override
 	public void update(float dt, InfectoGameObject parent) {
-		parent.pos.add(parent.vel.x * dt, parent.vel.y * dt);
+		parent.pos.add(parent.mVel.x * dt, parent.mVel.y * dt);
 	}
 	
 }

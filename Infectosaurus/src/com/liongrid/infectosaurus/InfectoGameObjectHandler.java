@@ -100,14 +100,19 @@ public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
 		CollisionObject collisionObject = gameObject.collisionObject;
 		if(collisionObject == null) return;
 		Vector2 pos = gameObject.pos;
-		float halfWidth = (float) (gameObject.width/2.0);
-		float halfHeight = (float) (gameObject.heigth/2.0);
+		float halfWidth = (float) (gameObject.mWidth/2.0);
+		float halfHeight = (float) (gameObject.mHeigth/2.0);
 		
 		int minX = (int) ((pos.x - halfWidth)/UNITS_PER_COLLISION_AREA_X);
 		int maxX = (int) ((pos.x + halfWidth)/UNITS_PER_COLLISION_AREA_X);
 		
 		int minY = (int) ((pos.y - halfHeight)/UNITS_PER_COLLISION_AREA_Y);
 		int maxY = (int) ((pos.y - halfHeight)/UNITS_PER_COLLISION_AREA_Y);
+		if(minX < 0 || maxX >= mCollisionAreasLengthX ||
+		   minY < 0 || maxY >= mCollisionAreasLengthY){
+			Log.d(Main.TAG, "A infectoGameObject seems to be moving outside the map");
+			return;
+		}
 		for(int i = minX; i <= maxX; i++){
 			for(int j = minY; j <= maxY; j++){
 				if(mCollisionAreas[i][j] == null) continue;

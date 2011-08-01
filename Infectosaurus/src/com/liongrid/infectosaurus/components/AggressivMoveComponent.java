@@ -22,11 +22,9 @@ public class AggressivMoveComponent extends Component<InfectoGameObject>{
 	@Override
 	public void update(float dt, InfectoGameObject parent) {
 		InfectoGameObject target = gameObjHandler.getClosest(parent.pos, Team.Human, parent);
-		Log.d(Main.TAG, "Pos 1 = " + parent.pos);
-		Log.d(Main.TAG, "Pos 2 = " + target.pos);
-		parent.vel.set(target.pos);
-		parent.vel.subtract(parent.pos);
-		parent.vel.normalize();
-		parent.vel.multiply(parent.speed);
+		parent.mVel.set(target.pos);
+		parent.mVel.subtract(parent.pos);
+		parent.mVel.normalize();
+		parent.mVel.multiply(parent.speed);
 	}
 }

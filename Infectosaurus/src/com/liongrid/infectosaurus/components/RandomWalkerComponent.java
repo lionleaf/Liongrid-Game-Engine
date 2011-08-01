@@ -34,7 +34,7 @@ public class RandomWalkerComponent extends Component<InfectoGameObject>{
 		if(width <= 0 || height <= 0) return;
 		
 
-		vel = parent.vel;
+		vel = parent.mVel;
 		pos = parent.pos;
 		
 		float newDistance = 0f;

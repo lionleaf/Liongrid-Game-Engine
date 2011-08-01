@@ -1,6 +1,9 @@
 package com.liongrid.gameengine;
 
+import android.util.Log;
+
 import com.liongrid.gameengine.tools.Vector2;
+import com.liongrid.infectosaurus.Main;
 
 /**
  * @author Lastis
@@ -74,7 +77,7 @@ public abstract class CollisionObject implements Shape{
 		for(int i = 0; i < collisionCnt; i++){
 			if(collisions[i] == object) return true;
 		}
-		return true;
+		return false;
 	}
 
 	/**

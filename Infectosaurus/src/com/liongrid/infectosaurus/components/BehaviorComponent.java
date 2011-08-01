@@ -79,7 +79,7 @@ public class BehaviorComponent extends Component<InfectoGameObject>{
 		
 		if(mLastParent != parent){
 			curState.pos.set(parent.pos);
-			curState.vel.set(parent.vel);
+			curState.vel.set(parent.mVel);
 			mLastParent = parent;
 		}
 		
@@ -101,7 +101,7 @@ public class BehaviorComponent extends Component<InfectoGameObject>{
 		
 		if(curState == null) return;
 		parent.pos.set(curState.pos);
-		parent.vel.set(curState.vel);
+		parent.mVel.set(curState.vel);
 		
 	}
 

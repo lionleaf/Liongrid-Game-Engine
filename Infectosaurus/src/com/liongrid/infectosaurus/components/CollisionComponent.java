@@ -20,11 +20,12 @@ public class CollisionComponent extends Component<InfectoGameObject>{
 	@Override
 	public void update(float dt, InfectoGameObject parent) {
 		if(parent.collisionObject == null) return;
-		CollisionObject parCollisionObject = parent.collisionObject;
-		for(int i = 0; i < parCollisionObject.collisionCnt ; i++){
-			moveObjectAway(parCollisionObject, parCollisionObject.collisions[i]);
+		CollisionObject collisionObject = parent.collisionObject;
+		Log.d(Main.TAG, "Collide count = " + collisionObject.collisionCnt);
+		for(int i = 0; i < collisionObject.collisionCnt ; i++){
+			Log.d(Main.TAG, "Collide with self = " + (collisionObject == collisionObject.collisions[i]));
+			moveObjectAway(collisionObject, collisionObject.collisions[i]);
 		}
-		
 	}
 	
 	private void moveObjectAway(CollisionObject shape1, CollisionObject shape2){

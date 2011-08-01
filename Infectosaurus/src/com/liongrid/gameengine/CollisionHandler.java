@@ -38,7 +38,6 @@ public class CollisionHandler extends BaseObject
 	}
 
 	public void commitUpdates() {
-		int type;
 		CollisionObject collisionObject;
 		Object[] rawArr = pendingAdditions.getArray();
 		int length = pendingAdditions.getCount();

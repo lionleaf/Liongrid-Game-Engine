@@ -52,6 +52,7 @@ public class Collision {
 	
 	/**
 	 * Returns the closest distance between two shapes. The distance is squared.
+	 * If no specific shape is found, returns the distance between the two points.
 	 * @param shape1
 	 * @param shape2
 	 * @return distance squared
@@ -60,7 +61,11 @@ public class Collision {
 		if(shape1.getShape() == CIRCLE && shape2.getShape() == CIRCLE){
 			return distance2((Shape.Circle) shape1, (Shape.Circle) shape2);
 		}
-		return Float.NaN;
+		else{
+			Vector2 pos1 = shape1.getPos();
+			Vector2 pos2 = shape2.getPos();
+			return (pos2.x - pos1.x)*(pos2.x - pos1.x) + (pos2.y - pos1.y)*(pos2.y - pos1.y);
+		}
 	}
 	
 	private static boolean collides(Shape.Circle circle1, Shape.Circle circle2){
