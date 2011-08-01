@@ -80,7 +80,7 @@ public class SpawnPool extends BaseObject{
 		object.collisionObject = 
 			new CollisionCircle(Team.Human.ordinal(), object.pos, object, (float) (object.mWidth/2.0));
 		
-		object.addComponent(new CollisionComponent());
+//		object.addComponent(new CollisionComponent());
 		object.addComponent(sprite); 
 		object.addComponent(new BehaviorComponent(object));
 		object.addComponent(new HpBarComponent());
