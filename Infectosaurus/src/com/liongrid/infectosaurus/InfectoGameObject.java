@@ -38,6 +38,6 @@ public class InfectoGameObject extends GameObject<InfectoGameObject>{
 	}
 
 	public float distance2(InfectoGameObject o){
-		return (pos.x - o.pos.x)*(pos.x - o.pos.x) + (pos.y - o.pos.y)*(pos.y - o.pos.y);
+		return Collision.distance2(collisionObject, o.collisionObject);
 	}
 }
