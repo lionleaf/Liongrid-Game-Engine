@@ -1,15 +1,8 @@
 package com.liongrid.gameengine;
 
-import android.R.color;
-import android.util.Log;
-
 import com.liongrid.gameengine.tools.FixedSizeArray;
 import com.liongrid.gameengine.tools.Vector2;
-import com.liongrid.infectosaurus.Main;
 
-/**
- * @author Lastis
- */
 public class CollisionHandlerMultipleArrays extends BaseObject 
 		implements ObjectHandlerInterface<CollisionObject>{
 	
@@ -233,7 +226,7 @@ public class CollisionHandlerMultipleArrays extends BaseObject
 		typeLessCnt = 0;
 	}
 
-	public boolean isInArray(CollisionObject object) throws UnsupportedOperationException {
+	public boolean inArray(CollisionObject object) throws UnsupportedOperationException {
 		throw new UnsupportedOperationException();
 	}
 }

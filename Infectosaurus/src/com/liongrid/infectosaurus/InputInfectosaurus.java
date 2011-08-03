@@ -28,9 +28,9 @@ public class InputInfectosaurus extends InputGame{
 		//we are not sure are valid
 		float tempX = Camera.pos.x + distanceX / Camera.scale;
 		if(tempX  < 0) Camera.pos.x = 0;
-		else if(tempX + Camera.screenWidth/Camera.scale > Map.mapSizePx.x) 
+		else if(tempX + Camera.screenWidth/Camera.scale > Map.sizePx.x) 
 			Camera.pos.x = Math.max(0, 
-					Map.mapSizePx.x - (int)( Camera.screenWidth/Camera.scale));
+					Map.sizePx.x - (int)( Camera.screenWidth/Camera.scale));
 		else{
 			Camera.pos.x = (int) tempX;
 		}
@@ -38,9 +38,9 @@ public class InputInfectosaurus extends InputGame{
 		float tempY = Camera.pos.y - distanceY / Camera.scale;
 		if(tempY  < 0){
 			Camera.pos.y = 0;
-		}else if(tempY  + Camera.screenHeight/Camera.scale > Map.mapSizePx.y){ 
+		}else if(tempY  + Camera.screenHeight/Camera.scale > Map.sizePx.y){ 
 			Camera.pos.y = Math.max(0, 
-					(Map.mapSizePx.y) - (int) (Camera.screenHeight/Camera.scale));
+					(Map.sizePx.y) - (int) (Camera.screenHeight/Camera.scale));
 		}else{
 			Camera.pos.y = (int) tempY;
 		}

@@ -86,7 +86,7 @@ public class ObjectHandler <T extends BaseObject> extends BaseObject
 		// TODO Auto-generated method stub
 	}
 
-	public FixedSizeArray<T> getObjects() {
+	public  FixedSizeArray<T> getObjects() {
 		return objects;
 	}
 
@@ -98,7 +98,7 @@ public class ObjectHandler <T extends BaseObject> extends BaseObject
 		throw new UnsupportedOperationException();
 	}
 
-	public boolean isInArray(T object) throws UnsupportedOperationException {
+	public boolean inArray(T object) throws UnsupportedOperationException {
 		throw new UnsupportedOperationException();
 	}
 }

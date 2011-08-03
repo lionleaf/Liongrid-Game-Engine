@@ -121,9 +121,9 @@ public class RenderingThread implements Panel.Renderer {
 		
 		if(bgTiles != null && bgTiles.length > 0){
 			int tilesX =  (int)(cameraX + cameraWidth/scale)/TILE_SIZE + 1;
-			if(tilesX > Map.mapSize.x) tilesX = Map.mapSize.x;
+			if(tilesX > Map.size.x) tilesX = Map.size.x;
 			int tilesY =  (int)(cameraY + cameraHeight/scale)/TILE_SIZE + 1;
-			if(tilesY > Map.mapSize.y) tilesY = Map.mapSize.y;
+			if(tilesY > Map.size.y) tilesY = Map.size.y;
 			for (int i = cameraX / Map.TILE_SIZE; i < tilesX; i++) {
 				for (int j = cameraY / Map.TILE_SIZE; j < tilesY; j++) {
 					int x = Map.TILE_SIZE*i;

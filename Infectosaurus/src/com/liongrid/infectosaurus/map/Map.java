@@ -23,8 +23,8 @@ public class Map extends BaseObject{
 	public static final int BLOCK_SIZE = TILE_SIZE/2;
 	static final int NODE_DENSITY = 2;
 
-	public static Vector2Int mapSizePx = new Vector2Int();
-	public static Vector2Int mapSize;
+	public static Vector2Int sizePx = new Vector2Int();
+	public static Vector2Int size;
 
 	private static final Random rand = new Random();
 
@@ -48,20 +48,20 @@ public class Map extends BaseObject{
 	}
 	
 	public Map(){
-		mapSize = new Vector2Int();
+		size = new Vector2Int();
 		loadTiles();
 		generateRenderQueue();
 		//insertPathNodes();
 	}
 
 	private void generateRenderQueue() {
-		renderQueue = new TileType[mapSize.x][mapSize.y];
+		renderQueue = new TileType[size.x][size.y];
 		
 		//Renderqueue must be inverted, since in OpenGL y=0 
 		//is at the bottom of the screen
 		
-		for (int y = 0; y < mapSize.y; y++) {
-			for (int x = 0; x < mapSize.x; x++) {
+		for (int y = 0; y < size.y; y++) {
+			for (int x = 0; x < size.x; x++) {
 				renderQueue[x][y] = tiles[x][y].tileType; 
 			}
 		}
@@ -72,11 +72,11 @@ public class Map extends BaseObject{
 	}
 
 	private void generateTestTiles(){
-		mapSize.x = 8;
-		mapSize.y = 12;
-		tiles = new Tile[mapSize.x][mapSize.y];
-		for (int i = 0; i < mapSize.x; i++) {
-			for (int j = 0; j < mapSize.y; j++) {
+		size.x = 8;
+		size.y = 12;
+		tiles = new Tile[size.x][size.y];
+		for (int i = 0; i < size.x; i++) {
+			for (int j = 0; j < size.y; j++) {
 				tiles[i][j] = new Tile(gamePointers.tileSet.tileTypes[0]);
 			}
 		}
@@ -99,23 +99,23 @@ public class Map extends BaseObject{
 
 			//mapSize.x = byteArrayToInt(workspaceBytes);
 			int id = reader.read(); //The version of the file
-			mapSize.x = reader.read();
-			mapSizePx.x = mapSize.x * TILE_SIZE;
-			mapSize.y = reader.read();
-			mapSizePx.y = mapSize.y * TILE_SIZE;
+			size.x = reader.read();
+			sizePx.x = size.x * TILE_SIZE;
+			size.y = reader.read();
+			sizePx.y = size.y * TILE_SIZE;
 			
-			tiles = new Tile[mapSize.x][mapSize.y];
+			tiles = new Tile[size.x][size.y];
 
 			int tileID;
 			int index;
-			for (int y = 0; y < mapSize.y; y++) {
-				for (int x = 0; x < mapSize.x; x++) {
+			for (int y = 0; y < size.y; y++) {
+				for (int x = 0; x < size.x; x++) {
 					tileID = reader.read(); 
 					index = gamePointers.tileSet.tileIDtoIndexMap.get(tileID);
 					
 					//Fix the fucked up way the maps are saved. origo is saved as 
 					//top-right, but here it`s bottom left...
-					tiles[x][mapSize.y-y-1] = new Tile(tileTypes[index]);
+					tiles[x][size.y-y-1] = new Tile(tileTypes[index]);
 				}
 			}
 		} catch (IOException e) {
@@ -142,13 +142,13 @@ public class Map extends BaseObject{
 	}
 
 	private void insertPathNodes() {
-		int count = mapSize.x * mapSize.y * NODE_DENSITY;
+		int count = size.x * size.y * NODE_DENSITY;
 		pathNodes = new Vector2Int[count];
 		boolean blocked = true;
 		for(int i = 0; i < count; i++){
 			while(blocked){
-				pathNodes[i] = new Vector2Int(rand.nextInt(mapSize.x),
-						rand.nextInt(mapSize.y));
+				pathNodes[i] = new Vector2Int(rand.nextInt(size.x),
+						rand.nextInt(size.y));
 
 
 				Tile cTile = 

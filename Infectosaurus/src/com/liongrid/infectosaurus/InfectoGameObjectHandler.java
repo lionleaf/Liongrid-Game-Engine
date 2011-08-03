@@ -33,8 +33,8 @@ public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
 //		mCollisionHandler = new CollisionHandler(Team.values().length, DEFAULT_CAPACITY);
 		UNITS_PER_COLLISION_AREA_X = Camera.unit * 8;
 		UNITS_PER_COLLISION_AREA_Y = Camera.unit * 8;
-		mCollisionAreasLengthX = Map.mapSizePx.x / UNITS_PER_COLLISION_AREA_X + 1;
-		mCollisionAreasLengthY = Map.mapSizePx.y / UNITS_PER_COLLISION_AREA_Y + 1;
+		mCollisionAreasLengthX = Map.sizePx.x / UNITS_PER_COLLISION_AREA_X + 1;
+		mCollisionAreasLengthY = Map.sizePx.y / UNITS_PER_COLLISION_AREA_Y + 1;
 		mCollisionAreas = new CollisionHandler[mCollisionAreasLengthX][];
 		for(int i = 0; i < mCollisionAreasLengthX; i++){
 			mCollisionAreas[i] = new CollisionHandler[mCollisionAreasLengthY];

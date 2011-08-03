@@ -1,9 +1,6 @@
 package com.liongrid.infectosaurus.map;
 
 import com.liongrid.gameengine.tools.MovementType;
-
-
-
 /**
  * Representation of a single tile. It contains info on which tileType
  * as well as specific situations currently active in it. Since tileType is static
@@ -41,7 +38,5 @@ public class Tile {
 		
 		return tileType.mBlocked[mType.ordinal()][x][y];
 	}
-	
-	 
 	
 }

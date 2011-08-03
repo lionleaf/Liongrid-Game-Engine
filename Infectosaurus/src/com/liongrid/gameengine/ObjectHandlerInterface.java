@@ -18,7 +18,6 @@ public interface ObjectHandlerInterface<T>{
 	public void add(T o) throws UnsupportedOperationException;
 	public void remove(T o) throws UnsupportedOperationException;
 	public int getCount() throws UnsupportedOperationException;
-	public FixedSizeArray<T> getObjects() throws UnsupportedOperationException;
 	public void clear() throws UnsupportedOperationException;
-	public boolean isInArray(T object) throws UnsupportedOperationException;
+	public boolean inArray(T object) throws UnsupportedOperationException;
 }
