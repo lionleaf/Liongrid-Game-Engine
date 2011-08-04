@@ -51,9 +51,6 @@ public abstract class Action {
 			prob /= nrOfStates; 
 			prob = 1 - Math.pow(1 - prob, dt);
 			
-			
-			
-			
 			for (int j = 0; j < nrOfStates;j++) {
 				mDefaultProbs[cIndex++] = prob;
 			}
@@ -82,6 +79,7 @@ public abstract class Action {
 		
 		return mStateList;
 	}
+	
 	@Override
 	public String toString() {
 		return mName;

@@ -9,11 +9,12 @@ import com.liongrid.gameengine.tools.FixedSizeArray;
 import com.liongrid.gameengine.tools.Vector2;
 import com.liongrid.gameengine.tools.Vector2Int;
 import com.liongrid.infectosaurus.GameActivity;
+import com.liongrid.infectosaurus.components.BehaviorComponent;
 import com.liongrid.infectosaurus.map.Map;
 
 /**
  * @author Lastis
- * Contains a threedimensional array of  situations. First and second index is map size x
+ * Contains a three dimensional array of  situations. First and second index is map size x
  * and y in tile sizes. The third index are for multiple situations stored at the same
  * tile position.
  */
@@ -50,37 +51,62 @@ public class SituationHandler extends BaseObject
 	}
 	
 	/**
-	 * Apply all the situations stored in the handler at the tile position.
-	 * @param o
+	 * This method is designed to update the behavior component to have the same
+	 * spatial situations as the situation handler. If the component has a situation
+	 * that the handler doesn't have, it will try to remove it. And if the handler has a
+	 * situation the component doesn't have, it will try to add it.
+	 * @param object - game object
+	 * @param component the behavior component.
 	 */
-	public void applySituations(GameObject o){
-		Vector2 pos = o.pos;
+	public void applySituations(GameObject object, BehaviorComponent component){
+		Vector2 pos = object.pos;
 		int x = (int) pos.x;
 		int y = (int) pos.y;
 		for(int i = 0; i < situationCnt[x][y]; i++){
 			Situation situation = situationsByTiles[x][y][i];
-			situation.applySituation(o);
+			// If the component does not contain the spatial situation, add the situation
+			// to the agent
+			if(component.hasSpatialSituation(situation) == false){
+				component.addSituation(situation);
+				situation.apply(object);
+			}
+		}
+		
+		// If the component contains any situations that is not in the situation handler,
+		// remove the situation from the component.
+		FixedSizeArray<Situation> componentSituations = component.getSpatialSituations();
+		Object[] rawArray = componentSituations.getArray();
+		int length = componentSituations.getCount();
+		for(int i = 0; i < length; i++){
+			Situation situation = (Situation) rawArray[i];
+			if(inArray(situation, x, y) == false){
+				component.removeSituation(situation);
+				situation.remove(object);
+			}
 		}
 	}
-
+	
 	public void commitUpdates() {
 		Object[] array = pendingRemovals.getArray();
 		int length = pendingRemovals.getCount();
 		for(int i = 0; i < length; i++){
-			Vector2Int pos = pendingRemPositions[i];
-			int count = situationCnt[pos.x][pos.y];
-			situationsByTiles[pos.x][pos.y][count] = (Situation) array[i];
-			situationCnt[pos.x][pos.y] ++;
+			removeFromTile((Situation) array[i], pendingRemPositions[i]);
 		}
 		
 		array = pendingAdditions.getArray();
 		length = pendingAdditions.getCount();
 		for(int i = 0; i < length; i++){
-			Vector2Int pos = pendingAddPositions[i];
-			removeFromTile((Situation) array[i], pos);
+			addToTile((Situation) array[i], pendingAddPositions[i]);
 		}
 	}
 	
+	private void addToTile(Situation situation, Vector2Int pos) {
+		if(inArray(situation, pos)) return; // If already in array, don't do anything
+		int count = situationCnt[pos.x][pos.y];
+		situationsByTiles[pos.x][pos.y][count] = situation;
+		situationCnt[pos.x][pos.y] ++;
+	}
+
 	private void removeFromTile(Situation situation, Vector2Int pos) {
 		Situation[] array = situationsByTiles[pos.x][pos.y];
 		// Remove situation
@@ -153,8 +179,8 @@ public class SituationHandler extends BaseObject
 		}
 		
 		for(int i = 0; i < situationCnt.length; i++){
-			for(int k = 0; k < situationCnt[i].length; k++){
-				situationCnt[i][k] = 0;
+			for(int j = 0; j < situationCnt[i].length; j++){
+				situationCnt[i][j] = 0;
 			}
 		}
 	}
@@ -169,12 +195,16 @@ public class SituationHandler extends BaseObject
 		
 	}
 	
-	public boolean inArray(Situation object, Vector2Int pos){
-		Situation[] array = situationsByTiles[pos.x][pos.y];
-		for(int i = 0; i < situationCnt[pos.x][pos.y]; i++){
+	public boolean inArray(Object object, int x, int y){
+		Situation[] array = situationsByTiles[x][x];
+		for(int i = 0; i < situationCnt[y][x]; i++){
 			if(array[i] == object) return true;
 		}
 		return false;
+	}
+	
+	public boolean inArray(Object object, Vector2Int pos){
+		return inArray(object, pos.x, pos.y);
 	}
 	
 	public boolean inArray(Situation object)

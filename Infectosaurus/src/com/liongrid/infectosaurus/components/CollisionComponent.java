@@ -21,9 +21,7 @@ public class CollisionComponent extends Component<InfectoGameObject>{
 	public void update(float dt, InfectoGameObject parent) {
 		if(parent.collisionObject == null) return;
 		CollisionObject collisionObject = parent.collisionObject;
-		Log.d(Main.TAG, "Collide count = " + collisionObject.collisionCnt);
 		for(int i = 0; i < collisionObject.collisionCnt ; i++){
-			Log.d(Main.TAG, "Collide with self = " + (collisionObject == collisionObject.collisions[i]));
 			moveObjectAway(collisionObject, collisionObject.collisions[i]);
 		}
 	}

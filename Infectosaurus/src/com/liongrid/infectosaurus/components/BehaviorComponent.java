@@ -15,6 +15,7 @@ import com.liongrid.infectosaurus.crowd.actions.Walk;
 import com.liongrid.infectosaurus.crowd.behaviorfunctions.AvoidObstacles;
 import com.liongrid.infectosaurus.crowd.behaviorfunctions.BehaviorFunction;
 import com.liongrid.infectosaurus.crowd.behaviorfunctions.InfectoFrightBehavior;
+import com.liongrid.infectosaurus.crowd.situations.Situation;
 
 /**
  * @author lastis
@@ -31,10 +32,11 @@ public class BehaviorComponent extends Component<InfectoGameObject>{
 	private final static int MAX_STATES = 64;
 	private FixedSizeArray<BehaviorFunction> behaviors = 
 		new FixedSizeArray<BehaviorFunction>(MAX_BEHAVIOURS);
+	private FixedSizeArray<Situation> spatialSituations;
+	private FixedSizeArray<Situation> nonSpatialSituations;
 	private double[] probabilities = new double[MAX_STATES]; 
 	private StateList prevStates;
 	private State curState;
-	
 	/**
 	 * To track "ownership" changes
 	 */
@@ -72,6 +74,38 @@ public class BehaviorComponent extends Component<InfectoGameObject>{
 	
 	public void addBehaviorFunction(BehaviorFunction func){
 		behaviors.add(func);
+	}
+	
+	/**
+	 * @return the direct pointer to the spatial situations. Be careful to only read.
+	 */
+	public FixedSizeArray<Situation> getSpatialSituations(){
+		return spatialSituations;
+	}
+	
+	/**
+	 * @return the direct pointer to the non-spatial situations. Be careful to only read.
+	 */
+	public FixedSizeArray<Situation> getNonSpatialSituations(){
+		return nonSpatialSituations;
+	}
+	
+	public boolean hasSpatialSituation(Situation situation){
+		Object[] array = spatialSituations.getArray();
+		int length = spatialSituations.getCount();
+		for(int i = 0; i < length; i++){
+			if(situation == array[i]) return true;
+		}
+		return false;
+	}
+	
+	public boolean hasNonSpatialSituation(Situation situation){
+		Object[] array = nonSpatialSituations.getArray();
+		int length = nonSpatialSituations.getCount();
+		for(int i = 0; i < length; i++){
+			if(situation == array[i]) return true;
+		}
+		return false;
 	}
 	
 	@Override
@@ -149,6 +183,26 @@ public class BehaviorComponent extends Component<InfectoGameObject>{
 		}
 		
 		return s;
+	}
+
+
+	public void addSituation(Situation situation) {
+		if(situation.spatial){
+			spatialSituations.add(situation);
+		}
+		else{
+			nonSpatialSituations.add(situation);
+		}
+	}
+
+
+	public void removeSituation(Situation situation) {
+		if(situation.spatial){
+			spatialSituations.remove(situation, true);
+		}
+		else{
+			nonSpatialSituations.remove(situation, true);
+		}
 	}
 
 }
