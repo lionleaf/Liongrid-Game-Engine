@@ -74,6 +74,7 @@ public class SpawnPool extends BaseObject{
 		object.addComponent(new HpBarComponent());
 		
 		object.speed = rand.nextInt(20)+20;
+		object.mMaxHp = hp;
 		object.mHp = hp;
 		
 		return object;
