@@ -19,27 +19,15 @@ import com.liongrid.infectosaurus.components.SpriteComponent.SpriteState;
 import com.liongrid.infectosaurus.effects.DOTEffect;
 
 public class SpawnPool extends BaseObject{
-	
-	public InfectoGameObject spawnInfectosaurus(){
-		InfectoGameObject object = new InfectoGameObject();
-		return object;
-	}
-	
+		
 	public InfectoGameObject spawnMinion(){
 		InfectoGameObject object = new InfectoGameObject();
 		return object;
 	}
 	
-	/**
-	 * @param posX -1 for random
-	 * @param posY -1 for random
-	 * @param hp
-	 * @return
-	 */
-	public static InfectoGameObject spawnInfectosaurus(float posX, float posY, int hp){
-		
+
+	public static InfectoGameObject spawnInfectosaurus(){
 		InfectoGameObject object = new Infectosaurus();
-		
 		return object;
 	}
 	
@@ -78,7 +66,7 @@ public class SpawnPool extends BaseObject{
 		object.pos.y = posY == -1? rand.nextInt(mapHeight): posY;
 		
 		object.collisionObject = 
-			new CollisionCircle(Team.Human.ordinal(), object.pos, object, (float) (object.mWidth/2.0));
+			new CollisionCircle(Team.Human.ordinal(), object, (float) (object.mWidth/2.0));
 		
 //		object.addComponent(new CollisionComponent());
 		object.addComponent(sprite); 
@@ -86,6 +74,7 @@ public class SpawnPool extends BaseObject{
 		object.addComponent(new HpBarComponent());
 		
 		object.speed = rand.nextInt(20)+20;
+		object.mHp = hp;
 		
 		return object;
 	}
