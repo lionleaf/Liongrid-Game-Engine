@@ -4,23 +4,20 @@ import android.view.MotionEvent;
 
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Camera;
-import com.liongrid.gameengine.InputGame;
+import com.liongrid.gameengine.InputDispatchInterface;
 import com.liongrid.infectosaurus.map.Map;
 
-public class InputInfectosaurus extends InputGame{
-	@Override
-	public boolean onSingleTapUp(MotionEvent event) {
+public class InputInfectosaurus implements InputDispatchInterface{
+	public boolean dispatchSingleTapUp(MotionEvent event) {
 		BaseObject.gamePointers.gameThread.registerScreenTouch(event);
 		return true;
 	}
 
-	@Override
-	public boolean onDown(MotionEvent e) {
+	public boolean dispatchTouchDown(MotionEvent e) {
 		return false;
 	}
 
-	@Override
-	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
+	public boolean dispatchScroll(MotionEvent e1, MotionEvent e2, float distanceX,
 			float distanceY) {
 		BaseObject.gamePointers.renderThread.waitDrawingComplete();
 		
@@ -47,8 +44,13 @@ public class InputInfectosaurus extends InputGame{
 		return true;
 	}
 
-	@Override
-	public boolean onShowPress(MotionEvent e) {
+	public boolean dispatchLongPress(MotionEvent e) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean dispatchShowPress(MotionEvent e) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 

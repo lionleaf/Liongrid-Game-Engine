@@ -26,6 +26,8 @@ public abstract interface Shape {
 	}
 	
 	public interface Square extends Shape{
+		public float getWidth();
+		public float getHeight();
 		
 	}
 	

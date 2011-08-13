@@ -3,13 +3,13 @@ package com.liongrid.infectosaurus;
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Camera;
 import com.liongrid.gameengine.DrawableBitmap;
-import com.liongrid.gameengine.HUDObject;
+import com.liongrid.gameengine.LionView;
 import com.liongrid.gameengine.RenderSystem;
 import com.liongrid.gameengine.Texture;
 import com.liongrid.gameengine.TextureLibrary;
 import com.liongrid.infectosaurus.R;
 
-public class HUDScore extends HUDObject{
+public class HUDScore extends BaseObject{
 
 	private DrawableBitmap drawing;
 	private InfectoGameObjectHandler objectHandler;
@@ -32,7 +32,7 @@ public class HUDScore extends HUDObject{
 	private DrawableBitmap d9;
 
 	public HUDScore() {
-		TextureLibrary texLib = gamePointers.textureLib;
+		TextureLibrary texLib = BaseObject.gamePointers.textureLib;
 		Texture tex = texLib.allocateTexture(R.drawable.humans_killed);
 		allocateNumbers(fontSize, fontSize);
 		drawing = new DrawableBitmap(tex, 8*fontSize, fontSize);
@@ -40,7 +40,7 @@ public class HUDScore extends HUDObject{
 
 
 	private void allocateNumbers(int width, int height) {
-		TextureLibrary texLib = gamePointers.textureLib;
+		TextureLibrary texLib = BaseObject.gamePointers.textureLib;
 		Texture tex0 = texLib.allocateTexture(R.drawable.d0);
 		Texture tex1 = texLib.allocateTexture(R.drawable.d1);
 		Texture tex2 = texLib.allocateTexture(R.drawable.d2);

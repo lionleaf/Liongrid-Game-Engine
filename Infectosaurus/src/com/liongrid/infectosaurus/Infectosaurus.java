@@ -11,7 +11,7 @@ import com.liongrid.infectosaurus.R;
 import com.liongrid.infectosaurus.components.AggressivMoveComponent;
 import com.liongrid.infectosaurus.components.CollisionComponent;
 import com.liongrid.infectosaurus.components.HpBarComponent;
-import com.liongrid.infectosaurus.components.LAnimation;
+import com.liongrid.infectosaurus.components.LionAnimation;
 import com.liongrid.infectosaurus.components.InfMeleeAttackComponent;
 import com.liongrid.infectosaurus.components.MoveComponent;
 import com.liongrid.infectosaurus.components.SpriteComponent;
@@ -101,9 +101,9 @@ public class Infectosaurus extends InfectoGameObject {
 		
 		attackBmps[0] = new DrawableBitmap(tex, mSize+25, mSize+25);
 		
-		LAnimation moveAnimation = new LAnimation(dbs, 0.1f);
-		LAnimation attackAnimation = new LAnimation(attackBmps, 0.1f, false);
-		LAnimation spawnAnimation = new LAnimation(spawnBmps, 0.06f, false);
+		LionAnimation moveAnimation = new LionAnimation(dbs, 0.1f);
+		LionAnimation attackAnimation = new LionAnimation(attackBmps, 0.1f, false);
+		LionAnimation spawnAnimation = new LionAnimation(spawnBmps, 0.06f, false);
 		
 		sprite.setAnimation(SpriteState.idle, moveAnimation);
 		sprite.setAnimation(SpriteState.attacking, attackAnimation);

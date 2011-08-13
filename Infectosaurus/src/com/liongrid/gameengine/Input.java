@@ -1,50 +1,53 @@
 package com.liongrid.gameengine;
 
+import com.liongrid.infectosaurus.Main;
+
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.GestureDetector.SimpleOnGestureListener;
 
-import com.liongrid.infectosaurus.InputInfectoHUD;
-import com.liongrid.infectosaurus.InputInfectosaurus;
-import com.liongrid.infectosaurus.map.Map;
-
 public class Input extends SimpleOnGestureListener{
 
-	private InputGame gameInput;
-	private InputHUD hudInput;
+	private InputDispatchInterface mTopLayer;
+	private InputDispatchInterface mBottomLayer;
 
-	public Input(InputHUD hudInput, InputGame gameInput) {
-		this.gameInput = gameInput;
-		this.hudInput = hudInput;
+	public Input(InputDispatchInterface topLayer, InputDispatchInterface bottomLayer) {
+		this.mTopLayer = topLayer;
+		this.mBottomLayer = bottomLayer;
 	}
 
 	@Override
 	public boolean onSingleTapUp(MotionEvent event) {
-		if(hudInput.onSingleTapUp(event)) return true;
-		if(gameInput.onSingleTapUp(event)) return true;
+		if(mTopLayer.dispatchSingleTapUp(event)) return true;
+		if(mBottomLayer.dispatchSingleTapUp(event)) return true;
 		return false;
 	}
-	
 	
 	@Override
 	public boolean onDown(MotionEvent e) {
-		if(hudInput.onDown(e)) return true;
-		if(gameInput.onDown(e)) return true;
+		if(mTopLayer.dispatchTouchDown(e)) return true;
+		if(mBottomLayer.dispatchTouchDown(e)) return true;
 		return false;
 	}
 	
 	@Override
-	public void onShowPress(MotionEvent e) {
-		if(hudInput.onShowPress(e)) return;
-		if(gameInput.onShowPress(e)) return;
+	public void onLongPress(MotionEvent e) {
+		if(mTopLayer.dispatchLongPress(e)) return;
+		if(mBottomLayer.dispatchLongPress(e)) return;
 	}
 	
 	@Override
 	public boolean onScroll(MotionEvent e1, MotionEvent e2, 
 			float distanceX, float distanceY) {
-		
-		if(hudInput.onScroll(e1, e2, distanceX, distanceY)) return true;
-		if(gameInput.onScroll(e1, e2, distanceX, distanceY)) return true;
+		if(mTopLayer.dispatchScroll(e1, e2, distanceX, distanceY)) return true;
+		if(mBottomLayer.dispatchScroll(e1, e2, distanceX, distanceY)) return true;
 		return false;
-		
+	}
+	
+	@Override
+	public void onShowPress(MotionEvent e) {
+		Log.d(Main.TAG, "ShowPress");
+		if(mTopLayer.dispatchShowPress(e)) return;
+		if(mBottomLayer.dispatchShowPress(e)) return;
 	}
 }

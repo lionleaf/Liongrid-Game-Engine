@@ -23,14 +23,12 @@ public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
 	public static int UNITS_PER_COLLISION_AREA_Y;
 	private static final int DEFAULT_CAPACITY = 256;
 	
-//	public CollisionHandler mCollisionHandler;
 	private CollisionHandler[][] mCollisionAreas;
 	public int mCollisionAreasLengthX;
 	public int mCollisionAreasLengthY;
 	
 	public InfectoGameObjectHandler(){
 		super(DEFAULT_CAPACITY);
-//		mCollisionHandler = new CollisionHandler(Team.values().length, DEFAULT_CAPACITY);
 		UNITS_PER_COLLISION_AREA_X = Camera.unit * 8;
 		UNITS_PER_COLLISION_AREA_Y = Camera.unit * 8;
 		mCollisionAreasLengthX = Map.sizePx.x / UNITS_PER_COLLISION_AREA_X + 1;
@@ -71,7 +69,6 @@ public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
 
 	private void refreshCollisionAreas(int count, Object[] objectArray) {
 		//Clear
-//		mCollisionHandler.clear();
 		for(int i = 0; i < mCollisionAreas.length; i++){
 			for(int j = 0; j < mCollisionAreas[i].length; j++){
 				mCollisionAreas[i][j].clear();
@@ -82,7 +79,6 @@ public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
 		for(int i = 0; i < count; i++){
 			InfectoGameObject infectoObject = (InfectoGameObject)objectArray[i];
 			if(infectoObject.collisionObject == null) return;
-//			mCollisionHandler.add(infectoObject.collisionObject);
 			addToCorrectCollisionHandler((InfectoGameObject)objectArray[i]);
 		}
 	}
@@ -96,7 +92,7 @@ public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
 		}
 	}
 
-	private void addToCorrectCollisionHandler(InfectoGameObject gameObject) {
+	public void addToCorrectCollisionHandler(InfectoGameObject gameObject) {
 		CollisionObject collisionObject = gameObject.collisionObject;
 		if(collisionObject == null) return;
 		Vector2 pos = gameObject.pos;

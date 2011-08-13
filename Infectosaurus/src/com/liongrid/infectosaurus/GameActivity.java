@@ -5,6 +5,8 @@ import com.liongrid.gameengine.Camera;
 import com.liongrid.gameengine.GameActivityInterface;
 import com.liongrid.gameengine.GameThread;
 import com.liongrid.gameengine.Input;
+import com.liongrid.gameengine.LionButton;
+import com.liongrid.gameengine.LionView;
 import com.liongrid.gameengine.Panel;
 import com.liongrid.gameengine.TextureLibrary;
 import com.liongrid.gameengine.Upgrade;
@@ -57,10 +59,6 @@ public class GameActivity extends Activity implements GameActivityInterface{
 
 		infectoPointers = new InfectoPointers();
 		
-		InputInfectosaurus gameInput = new InputInfectosaurus();
-		InputInfectoHUD hudInput = new InputInfectoHUD();
-		gestureDetector = new GestureDetector(this, new Input(hudInput,gameInput));
-
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		Log.d(Main.TAG,"In GameActivity onCreate");
 
@@ -133,15 +131,17 @@ public class GameActivity extends Activity implements GameActivityInterface{
 
 	private void init() {
 		infectoPointers.gameObjectHandler = new InfectoGameObjectHandler();
-		infectoPointers.HUDObjectHandler = new HUDObjectHandler();
 		infectoPointers.gameStatus = new GameStatus();
 		infectoPointers.spawnPool = new SpawnPool();
 		infectoPointers.curGameActivity = this;
 		infectoPointers.situationHandler = new SituationHandler(10, BaseObject.gamePointers.map);
 		panel.addToRoot(infectoPointers.gameObjectHandler);
-		panel.addToRoot(infectoPointers.HUDObjectHandler);
 		panel.addToRoot(infectoPointers.gameStatus);
-
+		
+		InputInfectosaurus gameInput = new InputInfectosaurus();
+		LionView hudInput = new LionButton();
+		panel.addToRoot(hudInput);
+		gestureDetector = new GestureDetector(this, new Input(hudInput,gameInput));
 	}
 
 

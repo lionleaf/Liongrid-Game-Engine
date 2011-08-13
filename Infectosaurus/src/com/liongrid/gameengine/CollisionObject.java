@@ -5,9 +5,9 @@ import com.liongrid.gameengine.tools.Vector2;
 
 /**
  * @author Lastis
- *	A CollisionObject is a object is used in the CollisionHandler. A CollisionObject needs to
- *	implement a subinterface of Shape to work. A CollisionObject is basically a shape with
- *	an array of all the other shapes it collides with. 
+ *	A CollisionObject is a object is used in the CollisionHandler. A CollisionObject needs 
+ *	to implement a subinterface of Shape to work. A CollisionObject is basically a shape 
+ *	with an array of all the other shapes it collides with. 
  */
 public abstract class CollisionObject implements Shape{
 	
@@ -60,14 +60,14 @@ public abstract class CollisionObject implements Shape{
 	 * @param object - The shape that the CollisionShape collides with.  
 	 */
 	public void collide(CollisionObject object){
-		if(collisionCnt >= collisions.length || isInArray(object)) return;
+		if(collisionCnt >= collisions.length || inArray(object)) return;
 		if(Collision.collides(this, object)){
 			collisions[collisionCnt] = object;
 			collisionCnt++;
 		}
 	}
 	
-	public boolean isInArray(CollisionObject object) {
+	public boolean inArray(CollisionObject object) {
 		for(int i = 0; i < collisionCnt; i++){
 			if(collisions[i] == object) return true;
 		}
