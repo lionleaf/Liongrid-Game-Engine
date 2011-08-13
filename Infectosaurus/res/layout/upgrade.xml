@@ -11,64 +11,64 @@
         	android:layout_width="fill_parent" 
         	android:layout_height="fill_parent">
         	
-            <com.liongrid.infectosaurus.TalentTree
+            <com.liongrid.gameengine.TalentTree
             	android:id="@+id/talentTree1" 
             	android:layout_width="wrap_content" 
             	android:layout_height="wrap_content"
             	infecto:ranks_per_tier="5" >
             	
-                <com.liongrid.infectosaurus.TalentTier android:id="@+id/talentTier1">
+                <com.liongrid.gameengine.TalentTier android:id="@+id/talentTier1">
                     
-                    <com.liongrid.infectosaurus.TalentIcon 
+                    <com.liongrid.gameengine.TalentIcon 
                     	android:text="Health" 
                     	android:id="@+id/hpIcon" 
-                    	infecto:upgrade = "HealthUpgrade"></com.liongrid.infectosaurus.TalentIcon>
+                    	infecto:upgrade = "HealthUpgrade"></com.liongrid.gameengine.TalentIcon>
                     
-                    <com.liongrid.infectosaurus.TalentIcon 
+                    <com.liongrid.gameengine.TalentIcon 
                     	android:text="Speed" 
                     	android:id="@+id/speedIcon" 
-                    	infecto:upgrade = "SpeedUpgrade"></com.liongrid.infectosaurus.TalentIcon>
+                    	infecto:upgrade = "SpeedUpgrade"></com.liongrid.gameengine.TalentIcon>
                     	
-                </com.liongrid.infectosaurus.TalentTier>
+                </com.liongrid.gameengine.TalentTier>
 				
-				<com.liongrid.infectosaurus.TalentTier android:id="@+id/talentTier2">
+				<com.liongrid.gameengine.TalentTier android:id="@+id/talentTier2">
 					
-					<com.liongrid.infectosaurus.TalentIcon 
+					<com.liongrid.gameengine.TalentIcon 
 						android:id="@+id/dmgIcon" 
 						infecto:upgrade="MeleeDamageUpgrade"
 						infecto:icon="@drawable/sand"
-						android:text="Damage"></com.liongrid.infectosaurus.TalentIcon>
+						android:text="Damage"></com.liongrid.gameengine.TalentIcon>
 					
-					<com.liongrid.infectosaurus.TalentIcon 
+					<com.liongrid.gameengine.TalentIcon 
 						android:text="Reach" 
 						android:id="@+id/reachIcon"
-						infecto:upgrade="ReachUpgrade"></com.liongrid.infectosaurus.TalentIcon>
+						infecto:upgrade="ReachUpgrade"></com.liongrid.gameengine.TalentIcon>
 					
 					
-                </com.liongrid.infectosaurus.TalentTier>
+                </com.liongrid.gameengine.TalentTier>
                 
-                <com.liongrid.infectosaurus.TalentTier 
+                <com.liongrid.gameengine.TalentTier 
                 	android:id="@+id/talentTier3">
                 	
                     
                     	
-                    <com.liongrid.infectosaurus.TalentIcon 
+                    <com.liongrid.gameengine.TalentIcon 
                     	android:text="Attackspeed" 
                     	android:id="@+id/attackSpeedIcon"
-                    	infecto:upgrade="MeleeSpeedUpgrade"></com.liongrid.infectosaurus.TalentIcon>
+                    	infecto:upgrade="MeleeSpeedUpgrade"></com.liongrid.gameengine.TalentIcon>
                 
-                </com.liongrid.infectosaurus.TalentTier>
+                </com.liongrid.gameengine.TalentTier>
                 
-                <com.liongrid.infectosaurus.TalentTier 
+                <com.liongrid.gameengine.TalentTier 
                 	android:id="@+id/talentTier4">
-                	<com.liongrid.infectosaurus.TalentIcon 
+                	<com.liongrid.gameengine.TalentIcon 
                     	android:text="Infect" 
                     	android:id="@+id/infectIcon"
                     	infecto:icon="@drawable/midtutenstripe"
-                    	infecto:upgrade="InfectUpgrade"></com.liongrid.infectosaurus.TalentIcon>
-                </com.liongrid.infectosaurus.TalentTier>
+                    	infecto:upgrade="InfectUpgrade"></com.liongrid.gameengine.TalentIcon>
+                </com.liongrid.gameengine.TalentTier>
                 
-            </com.liongrid.infectosaurus.TalentTree>
+            </com.liongrid.gameengine.TalentTree>
             
             </LinearLayout>
     </ScrollView>

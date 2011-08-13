@@ -1,6 +1,7 @@
-package com.liongrid.infectosaurus;
+package com.liongrid.gameengine;
 
-import com.liongrid.gameengine.LUpgrade;
+import com.liongrid.infectosaurus.R;
+import com.liongrid.infectosaurus.R.styleable;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -15,11 +16,11 @@ import android.widget.TableLayout;
  * @author Liongrid
  *	
  *	This is a talent tree. It`s has common attributes with radiogroup
- *	and TableLayout. It`s children should be TalentTier whose children again
- *	should be TalentIcon 
+ *	and TableLayout. It`s children should be LTalentTier whose children again
+ *	should be LTalentIcon 
  *
  */
-public class TalentTree extends TableLayout {
+public class LTalentTree extends TableLayout {
 
 	private int mSelectedId = -1;
 	private CompoundButton.OnCheckedChangeListener mChildOnCheckedChangeListener;
@@ -36,12 +37,12 @@ public class TalentTree extends TableLayout {
 	private int mRanksPerTier = 5;
 
 
-	public TalentTree(Context context, AttributeSet attrs) {
+	public LTalentTree(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init(attrs);
 	}
 
-	private void addIcon(TalentIcon icon){		
+	private void addIcon(LTalentIcon icon){		
 		int id = icon.getId();
 		// generates an id if it's missing
 		if (id == View.NO_ID) {
@@ -126,8 +127,8 @@ public class TalentTree extends TableLayout {
 	
 	private void setCheckedStateForView(int viewId, boolean checked) {
 		View checkedView = findViewById(viewId);
-		if (checkedView != null && checkedView instanceof TalentIcon) {
-			((TalentIcon) checkedView).setChecked(checked);
+		if (checkedView != null && checkedView instanceof LTalentIcon) {
+			((LTalentIcon) checkedView).setChecked(checked);
 		}
 	}
 
@@ -165,10 +166,10 @@ public class TalentTree extends TableLayout {
 				int nrOfGChildren = childGroup.getChildCount();
 				for (int j = 0; j < nrOfGChildren; j++) {
 					View grandChild = childGroup.getChildAt(j);
-					if(grandChild instanceof TalentIcon){
-						((TalentIcon) grandChild).setUpgradeable(upgradeable);
+					if(grandChild instanceof LTalentIcon){
+						((LTalentIcon) grandChild).setUpgradeable(upgradeable);
 						if(!upgradeable) continue;
-						int rank = ((TalentIcon) grandChild).getUpgrade().getRank();
+						int rank = ((LTalentIcon) grandChild).getUpgrade().getRank();
 						totalRank += rank;
 					}
 				}
@@ -182,15 +183,15 @@ public class TalentTree extends TableLayout {
 	}
 	
 	private void viewAdded(View child){
-		if(child instanceof TalentTier){
+		if(child instanceof LTalentTier){
 			
 			ViewGroup childGroup = ((ViewGroup) child);
 			int childCount = childGroup.getChildCount();
-			Log.d("TalentTree", "View added, children: "+childCount);
+			Log.d("LTalentTree", "View added, children: "+childCount);
 			for (int i = 0; i < childCount; i++) {
 				View grandChild = childGroup.getChildAt(i);
-				if(grandChild instanceof TalentIcon){
-					addIcon((TalentIcon)grandChild);
+				if(grandChild instanceof LTalentIcon){
+					addIcon((LTalentIcon)grandChild);
 				}
 			}
 		}
@@ -208,7 +209,7 @@ public class TalentTree extends TableLayout {
 			if(mProtectFromCheckedChange){
 				return;
 			}
-			Log.d("TalentTree", "onCheckChanged "+buttonView.getId());
+			Log.d("LTalentTree", "onCheckChanged "+buttonView.getId());
 			int id = buttonView.getId();
 			
 			mProtectFromCheckedChange = true;
@@ -227,13 +228,13 @@ public class TalentTree extends TableLayout {
 	public interface OnSelectedChangeListener{
 
 		/**
-		 * Called when another talent is selected in the TalentTree
+		 * Called when another talent is selected in the LTalentTree
 		 * 
 		 * @param tTree - The tree where the selection changed
 		 * @param selectedId - the unique id of the new selection 
 		 * 	(for findViewById() use)
 		 */
-		public void onSelectedChanged(TalentTree tTree, int selectedId);
+		public void onSelectedChanged(LTalentTree tTree, int selectedId);
 	}
 
 	

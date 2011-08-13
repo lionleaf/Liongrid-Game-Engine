@@ -1,4 +1,4 @@
-package com.liongrid.infectosaurus;
+package com.liongrid.gameengine;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -10,10 +10,12 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.RadioButton;
 
-import com.liongrid.gameengine.LUpgrade;
+import com.liongrid.infectosaurus.R;
+import com.liongrid.infectosaurus.R.drawable;
+import com.liongrid.infectosaurus.R.styleable;
 import com.liongrid.infectosaurus.upgrades.InfectosaurusUpgrade;
 
-public class TalentIcon extends RadioButton {
+public class LTalentIcon extends RadioButton {
 
 
 	private LUpgrade<?> mUpgrade = InfectosaurusUpgrade.SpeedUpgrade.get();
@@ -25,12 +27,12 @@ public class TalentIcon extends RadioButton {
 	private int mDefaultIcon = R.drawable.gressbusk1;
 
 
-	public TalentIcon(Context context, AttributeSet attrs) {
+	public LTalentIcon(Context context, AttributeSet attrs) {
 		super(context, attrs, android.R.attr.radioButtonStyle);
 		init(attrs);
 	}
 
-	public TalentIcon(Context context, AttributeSet attrs, int defStyle) {
+	public LTalentIcon(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init(attrs);
 	}

@@ -1,12 +1,12 @@
-package com.liongrid.infectosaurus;
+package com.liongrid.gameengine;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.TableRow;
 
-public class TalentTier extends TableRow {
+public class LTalentTier extends TableRow {
 
-	public TalentTier(Context context, AttributeSet attrs) {
+	public LTalentTier(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
 

@@ -1,7 +1,9 @@
 package com.liongrid.infectosaurus;
 
 import com.liongrid.gameengine.LUpgrade;
-import com.liongrid.infectosaurus.TalentTree.OnSelectedChangeListener;
+import com.liongrid.gameengine.LTalentIcon;
+import com.liongrid.gameengine.LTalentTree;
+import com.liongrid.gameengine.LTalentTree.OnSelectedChangeListener;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -12,7 +14,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 public class UpgradeActivity extends Activity {
-	private TalentTree talentTree;
+	private LTalentTree talentTree;
 	private TextView upgradeText;
 	private Button upgradeButton;
 	private TextView upgradeInfoText;
@@ -26,7 +28,7 @@ public class UpgradeActivity extends Activity {
 
 		setContentView(R.layout.upgrade);
 
-		talentTree = (TalentTree) findViewById(R.id.talentTree1);
+		talentTree = (LTalentTree) findViewById(R.id.talentTree1);
 		upgradeText = (TextView) findViewById(R.id.upgradeDescriptionText);
 		upgradeButton = (Button) findViewById(R.id.purchaseUpgradeButton);
 		upgradeInfoText = (TextView) findViewById(R.id.upgradeInfoText);
@@ -41,7 +43,7 @@ public class UpgradeActivity extends Activity {
 
 	private void updateRightPanel(){
 		int checkedID = talentTree.getSelectedId();
-		TalentIcon uTB = (TalentIcon) findViewById(checkedID);
+		LTalentIcon uTB = (LTalentIcon) findViewById(checkedID);
 		if(uTB == null) return;
 
 		LUpgrade<?> upgrade = uTB.getUpgrade();
@@ -67,7 +69,7 @@ public class UpgradeActivity extends Activity {
 
 	private class SelectedChangeListener implements OnSelectedChangeListener{
 
-		public void onSelectedChanged(TalentTree tTree, int selectedId) {
+		public void onSelectedChanged(LTalentTree tTree, int selectedId) {
 			updateRightPanel();
 		}
 
@@ -78,7 +80,7 @@ public class UpgradeActivity extends Activity {
 		public void onClick(View arg0) {
 
 			int checkedID = talentTree.getSelectedId();
-			TalentIcon uTB = (TalentIcon) findViewById(checkedID);
+			LTalentIcon uTB = (LTalentIcon) findViewById(checkedID);
 			if(uTB == null) return;
 			LUpgrade<?> upgrade = uTB.getUpgrade();
 			if(!cheatBox.isChecked()){
