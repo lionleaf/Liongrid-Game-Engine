@@ -4,6 +4,7 @@ import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Collision;
 import com.liongrid.gameengine.CollisionCircle;
 import com.liongrid.gameengine.DrawableBitmap;
+import com.liongrid.gameengine.LAnimation;
 import com.liongrid.gameengine.Panel;
 import com.liongrid.gameengine.Texture;
 import com.liongrid.gameengine.TextureLibrary;
@@ -11,11 +12,9 @@ import com.liongrid.infectosaurus.R;
 import com.liongrid.infectosaurus.components.AggressivMoveComponent;
 import com.liongrid.infectosaurus.components.CollisionComponent;
 import com.liongrid.infectosaurus.components.HpBarComponent;
-import com.liongrid.infectosaurus.components.LionAnimation;
 import com.liongrid.infectosaurus.components.InfMeleeAttackComponent;
 import com.liongrid.infectosaurus.components.MoveComponent;
 import com.liongrid.infectosaurus.components.SpriteComponent;
-import com.liongrid.infectosaurus.components.SpriteComponent.SpriteState;
 import com.liongrid.infectosaurus.effects.DOTEffect;
 import com.liongrid.infectosaurus.upgrades.InfectosaurusUpgrade;
 
@@ -43,7 +42,7 @@ public class Infectosaurus extends InfectoGameObject {
 		TextureLibrary texLib = gamePointers.textureLib;
 		Texture tex = texLib.allocateTexture(R.drawable.spheremonster01);
 		sprite = loadAnimations(tex);
-		sprite.setSpriteState(SpriteState.spawning);
+		sprite.setOverlayAnimation("Spawning");
 		mAttackComponent = new InfMeleeAttackComponent();
 		mAttackComponent.setEnabled(false);
 		addComponent(new CollisionComponent());
@@ -71,7 +70,7 @@ public class Infectosaurus extends InfectoGameObject {
 	@Override
 	public void update(float dt, BaseObject parent) {
 		//Make it not attack until spawning is done!
-		if(!addedAttack && sprite.getSpriteState() != SpriteState.spawning){
+		if(!addedAttack && sprite.getSpriteState() != "Spawning"){
 			mAttackComponent.setEnabled(true);
 			addedAttack = true;
 		}
@@ -101,13 +100,13 @@ public class Infectosaurus extends InfectoGameObject {
 		
 		attackBmps[0] = new DrawableBitmap(tex, mSize+25, mSize+25);
 		
-		LionAnimation moveAnimation = new LionAnimation(dbs, 0.1f);
-		LionAnimation attackAnimation = new LionAnimation(attackBmps, 0.1f, false);
-		LionAnimation spawnAnimation = new LionAnimation(spawnBmps, 0.06f, false);
+		LAnimation moveAnimation = new LAnimation(dbs, 0.1f, true);
+		LAnimation attackAnimation = new LAnimation(attackBmps, 0.1f, false);
+		LAnimation spawnAnimation = new LAnimation(spawnBmps, 0.06f, false);
 		
-		sprite.setAnimation(SpriteState.idle, moveAnimation);
-		sprite.setAnimation(SpriteState.attacking, attackAnimation);
-		sprite.setAnimation(SpriteState.spawning, spawnAnimation);
+		sprite.addAnimation("Move", moveAnimation);
+		sprite.addAnimation("Attack", attackAnimation);
+		sprite.addAnimation("Spawning", spawnAnimation);
 		return sprite;
 	}
 

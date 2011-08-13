@@ -5,6 +5,7 @@ import java.util.Random;
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.CollisionCircle;
 import com.liongrid.gameengine.DrawableBitmap;
+import com.liongrid.gameengine.LAnimation;
 import com.liongrid.gameengine.Texture;
 import com.liongrid.gameengine.TextureLibrary;
 import com.liongrid.infectosaurus.components.AggressivMoveComponent;
@@ -12,10 +13,8 @@ import com.liongrid.infectosaurus.components.BehaviorComponent;
 import com.liongrid.infectosaurus.components.CollisionComponent;
 import com.liongrid.infectosaurus.components.HpBarComponent;
 import com.liongrid.infectosaurus.components.InfMeleeAttackComponent;
-import com.liongrid.infectosaurus.components.LAnimation;
 import com.liongrid.infectosaurus.components.MoveComponent;
 import com.liongrid.infectosaurus.components.SpriteComponent;
-import com.liongrid.infectosaurus.components.SpriteComponent.SpriteState;
 import com.liongrid.infectosaurus.effects.DOTEffect;
 
 public class SpawnPool extends BaseObject{
@@ -47,17 +46,23 @@ public class SpawnPool extends BaseObject{
 		
 		Texture f1 = texLib.allocateTexture(R.drawable.manwalk_s_1);
 		Texture f2 = texLib.allocateTexture(R.drawable.manwalk_s_2);
+		Texture f3 = texLib.allocateTexture(R.drawable.manidle);
 		
 		object.mHeigth = 64;
 		object.mWidth = 64;
 		dbs[0] = new DrawableBitmap(f1, object.mWidth, object.mHeigth);
 		dbs[1] = new DrawableBitmap(f2, object.mWidth, object.mHeigth);
 		
-		LAnimation moveAnimation = new LAnimation(dbs, 0.2f);
-
+		DrawableBitmap[] stand = new DrawableBitmap[]{new DrawableBitmap
+				(f3, object.mWidth, object.mHeigth)};
+		
+		
+		LAnimation moveAnimation = new LAnimation(dbs, 0.2f,true);
+		LAnimation standAnimation = new LAnimation(stand, 1f, true);
 		
 		SpriteComponent sprite = new SpriteComponent();
-		sprite.setAnimation(SpriteState.idle, moveAnimation);
+		sprite.addAnimation("Walk", moveAnimation);
+		sprite.addAnimation("Stand", standAnimation);
 		
 		int mapWidth = gamePointers.map.getWidth();
 		int mapHeight = gamePointers.map.getHeight();

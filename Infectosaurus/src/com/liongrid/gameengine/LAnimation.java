@@ -1,8 +1,5 @@
-package com.liongrid.infectosaurus.components;
+package com.liongrid.gameengine;
 
-import com.liongrid.gameengine.BaseObject;
-import com.liongrid.gameengine.DrawableBitmap;
-import com.liongrid.gameengine.DrawableObject;
 import com.liongrid.gameengine.tools.Vector2;
 
 /**
@@ -29,13 +26,10 @@ public class LAnimation extends BaseObject {
 	/**
 	 * @param drawings - an array of frames
 	 * @param mspf - seconds per frame
+	 * @param repeat - Should the animation loop?
 	 */
-	public LAnimation(DrawableObject[] drawings, float spf){
-		set(drawings, spf);
-	}
-	
-	public LAnimation(DrawableBitmap[] attackBmps, float spf, boolean repeat) {
-			this(attackBmps, spf);
+	public LAnimation(DrawableBitmap[] drawings, float spf, boolean repeat) {
+			set(drawings, spf, repeat);
 			this.repeat  = repeat;
 	}
 
@@ -43,10 +37,10 @@ public class LAnimation extends BaseObject {
 	 * @param drawings - an array of frames
 	 * @param mspf - seconds per frame
 	 */
-	public void set(DrawableObject[] drawings, float spf){
-		
+	public void set(DrawableObject[] drawings, float spf, boolean repeat){
+		this.repeat = repeat;
 		this.drawings = drawings;
-		frames = drawings.length;
+		this.frames = drawings.length;
 		this.spf = spf;
 	}
 	

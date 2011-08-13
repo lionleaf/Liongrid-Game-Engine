@@ -1,5 +1,5 @@
 package com.liongrid.gameengine;
 
-public abstract class LionViewGroup {
+public abstract class LViewGroup {
 
 }

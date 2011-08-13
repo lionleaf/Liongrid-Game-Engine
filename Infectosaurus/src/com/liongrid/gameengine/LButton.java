@@ -6,11 +6,11 @@ import com.liongrid.infectosaurus.Main;
 import com.liongrid.infectosaurus.R;
 
 
-public class LionButton extends LionView{
+public class LButton extends LView{
 	private DrawableBitmap starOn;
 	private DrawableBitmap startOff;
 
-	public LionButton() {
+	public LButton() {
 		TextureLibrary texLib = gamePointers.textureLib;
 		Texture tex1 = texLib.allocateTexture(R.drawable.bluecircle);
 		Texture tex2 = texLib.allocateTexture(R.drawable.redcircle);

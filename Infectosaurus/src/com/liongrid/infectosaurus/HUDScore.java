@@ -3,7 +3,7 @@ package com.liongrid.infectosaurus;
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Camera;
 import com.liongrid.gameengine.DrawableBitmap;
-import com.liongrid.gameengine.LionView;
+import com.liongrid.gameengine.LView;
 import com.liongrid.gameengine.RenderSystem;
 import com.liongrid.gameengine.Texture;
 import com.liongrid.gameengine.TextureLibrary;

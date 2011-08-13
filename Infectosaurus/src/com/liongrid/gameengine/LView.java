@@ -12,26 +12,26 @@ import com.liongrid.infectosaurus.Main;
  * Because of the gesture detector we have implemented, it easier to dispatch spesific
  * gestures than the generic touch event. Therefore onTouch is not used as in android view.
  */
-public abstract class LionView extends BaseObject 
+public abstract class LView extends BaseObject 
 		implements Shape.Square, InputDispatchInterface {
 	
 	public interface OnClickListener{
-		void onClick(LionView view);
+		void onClick(LView view);
 	}
 	public interface OnFocusChangeListener{
-		void onFocusChange(LionView view, boolean hasFocus);
+		void onFocusChange(LView view, boolean hasFocus);
 	}
 	public interface OnKeyListener{
-		boolean onKey(LionView hudElement, int keyCode, KeyEvent event);
+		boolean onKey(LView hudElement, int keyCode, KeyEvent event);
 	}
 	public interface OnLongClickListener{
-		boolean onLongClick(LionView view);
+		boolean onLongClick(LView view);
 	}
 	public interface OnScrollListener{
-		boolean onScroll(LionView view, float distanceX, float distanceY);
+		boolean onScroll(LView view, float distanceX, float distanceY);
 	}
 	public interface OnTouchListener{
-		boolean onTouch(LionView view, MotionEvent event);
+		boolean onTouch(LView view, MotionEvent event);
 	}
 	
 	public Vector2 mPos = new Vector2();
@@ -50,7 +50,7 @@ public abstract class LionView extends BaseObject
 	
 	private boolean mOpaque;
 	private boolean mSoundEffectsEnabled;
-	private LionViewParent mParent;
+	private LViewParent mParent;
 	
 	private OnClickListener mOnClickListener;
 	private OnLongClickListener mOnLongClickListener;
@@ -59,12 +59,12 @@ public abstract class LionView extends BaseObject
 	private OnScrollListener mOnScrollListener;
 	private OnTouchListener mOnTouchListener;
 	
-	private LionView mNextFocusDown;
-	private LionView mNextFocusUp;
-	private LionView mNextFocusLeft;
-	private LionView mNextFocusRight;
+	private LView mNextFocusDown;
+	private LView mNextFocusUp;
+	private LView mNextFocusLeft;
+	private LView mNextFocusRight;
 	
-	public LionView() {
+	public LView() {
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -115,7 +115,7 @@ public abstract class LionView extends BaseObject
 		return onTouchEvent(event);
 	}
 	
-	public LionView focusSearch(int direction){
+	public LView focusSearch(int direction){
 		if(mParent != null){
 			return mParent.focusSearch(this, direction);
 		}
@@ -143,7 +143,7 @@ public abstract class LionView extends BaseObject
 	}
 
 	private boolean hasAncestorThatBlocksDescendantFocus() {
-		// Need to be tied to LionViewGroup
+		// Need to be tied to LViewGroup
 		return false;
 	}
 
@@ -285,19 +285,19 @@ public abstract class LionView extends BaseObject
 		this.mLongClickable = longClickable;
 	}
 	
-	public void setNextFocusDown(LionView down){
+	public void setNextFocusDown(LView down){
 		mNextFocusDown = down;
 	}
 
-	public void setNextFocusLeft(LionView left){
+	public void setNextFocusLeft(LView left){
 		mNextFocusLeft = left;
 	}
 
-	public void setNextFocusRight(LionView right){
+	public void setNextFocusRight(LView right){
 		mNextFocusRight = right;
 	}
 
-	public void setNextFocusUp(LionView up){
+	public void setNextFocusUp(LView up){
 		mNextFocusUp = up;
 	}
 

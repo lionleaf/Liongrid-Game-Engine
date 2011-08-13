@@ -3,8 +3,10 @@ package com.liongrid.infectosaurus;
 import com.liongrid.gameengine.BaseObject;
 import com.liongrid.gameengine.Collision;
 import com.liongrid.gameengine.CollisionObject;
+import com.liongrid.gameengine.Component;
 import com.liongrid.gameengine.GameObject;
 import com.liongrid.gameengine.tools.Vector2;
+import com.liongrid.infectosaurus.components.SpriteComponent;
 
 public class InfectoGameObject extends GameObject<InfectoGameObject>{
 	
@@ -20,6 +22,7 @@ public class InfectoGameObject extends GameObject<InfectoGameObject>{
 	public int mHp = mMaxHp;
 	public boolean infectable = true; // Tells if the object can be infected
 	public CollisionObject collisionObject;
+	public SpriteComponent spriteComponent = null;
 	
 	public InfectoGameObject() {
 		
@@ -33,6 +36,20 @@ public class InfectoGameObject extends GameObject<InfectoGameObject>{
 			return;
 		}
 		super.update(dt, parent);
+	}
+	
+	@Override
+	public void addComponent(Component<InfectoGameObject> component) {
+		super.addComponent(component);
+		if(component instanceof SpriteComponent){
+			spriteComponent = (SpriteComponent) component;
+		}
+	}
+	
+	@Override
+	public void reset() {
+		super.reset();
+		spriteComponent = null;
 	}
 	
 	protected void die(){

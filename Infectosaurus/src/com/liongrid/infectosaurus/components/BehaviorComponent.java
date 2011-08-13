@@ -149,6 +149,9 @@ public class BehaviorComponent extends Component<InfectoGameObject>{
 		if(curState == null) return;
 		parent.pos.set(curState.pos);
 		parent.mVel.set(curState.vel);
+		if(parent.spriteComponent != null){
+			parent.spriteComponent.setUnderlyingAnimation(curState.action.toString());
+		}
 		
 	}
 

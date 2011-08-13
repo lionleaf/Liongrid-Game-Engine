@@ -10,7 +10,6 @@ import com.liongrid.infectosaurus.GameActivity;
 import com.liongrid.infectosaurus.InfectoGameObjectHandler;
 import com.liongrid.infectosaurus.Team;
 import com.liongrid.infectosaurus.InfectoGameObject;
-import com.liongrid.infectosaurus.components.SpriteComponent.SpriteState;
 import com.liongrid.infectosaurus.effects.InfectedDamageEffect;
 import com.liongrid.infectosaurus.effects.SpeedBuffEffect;
 
@@ -85,7 +84,7 @@ public class InfMeleeAttackComponent extends Component<InfectoGameObject> {
 			return;
 		}
 		
-		spr.setSpriteState(SpriteState.attacking);
+		spr.setOverlayAnimation("Attacking");
 		
 	}
 

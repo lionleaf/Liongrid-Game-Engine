@@ -30,7 +30,7 @@ public class HpBarComponent extends Component<InfectoGameObject> {
 		 
 		 if(sprite == null) return;
 		 
-		 int spriteHeight = sprite.lastDrawing.getHeight();
+		 int spriteHeight = sprite.getLastDrawing().getHeight();
 		 
 		 gamePointers.renderSystem.scheduleForDraw(
 				 mBarBackground, parent.pos.x-0.5f*mWidth, parent.pos.y+0.5f*spriteHeight, false);

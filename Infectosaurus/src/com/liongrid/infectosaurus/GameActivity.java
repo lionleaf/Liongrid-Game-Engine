@@ -5,8 +5,8 @@ import com.liongrid.gameengine.Camera;
 import com.liongrid.gameengine.GameActivityInterface;
 import com.liongrid.gameengine.GameThread;
 import com.liongrid.gameengine.Input;
-import com.liongrid.gameengine.LionButton;
-import com.liongrid.gameengine.LionView;
+import com.liongrid.gameengine.LButton;
+import com.liongrid.gameengine.LView;
 import com.liongrid.gameengine.Panel;
 import com.liongrid.gameengine.TextureLibrary;
 import com.liongrid.gameengine.Upgrade;
@@ -139,7 +139,7 @@ public class GameActivity extends Activity implements GameActivityInterface{
 		panel.addToRoot(infectoPointers.gameStatus);
 		
 		InputInfectosaurus gameInput = new InputInfectosaurus();
-		LionView hudInput = new LionButton();
+		LView hudInput = new LButton();
 		panel.addToRoot(hudInput);
 		gestureDetector = new GestureDetector(this, new Input(hudInput,gameInput));
 	}
