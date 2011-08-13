@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.liongrid.gameengine.Component;
 import com.liongrid.gameengine.tools.FixedSizeArray;
+import com.liongrid.infectosaurus.GameActivity;
 import com.liongrid.infectosaurus.InfectoGameObject;
 import com.liongrid.infectosaurus.crowd.State;
 import com.liongrid.infectosaurus.crowd.StateList;
@@ -30,6 +31,7 @@ public class BehaviorComponent extends Component<InfectoGameObject>{
 	public static final int DEFAULT_STATES = 5;
 	private final static int MAX_BEHAVIOURS = 32;
 	private final static int MAX_STATES = 64;
+	private final static int MAX_SITUATIONS = 64;
 	private FixedSizeArray<BehaviorFunction> behaviors = 
 		new FixedSizeArray<BehaviorFunction>(MAX_BEHAVIOURS);
 	private FixedSizeArray<Situation> spatialSituations;
@@ -45,6 +47,8 @@ public class BehaviorComponent extends Component<InfectoGameObject>{
 	
 	
 	public BehaviorComponent(InfectoGameObject parent) {
+		spatialSituations = new FixedSizeArray<Situation>(MAX_SITUATIONS);
+		nonSpatialSituations = new FixedSizeArray<Situation>(MAX_SITUATIONS);
 		prevStates = new StateList();
 		addDefaultBehaviours();	
 		curState = new State();
@@ -74,6 +78,14 @@ public class BehaviorComponent extends Component<InfectoGameObject>{
 	
 	public void addBehaviorFunction(BehaviorFunction func){
 		behaviors.add(func);
+	}
+	
+	public void removeBehaviorFunction(BehaviorFunction func){
+		
+		//Most efficient way of removing something from a FixedSizeArray:
+		int index = behaviors.find(func, false);
+		behaviors.swapWithLast(index);
+		behaviors.removeLast();
 	}
 	
 	/**
@@ -117,6 +129,7 @@ public class BehaviorComponent extends Component<InfectoGameObject>{
 			mLastParent = parent;
 		}
 		
+		GameActivity.infectoPointers.situationHandler.updateSituations(parent, this);
 		
 		FixedSizeArray<State> stateChoices = curState.action.getAllNextStates(curState, dt, parent);
 		
@@ -186,23 +199,19 @@ public class BehaviorComponent extends Component<InfectoGameObject>{
 	}
 
 
-	public void addSituation(Situation situation) {
-		if(situation.spatial){
+	public void addSpatialSituation(Situation situation) {
 			spatialSituations.add(situation);
-		}
-		else{
-			nonSpatialSituations.add(situation);
-		}
+	}
+	
+	public void addNonSpatialSituation(Situation situation){
+		nonSpatialSituations.add(situation);
 	}
 
-
-	public void removeSituation(Situation situation) {
-		if(situation.spatial){
-			spatialSituations.remove(situation, true);
-		}
-		else{
+	public void removeSpatialSituation(Situation situation){
+		spatialSituations.remove(situation, true);
+	}
+	public void removeNonSpatialSituation(Situation situation) {
 			nonSpatialSituations.remove(situation, true);
-		}
 	}
 
 }

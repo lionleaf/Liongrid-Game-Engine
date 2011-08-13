@@ -8,6 +8,7 @@ import com.liongrid.gameengine.Input;
 import com.liongrid.gameengine.Panel;
 import com.liongrid.gameengine.TextureLibrary;
 import com.liongrid.gameengine.Upgrade;
+import com.liongrid.infectosaurus.crowd.situations.SituationHandler;
 import com.liongrid.infectosaurus.map.Map;
 import com.liongrid.infectosaurus.upgrades.InfectosaurusUpgrade;
 
@@ -136,6 +137,7 @@ public class GameActivity extends Activity implements GameActivityInterface{
 		infectoPointers.gameStatus = new GameStatus();
 		infectoPointers.spawnPool = new SpawnPool();
 		infectoPointers.curGameActivity = this;
+		infectoPointers.situationHandler = new SituationHandler(10, BaseObject.gamePointers.map);
 		panel.addToRoot(infectoPointers.gameObjectHandler);
 		panel.addToRoot(infectoPointers.HUDObjectHandler);
 		panel.addToRoot(infectoPointers.gameStatus);

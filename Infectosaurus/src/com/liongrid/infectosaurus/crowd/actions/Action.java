@@ -88,5 +88,9 @@ public abstract class Action {
 	public abstract FixedSizeArray<State> getInternalNextStates
 							(State lastState, float dt, InfectoGameObject parent);
 
+	public String getName() {
+		return mName;
+	}
+
 
 }
