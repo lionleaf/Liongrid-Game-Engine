@@ -2,10 +2,10 @@ package com.liongrid.infectosaurus.components;
 
 import android.util.Log;
 
-import com.liongrid.gameengine.CollisionHandlerMultipleArrays;
-import com.liongrid.gameengine.CollisionObject;
-import com.liongrid.gameengine.Component;
-import com.liongrid.gameengine.tools.FixedSizeArray;
+import com.liongrid.gameengine.LCollisionHandlerMultipleArrays;
+import com.liongrid.gameengine.LCollisionObject;
+import com.liongrid.gameengine.LComponent;
+import com.liongrid.gameengine.tools.LFixedSizeArray;
 import com.liongrid.infectosaurus.GameActivity;
 import com.liongrid.infectosaurus.InfectoGameObjectHandler;
 import com.liongrid.infectosaurus.Team;
@@ -14,11 +14,11 @@ import com.liongrid.infectosaurus.effects.InfectedDamageEffect;
 import com.liongrid.infectosaurus.effects.SpeedBuffEffect;
 
 
-public class InfMeleeAttackComponent extends Component<InfectoGameObject> {
+public class InfMeleeAttackComponent extends LComponent<InfectoGameObject> {
 
 	InfectoGameObjectHandler gameObjHandler;
 	static final int CLOSE_CAPACITY = 20;
-	FixedSizeArray<InfectoGameObject> close;
+	LFixedSizeArray<InfectoGameObject> close;
 	private int mReach = 15 * 15; //Square of the actual mReach 100 means 10 px
 	private int mDamage = 1;
 	private float mDelay = 2f; //sec
@@ -28,7 +28,7 @@ public class InfMeleeAttackComponent extends Component<InfectoGameObject> {
 	
 	public InfMeleeAttackComponent(){
 		super();
-		close = new FixedSizeArray<InfectoGameObject>(CLOSE_CAPACITY);
+		close = new LFixedSizeArray<InfectoGameObject>(CLOSE_CAPACITY);
 		set();
 		
 	}

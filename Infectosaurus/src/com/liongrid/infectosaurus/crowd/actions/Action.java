@@ -4,20 +4,20 @@ import java.util.Arrays;
 
 import android.util.Log;
 
-import com.liongrid.gameengine.tools.FixedSizeArray;
+import com.liongrid.gameengine.tools.LFixedSizeArray;
 import com.liongrid.infectosaurus.InfectoGameObject;
 import com.liongrid.infectosaurus.crowd.State;
 
 public abstract class Action {
 	private final static int MAX_LINKS = 32;
 	protected final static int MAX_STATES = MAX_LINKS * 2; 
-	private FixedSizeArray<Action> mLinkedActions = new FixedSizeArray<Action>(MAX_LINKS);
-	private FixedSizeArray<State> mStateList = new FixedSizeArray<State>(MAX_STATES);
+	private LFixedSizeArray<Action> mLinkedActions = new LFixedSizeArray<Action>(MAX_LINKS);
+	private LFixedSizeArray<State> mStateList = new LFixedSizeArray<State>(MAX_STATES);
 	protected double[] mDefaultLinkedProb = new double[MAX_LINKS];
 	protected double[] mDefaultProbs = new double[MAX_STATES];
 	protected int mStateNumber;
 	
-	protected FixedSizeArray<State> stateList = new FixedSizeArray<State>(MAX_STATES);
+	protected LFixedSizeArray<State> stateList = new LFixedSizeArray<State>(MAX_STATES);
 	protected String mName;
 	
 	
@@ -63,7 +63,7 @@ public abstract class Action {
 		return mDefaultProbs;
 	}
 	
-	public FixedSizeArray<State> getAllNextStates
+	public LFixedSizeArray<State> getAllNextStates
 							(State lastState, float dt, InfectoGameObject parent){
 		
 		mStateList.clearWithoutReleasing();
@@ -85,7 +85,7 @@ public abstract class Action {
 		return mName;
 	}
 
-	public abstract FixedSizeArray<State> getInternalNextStates
+	public abstract LFixedSizeArray<State> getInternalNextStates
 							(State lastState, float dt, InfectoGameObject parent);
 
 	public String getName() {

@@ -1,6 +1,6 @@
 package com.liongrid.infectosaurus.map;
 
-import com.liongrid.gameengine.tools.MovementType;
+import com.liongrid.gameengine.tools.LMovementType;
 /**
  * Representation of a single tile. It contains info on which tileType
  * as well as specific situations currently active in it. Since tileType is static
@@ -29,7 +29,7 @@ public class Tile {
 	 * @param y
 	 * @return true if x and y are out of bounds
 	 */
-	public boolean isBlocked(MovementType mType, int x, int y) {
+	public boolean isBlocked(LMovementType mType, int x, int y) {
 		if(x >= tileType.mBlocked[mType.ordinal()].length 
 				|| y >= tileType.mBlocked[mType.ordinal()][0].length
 				|| x < 0 || y < 0){

@@ -5,17 +5,17 @@ import java.io.InputStream;
 import java.util.Random;
 import android.content.res.AssetManager;
 
-import com.liongrid.gameengine.BaseObject;
-import com.liongrid.gameengine.Panel;
-import com.liongrid.gameengine.tools.MovementType;
-import com.liongrid.gameengine.tools.Vector2Int;
+import com.liongrid.gameengine.LBaseObject;
+import com.liongrid.gameengine.LPanel;
+import com.liongrid.gameengine.tools.LMovementType;
+import com.liongrid.gameengine.tools.LVector2Int;
 import com.liongrid.infectosaurus.GameActivity;
 import com.liongrid.infectosaurus.InfectoGameObject;
 import com.liongrid.infectosaurus.InfectoGameObjectHandler;
 import com.liongrid.infectosaurus.R;
 import com.liongrid.infectosaurus.SpawnPool;
 
-public class Map extends BaseObject{
+public class Map extends LBaseObject{
 
 	public Tile[][] tiles;
 	public TileType[][] renderQueue;
@@ -23,12 +23,12 @@ public class Map extends BaseObject{
 	public static final int BLOCK_SIZE = TILE_SIZE/2;
 	static final int NODE_DENSITY = 2;
 
-	public static Vector2Int sizePx = new Vector2Int();
-	public static Vector2Int size;
+	public static LVector2Int sizePx = new LVector2Int();
+	public static LVector2Int size;
 
 	private static final Random rand = new Random();
 
-	private Vector2Int[] pathNodes;
+	private LVector2Int[] pathNodes;
 	
 	private static final int defaultMap = R.raw.road2;
 
@@ -48,7 +48,7 @@ public class Map extends BaseObject{
 	}
 	
 	public Map(){
-		size = new Vector2Int();
+		size = new LVector2Int();
 		loadTiles();
 		generateRenderQueue();
 		//insertPathNodes();
@@ -84,7 +84,7 @@ public class Map extends BaseObject{
 	
 	private void loadTilesFromFile(int res) {
 
-		Panel panel = gamePointers.panel;
+		LPanel panel = gamePointers.panel;
 		InputStream inputStream = panel.getResources().openRawResource(res);
 
 		AssetManager.AssetInputStream reader = (AssetManager.AssetInputStream) inputStream;
@@ -143,11 +143,11 @@ public class Map extends BaseObject{
 
 	private void insertPathNodes() {
 		int count = size.x * size.y * NODE_DENSITY;
-		pathNodes = new Vector2Int[count];
+		pathNodes = new LVector2Int[count];
 		boolean blocked = true;
 		for(int i = 0; i < count; i++){
 			while(blocked){
-				pathNodes[i] = new Vector2Int(rand.nextInt(size.x),
+				pathNodes[i] = new LVector2Int(rand.nextInt(size.x),
 						rand.nextInt(size.y));
 
 
@@ -157,14 +157,14 @@ public class Map extends BaseObject{
 				int localX = (pathNodes[i].x%TILE_SIZE)/BLOCK_SIZE;
 				int localY = (pathNodes[i].y%TILE_SIZE)/BLOCK_SIZE;
 
-				blocked = cTile.isBlocked(MovementType.Walk, 
+				blocked = cTile.isBlocked(LMovementType.Walk, 
 						localX, 
 						localY);
 			}
 		}
 	}
 
-	public boolean isPositionBlocked(int x, int y, MovementType mType){
+	public boolean isPositionBlocked(int x, int y, LMovementType mType){
 		int xIndex = x/TILE_SIZE;
 		int yIndex = y/TILE_SIZE;
 		//outside the map is mBlocked for all!
@@ -198,7 +198,7 @@ public class Map extends BaseObject{
 	}
 	
 	@Override
-	public void update(float dt, BaseObject parent) {
+	public void update(float dt, LBaseObject parent) {
 		// TODO Auto-generated method stub
 		
 	}

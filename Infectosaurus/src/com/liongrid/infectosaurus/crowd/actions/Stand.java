@@ -1,6 +1,6 @@
 package com.liongrid.infectosaurus.crowd.actions;
 
-import com.liongrid.gameengine.tools.FixedSizeArray;
+import com.liongrid.gameengine.tools.LFixedSizeArray;
 import com.liongrid.infectosaurus.InfectoGameObject;
 import com.liongrid.infectosaurus.crowd.State;
 
@@ -11,7 +11,7 @@ public class Stand extends Action {
 		mName = "Stand";
 	}
 
-	public FixedSizeArray<State> getInternalNextStates(State lastState, float dt, InfectoGameObject parent) {
+	public LFixedSizeArray<State> getInternalNextStates(State lastState, float dt, InfectoGameObject parent) {
 		State s = stateList.get(0);
 		s.copy(lastState);
 		s.action = this;

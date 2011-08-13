@@ -1,6 +1,6 @@
 package com.liongrid.infectosaurus;
 
-import com.liongrid.gameengine.Upgrade;
+import com.liongrid.gameengine.LUpgrade;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -238,9 +238,9 @@ public class TalentTree extends TableLayout {
 
 	
 	private class RankChangeListener implements 
-	Upgrade.OnRankChangedListener{
+	LUpgrade.OnRankChangedListener{
 
-		public void onRankChanged(Upgrade<?> upgrade, int newRank) {
+		public void onRankChanged(LUpgrade<?> upgrade, int newRank) {
 			updateUpgradabilityStates();
 		}
 

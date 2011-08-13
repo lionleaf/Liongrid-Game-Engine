@@ -2,14 +2,14 @@ package com.liongrid.infectosaurus;
 
 import android.view.MotionEvent;
 
-import com.liongrid.gameengine.BaseObject;
-import com.liongrid.gameengine.Camera;
-import com.liongrid.gameengine.InputDispatchInterface;
+import com.liongrid.gameengine.LBaseObject;
+import com.liongrid.gameengine.LCamera;
+import com.liongrid.gameengine.LInputDispatchInterface;
 import com.liongrid.infectosaurus.map.Map;
 
-public class InputInfectosaurus implements InputDispatchInterface{
+public class InputInfectosaurus implements LInputDispatchInterface{
 	public boolean dispatchSingleTapUp(MotionEvent event) {
-		BaseObject.gamePointers.gameThread.registerScreenTouch(event);
+		LBaseObject.gamePointers.gameThread.registerScreenTouch(event);
 		return true;
 	}
 
@@ -19,27 +19,27 @@ public class InputInfectosaurus implements InputDispatchInterface{
 
 	public boolean dispatchScroll(MotionEvent e1, MotionEvent e2, float distanceX,
 			float distanceY) {
-		BaseObject.gamePointers.renderThread.waitDrawingComplete();
+		LBaseObject.gamePointers.renderThread.waitDrawingComplete();
 		
 		//Make sure not to put any value into the camera that 
 		//we are not sure are valid
-		float tempX = Camera.pos.x + distanceX / Camera.scale;
-		if(tempX  < 0) Camera.pos.x = 0;
-		else if(tempX + Camera.screenWidth/Camera.scale > Map.sizePx.x) 
-			Camera.pos.x = Math.max(0, 
-					Map.sizePx.x - (int)( Camera.screenWidth/Camera.scale));
+		float tempX = LCamera.pos.x + distanceX / LCamera.scale;
+		if(tempX  < 0) LCamera.pos.x = 0;
+		else if(tempX + LCamera.screenWidth/LCamera.scale > Map.sizePx.x) 
+			LCamera.pos.x = Math.max(0, 
+					Map.sizePx.x - (int)( LCamera.screenWidth/LCamera.scale));
 		else{
-			Camera.pos.x = (int) tempX;
+			LCamera.pos.x = (int) tempX;
 		}
 		
-		float tempY = Camera.pos.y - distanceY / Camera.scale;
+		float tempY = LCamera.pos.y - distanceY / LCamera.scale;
 		if(tempY  < 0){
-			Camera.pos.y = 0;
-		}else if(tempY  + Camera.screenHeight/Camera.scale > Map.sizePx.y){ 
-			Camera.pos.y = Math.max(0, 
-					(Map.sizePx.y) - (int) (Camera.screenHeight/Camera.scale));
+			LCamera.pos.y = 0;
+		}else if(tempY  + LCamera.screenHeight/LCamera.scale > Map.sizePx.y){ 
+			LCamera.pos.y = Math.max(0, 
+					(Map.sizePx.y) - (int) (LCamera.screenHeight/LCamera.scale));
 		}else{
-			Camera.pos.y = (int) tempY;
+			LCamera.pos.y = (int) tempY;
 		}
 		return true;
 	}

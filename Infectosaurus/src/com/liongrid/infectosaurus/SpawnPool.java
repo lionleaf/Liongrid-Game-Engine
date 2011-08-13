@@ -2,12 +2,12 @@ package com.liongrid.infectosaurus;
 
 import java.util.Random;
 
-import com.liongrid.gameengine.BaseObject;
-import com.liongrid.gameengine.CollisionCircle;
-import com.liongrid.gameengine.DrawableBitmap;
+import com.liongrid.gameengine.LBaseObject;
+import com.liongrid.gameengine.LCollisionCircle;
+import com.liongrid.gameengine.LDrawableBitmap;
 import com.liongrid.gameengine.LAnimation;
-import com.liongrid.gameengine.Texture;
-import com.liongrid.gameengine.TextureLibrary;
+import com.liongrid.gameengine.LTexture;
+import com.liongrid.gameengine.LTextureLibrary;
 import com.liongrid.infectosaurus.components.AggressivMoveComponent;
 import com.liongrid.infectosaurus.components.BehaviorComponent;
 import com.liongrid.infectosaurus.components.CollisionComponent;
@@ -17,7 +17,7 @@ import com.liongrid.infectosaurus.components.MoveComponent;
 import com.liongrid.infectosaurus.components.SpriteComponent;
 import com.liongrid.infectosaurus.effects.DOTEffect;
 
-public class SpawnPool extends BaseObject{
+public class SpawnPool extends LBaseObject{
 		
 	public InfectoGameObject spawnMinion(){
 		InfectoGameObject object = new InfectoGameObject();
@@ -41,19 +41,19 @@ public class SpawnPool extends BaseObject{
 		
 		InfectoGameObject object = new InfectoGameObject();
 		
-		TextureLibrary texLib = gamePointers.textureLib;
-		DrawableBitmap[] dbs = new DrawableBitmap[2];
+		LTextureLibrary texLib = gamePointers.textureLib;
+		LDrawableBitmap[] dbs = new LDrawableBitmap[2];
 		
-		Texture f1 = texLib.allocateTexture(R.drawable.manwalk_s_1);
-		Texture f2 = texLib.allocateTexture(R.drawable.manwalk_s_2);
-		Texture f3 = texLib.allocateTexture(R.drawable.manidle);
+		LTexture f1 = texLib.allocateTexture(R.drawable.manwalk_s_1);
+		LTexture f2 = texLib.allocateTexture(R.drawable.manwalk_s_2);
+		LTexture f3 = texLib.allocateTexture(R.drawable.manidle);
 		
 		object.mHeigth = 64;
 		object.mWidth = 64;
-		dbs[0] = new DrawableBitmap(f1, object.mWidth, object.mHeigth);
-		dbs[1] = new DrawableBitmap(f2, object.mWidth, object.mHeigth);
+		dbs[0] = new LDrawableBitmap(f1, object.mWidth, object.mHeigth);
+		dbs[1] = new LDrawableBitmap(f2, object.mWidth, object.mHeigth);
 		
-		DrawableBitmap[] stand = new DrawableBitmap[]{new DrawableBitmap
+		LDrawableBitmap[] stand = new LDrawableBitmap[]{new LDrawableBitmap
 				(f3, object.mWidth, object.mHeigth)};
 		
 		
@@ -71,7 +71,7 @@ public class SpawnPool extends BaseObject{
 		object.pos.y = posY == -1? rand.nextInt(mapHeight): posY;
 		
 		object.collisionObject = 
-			new CollisionCircle(Team.Human.ordinal(), object, (float) (object.mWidth/2.0));
+			new LCollisionCircle(Team.Human.ordinal(), object, (float) (object.mWidth/2.0));
 		
 //		object.addComponent(new CollisionComponent());
 		object.addComponent(sprite); 
@@ -86,7 +86,7 @@ public class SpawnPool extends BaseObject{
 	}
 
 	@Override
-	public void update(float dt, BaseObject parent) {
+	public void update(float dt, LBaseObject parent) {
 		// TODO Auto-generated method stub
 		
 	}

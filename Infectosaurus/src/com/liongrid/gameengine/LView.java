@@ -4,7 +4,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import com.liongrid.gameengine.tools.Vector2;
+import com.liongrid.gameengine.tools.LVector2;
 import com.liongrid.infectosaurus.Main;
 
 /**
@@ -12,8 +12,8 @@ import com.liongrid.infectosaurus.Main;
  * Because of the gesture detector we have implemented, it easier to dispatch spesific
  * gestures than the generic touch event. Therefore onTouch is not used as in android view.
  */
-public abstract class LView extends BaseObject 
-		implements Shape.Square, InputDispatchInterface {
+public abstract class LView extends LBaseObject 
+		implements LShape.Square, LInputDispatchInterface {
 	
 	public interface OnClickListener{
 		void onClick(LView view);
@@ -34,7 +34,7 @@ public abstract class LView extends BaseObject
 		boolean onTouch(LView view, MotionEvent event);
 	}
 	
-	public Vector2 mPos = new Vector2();
+	public LVector2 mPos = new LVector2();
 	private int mWidth;
 	private int mHeight;
 	private boolean mClickable;
@@ -124,12 +124,12 @@ public abstract class LView extends BaseObject
 		}
 	}
 
-	public Vector2 getPos() {
+	public LVector2 getPos() {
 		return mPos;
 	}
 
 	public int getShape() {
-		return Shape.SQUARE;
+		return LShape.SQUARE;
 	}
 
 	protected void handleFocusGainInternal(int direction) {
@@ -357,12 +357,12 @@ public abstract class LView extends BaseObject
 	}
 
 	@Override
-	public void update(float dt, BaseObject parent) {
-		RenderSystem rs = parent.gamePointers.renderSystem;
+	public void update(float dt, LBaseObject parent) {
+		LRenderSystem rs = parent.gamePointers.renderSystem;
 		onDraw(rs);
 	}
 
-	protected abstract void onDraw(RenderSystem rs);
+	protected abstract void onDraw(LRenderSystem rs);
 
 	public float getHeight() {
 		return mHeight;

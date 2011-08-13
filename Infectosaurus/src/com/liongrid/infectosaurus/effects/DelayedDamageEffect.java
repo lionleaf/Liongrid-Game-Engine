@@ -1,9 +1,9 @@
 package com.liongrid.infectosaurus.effects;
 
-import com.liongrid.gameengine.Effect;
+import com.liongrid.gameengine.LEffect;
 import com.liongrid.infectosaurus.InfectoGameObject;
 
-public class DelayedDamageEffect extends Effect<InfectoGameObject> {
+public class DelayedDamageEffect extends LEffect<InfectoGameObject> {
 
 	private int dmg = 0;
 

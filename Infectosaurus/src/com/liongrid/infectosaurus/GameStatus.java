@@ -3,10 +3,10 @@ package com.liongrid.infectosaurus;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.liongrid.gameengine.BaseObject;
-import com.liongrid.gameengine.CollisionHandlerMultipleArrays;
+import com.liongrid.gameengine.LBaseObject;
+import com.liongrid.gameengine.LCollisionHandlerMultipleArrays;
 
-public class GameStatus extends BaseObject{
+public class GameStatus extends LBaseObject{
 
 	public boolean gameStarted = false;
 	public int mCoinsGained = 0;
@@ -16,7 +16,7 @@ public class GameStatus extends BaseObject{
 
 
 	@Override
-	public void update(float dt, BaseObject parent) {
+	public void update(float dt, LBaseObject parent) {
 		gObjectHandler = GameActivity.infectoPointers.gameObjectHandler;
 		gameActivity = GameActivity.infectoPointers.curGameActivity;
 

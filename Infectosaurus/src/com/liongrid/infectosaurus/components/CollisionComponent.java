@@ -2,11 +2,11 @@ package com.liongrid.infectosaurus.components;
 
 import android.util.Log;
 
-import com.liongrid.gameengine.CollisionCircle;
-import com.liongrid.gameengine.CollisionObject;
-import com.liongrid.gameengine.Component;
-import com.liongrid.gameengine.Shape;
-import com.liongrid.gameengine.tools.Vector2;
+import com.liongrid.gameengine.LCollisionCircle;
+import com.liongrid.gameengine.LCollisionObject;
+import com.liongrid.gameengine.LComponent;
+import com.liongrid.gameengine.LShape;
+import com.liongrid.gameengine.tools.LVector2;
 import com.liongrid.infectosaurus.InfectoGameObject;
 import com.liongrid.infectosaurus.Main;
 
@@ -15,26 +15,26 @@ import com.liongrid.infectosaurus.Main;
  *	For this component to work, the InfectoGameObject needs to have a collision object with
  *	a shape. This component moves the parent away from any InfectoGameObjects it collides with.
  */
-public class CollisionComponent extends Component<InfectoGameObject>{
+public class CollisionComponent extends LComponent<InfectoGameObject>{
 
 	@Override
 	public void update(float dt, InfectoGameObject parent) {
 		if(parent.collisionObject == null) return;
-		CollisionObject collisionObject = parent.collisionObject;
+		LCollisionObject collisionObject = parent.collisionObject;
 		for(int i = 0; i < collisionObject.collisionCnt ; i++){
 			moveObjectAway(collisionObject, collisionObject.collisions[i]);
 		}
 	}
 	
-	private void moveObjectAway(CollisionObject shape1, CollisionObject shape2){
-		if(shape1.getShape() == Shape.CIRCLE && 
-			shape2.getShape() == Shape.CIRCLE){
+	private void moveObjectAway(LCollisionObject shape1, LCollisionObject shape2){
+		if(shape1.getShape() == LShape.CIRCLE && 
+			shape2.getShape() == LShape.CIRCLE){
 			
-			Shape.Circle circle1 = (Shape.Circle) shape1;
-			Shape.Circle circle2 = (Shape.Circle) shape2;
+			LShape.Circle circle1 = (LShape.Circle) shape1;
+			LShape.Circle circle2 = (LShape.Circle) shape2;
 			
-			Vector2 pos1 = circle1.getPos();
-			Vector2 pos2 = circle2.getPos();
+			LVector2 pos1 = circle1.getPos();
+			LVector2 pos2 = circle2.getPos();
 			float radius1 = circle1.getRadius();
 			float radius2 = circle2.getRadius();
 			

@@ -4,8 +4,8 @@ import java.util.Random;
 
 import android.util.Log;
 
-import com.liongrid.gameengine.Component;
-import com.liongrid.gameengine.tools.FixedSizeArray;
+import com.liongrid.gameengine.LComponent;
+import com.liongrid.gameengine.tools.LFixedSizeArray;
 import com.liongrid.infectosaurus.GameActivity;
 import com.liongrid.infectosaurus.InfectoGameObject;
 import com.liongrid.infectosaurus.crowd.State;
@@ -25,17 +25,17 @@ import com.liongrid.infectosaurus.crowd.situations.Situation;
  * The probability of each of the states are modified by the behavior
  * functions. 
  */
-public class BehaviorComponent extends Component<InfectoGameObject>{
+public class BehaviorComponent extends LComponent<InfectoGameObject>{
 	
 	static Random random = new Random();
 	public static final int DEFAULT_STATES = 5;
 	private final static int MAX_BEHAVIOURS = 32;
 	private final static int MAX_STATES = 64;
 	private final static int MAX_SITUATIONS = 64;
-	private FixedSizeArray<BehaviorFunction> behaviors = 
-		new FixedSizeArray<BehaviorFunction>(MAX_BEHAVIOURS);
-	private FixedSizeArray<Situation> spatialSituations;
-	private FixedSizeArray<Situation> nonSpatialSituations;
+	private LFixedSizeArray<BehaviorFunction> behaviors = 
+		new LFixedSizeArray<BehaviorFunction>(MAX_BEHAVIOURS);
+	private LFixedSizeArray<Situation> spatialSituations;
+	private LFixedSizeArray<Situation> nonSpatialSituations;
 	private double[] probabilities = new double[MAX_STATES]; 
 	private StateList prevStates;
 	private State curState;
@@ -47,8 +47,8 @@ public class BehaviorComponent extends Component<InfectoGameObject>{
 	
 	
 	public BehaviorComponent(InfectoGameObject parent) {
-		spatialSituations = new FixedSizeArray<Situation>(MAX_SITUATIONS);
-		nonSpatialSituations = new FixedSizeArray<Situation>(MAX_SITUATIONS);
+		spatialSituations = new LFixedSizeArray<Situation>(MAX_SITUATIONS);
+		nonSpatialSituations = new LFixedSizeArray<Situation>(MAX_SITUATIONS);
 		prevStates = new StateList();
 		addDefaultBehaviours();	
 		curState = new State();
@@ -82,7 +82,7 @@ public class BehaviorComponent extends Component<InfectoGameObject>{
 	
 	public void removeBehaviorFunction(BehaviorFunction func){
 		
-		//Most efficient way of removing something from a FixedSizeArray:
+		//Most efficient way of removing something from a LFixedSizeArray:
 		int index = behaviors.find(func, false);
 		behaviors.swapWithLast(index);
 		behaviors.removeLast();
@@ -91,14 +91,14 @@ public class BehaviorComponent extends Component<InfectoGameObject>{
 	/**
 	 * @return the direct pointer to the spatial situations. Be careful to only read.
 	 */
-	public FixedSizeArray<Situation> getSpatialSituations(){
+	public LFixedSizeArray<Situation> getSpatialSituations(){
 		return spatialSituations;
 	}
 	
 	/**
 	 * @return the direct pointer to the non-spatial situations. Be careful to only read.
 	 */
-	public FixedSizeArray<Situation> getNonSpatialSituations(){
+	public LFixedSizeArray<Situation> getNonSpatialSituations(){
 		return nonSpatialSituations;
 	}
 	
@@ -131,7 +131,7 @@ public class BehaviorComponent extends Component<InfectoGameObject>{
 		
 		GameActivity.infectoPointers.situationHandler.updateSituations(parent, this);
 		
-		FixedSizeArray<State> stateChoices = curState.action.getAllNextStates(curState, dt, parent);
+		LFixedSizeArray<State> stateChoices = curState.action.getAllNextStates(curState, dt, parent);
 		
 		calculateDefaultProb(dt, stateChoices, curState.action);
 		
@@ -156,13 +156,13 @@ public class BehaviorComponent extends Component<InfectoGameObject>{
 	}
 
 
-	private void calculateDefaultProb(float dt, FixedSizeArray<State> stateChoices, Action a) {
+	private void calculateDefaultProb(float dt, LFixedSizeArray<State> stateChoices, Action a) {
 		double[] prob = a.getDefaultProbs(dt);
 		System.arraycopy(prob, 0, probabilities, 0, stateChoices.getCount());
 	}
 
 
-	private State pickState(FixedSizeArray<State> nextStates, 
+	private State pickState(LFixedSizeArray<State> nextStates, 
 							double[] probabilities) {
 		float pickState = random.nextFloat();
 		float sum = 0f;

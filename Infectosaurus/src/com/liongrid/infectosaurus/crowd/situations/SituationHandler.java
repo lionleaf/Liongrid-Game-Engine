@@ -3,12 +3,12 @@ package com.liongrid.infectosaurus.crowd.situations;
 import android.app.PendingIntent;
 import android.util.Log;
 
-import com.liongrid.gameengine.BaseObject;
-import com.liongrid.gameengine.GameObject;
-import com.liongrid.gameengine.ObjectHandlerInterface;
-import com.liongrid.gameengine.tools.FixedSizeArray;
-import com.liongrid.gameengine.tools.Vector2;
-import com.liongrid.gameengine.tools.Vector2Int;
+import com.liongrid.gameengine.LBaseObject;
+import com.liongrid.gameengine.LGameObject;
+import com.liongrid.gameengine.LObjectHandlerInterface;
+import com.liongrid.gameengine.tools.LFixedSizeArray;
+import com.liongrid.gameengine.tools.LVector2;
+import com.liongrid.gameengine.tools.LVector2Int;
 import com.liongrid.infectosaurus.GameActivity;
 import com.liongrid.infectosaurus.InfectoGameObject;
 import com.liongrid.infectosaurus.components.BehaviorComponent;
@@ -20,27 +20,27 @@ import com.liongrid.infectosaurus.map.Map;
  * and y in tile sizes. The third index are for multiple situations stored at the same
  * tile position.
  */
-public class SituationHandler extends BaseObject 
-		implements ObjectHandlerInterface<Situation>{
+public class SituationHandler extends LBaseObject 
+		implements LObjectHandlerInterface<Situation>{
 	
 	private Situation[][][] situationsByTiles; // [tileX][tileY][situations]
 	// The count of how many situations are stored at tile position x and y. 
 	private int[][] situationCnt; 
-	private FixedSizeArray<Situation> pendingAdditions;
-	private FixedSizeArray<Situation> pendingRemovals;
-	// The Vector2Int arrays holds the positions of the pendingRemovals and pendingAdditions
+	private LFixedSizeArray<Situation> pendingAdditions;
+	private LFixedSizeArray<Situation> pendingRemovals;
+	// The LVector2Int arrays holds the positions of the pendingRemovals and pendingAdditions
 	// situations. The index of pending additions and pending positions should be the same.
-	private Vector2Int[] pendingAddPositions;
-	private Vector2Int[] pendingRemPositions;
+	private LVector2Int[] pendingAddPositions;
+	private LVector2Int[] pendingRemPositions;
 	private Map map;
 	
 	public SituationHandler(int maxSituations, Map map) {
 		this.map = map;
 		int numberOfTiles = Map.size.x * Map.size.y;
-		pendingAdditions = new FixedSizeArray<Situation>(numberOfTiles/8);
-		pendingRemovals = new FixedSizeArray<Situation>(numberOfTiles/8);
-		pendingAddPositions = new Vector2Int[numberOfTiles/8];
-		pendingRemPositions = new Vector2Int[numberOfTiles/8];
+		pendingAdditions = new LFixedSizeArray<Situation>(numberOfTiles/8);
+		pendingRemovals = new LFixedSizeArray<Situation>(numberOfTiles/8);
+		pendingAddPositions = new LVector2Int[numberOfTiles/8];
+		pendingRemPositions = new LVector2Int[numberOfTiles/8];
 		
 		// Init situationsByTiles
 		int xSize = map.size.x;
@@ -82,7 +82,7 @@ public class SituationHandler extends BaseObject
 	 */
 	public void updateSituations(InfectoGameObject object, BehaviorComponent component){
 		commitUpdates();
-		Vector2 pos = object.pos;
+		LVector2 pos = object.pos;
 		int x = (int) pos.x / map.TILE_SIZE;
 		int y = (int) pos.y / map.TILE_SIZE;
 		if(x < 0 || x >= situationCnt.length || y < 0 || y >= situationCnt[0].length){
@@ -102,7 +102,7 @@ public class SituationHandler extends BaseObject
 		
 		// If the component contains any situations that is not in the situation handler,
 		// remove the situation from the component.
-		FixedSizeArray<Situation> componentSituations = component.getSpatialSituations();
+		LFixedSizeArray<Situation> componentSituations = component.getSpatialSituations();
 		Object[] rawArray = componentSituations.getArray();
 		int length = componentSituations.getCount();
 		for(int i = 0; i < length; i++){
@@ -128,7 +128,7 @@ public class SituationHandler extends BaseObject
 		}
 	}
 	
-	private void addToTile(Situation situation, Vector2Int pos) {
+	private void addToTile(Situation situation, LVector2Int pos) {
 		addToTile(situation, pos.x, pos.y);
 	}
 	
@@ -139,7 +139,7 @@ public class SituationHandler extends BaseObject
 		situationCnt[x][y] ++;
 	}
 
-	private void removeFromTile(Situation situation, Vector2Int pos) {
+	private void removeFromTile(Situation situation, LVector2Int pos) {
 		Situation[] array = situationsByTiles[pos.x][pos.y];
 		// Remove situation
 		for(int i = 0; i < array.length; i++){
@@ -162,7 +162,7 @@ public class SituationHandler extends BaseObject
 		}
 	}
 
-	public int getCount(Vector2 pos){
+	public int getCount(LVector2 pos){
 		return getCount((int) pos.x, (int) pos.y);
 	}
 	
@@ -175,7 +175,7 @@ public class SituationHandler extends BaseObject
 		return situationCnt[x][y];
 	}
 	
-	public void add(Situation o, Vector2Int pos) {
+	public void add(Situation o, LVector2Int pos) {
 		int index = pendingAdditions.getCount();
 		pendingAdditions.add(o);
 		pendingAddPositions[index] = pos;
@@ -185,7 +185,7 @@ public class SituationHandler extends BaseObject
 		addToTile(o, x, y);
 	}
 
-	public void remove(Situation o, Vector2Int pos) {
+	public void remove(Situation o, LVector2Int pos) {
 		int index = pendingRemovals.getCount();
 		pendingRemovals.add(o);
 		pendingRemPositions[index] = pos;
@@ -222,7 +222,7 @@ public class SituationHandler extends BaseObject
 	}
 
 	@Override
-	public void update(float dt, BaseObject parent) {
+	public void update(float dt, LBaseObject parent) {
 		commitUpdates();
 	}
 
@@ -239,7 +239,7 @@ public class SituationHandler extends BaseObject
 		return false;
 	}
 	
-	public boolean inArray(Object object, Vector2Int pos){
+	public boolean inArray(Object object, LVector2Int pos){
 		return inArray(object, pos.x, pos.y);
 	}
 	

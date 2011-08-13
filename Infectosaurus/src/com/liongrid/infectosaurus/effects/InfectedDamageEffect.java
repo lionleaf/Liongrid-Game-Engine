@@ -4,12 +4,12 @@ import java.util.Random;
 
 import android.util.Log;
 
-import com.liongrid.gameengine.Effect;
+import com.liongrid.gameengine.LEffect;
 import com.liongrid.infectosaurus.GameActivity;
 import com.liongrid.infectosaurus.InfectoGameObject;
 import com.liongrid.infectosaurus.Infectosaurus;
 
-public class InfectedDamageEffect extends Effect<InfectoGameObject> {
+public class InfectedDamageEffect extends LEffect<InfectoGameObject> {
 	
 	private int mDamage;
 	private float mInfectChance;

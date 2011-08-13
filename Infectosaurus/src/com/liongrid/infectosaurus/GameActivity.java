@@ -1,15 +1,15 @@
 package com.liongrid.infectosaurus;
 
-import com.liongrid.gameengine.BaseObject;
-import com.liongrid.gameengine.Camera;
-import com.liongrid.gameengine.GameActivityInterface;
-import com.liongrid.gameengine.GameThread;
-import com.liongrid.gameengine.Input;
+import com.liongrid.gameengine.LBaseObject;
+import com.liongrid.gameengine.LCamera;
+import com.liongrid.gameengine.LGameActivityInterface;
+import com.liongrid.gameengine.LGameThread;
+import com.liongrid.gameengine.LInput;
 import com.liongrid.gameengine.LButton;
 import com.liongrid.gameengine.LView;
-import com.liongrid.gameengine.Panel;
-import com.liongrid.gameengine.TextureLibrary;
-import com.liongrid.gameengine.Upgrade;
+import com.liongrid.gameengine.LPanel;
+import com.liongrid.gameengine.LTextureLibrary;
+import com.liongrid.gameengine.LUpgrade;
 import com.liongrid.infectosaurus.crowd.situations.SituationHandler;
 import com.liongrid.infectosaurus.map.Map;
 import com.liongrid.infectosaurus.upgrades.InfectosaurusUpgrade;
@@ -35,7 +35,7 @@ import android.widget.TextView;
  * @author Lastis
  *		This activity is the upper class for the whole game play
  */
-public class GameActivity extends Activity implements GameActivityInterface{
+public class GameActivity extends Activity implements LGameActivityInterface{
 
 	private static final String SAVE_PREF_NAME = "infectoSave";
 
@@ -44,7 +44,7 @@ public class GameActivity extends Activity implements GameActivityInterface{
 	//To keep screen alive
 	private PowerManager.WakeLock wl;
 
-	Panel panel;
+	LPanel panel;
 	private GestureDetector gestureDetector;
 
 	private static final boolean useScreenshot = false;
@@ -64,12 +64,12 @@ public class GameActivity extends Activity implements GameActivityInterface{
 
 		setScreenDimensionsAndScale();
 
-		panel = new Panel(this);
+		panel = new LPanel(this);
 		if(savedInstanceState == null){
 			panel.init();
 			init();
 		}else{
-			BaseObject.gamePointers.panel = panel;
+			LBaseObject.gamePointers.panel = panel;
 		}
 
 
@@ -89,7 +89,7 @@ public class GameActivity extends Activity implements GameActivityInterface{
 
 		
 		CONTEXT = this;
-		BaseObject.gamePointers.map.spawnNPCs(pop,  difficulty);
+		LBaseObject.gamePointers.map.spawnNPCs(pop,  difficulty);
 
 
 	}
@@ -102,7 +102,7 @@ public class GameActivity extends Activity implements GameActivityInterface{
 		InfectosaurusUpgrade[] upgrades = InfectosaurusUpgrade.values();
 		int upgradeCount = upgrades.length; 
 		for (int i = 0; i < upgradeCount; i++) {
-			Upgrade upgrade = upgrades[i].get();
+			LUpgrade upgrade = upgrades[i].get();
 			int newRank = data.getInt(upgrades[i].name(), -1);
 			if(newRank < 0) continue;
 			upgrade.setRank(newRank);
@@ -123,7 +123,7 @@ public class GameActivity extends Activity implements GameActivityInterface{
 		InfectosaurusUpgrade[] upgrades = InfectosaurusUpgrade.values();
 		int upgradeCount = upgrades.length; 
 		for (int i = 0; i < upgradeCount; i++) {
-			Upgrade upgrade = upgrades[i].get();
+			LUpgrade upgrade = upgrades[i].get();
 			editor.putInt(upgrades[i].name(), upgrade.getRank());
 		}
 		editor.commit();
@@ -134,21 +134,21 @@ public class GameActivity extends Activity implements GameActivityInterface{
 		infectoPointers.gameStatus = new GameStatus();
 		infectoPointers.spawnPool = new SpawnPool();
 		infectoPointers.curGameActivity = this;
-		infectoPointers.situationHandler = new SituationHandler(10, BaseObject.gamePointers.map);
+		infectoPointers.situationHandler = new SituationHandler(10, LBaseObject.gamePointers.map);
 		panel.addToRoot(infectoPointers.gameObjectHandler);
 		panel.addToRoot(infectoPointers.gameStatus);
 		
 		InputInfectosaurus gameInput = new InputInfectosaurus();
 		LView hudInput = new LButton();
 		panel.addToRoot(hudInput);
-		gestureDetector = new GestureDetector(this, new Input(hudInput,gameInput));
+		gestureDetector = new GestureDetector(this, new LInput(hudInput,gameInput));
 	}
 
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		//outState.putSerializable("GamePointers", (Serializable) BaseObject.gamePointers);
+		//outState.putSerializable("GamePointers", (Serializable) LBaseObject.gamePointers);
 	}
 
 	/**
@@ -157,7 +157,7 @@ public class GameActivity extends Activity implements GameActivityInterface{
 	 *  Before you start up!
 	 */
 	public void preLoadTextures(){
-		TextureLibrary tLib = BaseObject.gamePointers.textureLib;
+		LTextureLibrary tLib = LBaseObject.gamePointers.textureLib;
 		tLib.allocateTexture(R.drawable.spheremonster01);
 		tLib.allocateTexture(R.drawable.mann1);
 		tLib.allocateTexture(R.drawable.ants);
@@ -175,10 +175,10 @@ public class GameActivity extends Activity implements GameActivityInterface{
 	public void setScreenDimensionsAndScale() {
 		Display display = getWindowManager().getDefaultDisplay(); 
 		/* Now we can retrieve all display-related infos */
-		Camera.init(display.getHeight(), 
+		LCamera.init(display.getHeight(), 
 				display.getWidth(), 
 				Map.TILE_SIZE);
-		Camera.setUnitsPerHeight(12);
+		LCamera.setUnitsPerHeight(12);
 	}
 
 	@Override
@@ -210,8 +210,8 @@ public class GameActivity extends Activity implements GameActivityInterface{
 	public void roundOver(final int humansKilled, final int coinsGained) {
 
 		if(useScreenshot){
-			BaseObject.gamePointers.renderThread.takeScreenShot();
-			while(BaseObject.gamePointers.renderThread.lastScreenshot == null){
+			LBaseObject.gamePointers.renderThread.takeScreenShot();
+			while(LBaseObject.gamePointers.renderThread.lastScreenshot == null){
 				try {
 					Thread.sleep(10);
 				} catch (InterruptedException e) {
@@ -221,7 +221,7 @@ public class GameActivity extends Activity implements GameActivityInterface{
 		}
 
 
-		BaseObject.gamePointers.gameThread.stopRunning();
+		LBaseObject.gamePointers.gameThread.stopRunning();
 
 
 		runOnUiThread(new Runnable() {
@@ -231,7 +231,7 @@ public class GameActivity extends Activity implements GameActivityInterface{
 				
 				if(useScreenshot){
 					View mainView = findViewById(R.id.roundOverMainLayout);
-					Bitmap bmp = BaseObject.gamePointers.renderThread.lastScreenshot;
+					Bitmap bmp = LBaseObject.gamePointers.renderThread.lastScreenshot;
 					if(bmp != null){
 						mainView.setBackgroundDrawable(new BitmapDrawable(bmp));
 					}

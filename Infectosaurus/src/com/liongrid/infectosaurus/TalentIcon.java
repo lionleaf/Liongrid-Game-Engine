@@ -10,15 +10,15 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.RadioButton;
 
-import com.liongrid.gameengine.Upgrade;
+import com.liongrid.gameengine.LUpgrade;
 import com.liongrid.infectosaurus.upgrades.InfectosaurusUpgrade;
 
 public class TalentIcon extends RadioButton {
 
 
-	private Upgrade<?> mUpgrade = InfectosaurusUpgrade.SpeedUpgrade.get();
+	private LUpgrade<?> mUpgrade = InfectosaurusUpgrade.SpeedUpgrade.get();
 	private boolean mUpgradeable = true;
-	private Upgrade.OnRankChangedListener mOnRankChangedListener;
+	private LUpgrade.OnRankChangedListener mOnRankChangedListener;
 
 	private rankChangeListener mRankListener = new rankChangeListener();
 	private int mIconRes;
@@ -37,7 +37,7 @@ public class TalentIcon extends RadioButton {
 
 
 
-	public Upgrade<?> getUpgrade(){
+	public LUpgrade<?> getUpgrade(){
 		return mUpgrade;
 	}
 
@@ -68,7 +68,7 @@ public class TalentIcon extends RadioButton {
 	}
 
 	/**
-	 * @return true if the Upgrade associated with this button 
+	 * @return true if the LUpgrade associated with this button 
 	 * should be allowed to be upgraded by the player
 	 */
 	public boolean isUpgradeable(){
@@ -140,7 +140,7 @@ public class TalentIcon extends RadioButton {
 	 * 
 	 * @param listener - An instance of the listener class
 	 */
-	public void setOnRankChangedListener(Upgrade.OnRankChangedListener listener){
+	public void setOnRankChangedListener(LUpgrade.OnRankChangedListener listener){
 		mOnRankChangedListener = listener;
 	}
 	
@@ -151,9 +151,9 @@ public class TalentIcon extends RadioButton {
 	}
 
 	private class rankChangeListener implements 
-	Upgrade.OnRankChangedListener{
+	LUpgrade.OnRankChangedListener{
 
-		public void onRankChanged(Upgrade<?> upgrade, int newRank) {
+		public void onRankChanged(LUpgrade<?> upgrade, int newRank) {
 			//cause a full repaint of the view when rank is changed.
 			if(upgrade == mUpgrade){
 				postInvalidate();

@@ -1,9 +1,9 @@
 package com.liongrid.infectosaurus.effects;
 
-import com.liongrid.gameengine.Effect;
+import com.liongrid.gameengine.LEffect;
 import com.liongrid.infectosaurus.InfectoGameObject;
 
-public class SpeedBuffEffect extends Effect<InfectoGameObject> {
+public class SpeedBuffEffect extends LEffect<InfectoGameObject> {
 	
 	
 	private float multiplier = 1;

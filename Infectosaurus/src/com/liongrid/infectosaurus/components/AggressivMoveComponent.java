@@ -2,16 +2,16 @@ package com.liongrid.infectosaurus.components;
 
 import android.util.Log;
 
-import com.liongrid.gameengine.CollisionHandlerMultipleArrays;
-import com.liongrid.gameengine.CollisionObject;
-import com.liongrid.gameengine.Component;
+import com.liongrid.gameengine.LCollisionHandlerMultipleArrays;
+import com.liongrid.gameengine.LCollisionObject;
+import com.liongrid.gameengine.LComponent;
 import com.liongrid.infectosaurus.GameActivity;
 import com.liongrid.infectosaurus.InfectoGameObject;
 import com.liongrid.infectosaurus.InfectoGameObjectHandler;
 import com.liongrid.infectosaurus.Main;
 import com.liongrid.infectosaurus.Team;
 
-public class AggressivMoveComponent extends Component<InfectoGameObject>{
+public class AggressivMoveComponent extends LComponent<InfectoGameObject>{
 	
 	private InfectoGameObjectHandler gameObjHandler;
 

@@ -2,7 +2,7 @@ package com.liongrid.infectosaurus.crowd.actions;
 
 import android.location.Address;
 
-import com.liongrid.gameengine.tools.FixedSizeArray;
+import com.liongrid.gameengine.tools.LFixedSizeArray;
 import com.liongrid.infectosaurus.InfectoGameObject;
 import com.liongrid.infectosaurus.crowd.State;
 
@@ -18,7 +18,7 @@ public class Walk extends Action {
 	}
 
 	@Override
-	public FixedSizeArray<State> getInternalNextStates(State lastState, float dt, InfectoGameObject parent) {
+	public LFixedSizeArray<State> getInternalNextStates(State lastState, float dt, InfectoGameObject parent) {
 		int l = 5;
 		for (int i = 0; i < l; i++) {
 			State state = stateList.get(i);

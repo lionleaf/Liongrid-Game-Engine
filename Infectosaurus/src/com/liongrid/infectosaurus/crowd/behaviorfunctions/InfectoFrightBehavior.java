@@ -2,7 +2,7 @@ package com.liongrid.infectosaurus.crowd.behaviorfunctions;
 
 import android.util.Log;
 
-import com.liongrid.gameengine.tools.Vector2;
+import com.liongrid.gameengine.tools.LVector2;
 import com.liongrid.infectosaurus.Infectosaurus;
 import com.liongrid.infectosaurus.crowd.*;
 import com.liongrid.infectosaurus.crowd.actions.*;
@@ -10,7 +10,7 @@ import com.liongrid.infectosaurus.crowd.StateList;
 
 public class InfectoFrightBehavior extends BehaviorFunction {
 	Infectosaurus inf = null;
-	Vector2 vec = new Vector2();
+	LVector2 vec = new LVector2();
 	float alpha = 10;
 	
 	@Override

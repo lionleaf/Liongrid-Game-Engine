@@ -1,14 +1,14 @@
 package com.liongrid.infectosaurus;
 
-import com.liongrid.gameengine.BaseObject;
-import com.liongrid.gameengine.Collision;
-import com.liongrid.gameengine.CollisionObject;
-import com.liongrid.gameengine.Component;
-import com.liongrid.gameengine.GameObject;
-import com.liongrid.gameengine.tools.Vector2;
+import com.liongrid.gameengine.LBaseObject;
+import com.liongrid.gameengine.LCollision;
+import com.liongrid.gameengine.LCollisionObject;
+import com.liongrid.gameengine.LComponent;
+import com.liongrid.gameengine.LGameObject;
+import com.liongrid.gameengine.tools.LVector2;
 import com.liongrid.infectosaurus.components.SpriteComponent;
 
-public class InfectoGameObject extends GameObject<InfectoGameObject>{
+public class InfectoGameObject extends LGameObject<InfectoGameObject>{
 	
 	//TODO Don't have public!
 	
@@ -16,12 +16,12 @@ public class InfectoGameObject extends GameObject<InfectoGameObject>{
 	public int mWidth = 0;
 	public int mHeigth = 0;
 	public boolean alive = true;
-	public Vector2 mVel = new Vector2(0,0);
+	public LVector2 mVel = new LVector2(0,0);
 	public float speed = 10;
 	public int mMaxHp = 1;
 	public int mHp = mMaxHp;
 	public boolean infectable = true; // Tells if the object can be infected
-	public CollisionObject collisionObject;
+	public LCollisionObject collisionObject;
 	public SpriteComponent spriteComponent = null;
 	
 	public InfectoGameObject() {
@@ -30,7 +30,7 @@ public class InfectoGameObject extends GameObject<InfectoGameObject>{
 	
 	
 	@Override
-	public void update(float dt, BaseObject parent) {
+	public void update(float dt, LBaseObject parent) {
 		if(mHp <= 0) { // Temp death function!!! TODO RREMOVE
 			die();
 			return;
@@ -39,7 +39,7 @@ public class InfectoGameObject extends GameObject<InfectoGameObject>{
 	}
 	
 	@Override
-	public void addComponent(Component<InfectoGameObject> component) {
+	public void addComponent(LComponent<InfectoGameObject> component) {
 		super.addComponent(component);
 		if(component instanceof SpriteComponent){
 			spriteComponent = (SpriteComponent) component;
@@ -57,6 +57,6 @@ public class InfectoGameObject extends GameObject<InfectoGameObject>{
 	}
 
 	public float distance2(InfectoGameObject o){
-		return Collision.distance2(collisionObject, o.collisionObject);
+		return LCollision.distance2(collisionObject, o.collisionObject);
 	}
 }

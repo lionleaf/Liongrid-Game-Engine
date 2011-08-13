@@ -1,10 +1,10 @@
 package com.liongrid.infectosaurus.upgrades;
 
-import com.liongrid.gameengine.Upgrade;
+import com.liongrid.gameengine.LUpgrade;
 import com.liongrid.infectosaurus.Infectosaurus;
 import com.liongrid.infectosaurus.R;
 
-public class HealthUpgrade extends Upgrade<Infectosaurus> {
+public class HealthUpgrade extends LUpgrade<Infectosaurus> {
 	
 	public HealthUpgrade() {
 		super(Integer.MAX_VALUE);

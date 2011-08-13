@@ -1,7 +1,7 @@
 package com.liongrid.infectosaurus.map;
 
-import com.liongrid.gameengine.DrawableBitmap;
-import com.liongrid.gameengine.Texture;
+import com.liongrid.gameengine.LDrawableBitmap;
+import com.liongrid.gameengine.LTexture;
 
 /**
  * Representation of one type of Tile. 
@@ -10,10 +10,10 @@ import com.liongrid.gameengine.Texture;
  * what sort of movement. 
  *
  */
-public class TileType extends DrawableBitmap{
+public class TileType extends LDrawableBitmap{
 	/**
 	 * You probably want to use 
-	 * Tile.isBlocked(MovementType mType, int x, int y) 
+	 * Tile.isBlocked(LMovementType mType, int x, int y) 
 	 * instead. Unless you want to remove a method call.
 	 * 
 	 * 
@@ -21,7 +21,7 @@ public class TileType extends DrawableBitmap{
 	 * coordinate (x,y). To check whether a part of the tile is mBlocked
 	 * check:
 	 * 
-	 * mBlocked[MovementType.ordinal()][local x][local y]
+	 * mBlocked[LMovementType.ordinal()][local x][local y]
 	 * 
 	 * So if a square is divided in 4, there is 4 valid coordinates:
 	 * (0,0), (1,0), (0,1), and (1,1);
@@ -38,7 +38,7 @@ public class TileType extends DrawableBitmap{
 	 *  as calculations depend upon it
 	 * @param context - gamePointer.panel;
 	 */
-	public TileType(Texture texture, boolean[][][] blocked){
+	public TileType(LTexture texture, boolean[][][] blocked){
 		super(texture, Map.TILE_SIZE, Map.TILE_SIZE);
 		
 		this.mBlocked = blocked;	

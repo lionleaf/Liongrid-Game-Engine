@@ -4,21 +4,21 @@ import java.util.HashMap;
 
 import android.util.Log;
 
-import com.liongrid.gameengine.BaseObject;
-import com.liongrid.gameengine.Component;
-import com.liongrid.gameengine.DrawableBitmap;
-import com.liongrid.gameengine.DrawableObject;
-import com.liongrid.gameengine.EasyBitmapCropper;
+import com.liongrid.gameengine.LBaseObject;
+import com.liongrid.gameengine.LComponent;
+import com.liongrid.gameengine.LDrawableBitmap;
+import com.liongrid.gameengine.LDrawableObject;
+import com.liongrid.gameengine.LEasyBitmapCropper;
 import com.liongrid.gameengine.LAnimation;
 import com.liongrid.infectosaurus.InfectoGameObject;
 
-public class SpriteComponent extends Component<InfectoGameObject> {
+public class SpriteComponent extends LComponent<InfectoGameObject> {
 	 
 	private String currentState = null;
 	private String currentOverlayAnimation = null;
 	private LAnimation lastAnimation = null;
-	private DrawableObject lastDrawing = null;
-	private DrawableObject defaultDrawing;
+	private LDrawableObject lastDrawing = null;
+	private LDrawableObject defaultDrawing;
 
 	//LAnimation[] animations = new LAnimation[SpriteState.values().length];
 	
@@ -37,7 +37,7 @@ public class SpriteComponent extends Component<InfectoGameObject> {
 		
 	}
 	
-	public SpriteComponent(DrawableObject drawing){
+	public SpriteComponent(LDrawableObject drawing){
 		this.defaultDrawing = drawing;
 	}
 	
@@ -66,7 +66,7 @@ public class SpriteComponent extends Component<InfectoGameObject> {
 			animation = animations.get(currentState);
 		}
 		
-		DrawableObject toDraw;
+		LDrawableObject toDraw;
 
 		if(animation != null){
 
@@ -101,7 +101,7 @@ public class SpriteComponent extends Component<InfectoGameObject> {
 		y -= 0.5 * toDraw.getHeight();
 		
 		lastDrawing = toDraw;
-		BaseObject.gamePointers.renderSystem.scheduleForDraw(toDraw, x, y, false);
+		LBaseObject.gamePointers.renderSystem.scheduleForDraw(toDraw, x, y, false);
 	}
 
 	public String getSpriteState() {
@@ -109,7 +109,7 @@ public class SpriteComponent extends Component<InfectoGameObject> {
 		
 	}
 
-	public DrawableObject getLastDrawing() {
+	public LDrawableObject getLastDrawing() {
 		return lastDrawing;
 	}
 

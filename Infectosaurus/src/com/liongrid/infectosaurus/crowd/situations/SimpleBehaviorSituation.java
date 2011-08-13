@@ -1,6 +1,6 @@
 package com.liongrid.infectosaurus.crowd.situations;
 
-import com.liongrid.gameengine.BaseObject;
+import com.liongrid.gameengine.LBaseObject;
 import com.liongrid.infectosaurus.InfectoGameObject;
 import com.liongrid.infectosaurus.components.BehaviorComponent;
 import com.liongrid.infectosaurus.crowd.behaviorfunctions.BehaviorFunction;
@@ -26,7 +26,7 @@ public class SimpleBehaviorSituation extends Situation {
 	}
 
 	@Override
-	public void update(float dt, BaseObject parent) {
+	public void update(float dt, LBaseObject parent) {
 		// TODO Auto-generated method stub
 
 	}

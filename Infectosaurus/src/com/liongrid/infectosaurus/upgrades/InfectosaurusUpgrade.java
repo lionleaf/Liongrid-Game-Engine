@@ -1,6 +1,6 @@
 package com.liongrid.infectosaurus.upgrades;
 
-import com.liongrid.gameengine.Upgrade;
+import com.liongrid.gameengine.LUpgrade;
 import com.liongrid.infectosaurus.Infectosaurus;
 
 public enum InfectosaurusUpgrade {
@@ -12,17 +12,17 @@ public enum InfectosaurusUpgrade {
 	MeleeSpeedUpgrade(new MeleeSpeedUpgrade());
 	
 	
-	Upgrade<Infectosaurus> upgrade;
+	LUpgrade<Infectosaurus> upgrade;
 	
 	
-	private InfectosaurusUpgrade(Upgrade<Infectosaurus> u) {
+	private InfectosaurusUpgrade(LUpgrade<Infectosaurus> u) {
 		upgrade = u;
 	}
 	
 	/**
 	 * @return the upgrade objecct associated with this upgrade.
 	 */
-	public Upgrade<Infectosaurus> get(){
+	public LUpgrade<Infectosaurus> get(){
 		return upgrade;
 	}
 }

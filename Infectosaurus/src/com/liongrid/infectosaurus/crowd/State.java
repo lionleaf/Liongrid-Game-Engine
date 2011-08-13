@@ -1,8 +1,8 @@
 package com.liongrid.infectosaurus.crowd;
 
-import com.liongrid.gameengine.BaseObject;
-import com.liongrid.gameengine.tools.FixedSizeArray;
-import com.liongrid.gameengine.tools.Vector2;
+import com.liongrid.gameengine.LBaseObject;
+import com.liongrid.gameengine.tools.LFixedSizeArray;
+import com.liongrid.gameengine.tools.LVector2;
 import com.liongrid.infectosaurus.InfectoGameObject;
 import com.liongrid.infectosaurus.crowd.actions.Action;
 
@@ -12,15 +12,15 @@ import com.liongrid.infectosaurus.crowd.actions.Action;
  *   info about the current doing of an agent.
  *  A game object always have one active state. 
  */
-public class State extends BaseObject{
+public class State extends LBaseObject{
 	public InfectoGameObject parent;
-	public Vector2 pos;
-	public Vector2 vel;
+	public LVector2 pos;
+	public LVector2 vel;
 	public Action action;
 		
 	public State(){ // Has to have this if we want it pooled
-		vel = new Vector2();
-		pos = new Vector2();
+		vel = new LVector2();
+		pos = new LVector2();
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class State extends BaseObject{
 	}
 
 	@Override
-	public void update(float dt, BaseObject parent) {}
+	public void update(float dt, LBaseObject parent) {}
 	
 	@Override
 	public String toString() {

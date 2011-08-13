@@ -2,8 +2,8 @@ package com.liongrid.infectosaurus.crowd.behaviorfunctions;
 
 import android.util.Log;
 
-import com.liongrid.gameengine.BaseObject;
-import com.liongrid.gameengine.tools.FixedSizeArray;
+import com.liongrid.gameengine.LBaseObject;
+import com.liongrid.gameengine.tools.LFixedSizeArray;
 import com.liongrid.infectosaurus.crowd.State;
 import com.liongrid.infectosaurus.crowd.StateList;
 
@@ -12,7 +12,7 @@ import com.liongrid.infectosaurus.crowd.StateList;
  * A behavior function is class that changes the likelihood that a 
  * specific states will be initiated.  
  */
-public abstract class BehaviorFunction extends BaseObject{
+public abstract class BehaviorFunction extends LBaseObject{
 
 	static final float EXTREMLY_HIGH = 10;
 	static final float VERY_HIGH = 5;
@@ -26,7 +26,7 @@ public abstract class BehaviorFunction extends BaseObject{
 	 * @param s - An array of States. Will be casted! BE CAREFUL!
 	 * @param prob
 	 */
-	public void update(FixedSizeArray<State> s, 
+	public void update(LFixedSizeArray<State> s, 
 					   double[] prob, 
 					   StateList prevStates){
 		int i;
@@ -64,7 +64,7 @@ public abstract class BehaviorFunction extends BaseObject{
 	}
 	
 	@Override
-	public void update(float dt, BaseObject parent) {
+	public void update(float dt, LBaseObject parent) {
 		// TODO Auto-generated method stub
 		
 	}

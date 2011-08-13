@@ -1,20 +1,20 @@
 package com.liongrid.infectosaurus.components;
 
-import com.liongrid.gameengine.Component;
-import com.liongrid.gameengine.DrawableBitmap;
+import com.liongrid.gameengine.LComponent;
+import com.liongrid.gameengine.LDrawableBitmap;
 import com.liongrid.infectosaurus.InfectoGameObject;
 import com.liongrid.infectosaurus.R;
 
-public class HpBarComponent extends Component<InfectoGameObject> {
-	DrawableBitmap mBarBackground;
-	DrawableBitmap mBarForeground;
+public class HpBarComponent extends LComponent<InfectoGameObject> {
+	LDrawableBitmap mBarBackground;
+	LDrawableBitmap mBarForeground;
 	int mHeight = 10;
 	int mWidth = 64;
 	
 	public HpBarComponent() {
-		mBarBackground = new DrawableBitmap
+		mBarBackground = new LDrawableBitmap
 		(gamePointers.textureLib.allocateTexture(R.drawable.red),mWidth,mHeight);
-		mBarForeground = new DrawableBitmap
+		mBarForeground = new LDrawableBitmap
 		(gamePointers.textureLib.allocateTexture(R.drawable.green),0,mHeight);
 		
 	}

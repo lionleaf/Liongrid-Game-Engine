@@ -1,6 +1,6 @@
 package com.liongrid.infectosaurus;
 
-import com.liongrid.gameengine.Upgrade;
+import com.liongrid.gameengine.LUpgrade;
 import com.liongrid.infectosaurus.TalentTree.OnSelectedChangeListener;
 
 import android.app.Activity;
@@ -44,7 +44,7 @@ public class UpgradeActivity extends Activity {
 		TalentIcon uTB = (TalentIcon) findViewById(checkedID);
 		if(uTB == null) return;
 
-		Upgrade<?> upgrade = uTB.getUpgrade();
+		LUpgrade<?> upgrade = uTB.getUpgrade();
 
 		int coins = InfectoPointers.coins;
 		int price = upgrade.getUpgradePrice();
@@ -80,7 +80,7 @@ public class UpgradeActivity extends Activity {
 			int checkedID = talentTree.getSelectedId();
 			TalentIcon uTB = (TalentIcon) findViewById(checkedID);
 			if(uTB == null) return;
-			Upgrade<?> upgrade = uTB.getUpgrade();
+			LUpgrade<?> upgrade = uTB.getUpgrade();
 			if(!cheatBox.isChecked()){
 				InfectoPointers.coins -= upgrade.getUpgradePrice();
 			}

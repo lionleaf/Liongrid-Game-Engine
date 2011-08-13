@@ -8,9 +8,9 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import android.util.Log;
 
-import com.liongrid.gameengine.BaseObject;
-import com.liongrid.gameengine.TextureLibrary;
-import com.liongrid.gameengine.tools.MovementType;
+import com.liongrid.gameengine.LBaseObject;
+import com.liongrid.gameengine.LTextureLibrary;
+import com.liongrid.gameengine.tools.LMovementType;
 import com.liongrid.infectosaurus.R;
 
 public class TileSetSaxParser extends DefaultHandler {
@@ -22,7 +22,7 @@ public class TileSetSaxParser extends DefaultHandler {
 	boolean[][][] currentBlocked;
 	int currentID;
 	TileSet tileSet;
-	MovementType currentMType = null;
+	LMovementType currentMType = null;
 	
 	
 	
@@ -42,7 +42,7 @@ public class TileSetSaxParser extends DefaultHandler {
 					attributes.getValue("resource"), R.drawable.class);
 			
 			currentBlocked = 
-				new boolean[MovementType.values().length][blockDimensions][blockDimensions];
+				new boolean[LMovementType.values().length][blockDimensions][blockDimensions];
 			
 		}else if(localName.equalsIgnoreCase("TileSet")){
 			//block_dimension="2" nr_of_movetypes="3" nr_of_tiles="2"
@@ -56,7 +56,7 @@ public class TileSetSaxParser extends DefaultHandler {
 		}else if(localName.equalsIgnoreCase("state")){
 			String mTypeName = attributes.getValue("name");
 			try{
-				currentMType = MovementType.valueOf(mTypeName);		
+				currentMType = LMovementType.valueOf(mTypeName);		
 			}catch(IllegalArgumentException e){
 				//If we don`t have the movementType, skip it.
 				currentMType = null;
@@ -73,7 +73,7 @@ public class TileSetSaxParser extends DefaultHandler {
 		super.endElement(uri, localName, qName);
 		
 		if(localName.equalsIgnoreCase("Tile")){
-			TextureLibrary texLib = BaseObject.gamePointers.textureLib;		
+			LTextureLibrary texLib = LBaseObject.gamePointers.textureLib;		
 			checkTrue(currentBlocked);
 			tileTypes[currentIndex] = new TileType(texLib.allocateTexture(currentRes),currentBlocked);
 			tileSet.tileIDtoIndexMap.put(currentID, currentIndex);

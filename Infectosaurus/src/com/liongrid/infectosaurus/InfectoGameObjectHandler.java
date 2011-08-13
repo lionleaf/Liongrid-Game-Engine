@@ -4,13 +4,13 @@ import java.util.Random;
 
 import android.util.Log;
 
-import com.liongrid.gameengine.BaseObject;
-import com.liongrid.gameengine.Camera;
-import com.liongrid.gameengine.CollisionHandler;
-import com.liongrid.gameengine.CollisionHandlerMultipleArrays;
-import com.liongrid.gameengine.CollisionObject;
-import com.liongrid.gameengine.ObjectHandler;
-import com.liongrid.gameengine.tools.Vector2;
+import com.liongrid.gameengine.LBaseObject;
+import com.liongrid.gameengine.LCamera;
+import com.liongrid.gameengine.LCollisionHandler;
+import com.liongrid.gameengine.LCollisionHandlerMultipleArrays;
+import com.liongrid.gameengine.LCollisionObject;
+import com.liongrid.gameengine.LObjectHandler;
+import com.liongrid.gameengine.tools.LVector2;
 import com.liongrid.infectosaurus.map.Map;
 
 /**
@@ -18,26 +18,26 @@ import com.liongrid.infectosaurus.map.Map;
  * This class needs to hold all the GameObjects and sort the 
  * components in a way that they can be done in the right order 
  */
-public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
+public class InfectoGameObjectHandler extends LObjectHandler<InfectoGameObject> {
 	public static int UNITS_PER_COLLISION_AREA_X;
 	public static int UNITS_PER_COLLISION_AREA_Y;
 	private static final int DEFAULT_CAPACITY = 256;
 	
-	private CollisionHandler[][] mCollisionAreas;
+	private LCollisionHandler[][] mCollisionAreas;
 	public int mCollisionAreasLengthX;
 	public int mCollisionAreasLengthY;
 	
 	public InfectoGameObjectHandler(){
 		super(DEFAULT_CAPACITY);
-		UNITS_PER_COLLISION_AREA_X = Camera.unit * 8;
-		UNITS_PER_COLLISION_AREA_Y = Camera.unit * 8;
+		UNITS_PER_COLLISION_AREA_X = LCamera.unit * 8;
+		UNITS_PER_COLLISION_AREA_Y = LCamera.unit * 8;
 		mCollisionAreasLengthX = Map.sizePx.x / UNITS_PER_COLLISION_AREA_X + 1;
 		mCollisionAreasLengthY = Map.sizePx.y / UNITS_PER_COLLISION_AREA_Y + 1;
-		mCollisionAreas = new CollisionHandler[mCollisionAreasLengthX][];
+		mCollisionAreas = new LCollisionHandler[mCollisionAreasLengthX][];
 		for(int i = 0; i < mCollisionAreasLengthX; i++){
-			mCollisionAreas[i] = new CollisionHandler[mCollisionAreasLengthY];
+			mCollisionAreas[i] = new LCollisionHandler[mCollisionAreasLengthY];
 			for(int j = 0; j < mCollisionAreasLengthY; j++){
-				mCollisionAreas[i][j] = new CollisionHandler(DEFAULT_CAPACITY);
+				mCollisionAreas[i][j] = new LCollisionHandler(DEFAULT_CAPACITY);
 			}
 		}
 	}
@@ -53,14 +53,14 @@ public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
 	}
 	
 	@Override
-	public void update(float dt, BaseObject parent){
+	public void update(float dt, LBaseObject parent){
 		
 		commitUpdates();
 		//For speed, we get the raw array. We have to be careful to only read		
 		Object[] objectArray = objects.getArray();
 		int count = objects.getCount();
 		for(int i = 0; i < count; i++){
-			((BaseObject)objectArray[i]).update(dt, this);
+			((LBaseObject)objectArray[i]).update(dt, this);
 		}
 		
 		refreshCollisionAreas(count, objectArray);
@@ -84,7 +84,7 @@ public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
 	}
 	
 	private void updateCollisionAreas(int count, Object[] objectArray,
-			BaseObject parent, float dt) {
+			LBaseObject parent, float dt) {
 		for(int i = 0; i < mCollisionAreas.length; i++){
 			for(int j = 0; j < mCollisionAreas[i].length; j++){
 				mCollisionAreas[i][j].update(dt, parent);
@@ -93,9 +93,9 @@ public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
 	}
 
 	public void addToCorrectCollisionHandler(InfectoGameObject gameObject) {
-		CollisionObject collisionObject = gameObject.collisionObject;
+		LCollisionObject collisionObject = gameObject.collisionObject;
 		if(collisionObject == null) return;
-		Vector2 pos = gameObject.pos;
+		LVector2 pos = gameObject.pos;
 		float halfWidth = (float) (gameObject.mWidth/2.0);
 		float halfHeight = (float) (gameObject.mHeigth/2.0);
 		
@@ -128,7 +128,7 @@ public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
 		return count;
 	}
 	
-	public InfectoGameObject getClosest(Vector2 pos, Team team, InfectoGameObject self){
+	public InfectoGameObject getClosest(LVector2 pos, Team team, InfectoGameObject self){
 		int i; float closestDistance = Float.MAX_VALUE;
 		int length = objects.getCount();
 		Object[] array = objects.getArray();
@@ -147,7 +147,7 @@ public class InfectoGameObjectHandler extends ObjectHandler<InfectoGameObject> {
 	} 
 	
 
-	public InfectoGameObject[] getClose(Vector2 pos, float within, 
+	public InfectoGameObject[] getClose(LVector2 pos, float within, 
 			Team team, InfectoGameObject[] array, InfectoGameObject self){
 		int count = 0; float dis2;
 		int length = objects.getCount();

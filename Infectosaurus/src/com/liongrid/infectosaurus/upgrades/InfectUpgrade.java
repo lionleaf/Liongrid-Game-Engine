@@ -1,11 +1,11 @@
 package com.liongrid.infectosaurus.upgrades;
 
-import com.liongrid.gameengine.Upgrade;
+import com.liongrid.gameengine.LUpgrade;
 import com.liongrid.infectosaurus.Infectosaurus;
 import com.liongrid.infectosaurus.R;
 import com.liongrid.infectosaurus.components.InfMeleeAttackComponent;
 
-public class InfectUpgrade extends Upgrade<Infectosaurus> {
+public class InfectUpgrade extends LUpgrade<Infectosaurus> {
 
 	public InfectUpgrade() {
 		super(20);

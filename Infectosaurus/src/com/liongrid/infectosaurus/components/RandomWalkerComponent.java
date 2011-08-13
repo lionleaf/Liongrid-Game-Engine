@@ -2,21 +2,21 @@ package com.liongrid.infectosaurus.components;
 
 import java.util.Random;
 
-import com.liongrid.gameengine.BaseObject;
-import com.liongrid.gameengine.Component;
-import com.liongrid.gameengine.tools.Vector2;
+import com.liongrid.gameengine.LBaseObject;
+import com.liongrid.gameengine.LComponent;
+import com.liongrid.gameengine.tools.LVector2;
 import com.liongrid.infectosaurus.InfectoGameObject;
 
-public class RandomWalkerComponent extends Component<InfectoGameObject>{
+public class RandomWalkerComponent extends LComponent<InfectoGameObject>{
 	Random random;
 	int width; //Screw real data, let`s guess
 	int height;
 	boolean recalculate = true;
 	
-	Vector2 vel;
-	Vector2 pos;
-	Vector2 goal = new Vector2();
-	Vector2 temp = new Vector2();
+	LVector2 vel;
+	LVector2 pos;
+	LVector2 goal = new LVector2();
+	LVector2 temp = new LVector2();
 	
 	float lastDistance = Integer.MAX_VALUE;
 	
@@ -29,8 +29,8 @@ public class RandomWalkerComponent extends Component<InfectoGameObject>{
 
 	@Override
 	public void update(float dt, InfectoGameObject parent) {
-		width = BaseObject.gamePointers.panel.getWidth();
-		height = BaseObject.gamePointers.panel.getHeight();
+		width = LBaseObject.gamePointers.panel.getWidth();
+		height = LBaseObject.gamePointers.panel.getHeight();
 		if(width <= 0 || height <= 0) return;
 		
 

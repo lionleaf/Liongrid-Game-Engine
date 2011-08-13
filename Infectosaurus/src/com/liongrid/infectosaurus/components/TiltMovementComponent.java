@@ -8,7 +8,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
 
-import com.liongrid.gameengine.Component;
+import com.liongrid.gameengine.LComponent;
 import com.liongrid.infectosaurus.InfectoGameObject;
 
 /**
@@ -16,7 +16,7 @@ import com.liongrid.infectosaurus.InfectoGameObject;
  *	A quick fix to show Furu that it`s easily done!
  *	
  */
-public class TiltMovementComponent extends Component<InfectoGameObject> {
+public class TiltMovementComponent extends LComponent<InfectoGameObject> {
 	private float[] mLastValues;
 	
 	public TiltMovementComponent(){

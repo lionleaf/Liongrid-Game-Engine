@@ -1,9 +1,9 @@
 package com.liongrid.infectosaurus.effects;
 
-import com.liongrid.gameengine.Effect;
+import com.liongrid.gameengine.LEffect;
 import com.liongrid.infectosaurus.InfectoGameObject;
 
-public class DOTEffect extends Effect<InfectoGameObject> {
+public class DOTEffect extends LEffect<InfectoGameObject> {
 
 	private int mTickDamage = 1;
 	private float mTickTime = 1f; 
