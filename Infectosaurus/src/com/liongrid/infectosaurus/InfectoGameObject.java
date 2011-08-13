@@ -8,6 +8,8 @@ import com.liongrid.gameengine.tools.Vector2;
 
 public class InfectoGameObject extends GameObject<InfectoGameObject>{
 	
+	//TODO Don't have public!
+	
 	public Team team = Team.Human; //Default team
 	public int mWidth = 0;
 	public int mHeigth = 0;

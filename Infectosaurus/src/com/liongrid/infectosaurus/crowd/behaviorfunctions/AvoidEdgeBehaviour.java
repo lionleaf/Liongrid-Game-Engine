@@ -1,1 +1,0 @@
-package com.liongrid.infectosaurus.crowd.behaviorfunctions;

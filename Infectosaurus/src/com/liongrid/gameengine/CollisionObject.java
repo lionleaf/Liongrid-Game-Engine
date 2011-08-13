@@ -16,25 +16,22 @@ public abstract class CollisionObject implements Shape{
 	// Made public for speed.
 	public int collisionCnt;
 	public CollisionObject[] collisions;
-	public Object owner;
+	public GameObject owner;
 	public int type;
-	public Vector2 pos;
 	
 	/**
 	 * A CollisionObject is basically a shape with an array of all the other shapes 
 	 * it collides with. It is used in CollisionHandler. The CollisionObject has a max
 	 * number of objects it will store in its array.
 	 * 
-	 * @param type - CollisionObject are divided into different arrays in CollisionHandler
-	 * according to their types.
+	 * @param type - 
 	 * @param pos - The position of the shape.
 	 * @param owner - A pointer to the owner of the shape.
 	 * @param maxCollisions - Number of max collisions the CollisionObject will store
 	 * in its array.
 	 */
-	public CollisionObject(int type, Vector2 pos, Object owner, int maxCollisions) {
+	public CollisionObject(int type, GameObject owner, int maxCollisions) {
 		this.type = type;
-		this.pos = pos;
 		this.owner = owner;
 		collisions = new CollisionObject[maxCollisions];
 	}
@@ -51,9 +48,8 @@ public abstract class CollisionObject implements Shape{
 	 * @param owner - A pointer to the owner of the shape.
 	 * in its array.
 	 */
-	public CollisionObject(int type, Vector2 pos, Object owner) {
+	public CollisionObject(int type, GameObject owner) {
 		this.type = type;
-		this.pos = pos;
 		this.owner = owner;
 		collisions = new CollisionObject[DEFAULT_MAX_COLLISIONS];
 	}
@@ -97,6 +93,6 @@ public abstract class CollisionObject implements Shape{
 	}
 	
 	public Vector2 getPos() {
-		return pos;
+		return owner.pos;
 	}
 }

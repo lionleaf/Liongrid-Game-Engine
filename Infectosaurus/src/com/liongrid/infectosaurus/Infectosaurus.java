@@ -38,7 +38,7 @@ public class Infectosaurus extends InfectoGameObject {
 		
 		mSize = 16*3;
 		float radius = (float) (mSize/2.0);
-		collisionObject = new CollisionCircle(Team.Alien.ordinal(), pos, this, radius);
+		collisionObject = new CollisionCircle(Team.Alien.ordinal(), this, radius);
 		
 		TextureLibrary texLib = gamePointers.textureLib;
 		Texture tex = texLib.allocateTexture(R.drawable.spheremonster01);

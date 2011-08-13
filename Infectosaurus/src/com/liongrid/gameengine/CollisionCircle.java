@@ -6,14 +6,14 @@ public class CollisionCircle extends CollisionObject implements Shape.Circle{
 	
 	public float radius;
 
-	public CollisionCircle(int type, Vector2 pos, int maxCollisions, 
-			Object owner, float radius) {
-		super(type, pos, owner, maxCollisions);
+	public CollisionCircle(int type, int maxCollisions, 
+			GameObject owner, float radius) {
+		super(type, owner, maxCollisions);
 		this.radius = radius;
 	}
 	
-	public CollisionCircle(int type, Vector2 pos, Object owner, float radius) {
-		super(type, pos, owner);
+	public CollisionCircle(int type, GameObject owner, float radius) {
+		super(type, owner);
 		this.radius = radius;
 	}
 
