@@ -1,8 +1,5 @@
 package com.liongrid.gameengine;
 
-import android.util.Log;
-
-import com.liongrid.infectosaurus.Main;
 import com.liongrid.infectosaurus.R;
 
 
@@ -11,7 +8,7 @@ public class LButton extends LView{
 	private LDrawableBitmap startOff;
 
 	public LButton() {
-		LTextureLibrary texLib = gamePointers.textureLib;
+		LTextureLibrary texLib = LGamePointers.textureLib;
 		LTexture tex1 = texLib.allocateTexture(R.drawable.bluecircle);
 		LTexture tex2 = texLib.allocateTexture(R.drawable.redcircle);
 		starOn = new LDrawableBitmap(tex1, 50, 50);

@@ -1,7 +1,5 @@
 package com.liongrid.gameengine;
 
-import com.liongrid.gameengine.tools.LFixedSizeArray;
-
 public interface LObjectHandlerInterface<T>{
 	
 	static final int DEFAULT_CAPACITY = 64;

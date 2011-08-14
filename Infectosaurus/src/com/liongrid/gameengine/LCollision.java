@@ -1,9 +1,6 @@
 package com.liongrid.gameengine;
 
-import android.util.Log;
-
 import com.liongrid.gameengine.tools.LVector2;
-import com.liongrid.infectosaurus.Main;
 
 public class LCollision {
 	private static final int CIRCLE = LShape.CIRCLE;

@@ -3,23 +3,19 @@ package com.liongrid.infectosaurus;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.widget.ProgressBar;
 
 import com.liongrid.gameengine.LBaseObject;
-import com.liongrid.gameengine.LButton;
 import com.liongrid.gameengine.LGameLoader;
 import com.liongrid.gameengine.LGamePointers;
-import com.liongrid.gameengine.LInput;
 import com.liongrid.gameengine.LSurfaceViewPanel;
 import com.liongrid.gameengine.LTextureLibrary;
-import com.liongrid.gameengine.LView;
-import com.liongrid.infectosaurus.crowd.situations.SituationHandler;
+import com.liongrid.infectosaurus.crowd.situations.ISituationHandler;
 
 public class IGameLoader extends LGameLoader{
-	private GameActivity mGameActivity;
+	private IGameActivity mGameActivity;
 	
-	public IGameLoader(LSurfaceViewPanel panel, GameActivity gameActivity, 
+	public IGameLoader(LSurfaceViewPanel panel, IGameActivity gameActivity, 
 			Handler handler, ProgressBar progressBar) {
 		super(panel, handler, progressBar);
 		mGameActivity = gameActivity;
@@ -30,15 +26,15 @@ public class IGameLoader extends LGameLoader{
 	protected void init() {
 		super.init();
 		Log.d("Infectosaurus", "Game Engine loaded");
-		InfectoPointers.gameObjectHandler = new InfectoGameObjectHandler();
+		IGamePointers.gameObjectHandler = new IGameObjectHandler();
 		postProgress(50);
-		InfectoPointers.gameStatus = new GameStatus();
-		InfectoPointers.spawnPool = new SpawnPool();
-		InfectoPointers.curGameActivity = mGameActivity;
-		InfectoPointers.situationHandler = new SituationHandler(10, LBaseObject.gamePointers.map);
+		IGamePointers.gameStatus = new IGameStatus();
+		IGamePointers.spawnPool = new ISpawnPool();
+		IGamePointers.curGameActivity = mGameActivity;
+		IGamePointers.situationHandler = new ISituationHandler(10, LGamePointers.map);
 		postProgress(70);
-		LGamePointers.panel.addToRoot(InfectoPointers.gameObjectHandler);
-		LGamePointers.panel.addToRoot(InfectoPointers.gameStatus);
+		LGamePointers.panel.addToRoot(IGamePointers.gameObjectHandler);
+		LGamePointers.panel.addToRoot(IGamePointers.gameStatus);
 		
 		
 		
@@ -50,12 +46,12 @@ public class IGameLoader extends LGameLoader{
 	}
 	
 	private void spawnMobs(){
-		Bundle extras = InfectoPointers.curGameActivity.getIntent().getExtras();
+		Bundle extras = IGamePointers.curGameActivity.getIntent().getExtras();
 		//TODO try catch and alert!!!!! on getint
 		int difficulty = extras.getInt("com.liongrid.infectosaurus.difficulty");
 		int pop = extras.getInt("com.liongrid.infectosaurus.population");
-		InfectoPointers.difficulty = difficulty;
-		InfectoPointers.NumberOfHumans = pop;
+		IGamePointers.difficulty = difficulty;
+		IGamePointers.NumberOfHumans = pop;
 		LGamePointers.map.spawnNPCs(pop,  difficulty);
 	}
 	
@@ -72,7 +68,7 @@ public class IGameLoader extends LGameLoader{
 		
 		mHandler.post(new Runnable(){
 			public void run(){
-				InfectoPointers.curGameActivity.onFinishGameLoad();
+				IGamePointers.curGameActivity.onFinishGameLoad();
 			}
 		});
 		

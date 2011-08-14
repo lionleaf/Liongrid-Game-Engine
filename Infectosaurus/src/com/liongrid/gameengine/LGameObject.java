@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.liongrid.gameengine.tools.LFixedSizeArray;
 import com.liongrid.gameengine.tools.LVector2;
-import com.liongrid.infectosaurus.Main;
+import com.liongrid.infectosaurus.IMainMenuActivity;
 
 /**
  * @author Lionleaf
@@ -23,10 +23,10 @@ public abstract class LGameObject<T extends LGameObject<?>> extends LBaseObject 
 	private int Counter = 0;
 
 	protected LGameObject() {
-		Log.d(Main.TAG, "In LBaseObject");
+		Log.d(IMainMenuActivity.TAG, "In LBaseObject");
 		components = new LFixedSizeArray<LComponent<T>>(DEFAULT_COMPONENT_SIZE);
 		effects = new LFixedSizeArray<LEffect<T>>(DEFAULT_EFFECT_SIZE);
-		Log.d(Main.TAG, "LGameObject construct");
+		Log.d(IMainMenuActivity.TAG, "LGameObject construct");
 	}
 
 	LGameObject(int size) {
@@ -75,7 +75,7 @@ public abstract class LGameObject<T extends LGameObject<?>> extends LBaseObject 
 	 * This is potentially really slow, should be tested!
 	 * 
 	 * @param type
-	 *            The type your looking for. ie. SpriteComponent.class;
+	 *            The type your looking for. ie. ISpriteComponent.class;
 	 * @return a component of the type, or null if none was found
 	 */
 	public LComponent<T> findComponentOfType(Class<? extends LComponent<T>> type) {
@@ -102,7 +102,7 @@ public abstract class LGameObject<T extends LGameObject<?>> extends LBaseObject 
 	 *            - The effect to be added to the effect list. The effects needs
 	 *            to extend GameEngine.Effect
 	 */
-	public void afflict(LEffect e) {
+	public void afflict(LEffect<T> e) {
 		effects.add(e);
 	}
 

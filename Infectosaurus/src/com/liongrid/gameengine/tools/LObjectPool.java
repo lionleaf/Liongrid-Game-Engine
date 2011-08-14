@@ -1,7 +1,7 @@
 package com.liongrid.gameengine.tools;
 
 import com.liongrid.gameengine.LBaseObject;
-import com.liongrid.infectosaurus.Main;
+import com.liongrid.infectosaurus.IMainMenuActivity;
 
 import android.util.Log;
 
@@ -54,7 +54,7 @@ public class LObjectPool<E extends LBaseObject> {
 	 */
 	public E allocate(){
 		if(objects.getCount() == 0){
-			Log.e(Main.TAG, 
+			Log.e(IMainMenuActivity.TAG, 
 					"EXHAUSTED "+objectClass.getSimpleName()+ " pool! "+objects.getCapacity());
 			return null;
 		}

@@ -3,8 +3,6 @@ package com.liongrid.gameengine;
 import android.os.Handler;
 import android.widget.ProgressBar;
 
-import com.liongrid.infectosaurus.map.Map;
-import com.liongrid.infectosaurus.map.TileSet;
 
 public class LGameLoader implements Runnable {
 	private LSurfaceViewPanel panel;
@@ -27,14 +25,13 @@ public class LGameLoader implements Runnable {
 	 * Overriden methods must remember to call super.init()!
 	 */
 	protected void init(){
-		LBaseObject.gamePointers = new LGamePointers();
 	    LGamePointers.textureLib = new LTextureLibrary();
 	    LGamePointers.renderSystem = new LRenderSystem();
 	    postProgress(5);
 	    LGamePointers.panel = panel;
 	    LGamePointers.root = new LObjectHandler();
-	    LGamePointers.tileSet = new TileSet();
-	    LGamePointers.map = new Map();
+	    LGamePointers.tileSet = new LTileSet();
+	    LGamePointers.map = new LMap();
 	    postProgress(35);
 	    LGamePointers.gameThread = new LGameThread();
 	    LGamePointers.renderThread = new LRenderingThread();

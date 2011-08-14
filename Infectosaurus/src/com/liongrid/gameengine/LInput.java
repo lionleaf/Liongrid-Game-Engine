@@ -1,6 +1,6 @@
 package com.liongrid.gameengine;
 
-import com.liongrid.infectosaurus.Main;
+import com.liongrid.infectosaurus.IMainMenuActivity;
 
 import android.util.Log;
 import android.view.MotionEvent;
@@ -46,7 +46,7 @@ public class LInput extends SimpleOnGestureListener{
 	
 	@Override
 	public void onShowPress(MotionEvent e) {
-		Log.d(Main.TAG, "ShowPress");
+		Log.d(IMainMenuActivity.TAG, "ShowPress");
 		if(mTopLayer.dispatchShowPress(e)) return;
 		if(mBottomLayer.dispatchShowPress(e)) return;
 	}

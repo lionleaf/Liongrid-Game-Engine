@@ -3,8 +3,6 @@ package com.liongrid.gameengine;
 import java.io.Serializable;
 
 import com.liongrid.infectosaurus.Infectosaurus;
-import com.liongrid.infectosaurus.map.Map;
-import com.liongrid.infectosaurus.map.TileSet;
 
 /**
  * @author Lionleaf
@@ -19,8 +17,8 @@ public class LGamePointers implements Serializable {
 	public static LRenderSystem renderSystem;
 	public static LRenderingThread renderThread;
 	public static volatile LSurfaceViewPanel panel;
-	public static Map map;
-	public static TileSet tileSet;
+	public static LMap map;
+	public static LTileSet tileSet;
 	public static Infectosaurus currentSaurus;
 	public static LTextureLibrary textureLib;
 }

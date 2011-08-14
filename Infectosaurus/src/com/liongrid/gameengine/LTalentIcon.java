@@ -11,14 +11,12 @@ import android.util.AttributeSet;
 import android.widget.RadioButton;
 
 import com.liongrid.infectosaurus.R;
-import com.liongrid.infectosaurus.R.drawable;
-import com.liongrid.infectosaurus.R.styleable;
-import com.liongrid.infectosaurus.upgrades.InfectosaurusUpgrade;
+import com.liongrid.infectosaurus.upgrades.IUpgrade;
 
 public class LTalentIcon extends RadioButton {
 
 
-	private LUpgrade<?> mUpgrade = InfectosaurusUpgrade.SpeedUpgrade.get();
+	private LUpgrade<?> mUpgrade = IUpgrade.SpeedUpgrade.get();
 	private boolean mUpgradeable = true;
 	private LUpgrade.OnRankChangedListener mOnRankChangedListener;
 
@@ -50,7 +48,7 @@ public class LTalentIcon extends RadioButton {
 
 		String upgradeValue = a.getString(R.styleable.TalentIcon_upgrade);
 		try {
-			InfectosaurusUpgrade infUp = InfectosaurusUpgrade.valueOf(upgradeValue);
+			IUpgrade infUp = IUpgrade.valueOf(upgradeValue);
 			mUpgrade = infUp.get();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -1,8 +1,9 @@
 package com.liongrid.gameengine;
 
-import com.liongrid.infectosaurus.GameActivity;
+import com.liongrid.infectosaurus.IGameActivity;
+import com.liongrid.infectosaurus.IGamePointers;
 import com.liongrid.infectosaurus.Infectosaurus;
-import com.liongrid.infectosaurus.Main;
+import com.liongrid.infectosaurus.IMainMenuActivity;
 
 import android.os.SystemClock;
 import android.util.Log;
@@ -16,7 +17,7 @@ import android.view.MotionEvent;
  *
  */
 public class LGameThread extends Thread { 
-	private LObjectHandler root;
+	private LObjectHandler<?> root;
 
 	private long dt;
 	private long currentTime;
@@ -39,15 +40,15 @@ public class LGameThread extends Thread {
 
 	public LGameThread() {
 		updateLock = new Object();
-		root = LBaseObject.gamePointers.root;
+		root = LGamePointers.root;
 		setName("LGameThread");
 	}
 
 	@Override
 	public void run() {
-		renderSystem = LBaseObject.gamePointers.renderSystem;
-		renderThread = LBaseObject.gamePointers.renderThread;
-		Log.d(Main.TAG, "Starting LGameThread");
+		renderSystem = LGamePointers.renderSystem;
+		renderThread = LGamePointers.renderThread;
+		Log.d(IMainMenuActivity.TAG, "Starting LGameThread");
 		while(running){
 			//Make sure we don`t swap queues while renderer is rendering
 			renderThread.waitDrawingComplete();
@@ -96,7 +97,7 @@ public class LGameThread extends Thread {
 	private synchronized void waitWhilePaused() {
 		while(paused){
 			try {
-				Log.d(Main.TAG, "Game is paused!");
+				Log.d(IMainMenuActivity.TAG, "Game is paused!");
 				wait();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -109,16 +110,16 @@ public class LGameThread extends Thread {
 
 	public void registerScreenTouch(MotionEvent event) {
 		synchronized(updateLock){
-			if(LBaseObject.gamePointers.currentSaurus != null) return;
+			if(LGamePointers.currentSaurus != null) return;
 			
 			Infectosaurus inf = new Infectosaurus();
-			LBaseObject.gamePointers.currentSaurus = inf;
-			GameActivity.infectoPointers.gameObjectHandler.add(inf);
+			LGamePointers.currentSaurus = inf;
+			IGamePointers.gameObjectHandler.add(inf);
 
 
-			float y = (LBaseObject.gamePointers.panel.getHeight() - event.getY()) / LCamera.scale;
+			float y = (LGamePointers.panel.getHeight() - event.getY()) / LCamera.scale;
 			float x = event.getX() / LCamera.scale;
-			LBaseObject.gamePointers.currentSaurus.pos.set(x + LCamera.pos.x, 
+			LGamePointers.currentSaurus.pos.set(x + LCamera.pos.x, 
 					y + LCamera.pos.y);
 		}
 	}

@@ -48,7 +48,7 @@ public abstract class LCollisionObject implements LShape{
 	 * @param owner - A pointer to the owner of the shape.
 	 * in its array.
 	 */
-	public LCollisionObject(int type, LGameObject owner) {
+	public LCollisionObject(int type, LGameObject<?> owner) {
 		this.type = type;
 		this.owner = owner;
 		collisions = new LCollisionObject[DEFAULT_MAX_COLLISIONS];

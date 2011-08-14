@@ -1,63 +1,59 @@
 package com.liongrid.infectosaurus;
 
 import com.liongrid.gameengine.LBaseObject;
-import com.liongrid.gameengine.LCollision;
 import com.liongrid.gameengine.LCollisionCircle;
 import com.liongrid.gameengine.LDrawableBitmap;
 import com.liongrid.gameengine.LAnimation;
-import com.liongrid.gameengine.LSurfaceViewPanel;
+import com.liongrid.gameengine.LGamePointers;
 import com.liongrid.gameengine.LTexture;
 import com.liongrid.gameengine.LTextureLibrary;
 import com.liongrid.infectosaurus.R;
-import com.liongrid.infectosaurus.components.AggressivMoveComponent;
-import com.liongrid.infectosaurus.components.CollisionComponent;
-import com.liongrid.infectosaurus.components.HpBarComponent;
-import com.liongrid.infectosaurus.components.InfMeleeAttackComponent;
-import com.liongrid.infectosaurus.components.MoveComponent;
-import com.liongrid.infectosaurus.components.SpriteComponent;
-import com.liongrid.infectosaurus.effects.DOTEffect;
-import com.liongrid.infectosaurus.upgrades.InfectosaurusUpgrade;
-
-
-import android.util.Log;
+import com.liongrid.infectosaurus.components.IAggressivMoveComponent;
+import com.liongrid.infectosaurus.components.ICollisionComponent;
+import com.liongrid.infectosaurus.components.IHpBarComponent;
+import com.liongrid.infectosaurus.components.IMeleeAttackComponent;
+import com.liongrid.infectosaurus.components.IMoveComponent;
+import com.liongrid.infectosaurus.components.ISpriteComponent;
+import com.liongrid.infectosaurus.effects.IDOTEffect;
+import com.liongrid.infectosaurus.upgrades.IUpgrade;
 
 /**
  * @author Liongrid
  *	All the extra functionality should instead 
  *	be added to a component?
  */
-public class Infectosaurus extends InfectoGameObject {
+public class Infectosaurus extends IGameObject {
 	
 	private int mSize;
-	private SpriteComponent sprite;
+	private ISpriteComponent sprite;
 	private boolean addedAttack = false;
-	InfMeleeAttackComponent mAttackComponent;
+	IMeleeAttackComponent mAttackComponent;
 
 	public Infectosaurus() {
 		
 		mSize = 16*3;
 		float radius = (float) (mSize/2.0);
-		collisionObject = new LCollisionCircle(Team.Alien.ordinal(), this, radius);
+		collisionObject = new LCollisionCircle(ITeam.Alien.ordinal(), this, radius);
 		
-		LTextureLibrary texLib = gamePointers.textureLib;
+		LTextureLibrary texLib = LGamePointers.textureLib;
 		LTexture tex = texLib.allocateTexture(R.drawable.spheremonster01);
 		sprite = loadAnimations(tex);
 		sprite.setOverlayAnimation("Spawning");
-		mAttackComponent = new InfMeleeAttackComponent();
+		mAttackComponent = new IMeleeAttackComponent();
 		mAttackComponent.setEnabled(false);
-		addComponent(new CollisionComponent());
+		addComponent(new ICollisionComponent());
 		addComponent(mAttackComponent);
-		addComponent(new AggressivMoveComponent());
+		addComponent(new IAggressivMoveComponent());
 		addComponent(sprite);
-		addComponent(new MoveComponent());
-		addComponent(new HpBarComponent());
+		addComponent(new IMoveComponent());
+		addComponent(new IHpBarComponent());
 		speed = 80;
 		
-		team = Team.Alien;
+		team = ITeam.Alien;
 		
-		int diff = GameActivity.infectoPointers.difficulty;
+		int diff = IGamePointers.difficulty;
 		//Temp stuff to die in x sec
-		DOTEffect e = new DOTEffect();
+		IDOTEffect e = new IDOTEffect();
 		e.set(Float.MAX_VALUE, diff, 1f);
 		afflict(e);
 		
@@ -78,8 +74,8 @@ public class Infectosaurus extends InfectoGameObject {
 		
 	}
 	
-	private SpriteComponent loadAnimations(LTexture tex) {
-		SpriteComponent sprite = new SpriteComponent();
+	private ISpriteComponent loadAnimations(LTexture tex) {
+		ISpriteComponent sprite = new ISpriteComponent();
 		LDrawableBitmap[] dbs = new LDrawableBitmap[4];
 		LDrawableBitmap[] attackBmps = new LDrawableBitmap[1];
 		LDrawableBitmap[] spawnBmps = new LDrawableBitmap[5];
@@ -111,7 +107,7 @@ public class Infectosaurus extends InfectoGameObject {
 	}
 
 	private void applyUpgrades() {
-		InfectosaurusUpgrade[] us = InfectosaurusUpgrade.values();
+		IUpgrade[] us = IUpgrade.values();
 		
 		int len = us.length;
 		
@@ -128,6 +124,6 @@ public class Infectosaurus extends InfectoGameObject {
 	@Override
 	protected void die() {
 		super.die();
-		gamePointers.currentSaurus = null;
+		LGamePointers.currentSaurus = null;
 	}
 }

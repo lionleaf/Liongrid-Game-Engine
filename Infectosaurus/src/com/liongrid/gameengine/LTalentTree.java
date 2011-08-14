@@ -1,8 +1,6 @@
 package com.liongrid.gameengine;
 
 import com.liongrid.infectosaurus.R;
-import com.liongrid.infectosaurus.R.styleable;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;

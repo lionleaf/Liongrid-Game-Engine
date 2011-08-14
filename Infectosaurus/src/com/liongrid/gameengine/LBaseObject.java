@@ -8,7 +8,6 @@ package com.liongrid.gameengine;
  * 
  */
 public abstract class LBaseObject {
-	public static LGamePointers gamePointers;
 	public LBaseObject(){
 		//Log.d("GameBoard", "In LBaseObject");
 	}

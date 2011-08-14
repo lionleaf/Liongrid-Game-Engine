@@ -3,7 +3,7 @@ package com.liongrid.infectosaurus.upgrades;
 import com.liongrid.gameengine.LUpgrade;
 import com.liongrid.infectosaurus.Infectosaurus;
 import com.liongrid.infectosaurus.R;
-import com.liongrid.infectosaurus.components.InfMeleeAttackComponent;
+import com.liongrid.infectosaurus.components.IMeleeAttackComponent;
 
 public class InfectUpgrade extends LUpgrade<Infectosaurus> {
 
@@ -13,9 +13,9 @@ public class InfectUpgrade extends LUpgrade<Infectosaurus> {
 
 	@Override
 	public void apply(Infectosaurus target) {
-		InfMeleeAttackComponent c = 
-			(InfMeleeAttackComponent) target.findComponentOfType
-			(InfMeleeAttackComponent.class);	
+		IMeleeAttackComponent c = 
+			(IMeleeAttackComponent) target.findComponentOfType
+			(IMeleeAttackComponent.class);	
 		
 		if(c == null) return;
 		

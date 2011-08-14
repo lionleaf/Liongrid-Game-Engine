@@ -8,18 +8,16 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 import com.liongrid.gameengine.tools.LFixedSizeArray;
-import com.liongrid.infectosaurus.Main;
-import com.liongrid.infectosaurus.map.Map;
-import com.liongrid.infectosaurus.map.TileType;
+import com.liongrid.infectosaurus.IMainMenuActivity;
 
 import android.graphics.Bitmap;
 import android.util.Log;
 
 
 public class LRenderingThread implements LSurfaceViewPanel.Renderer {
-	static final int TILE_SIZE = Map.TILE_SIZE;
+	static final int TILE_SIZE = LMap.TILE_SIZE;
 	
-    private LObjectHandler drawQueue;
+    private LObjectHandler<LRenderElement> drawQueue;
 	private Object drawLock;
 	private boolean drawQueueChanged;
 
@@ -29,7 +27,7 @@ public class LRenderingThread implements LSurfaceViewPanel.Renderer {
     
  
     public LRenderingThread() {
-    	Log.d(Main.TAG,"In RThread");
+    	Log.d(IMainMenuActivity.TAG,"In RThread");
     	drawLock = new Object();
     }
     
@@ -54,8 +52,8 @@ public class LRenderingThread implements LSurfaceViewPanel.Renderer {
         }
 		
 		synchronized (this) {
-			int mWidth = LBaseObject.gamePointers.panel.getWidth();
-			int mHeight= LBaseObject.gamePointers.panel.getHeight();
+			int mWidth = LGamePointers.panel.getWidth();
+			int mHeight= LGamePointers.panel.getHeight();
 			
 			//Get current camera state, to avoid different 
 			//camera throughout drawing
@@ -98,7 +96,7 @@ public class LRenderingThread implements LSurfaceViewPanel.Renderer {
 			LRenderElement elem = (LRenderElement)elems[i];
 			
 			if(elems[i] == null){ 
-				Log.d(Main.TAG, "elem in drawBGQueue is " + elem + 
+				Log.d(IMainMenuActivity.TAG, "elem in drawBGQueue is " + elem + 
 						"Last count was " + count + " Now it is "+ objects.getCount());
 				continue;
 			}
@@ -116,22 +114,22 @@ public class LRenderingThread implements LSurfaceViewPanel.Renderer {
 	}
 	
 	private void drawTiles(GL10 gl, int cameraX, int cameraY, int cameraWidth, float cameraHeight, float scale){
-		Map level = LBaseObject.gamePointers.map;
-		TileType[][] bgTiles = level.renderQueue;
+		LMap level = LGamePointers.map;
+		LTileType[][] bgTiles = level.renderQueue;
 		
 		if(bgTiles != null && bgTiles.length > 0){
 			int tilesX =  (int)(cameraX + cameraWidth/scale)/TILE_SIZE + 1;
-			if(tilesX > Map.size.x) tilesX = Map.size.x;
+			if(tilesX > LMap.size.x) tilesX = LMap.size.x;
 			int tilesY =  (int)(cameraY + cameraHeight/scale)/TILE_SIZE + 1;
-			if(tilesY > Map.size.y) tilesY = Map.size.y;
-			for (int i = cameraX / Map.TILE_SIZE; i < tilesX; i++) {
-				for (int j = cameraY / Map.TILE_SIZE; j < tilesY; j++) {
-					int x = Map.TILE_SIZE*i;
-					int y = Map.TILE_SIZE*j;
+			if(tilesY > LMap.size.y) tilesY = LMap.size.y;
+			for (int i = cameraX / LMap.TILE_SIZE; i < tilesX; i++) {
+				for (int j = cameraY / LMap.TILE_SIZE; j < tilesY; j++) {
+					int x = LMap.TILE_SIZE*i;
+					int y = LMap.TILE_SIZE*j;
 					//Check if element is outside the screen view
-			        if(x + Map.TILE_SIZE < cameraX/scale) continue;
+			        if(x + LMap.TILE_SIZE < cameraX/scale) continue;
 			    	if(x > cameraX + cameraWidth/scale) continue;
-			        if(y + Map.TILE_SIZE < cameraY) continue;
+			        if(y + LMap.TILE_SIZE < cameraY) continue;
 			    	if(y > cameraY + cameraHeight/scale) continue;
 			    	
 					bgTiles[i][j].draw(gl, x - cameraX
@@ -213,12 +211,12 @@ public class LRenderingThread implements LSurfaceViewPanel.Renderer {
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
         
         
-        LBaseObject.gamePointers.textureLib.invalidateAll();
-        LBaseObject.gamePointers.textureLib.loadAll(
-        		LBaseObject.gamePointers.panel.getContext(), gl);
+        LGamePointers.textureLib.invalidateAll();
+        LGamePointers.textureLib.loadAll(
+        		LGamePointers.panel.getContext(), gl);
 	}
 
-	public synchronized void setDrawQueue(LObjectHandler drawQueue) {
+	public synchronized void setDrawQueue(LObjectHandler<LRenderElement> drawQueue) {
 		this.drawQueue = drawQueue;
 		synchronized(drawLock) {
             drawQueueChanged = true;

@@ -19,9 +19,7 @@ package com.liongrid.gameengine.tools;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import com.liongrid.infectosaurus.Main;
-import com.liongrid.infectosaurus.crowd.State;
-
+import com.liongrid.infectosaurus.IMainMenuActivity;
 import android.util.Log;
 
 /**
@@ -260,7 +258,7 @@ public class LFixedSizeArray<T> {
            if (mComparator != null) {
                mSorter.sort(mContents, mCount, mComparator);
            } else {
-               Log.d(Main.TAG, "No comparator specified for this type, using Arrays.sort().");
+               Log.d(IMainMenuActivity.TAG, "No comparator specified for this type, using Arrays.sort().");
                
                Arrays.sort(mContents, 0, mCount);
            }

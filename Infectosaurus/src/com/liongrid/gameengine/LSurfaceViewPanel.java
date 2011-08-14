@@ -2,10 +2,7 @@ package com.liongrid.gameengine;
 
 import java.io.Serializable;
 
-import com.liongrid.infectosaurus.GameActivity;
-import com.liongrid.infectosaurus.Main;
-import com.liongrid.infectosaurus.map.Map;
-import com.liongrid.infectosaurus.map.TileSet;
+import com.liongrid.infectosaurus.IMainMenuActivity;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
@@ -20,7 +17,7 @@ public class LSurfaceViewPanel extends GLSurfaceView implements SurfaceHolder.Ca
 	
 	public LSurfaceViewPanel(Context context) {
 		super(context);
-	    Log.d(Main.TAG,"In LSurfaceViewPanel");
+	    Log.d(IMainMenuActivity.TAG,"In LSurfaceViewPanel");
 	    
 	}
 	

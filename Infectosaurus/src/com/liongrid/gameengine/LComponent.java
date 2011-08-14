@@ -1,7 +1,7 @@
 package com.liongrid.gameengine;
 
 
-public abstract class LComponent<TARGET_OBJECT extends LGameObject> extends LBaseObject{
+public abstract class LComponent<TARGET_OBJECT extends LGameObject<?>> extends LBaseObject{
 	
 	public LComponent() {
 		super();

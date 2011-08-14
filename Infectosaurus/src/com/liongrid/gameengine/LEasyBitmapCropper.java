@@ -1,10 +1,5 @@
 package com.liongrid.gameengine;
 
-import android.util.Log;
-
-import com.liongrid.infectosaurus.Main;
-import com.liongrid.infectosaurus.R;
-
 public class LEasyBitmapCropper {
 	
 	public static int[] crop(LTexture tex, int x, int y, int width, int height){

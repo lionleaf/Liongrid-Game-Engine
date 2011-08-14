@@ -5,7 +5,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import com.liongrid.gameengine.tools.LVector2;
-import com.liongrid.infectosaurus.Main;
+import com.liongrid.infectosaurus.IMainMenuActivity;
 
 /**
  * @author Lastis
@@ -75,7 +75,7 @@ public abstract class LView extends LBaseObject
 			setPressed(false);
 			result = performLongPress();
 		}
-		Log.d(Main.TAG, "Long press, pressed = " + isPressed());
+		Log.d(IMainMenuActivity.TAG, "Long press, pressed = " + isPressed());
 		return result;
 	}
 	
@@ -92,7 +92,7 @@ public abstract class LView extends LBaseObject
 			setPressed(false);
 			result = performClick();
 		}
-		Log.d(Main.TAG, "Tap up, pressed = " + isPressed());
+		Log.d(IMainMenuActivity.TAG, "Tap up, pressed = " + isPressed());
 		return result;
 	}
 
@@ -103,7 +103,7 @@ public abstract class LView extends LBaseObject
 			setPressed(true);
 			result = performTouchDown();
 		}
-		Log.d(Main.TAG, "Touch down, pressed = " + isPressed());
+		Log.d(IMainMenuActivity.TAG, "Touch down, pressed = " + isPressed());
 		return result;
 	}
 	
@@ -358,7 +358,7 @@ public abstract class LView extends LBaseObject
 
 	@Override
 	public void update(float dt, LBaseObject parent) {
-		LRenderSystem rs = parent.gamePointers.renderSystem;
+		LRenderSystem rs = LGamePointers.renderSystem;
 		onDraw(rs);
 	}
 
