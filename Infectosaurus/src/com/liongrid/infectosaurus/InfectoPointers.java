@@ -4,11 +4,11 @@ import com.liongrid.infectosaurus.crowd.situations.SituationHandler;
 
 public class InfectoPointers {
 	public static int NumberOfHumans = 15;
-	public InfectoGameObjectHandler gameObjectHandler;
-	public int difficulty;
-	public GameStatus gameStatus;
-	public GameActivity curGameActivity;
+	public static InfectoGameObjectHandler gameObjectHandler;
+	public static int difficulty;
+	public static GameStatus gameStatus;
+	public static GameActivity curGameActivity;
 	public static int coins = 0; 
-	public SpawnPool spawnPool;
-	public SituationHandler situationHandler;
+	public static SpawnPool spawnPool;
+	public static SituationHandler situationHandler;
 }

@@ -3,11 +3,12 @@ package com.liongrid.infectosaurus;
 import com.liongrid.gameengine.LBaseObject;
 import com.liongrid.gameengine.LCamera;
 import com.liongrid.gameengine.LGameActivityInterface;
+import com.liongrid.gameengine.LGamePointers;
 import com.liongrid.gameengine.LGameThread;
 import com.liongrid.gameengine.LInput;
 import com.liongrid.gameengine.LButton;
 import com.liongrid.gameengine.LView;
-import com.liongrid.gameengine.LPanel;
+import com.liongrid.gameengine.LSurfaceViewPanel;
 import com.liongrid.gameengine.LTextureLibrary;
 import com.liongrid.gameengine.LUpgrade;
 import com.liongrid.infectosaurus.crowd.situations.SituationHandler;
@@ -20,6 +21,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.PowerManager;
 import android.util.Log;
 import android.view.Display;
@@ -29,6 +31,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 /**
@@ -44,56 +47,57 @@ public class GameActivity extends Activity implements LGameActivityInterface{
 	//To keep screen alive
 	private PowerManager.WakeLock wl;
 
-	LPanel panel;
-	private GestureDetector gestureDetector;
+
+	private GestureDetector mGestureDetector;
 
 	private static final boolean useScreenshot = false;
 	public static InfectoPointers infectoPointers;
 
+	private Handler mHandler;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		
+		Log.d(Main.TAG,"In GameActivity onCreate");
+		
 		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 		wl = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
-
-		infectoPointers = new InfectoPointers();
 		
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		Log.d(Main.TAG,"In GameActivity onCreate");
-
+		
 		setScreenDimensionsAndScale();
-
-		panel = new LPanel(this);
-		if(savedInstanceState == null){
-			panel.init();
-			init();
-		}else{
-			LBaseObject.gamePointers.panel = panel;
-		}
-
-
-
-		panel.startGame();
-		panel.setRender();
-		preLoadTextures();
-
-		setContentView(panel);
-
-		Bundle extras = getIntent().getExtras();
-		//TODO try catch and alert!!!!! on getint
-		int difficulty = extras.getInt("com.liongrid.infectosaurus.difficulty");
-		int pop = extras.getInt("com.liongrid.infectosaurus.population");
-		infectoPointers.difficulty = difficulty;
-		GameActivity.infectoPointers.NumberOfHumans = pop;
-
 		
 		CONTEXT = this;
-		LBaseObject.gamePointers.map.spawnNPCs(pop,  difficulty);
-
-
+		setContentView(R.layout.loading_game);
+		LSurfaceViewPanel panel = new LSurfaceViewPanel(this);
+		if(savedInstanceState == null){
+			mHandler = new Handler();
+			ProgressBar progress = (ProgressBar) findViewById(R.id.loadingGameBar);
+			progress.setIndeterminate(false);
+			
+			(new Thread(new IGameLoader(panel,this,mHandler,progress))).start();
+		}else{
+			LBaseObject.gamePointers.panel = panel;
+			setContentView(LGamePointers.panel);
+		}
+		
+		
 	}
 
+	public void onFinishGameLoad(){
+		setUpInputHandler();
+		Log.d("Infectosaurus", "Game loaded");
+		setContentView(LGamePointers.panel);
+	}
+	
+	private void setUpInputHandler(){
+		InputInfectosaurus gameInput = new InputInfectosaurus();
+		LView hudInput = new LButton();
+		LGamePointers.panel.addToRoot(hudInput);
+		
+		setGestureDetector(new GestureDetector
+				(this, new LInput(hudInput,gameInput)));
+	}
 
 
 	public static void loadData(Context context){
@@ -129,20 +133,6 @@ public class GameActivity extends Activity implements LGameActivityInterface{
 		editor.commit();
 	}
 
-	private void init() {
-		infectoPointers.gameObjectHandler = new InfectoGameObjectHandler();
-		infectoPointers.gameStatus = new GameStatus();
-		infectoPointers.spawnPool = new SpawnPool();
-		infectoPointers.curGameActivity = this;
-		infectoPointers.situationHandler = new SituationHandler(10, LBaseObject.gamePointers.map);
-		panel.addToRoot(infectoPointers.gameObjectHandler);
-		panel.addToRoot(infectoPointers.gameStatus);
-		
-		InputInfectosaurus gameInput = new InputInfectosaurus();
-		LView hudInput = new LButton();
-		panel.addToRoot(hudInput);
-		gestureDetector = new GestureDetector(this, new LInput(hudInput,gameInput));
-	}
 
 
 	@Override
@@ -151,22 +141,12 @@ public class GameActivity extends Activity implements LGameActivityInterface{
 		//outState.putSerializable("GamePointers", (Serializable) LBaseObject.gamePointers);
 	}
 
-	/**
-	 * This should be placed somewhere else later. 
-	 * But you have to load the textures to be used in a level!
-	 *  Before you start up!
-	 */
-	public void preLoadTextures(){
-		LTextureLibrary tLib = LBaseObject.gamePointers.textureLib;
-		tLib.allocateTexture(R.drawable.spheremonster01);
-		tLib.allocateTexture(R.drawable.mann1);
-		tLib.allocateTexture(R.drawable.ants);
-	}
+
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		// Gesture detection
-		if (gestureDetector.onTouchEvent(event)) {
+		if (mGestureDetector.onTouchEvent(event)) {
 			return true;
 		}
 		return false;
@@ -183,7 +163,7 @@ public class GameActivity extends Activity implements LGameActivityInterface{
 
 	@Override
 	public void finish() {
-		panel.finish();
+		LBaseObject.gamePointers.panel.finish();
 		super.finish();
 	}
 
@@ -192,7 +172,9 @@ public class GameActivity extends Activity implements LGameActivityInterface{
 		super.onPause();
 		Log.d("Infectosaurus", "onPause()");
 		wl.release();
-		panel.onPause();
+		if(LBaseObject.gamePointers.panel != null){
+			LBaseObject.gamePointers.panel.onPause();
+		}
 		saveData(getApplicationContext());
 	}
 
@@ -201,7 +183,10 @@ public class GameActivity extends Activity implements LGameActivityInterface{
 		super.onResume();
 		Log.d("Infectosaurus", "onResume()"); 
 		wl.acquire();
-		panel.onResume();
+		if(LBaseObject.gamePointers.panel != null){
+			LBaseObject.gamePointers.panel.onResume();
+		}
+		
 		loadData(getApplicationContext());
 	}
 
@@ -252,5 +237,12 @@ public class GameActivity extends Activity implements LGameActivityInterface{
 			}
 		});
 
+	}
+
+
+
+	public void setGestureDetector(GestureDetector gestureDetector) {
+		this.mGestureDetector = gestureDetector;
+		
 	}
 }

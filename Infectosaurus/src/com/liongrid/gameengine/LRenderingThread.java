@@ -16,7 +16,7 @@ import android.graphics.Bitmap;
 import android.util.Log;
 
 
-public class LRenderingThread implements LPanel.Renderer {
+public class LRenderingThread implements LSurfaceViewPanel.Renderer {
 	static final int TILE_SIZE = Map.TILE_SIZE;
 	
     private LObjectHandler drawQueue;

@@ -12,15 +12,15 @@ import android.opengl.GLSurfaceView;
 import android.util.Log;
 import android.view.SurfaceHolder;
 
-public class LPanel extends GLSurfaceView implements SurfaceHolder.Callback, 
+public class LSurfaceViewPanel extends GLSurfaceView implements SurfaceHolder.Callback, 
 	Serializable{
 
 	private static final long serialVersionUID = -385597431318350061L;
 
 	
-	public LPanel(Context context) {
+	public LSurfaceViewPanel(Context context) {
 		super(context);
-	    Log.d(Main.TAG,"In LPanel");
+	    Log.d(Main.TAG,"In LSurfaceViewPanel");
 	    
 	}
 	
@@ -30,31 +30,22 @@ public class LPanel extends GLSurfaceView implements SurfaceHolder.Callback,
 	    getHolder().addCallback(this);
 	    getHolder().setType(SurfaceHolder.SURFACE_TYPE_GPU);
 	    
-	    LGameEnginePointers gamePointers = new LGameEnginePointers();
-	    LBaseObject.gamePointers = gamePointers;
-	    gamePointers.textureLib = new LTextureLibrary();
-	    gamePointers.renderSystem = new LRenderSystem();
-	    gamePointers.panel = this;
-	    gamePointers.root = new LObjectHandler();
-	    gamePointers.tileSet = new TileSet();
-	    gamePointers.map = new Map();
-	    gamePointers.gameThread = new LGameThread();
-	    LBaseObject.gamePointers.renderThread = new LRenderingThread();
+	    
 	    
 	}
 	
 	public void addToRoot(LBaseObject object){
-		LBaseObject.gamePointers.root.add(object);
+		LGamePointers.root.add(object);
 	}
 	
-	public void startGame(){
+	public synchronized void startGame(){
 		
-		LBaseObject.gamePointers.gameThread.start();
+		LGamePointers.gameThread.start();
 		
 	}
 	
-	public void setRender(){
-		setRenderer(LBaseObject.gamePointers.renderThread);
+	public synchronized void setRender(){
+		setRenderer(LGamePointers.renderThread);
 	}
 	
 
@@ -62,17 +53,17 @@ public class LPanel extends GLSurfaceView implements SurfaceHolder.Callback,
 	@Override
 	public void onPause() {
 		super.onPause();
-		LBaseObject.gamePointers.gameThread.onPause();
+		LGamePointers.gameThread.onPause();
 	}
 	
 	@Override
 	public void onResume() {
 		super.onResume();
-		LBaseObject.gamePointers.gameThread.onResume();
+		LGamePointers.gameThread.onResume();
 	}
 
 	public void finish() {
-		LBaseObject.gamePointers.gameThread.stopRunning();
+		LGamePointers.gameThread.stopRunning();
 		
 	}
 }

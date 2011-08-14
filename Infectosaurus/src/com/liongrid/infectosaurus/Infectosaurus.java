@@ -5,7 +5,7 @@ import com.liongrid.gameengine.LCollision;
 import com.liongrid.gameengine.LCollisionCircle;
 import com.liongrid.gameengine.LDrawableBitmap;
 import com.liongrid.gameengine.LAnimation;
-import com.liongrid.gameengine.LPanel;
+import com.liongrid.gameengine.LSurfaceViewPanel;
 import com.liongrid.gameengine.LTexture;
 import com.liongrid.gameengine.LTextureLibrary;
 import com.liongrid.infectosaurus.R;

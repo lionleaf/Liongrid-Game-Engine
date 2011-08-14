@@ -33,7 +33,7 @@ public class LGameThread extends Thread {
 	private static final int MIN_UPDATE_MS = 12; 
 	private static final float MAX_TIMESTEP = 0.1f; //seconds
 
-	private volatile boolean paused = true;
+	private volatile boolean paused = false;
 
 
 
@@ -51,7 +51,6 @@ public class LGameThread extends Thread {
 		while(running){
 			//Make sure we don`t swap queues while renderer is rendering
 			renderThread.waitDrawingComplete();
-
 			waitWhilePaused();
 
 			//calculateDT();
@@ -70,7 +69,6 @@ public class LGameThread extends Thread {
 					dtsec = MAX_TIMESTEP;
 				}
 				lastTime = currentTime;
-
 				//Update all game logic
 				synchronized(updateLock){
 					root.update(dtsec, null);
@@ -98,6 +96,7 @@ public class LGameThread extends Thread {
 	private synchronized void waitWhilePaused() {
 		while(paused){
 			try {
+				Log.d(Main.TAG, "Game is paused!");
 				wait();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -124,9 +123,18 @@ public class LGameThread extends Thread {
 		}
 	}
 	
-
-	public void onPause() {
+	public void pause(){
 		paused = true;
+	}
+	public void unpause(){
+		paused = false;
+		synchronized(this){
+			notifyAll();
+		}
+	}
+	
+	public void onPause() {
+		pause();
 	}
 
 	/**
@@ -137,9 +145,7 @@ public class LGameThread extends Thread {
 	}
 
 	public void onResume(){
-		paused = false;
-		synchronized(this){
-			notifyAll();
-		}
+		unpause();
+		
 	}
 }

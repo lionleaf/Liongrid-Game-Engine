@@ -11,7 +11,7 @@ import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.SAXException;
 
 import com.liongrid.gameengine.LBaseObject;
-import com.liongrid.gameengine.LPanel;
+import com.liongrid.gameengine.LSurfaceViewPanel;
 import com.liongrid.infectosaurus.R;
 
 /**
@@ -37,7 +37,7 @@ public class TileSet {
 	 */
 	public void initTileTypes(){
 		loadTileSet(R.raw.tileset);
-		/*LPanel panel = LBaseObject.gamePointers.panel;
+		/*LSurfaceViewPanel panel = LBaseObject.gamePointers.panel;
 		int tile1 = R.drawable.tile1;
 		int tile2 = R.drawable.tile2;
 		int tile3 = R.drawable.tile3;
@@ -55,7 +55,7 @@ public class TileSet {
 	}
 	
 	public void loadTileSet(int res){
-		LPanel panel = LBaseObject.gamePointers.panel;
+		LSurfaceViewPanel panel = LBaseObject.gamePointers.panel;
 		InputStream inputStream = panel.getResources().openRawResource(res);
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 	    try {

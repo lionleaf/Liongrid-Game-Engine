@@ -6,7 +6,7 @@ import java.util.Random;
 import android.content.res.AssetManager;
 
 import com.liongrid.gameengine.LBaseObject;
-import com.liongrid.gameengine.LPanel;
+import com.liongrid.gameengine.LSurfaceViewPanel;
 import com.liongrid.gameengine.tools.LMovementType;
 import com.liongrid.gameengine.tools.LVector2Int;
 import com.liongrid.infectosaurus.GameActivity;
@@ -84,7 +84,7 @@ public class Map extends LBaseObject{
 	
 	private void loadTilesFromFile(int res) {
 
-		LPanel panel = gamePointers.panel;
+		LSurfaceViewPanel panel = gamePointers.panel;
 		InputStream inputStream = panel.getResources().openRawResource(res);
 
 		AssetManager.AssetInputStream reader = (AssetManager.AssetInputStream) inputStream;

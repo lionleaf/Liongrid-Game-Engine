@@ -12,15 +12,15 @@ import com.liongrid.infectosaurus.map.TileSet;
  * objects in the game. The current object of this class can be 
  * accessed through the static field LBaseObject.gamePointers
  */
-public class LGameEnginePointers implements Serializable {
+public class LGamePointers implements Serializable {
 
-	public LGameThread gameThread;
-	public LObjectHandler root;
-	public LRenderSystem renderSystem;
-	public LRenderingThread renderThread;
-	public LPanel panel;
-	public Map map;
-	public TileSet tileSet;
-	public Infectosaurus currentSaurus;
-	public LTextureLibrary textureLib;
+	public static LGameThread gameThread;
+	public static LObjectHandler root;
+	public static LRenderSystem renderSystem;
+	public static LRenderingThread renderThread;
+	public static volatile LSurfaceViewPanel panel;
+	public static Map map;
+	public static TileSet tileSet;
+	public static Infectosaurus currentSaurus;
+	public static LTextureLibrary textureLib;
 }
