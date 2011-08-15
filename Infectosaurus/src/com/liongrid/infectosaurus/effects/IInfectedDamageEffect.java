@@ -3,10 +3,8 @@ package com.liongrid.infectosaurus.effects;
 import java.util.Random;
 
 import com.liongrid.gameengine.LEffect;
-import com.liongrid.infectosaurus.IGameActivity;
 import com.liongrid.infectosaurus.IGameObject;
 import com.liongrid.infectosaurus.IGamePointers;
-import com.liongrid.infectosaurus.Infectosaurus;
 
 public class IInfectedDamageEffect extends LEffect<IGameObject> {
 	
@@ -51,9 +49,9 @@ public class IInfectedDamageEffect extends LEffect<IGameObject> {
 		if(target.mHp <= 0 && startedWithHp && target.infectable){
 			float check = random.nextFloat();
 			if(check <= mInfectChance){
-				Infectosaurus inf = new Infectosaurus();
-				inf.pos.set(target.pos);
-				IGamePointers.gameObjectHandler.add(inf);
+				IGameObject minion = 
+					IGamePointers.spawnPool.spawnMinion(target.pos.x,target.pos.y);
+				IGamePointers.gameObjectHandler.add(minion);
 			}
 		}
 	}

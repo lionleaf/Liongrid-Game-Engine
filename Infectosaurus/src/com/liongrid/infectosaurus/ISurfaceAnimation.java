@@ -81,6 +81,7 @@ public class ISurfaceAnimation extends SurfaceView implements SurfaceHolder.Call
 		public void setFlag (boolean myFlag) {
 			flag = myFlag;
 		}
+		@Override
 		public void run(){
 			Canvas canvas = null;
 			while(flag) {

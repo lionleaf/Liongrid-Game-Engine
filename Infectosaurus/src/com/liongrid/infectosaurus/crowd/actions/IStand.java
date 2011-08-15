@@ -11,6 +11,7 @@ public class IStand extends IAction {
 		mName = "IStand";
 	}
 
+	@Override
 	public LFixedSizeArray<IState> getInternalNextStates(IState lastState, float dt, IGameObject parent) {
 		IState s = stateList.get(0);
 		s.copy(lastState);

@@ -34,7 +34,7 @@ public class LTileSetSaxParser extends DefaultHandler {
 			Attributes attributes) throws SAXException {
 		super.startElement(uri, localName, qName, attributes);
 		
-		if(localName.equalsIgnoreCase("LTile")){
+		if(localName.equalsIgnoreCase("Tile")){
 			currentID = Integer.parseInt(attributes.getValue("id"));
 			currentRes = getResId(
 					attributes.getValue("resource"), R.drawable.class);
@@ -42,7 +42,7 @@ public class LTileSetSaxParser extends DefaultHandler {
 			currentBlocked = 
 				new boolean[LMovementType.values().length][blockDimensions][blockDimensions];
 			
-		}else if(localName.equalsIgnoreCase("LTileSet")){
+		}else if(localName.equalsIgnoreCase("TileSet")){
 			//block_dimension="2" nr_of_movetypes="3" nr_of_tiles="2"
 			blockDimensions = Integer.parseInt(
 					attributes.getValue("block_dimension"));
@@ -51,7 +51,9 @@ public class LTileSetSaxParser extends DefaultHandler {
 			
 			tileTypes = new LTileType[nrTiles];	
 			
-		}else if(localName.equalsIgnoreCase("state")){
+		}
+		
+		if(localName.equalsIgnoreCase("state")){
 			String mTypeName = attributes.getValue("name");
 			try{
 				currentMType = LMovementType.valueOf(mTypeName);		
@@ -59,7 +61,8 @@ public class LTileSetSaxParser extends DefaultHandler {
 				//If we don`t have the movementType, skip it.
 				currentMType = null;
 			}
-			
+		}else{
+			currentMType = null;
 		}
 		
 	}
@@ -70,9 +73,9 @@ public class LTileSetSaxParser extends DefaultHandler {
 			throws SAXException {
 		super.endElement(uri, localName, qName);
 		
-		if(localName.equalsIgnoreCase("LTile")){
+		if(localName.equalsIgnoreCase("tile")){
 			LTextureLibrary texLib = LGamePointers.textureLib;		
-			checkTrue(currentBlocked);
+			//checkTrue(currentBlocked);
 			tileTypes[currentIndex] = new LTileType(texLib.allocateTexture(currentRes),currentBlocked);
 			tileSet.tileIDtoIndexMap.put(currentID, currentIndex);
 			currentIndex++;
@@ -137,12 +140,10 @@ public class LTileSetSaxParser extends DefaultHandler {
 				"[^01]\\s", "").toCharArray();
 		
 		int l = realch.length;
+		
 		for (int i = start; i < l + start; i++) {
 			currentBlocked[currentMType.ordinal()][i%blockDimensions][i/blockDimensions]
 			                = (ch[i] == '1');
-			
-			
-				
 			
 		}
 		

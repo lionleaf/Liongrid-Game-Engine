@@ -7,7 +7,6 @@ import android.content.res.AssetManager;
 
 import com.liongrid.gameengine.tools.LMovementType;
 import com.liongrid.gameengine.tools.LVector2Int;
-import com.liongrid.infectosaurus.IGameActivity;
 import com.liongrid.infectosaurus.IGameObject;
 import com.liongrid.infectosaurus.IGameObjectHandler;
 import com.liongrid.infectosaurus.IGamePointers;

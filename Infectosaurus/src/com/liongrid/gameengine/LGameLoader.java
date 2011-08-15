@@ -16,6 +16,7 @@ public class LGameLoader implements Runnable {
 	}
 	
 	public synchronized void run() {
+		LGamePointers.resetAll();
 		panel.init();
 		init();
 	}

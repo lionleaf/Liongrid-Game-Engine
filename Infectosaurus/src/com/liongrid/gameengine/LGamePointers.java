@@ -21,4 +21,16 @@ public class LGamePointers implements Serializable {
 	public static LTileSet tileSet;
 	public static Infectosaurus currentSaurus;
 	public static LTextureLibrary textureLib;
+	
+	public static void resetAll(){
+		gameThread = null;
+		root = null;
+		renderSystem = null;
+		renderThread = null;
+		panel = null;
+		map = null;
+		tileSet = null;
+		currentSaurus = null;
+		textureLib = null;
+	}
 }

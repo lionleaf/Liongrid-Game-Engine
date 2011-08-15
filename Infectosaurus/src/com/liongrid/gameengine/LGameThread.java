@@ -1,6 +1,6 @@
 package com.liongrid.gameengine;
 
-import com.liongrid.infectosaurus.IGameActivity;
+import com.liongrid.gameengine.tools.LFixedSizeArray;
 import com.liongrid.infectosaurus.IGamePointers;
 import com.liongrid.infectosaurus.Infectosaurus;
 import com.liongrid.infectosaurus.IMainMenuActivity;
@@ -19,6 +19,9 @@ import android.view.MotionEvent;
 public class LGameThread extends Thread { 
 	private LObjectHandler<?> root;
 
+	private LFixedSizeArray<MotionEvent> mTouchEventQueue = 
+		new LFixedSizeArray<MotionEvent>(32);
+
 	private long dt;
 	private long currentTime;
 	private long lastTime = -1;
@@ -28,6 +31,7 @@ public class LGameThread extends Thread {
 	LRenderingThread renderThread;
 
 	private Object updateLock;
+	private Object touchLock = new Object();
 
 	private static final int MIN_REFRESH_TIME = 16; //ms, 16 gives 60fps
 	//ms, if the dt is lower than this, don't update this cycle
@@ -72,6 +76,7 @@ public class LGameThread extends Thread {
 				lastTime = currentTime;
 				//Update all game logic
 				synchronized(updateLock){
+					handleTouchEvents();
 					root.update(dtsec, null);
 				}
 				//Sends the previously completed renderQueue 
@@ -105,25 +110,43 @@ public class LGameThread extends Thread {
 		}
 	}
 
-	public void doTouchEvent(MotionEvent event) {
+	private void handleTouchEvents(){
+		
+		//Make sure nothing is added to the queue while we`re working on it
+		synchronized(touchLock){
+			Object[] rawArr = mTouchEventQueue.getArray();
+
+			int cunt = mTouchEventQueue.getCount();
+			for(int i = 0; i < cunt; i++){
+				MotionEvent event = (MotionEvent) rawArr[i];
+				doTouchEvent(event);
+			}
+			mTouchEventQueue.clear();
+		}
+
+
+	}
+
+	private void doTouchEvent(MotionEvent event) {
+		if(LGamePointers.currentSaurus != null) return;
+
+		Infectosaurus inf = new Infectosaurus();
+		LGamePointers.currentSaurus = inf;
+		IGamePointers.gameObjectHandler.add(inf);
+
+
+		float y = (LGamePointers.panel.getHeight() - event.getY()) / LCamera.scale;
+		float x = event.getX() / LCamera.scale;
+		LGamePointers.currentSaurus.pos.set(x + LCamera.pos.x, 
+				y + LCamera.pos.y);
 	}
 
 	public void registerScreenTouch(MotionEvent event) {
-		synchronized(updateLock){
-			if(LGamePointers.currentSaurus != null) return;
-			
-			Infectosaurus inf = new Infectosaurus();
-			LGamePointers.currentSaurus = inf;
-			IGamePointers.gameObjectHandler.add(inf);
-
-
-			float y = (LGamePointers.panel.getHeight() - event.getY()) / LCamera.scale;
-			float x = event.getX() / LCamera.scale;
-			LGamePointers.currentSaurus.pos.set(x + LCamera.pos.x, 
-					y + LCamera.pos.y);
+		synchronized(touchLock){
+			mTouchEventQueue.add(event);
 		}
 	}
-	
+
 	public void pause(){
 		paused = true;
 	}
@@ -133,7 +156,7 @@ public class LGameThread extends Thread {
 			notifyAll();
 		}
 	}
-	
+
 	public void onPause() {
 		pause();
 	}
@@ -147,6 +170,6 @@ public class LGameThread extends Thread {
 
 	public void onResume(){
 		unpause();
-		
+
 	}
 }

@@ -1,7 +1,6 @@
 package com.liongrid.infectosaurus.components;
 
 import com.liongrid.gameengine.LComponent;
-import com.liongrid.infectosaurus.IGameActivity;
 import com.liongrid.infectosaurus.IGameObject;
 import com.liongrid.infectosaurus.IGameObjectHandler;
 import com.liongrid.infectosaurus.IGamePointers;

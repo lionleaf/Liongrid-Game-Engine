@@ -9,7 +9,6 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.SAXException;
 
-import com.liongrid.gameengine.LBaseObject;
 import com.liongrid.gameengine.LGamePointers;
 import com.liongrid.gameengine.LSurfaceViewPanel;
 import com.liongrid.gameengine.LMap;

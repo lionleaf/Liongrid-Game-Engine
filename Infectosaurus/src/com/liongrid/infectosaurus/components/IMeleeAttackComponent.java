@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.liongrid.gameengine.LComponent;
 import com.liongrid.gameengine.tools.LFixedSizeArray;
-import com.liongrid.infectosaurus.IGameActivity;
 import com.liongrid.infectosaurus.IGameObjectHandler;
 import com.liongrid.infectosaurus.IGamePointers;
 import com.liongrid.infectosaurus.ITeam;
@@ -24,6 +23,7 @@ public class IMeleeAttackComponent extends LComponent<IGameObject> {
 	private float mDelayCountDown = 0;
 	private float mInfectChance = 0f;
 	private boolean mEnabled = true;
+	private boolean mInfect = true;
 	
 	public IMeleeAttackComponent(){
 		super();
@@ -69,7 +69,7 @@ public class IMeleeAttackComponent extends LComponent<IGameObject> {
 		//TODO pool this!!
 		
 		IInfectedDamageEffect eff = new IInfectedDamageEffect();
-		eff.set(mDamage, mInfectChance );
+		eff.set(mDamage, mInfect ? mInfectChance : 0f);
 		target.afflict(eff);
 		
 		ISpeedBuffEffect speed = new ISpeedBuffEffect();
@@ -105,6 +105,11 @@ public class IMeleeAttackComponent extends LComponent<IGameObject> {
 
 	public void setEnabled(boolean value) {
 		mEnabled = value;
+		
+	}
+
+	public void setInfect(boolean b) {
+		mInfect = b; 
 		
 	}
 }

@@ -7,7 +7,6 @@ import com.liongrid.gameengine.LGamePointers;
 import com.liongrid.gameengine.LRenderSystem;
 import com.liongrid.gameengine.LTexture;
 import com.liongrid.gameengine.LTextureLibrary;
-import com.liongrid.infectosaurus.IGameActivity;
 import com.liongrid.infectosaurus.IGameObjectHandler;
 import com.liongrid.infectosaurus.IGamePointers;
 import com.liongrid.infectosaurus.ITeam;

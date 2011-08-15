@@ -2,7 +2,6 @@ package com.liongrid.infectosaurus;
 
 import android.view.MotionEvent;
 
-import com.liongrid.gameengine.LBaseObject;
 import com.liongrid.gameengine.LCamera;
 import com.liongrid.gameengine.LGamePointers;
 import com.liongrid.gameengine.LInputDispatchInterface;

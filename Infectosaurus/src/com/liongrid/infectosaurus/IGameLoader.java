@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.ProgressBar;
 
-import com.liongrid.gameengine.LBaseObject;
 import com.liongrid.gameengine.LGameLoader;
 import com.liongrid.gameengine.LGamePointers;
 import com.liongrid.gameengine.LSurfaceViewPanel;
@@ -26,6 +25,8 @@ public class IGameLoader extends LGameLoader{
 	protected void init() {
 		super.init();
 		Log.d("Infectosaurus", "Game Engine loaded");
+		IGamePointers.resetGameVars();
+		
 		IGamePointers.gameObjectHandler = new IGameObjectHandler();
 		postProgress(50);
 		IGamePointers.gameStatus = new IGameStatus();
@@ -44,7 +45,7 @@ public class IGameLoader extends LGameLoader{
 		postProgress(100);
 		startGame();
 	}
-	
+
 	private void spawnMobs(){
 		Bundle extras = IGamePointers.curGameActivity.getIntent().getExtras();
 		//TODO try catch and alert!!!!! on getint
@@ -57,6 +58,7 @@ public class IGameLoader extends LGameLoader{
 	
 	private void preLoadTextures(){
 		LTextureLibrary tLib = LGamePointers.textureLib;
+		tLib.allocateTexture(R.drawable.squaremonster);
 		tLib.allocateTexture(R.drawable.spheremonster01);
 		tLib.allocateTexture(R.drawable.mann1);
 		tLib.allocateTexture(R.drawable.ants);

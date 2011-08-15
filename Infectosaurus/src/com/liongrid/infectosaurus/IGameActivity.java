@@ -1,6 +1,5 @@
 package com.liongrid.infectosaurus;
 
-import com.liongrid.gameengine.LBaseObject;
 import com.liongrid.gameengine.LCamera;
 import com.liongrid.gameengine.LGameActivityInterface;
 import com.liongrid.gameengine.LGamePointers;

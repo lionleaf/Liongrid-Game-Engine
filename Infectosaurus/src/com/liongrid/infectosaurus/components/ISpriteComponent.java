@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import android.util.Log;
 
-import com.liongrid.gameengine.LBaseObject;
 import com.liongrid.gameengine.LComponent;
 import com.liongrid.gameengine.LDrawableObject;
 import com.liongrid.gameengine.LAnimation;

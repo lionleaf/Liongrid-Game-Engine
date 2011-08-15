@@ -6,7 +6,6 @@ import android.util.Log;
 
 import com.liongrid.gameengine.LComponent;
 import com.liongrid.gameengine.tools.LFixedSizeArray;
-import com.liongrid.infectosaurus.IGameActivity;
 import com.liongrid.infectosaurus.IGameObject;
 import com.liongrid.infectosaurus.IGamePointers;
 import com.liongrid.infectosaurus.crowd.IState;

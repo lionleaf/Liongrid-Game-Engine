@@ -2,7 +2,6 @@ package com.liongrid.infectosaurus.components;
 
 import java.util.Random;
 
-import com.liongrid.gameengine.LBaseObject;
 import com.liongrid.gameengine.LComponent;
 import com.liongrid.gameengine.LGamePointers;
 import com.liongrid.gameengine.tools.LVector2;
