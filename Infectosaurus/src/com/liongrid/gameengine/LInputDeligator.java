@@ -6,12 +6,12 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.GestureDetector.SimpleOnGestureListener;
 
-public class LInput extends SimpleOnGestureListener{
+public class LInputDeligator extends SimpleOnGestureListener{
 
 	private LInputDispatchInterface mTopLayer;
 	private LInputDispatchInterface mBottomLayer;
 
-	public LInput(LInputDispatchInterface topLayer, LInputDispatchInterface bottomLayer) {
+	public LInputDeligator(LInputDispatchInterface topLayer, LInputDispatchInterface bottomLayer) {
 		this.mTopLayer = topLayer;
 		this.mBottomLayer = bottomLayer;
 	}

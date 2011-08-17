@@ -3,7 +3,7 @@ package com.liongrid.infectosaurus;
 import com.liongrid.gameengine.LCamera;
 import com.liongrid.gameengine.LGameActivityInterface;
 import com.liongrid.gameengine.LGamePointers;
-import com.liongrid.gameengine.LInput;
+import com.liongrid.gameengine.LInputDeligator;
 import com.liongrid.gameengine.LButton;
 import com.liongrid.gameengine.LView;
 import com.liongrid.gameengine.LSurfaceViewPanel;
@@ -92,7 +92,7 @@ public class IGameActivity extends Activity implements LGameActivityInterface{
 		LGamePointers.panel.addToRoot(hudInput);
 		
 		setGestureDetector(new GestureDetector
-				(this, new LInput(hudInput,gameInput)));
+				(this, new LInputDeligator(hudInput,gameInput)));
 	}
 
 
