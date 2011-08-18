@@ -103,7 +103,7 @@ public class IGameObjectHandler extends LObjectHandler<IGameObject> {
 		int maxY = (int) ((pos.y - halfHeight)/UNITS_PER_COLLISION_AREA_Y);
 		if(minX < 0 || maxX >= mCollisionAreasLengthX ||
 		   minY < 0 || maxY >= mCollisionAreasLengthY){
-			Log.d(IMainMenuActivity.TAG, "A infectoGameObject seems to be moving outside the map");
+			Log.d(IMainMenuActivity.TAG, "A infectoGameObject seems to be placed outside the map");
 			return;
 		}
 		for(int i = minX; i <= maxX; i++){

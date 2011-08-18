@@ -1,6 +1,7 @@
 package com.liongrid.gameengine;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
@@ -33,6 +34,8 @@ public class LGestureDetector {
          * @param e The up motion event that completed the first tap
          * @return true if the event is consumed, else false
          */
+        boolean onSingleTapUp(MotionEvent ev);
+        
         boolean onUp(MotionEvent e);
 
         /**
@@ -76,6 +79,7 @@ public class LGestureDetector {
          */
         boolean onFling(MotionEvent e1, MotionEvent e2,
                 float velocityX, float velocityY);
+
     }
 
     /**
@@ -143,6 +147,11 @@ public class LGestureDetector {
 			// TODO Auto-generated method stub
 			return false;
 		}
+		
+		public boolean onSingleTapUp(MotionEvent ev) {
+			// TODO Auto-generated method stub
+			return false;
+		}
 
 		public boolean onSingleTapConfirmed(MotionEvent e) {
 			// TODO Auto-generated method stub
@@ -174,9 +183,8 @@ public class LGestureDetector {
                  .getDoubleTapTimeout();
 
          // constants for Message.what used by GestureHandler below
-         private static final int SHOW_PRESS = 1;
-         private static final int LONG_PRESS = 2;
-         private static final int TAP = 3;
+         private static final int LONG_PRESS = 1;
+         private static final int TAP = 2;
 
          private final Handler mHandler;
          private final OnGestureListener mListener;
@@ -225,10 +233,7 @@ public class LGestureDetector {
              @Override
              public void handleMessage(Message msg) {
                  switch (msg.what) {
-                 case SHOW_PRESS:
-//                     mListener.onShowPress(mCurrentDownEvent);
-                     break;
-
+                 
                  case LONG_PRESS:
                      dispatchLongPress();
                      break;
@@ -281,8 +286,7 @@ public class LGestureDetector {
                      listener,
                      handler,
                      context != null
-                     							// 8 instead of Build.VERSION_CODES.FROYO
-                             &&  context.getApplicationInfo().targetSdkVersion >= 8);
+                             &&  context.getApplicationInfo().targetSdkVersion >= Build.VERSION_CODES.FROYO);
          }
 
          /**
@@ -476,7 +480,6 @@ public class LGestureDetector {
                          mLastMotionY = y;
                          mAlwaysInTapRegion = false;
                          mHandler.removeMessages(TAP);
-                         mHandler.removeMessages(SHOW_PRESS);
                          mHandler.removeMessages(LONG_PRESS);
                      }
                      if (distance > mBiggerTouchSlopSquare) {
@@ -494,6 +497,7 @@ public class LGestureDetector {
              case MotionEvent.ACTION_UP:
                  mStillDown = false;
                  MotionEvent currentUpEvent = MotionEvent.obtain(ev);
+                 handled |= mListener.onUp(ev);
                  if (mIsDoubleTapping) {
                      // Finally, give the up event of the double-tap
                      handled |= mDoubleTapListener.onDoubleTapEvent(ev);
@@ -501,7 +505,7 @@ public class LGestureDetector {
                      mHandler.removeMessages(TAP);
                      mInLongPress = false;
                  } else if (mAlwaysInTapRegion) {
-//                     handled = mListener.onSingleTapUp(ev);
+                     handled |= mListener.onSingleTapUp(ev);
                  } else {
 
                      // A fling must travel the minimum tap distance
@@ -525,7 +529,6 @@ public class LGestureDetector {
                  mVelocityTracker.recycle();
                  mVelocityTracker = null;
                  mIsDoubleTapping = false;
-                 mHandler.removeMessages(SHOW_PRESS);
                  mHandler.removeMessages(LONG_PRESS);
                  break;
              case MotionEvent.ACTION_CANCEL:
@@ -535,7 +538,6 @@ public class LGestureDetector {
          }
 
          private void cancel() {
-             mHandler.removeMessages(SHOW_PRESS);
              mHandler.removeMessages(LONG_PRESS);
              mHandler.removeMessages(TAP);
              mVelocityTracker.recycle();
@@ -567,5 +569,6 @@ public class LGestureDetector {
              mInLongPress = true;
              mListener.onLongPress(mCurrentDownEvent);
          }
+		
     }
 }
