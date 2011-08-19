@@ -3,6 +3,7 @@ package com.liongrid.infectosaurus;
 import com.liongrid.gameengine.LCamera;
 import com.liongrid.gameengine.LGameActivityInterface;
 import com.liongrid.gameengine.LGamePointers;
+import com.liongrid.gameengine.LGestureDetector;
 import com.liongrid.gameengine.LInputDeligator;
 import com.liongrid.gameengine.LButton;
 import com.liongrid.gameengine.LView;
@@ -44,7 +45,7 @@ public class IGameActivity extends Activity implements LGameActivityInterface{
 	private PowerManager.WakeLock wl;
 
 
-	private GestureDetector mGestureDetector;
+	private LGestureDetector mGestureDetector;
 
 	private static final boolean useScreenshot = false;
 	public static IGamePointers infectoPointers;
@@ -91,7 +92,7 @@ public class IGameActivity extends Activity implements LGameActivityInterface{
 		LView hudInput = new LButton();
 		LGamePointers.panel.addToRoot(hudInput);
 		
-		setGestureDetector(new GestureDetector
+		setGestureDetector(new LGestureDetector
 				(this, new LInputDeligator(hudInput,gameInput)));
 	}
 
@@ -136,8 +137,6 @@ public class IGameActivity extends Activity implements LGameActivityInterface{
 		super.onSaveInstanceState(outState);
 		//outState.putSerializable("GamePointers", (Serializable) LBaseObject.gamePointers);
 	}
-
-
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
@@ -232,13 +231,9 @@ public class IGameActivity extends Activity implements LGameActivityInterface{
 						". Total coins: " + totalCoins+". ");
 			}
 		});
-
 	}
 
-
-
-	public void setGestureDetector(GestureDetector gestureDetector) {
-		this.mGestureDetector = gestureDetector;
-		
+	public void setGestureDetector(LGestureDetector lGestureDetector) {
+		this.mGestureDetector = lGestureDetector;
 	}
 }

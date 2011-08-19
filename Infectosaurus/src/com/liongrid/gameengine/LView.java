@@ -71,39 +71,33 @@ public abstract class LView extends LBaseObject
 	public boolean dispatchLongPress(MotionEvent e) {
 		boolean result = false;
 		if(!isEnabled()) return true;
-		if(isLongClickable() && isPressed()){
-			setPressed(false);
+		if(isLongClickable()){
 			result = performLongPress();
 		}
-		Log.d(IMainMenuActivity.TAG, "Long press, pressed = " + isPressed());
 		return result;
 	}
 	
 	public boolean dispatchScroll(MotionEvent e1, MotionEvent e2,
 			float distanceX, float distanceY) {
-		
 		return false;
 	}
 	
 	public boolean dispatchSingleTapUp(MotionEvent event) {
 		boolean result = false;
 		if(!isEnabled()) return true;
-		if(isPressed()){
-			setPressed(false);
+		if(isClickable()){
 			result = performClick();
 		}
-		Log.d(IMainMenuActivity.TAG, "Tap up, pressed = " + isPressed());
 		return result;
 	}
 
 	public boolean dispatchTouchDown(MotionEvent e) {
 		boolean result = false;
 		if(!isEnabled()) return true;
-		if(isClickable() || isLongClickable()){
+		if((isClickable() || isLongClickable()) && !isPressed()){
 			setPressed(true);
 			result = performTouchDown();
 		}
-		Log.d(IMainMenuActivity.TAG, "Touch down, pressed = " + isPressed());
 		return result;
 	}
 	
@@ -113,6 +107,16 @@ public abstract class LView extends LBaseObject
 			return true;
 		}
 		return onTouchEvent(event);
+	}
+	
+	public boolean dispatchTouchUp(MotionEvent e) {
+		boolean result = false;
+		if(!isEnabled()) return true;
+		if(isPressed()){
+			setPressed(false);
+			result = performTouchUp();
+		}
+		return result;
 	}
 	
 	public LView focusSearch(int direction){
@@ -220,6 +224,10 @@ public abstract class LView extends LBaseObject
 		return false;
 	}
 
+	private boolean performTouchUp() {
+		return false;
+	}
+	
 	public boolean performLongPress() {
 		if(mOnLongClickListener != null){
 			mOnLongClickListener.onLongClick(this);
@@ -370,9 +378,5 @@ public abstract class LView extends LBaseObject
 	
 	public float getWidth() {
 		return mWidth;
-	}
-
-	public boolean dispatchShowPress(MotionEvent e) {
-		return false;
 	}
 }

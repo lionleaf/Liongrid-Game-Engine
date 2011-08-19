@@ -49,7 +49,7 @@ public class IGameScreenInput implements LInputDispatchInterface{
 		return false;
 	}
 
-	public boolean dispatchShowPress(MotionEvent e) {
+	public boolean dispatchTouchUp(MotionEvent e) {
 		// TODO Auto-generated method stub
 		return false;
 	}

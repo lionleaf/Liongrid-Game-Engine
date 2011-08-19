@@ -1,12 +1,13 @@
 package com.liongrid.gameengine;
 
+import com.liongrid.gameengine.LGestureDetector.LSimpleGestureDetector;
 import com.liongrid.infectosaurus.IMainMenuActivity;
 
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.GestureDetector.SimpleOnGestureListener;
 
-public class LInputDeligator extends SimpleOnGestureListener{
+public class LInputDeligator extends LSimpleGestureDetector{
 
 	private LInputDispatchInterface mTopLayer;
 	private LInputDispatchInterface mBottomLayer;
@@ -14,6 +15,13 @@ public class LInputDeligator extends SimpleOnGestureListener{
 	public LInputDeligator(LInputDispatchInterface topLayer, LInputDispatchInterface bottomLayer) {
 		this.mTopLayer = topLayer;
 		this.mBottomLayer = bottomLayer;
+	}
+	
+	@Override
+	public boolean onUp(MotionEvent e) {
+		if(mTopLayer.dispatchTouchUp(e))return true;
+		if(mBottomLayer.dispatchTouchUp(e))return true;
+		return false;
 	}
 
 	@Override
@@ -42,12 +50,5 @@ public class LInputDeligator extends SimpleOnGestureListener{
 		if(mTopLayer.dispatchScroll(e1, e2, distanceX, distanceY)) return true;
 		if(mBottomLayer.dispatchScroll(e1, e2, distanceX, distanceY)) return true;
 		return false;
-	}
-	
-	@Override
-	public void onShowPress(MotionEvent e) {
-		Log.d(IMainMenuActivity.TAG, "ShowPress");
-		if(mTopLayer.dispatchShowPress(e)) return;
-		if(mBottomLayer.dispatchShowPress(e)) return;
 	}
 }
