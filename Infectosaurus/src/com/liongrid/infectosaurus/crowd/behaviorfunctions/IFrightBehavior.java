@@ -17,9 +17,9 @@ public class IFrightBehavior extends IBehaviorFunction {
 		inf = LGamePointers.currentSaurus;
 		if(inf == null) return INDIFFERENT;
 		//if(s.action instanceof IStand) return Double.NaN;
-		if(inf.pos.distance2(s.pos) > 150*150) return INDIFFERENT;
+		if(inf.mPos.distance2(s.pos) > 150*150) return INDIFFERENT;
 		if(s.action instanceof IStand) return EXTREMELY_LOW;
-		vec.set(inf.pos);
+		vec.set(inf.mPos);
 		vec.subtract(lastStates.get(1).pos);
 		float angToInf = vec.getAngle();
 		

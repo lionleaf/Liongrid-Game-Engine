@@ -12,7 +12,7 @@ import com.liongrid.infectosaurus.IMainMenuActivity;
  */
 public abstract class LGameObject<T extends LGameObject<?>> extends LBaseObject {
 
-	public LVector2 pos = new LVector2(0,0);
+	public LVector2 mPos = new LVector2(0,0);
 	
 	private LFixedSizeArray<LComponent<T>> components;
 	private LFixedSizeArray<LEffect<T>> effects;

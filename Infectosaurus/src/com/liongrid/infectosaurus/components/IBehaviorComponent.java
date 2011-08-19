@@ -52,7 +52,7 @@ public class IBehaviorComponent extends LComponent<IGameObject>{
 		prevStates = new IStateList();
 		addDefaultBehaviours();	
 		curState = new IState();
-		curState.pos.set(parent.pos);
+		curState.pos.set(parent.mPos);
 		curState.action = createDefaultActionTree();
 		mLastParent = parent;
 	}
@@ -124,7 +124,7 @@ public class IBehaviorComponent extends LComponent<IGameObject>{
 	public void update(float dt, IGameObject parent) {
 		
 		if(mLastParent != parent){
-			curState.pos.set(parent.pos);
+			curState.pos.set(parent.mPos);
 			curState.vel.set(parent.mVel);
 			mLastParent = parent;
 		}
@@ -147,12 +147,11 @@ public class IBehaviorComponent extends LComponent<IGameObject>{
 		curState.copy(pickState(stateChoices, probabilities));
 		
 		if(curState == null) return;
-		parent.pos.set(curState.pos);
+		parent.mPos.set(curState.pos);
 		parent.mVel.set(curState.vel);
 		if(parent.spriteComponent != null){
 			parent.spriteComponent.setUnderlyingAnimation(curState.action.toString());
 		}
-		
 	}
 
 
@@ -200,7 +199,6 @@ public class IBehaviorComponent extends LComponent<IGameObject>{
 		
 		return s;
 	}
-
 
 	public void addSpatialSituation(ISituation situation) {
 			spatialSituations.add(situation);

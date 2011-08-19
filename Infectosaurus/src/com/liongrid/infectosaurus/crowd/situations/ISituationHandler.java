@@ -79,7 +79,7 @@ public class ISituationHandler extends LBaseObject
 	 */
 	public void updateSituations(IGameObject object, IBehaviorComponent component){
 		commitUpdates();
-		LVector2 pos = object.pos;
+		LVector2 pos = object.mPos;
 		int x = (int) pos.x / LMap.TILE_SIZE;
 		int y = (int) pos.y / LMap.TILE_SIZE;
 		if(x < 0 || x >= situationCnt.length || y < 0 || y >= situationCnt[0].length){

@@ -26,19 +26,17 @@ public class ISpriteComponent extends LComponent<IGameObject> {
 		
 	}
 	
+	public ISpriteComponent(LDrawableObject drawing){
+		this.defaultDrawing = drawing;
+	}
+	
 	public void setUnderlyingAnimation(String state){
 		currentState = state;
 	}
 	
 	public void setOverlayAnimation(String animationName) {
 		currentOverlayAnimation = animationName;
-		
 	}
-	
-	public ISpriteComponent(LDrawableObject drawing){
-		this.defaultDrawing = drawing;
-	}
-	
 	
 	public void addAnimation(String state, LAnimation animation){
 		if(currentState == null){
@@ -49,10 +47,8 @@ public class ISpriteComponent extends LComponent<IGameObject> {
 	
 	@Override
 	public void update(float dt, IGameObject parent){
-
-		float x = parent.pos.x;
-		float y = parent.pos.y;
-		
+		float x = parent.mPos.x;
+		float y = parent.mPos.y;
 		
 		LAnimation animation = null;
 		if(currentOverlayAnimation != null){
@@ -86,12 +82,14 @@ public class ISpriteComponent extends LComponent<IGameObject> {
 			if(lastAnimation != null && lastAnimation != animation){
 				lastAnimation.resetAnimation();
 			}
-			
-			
 		}else{
 			toDraw = defaultDrawing;
 		}
 		
+		if(toDraw == null){
+			Log.d("Infectosaurus", "Could not find drawable object in ISpriteComponent");
+			return;
+		}
 		
 		//center the image around the pos point
 		
@@ -104,13 +102,9 @@ public class ISpriteComponent extends LComponent<IGameObject> {
 
 	public String getSpriteState() {
 		return currentState;
-		
 	}
 
 	public LDrawableObject getLastDrawing() {
 		return lastDrawing;
 	}
-
-	
-	
 }

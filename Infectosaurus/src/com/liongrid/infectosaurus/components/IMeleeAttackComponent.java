@@ -55,7 +55,7 @@ public class IMeleeAttackComponent extends LComponent<IGameObject> {
 		if(mDelayCountDown > 0) return;
 		
 		ITeam team = parent.team == ITeam.Human ? ITeam.Alien: ITeam.Human;
-		IGameObject target = gameObjHandler.getClosest(parent.pos, team, parent);
+		IGameObject target = gameObjHandler.getClosest(parent.mPos, team, parent);
 		
 		if(target == null || 
 				target.distance2(parent) > mReach){

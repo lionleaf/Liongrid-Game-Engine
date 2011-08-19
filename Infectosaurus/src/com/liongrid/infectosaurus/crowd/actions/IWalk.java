@@ -1,23 +1,26 @@
 package com.liongrid.infectosaurus.crowd.actions;
 
 import com.liongrid.gameengine.tools.LFixedSizeArray;
+import com.liongrid.infectosaurus.ISpawnPool;
 import com.liongrid.infectosaurus.IGameObject;
 import com.liongrid.infectosaurus.crowd.IState;
 
 public class IWalk extends IAction {
-	
-	
+	public static final String WALK_EAST = ISpawnPool.WALK_EAST;
+	public static final String WALK_WEST = ISpawnPool.WALK_WEST;
+	public static final String WALK_NORTH = ISpawnPool.WALK_NORTH;
+	public static final String WALK_SOUTH = ISpawnPool.WALK_SOUTH;
 	
 	public IWalk(){
 		for (int i = 0; i < 5; i++) {
 			stateList.add(new IState());
 		}
-		mName = "IWalk";
+		mName = WALK_NORTH;
 	}
 
 	@Override
 	public LFixedSizeArray<IState> getInternalNextStates(IState lastState, float dt, IGameObject parent) {
-		int l = 5;
+		int l = getNumberOfStates();
 		for (int i = 0; i < l; i++) {
 			IState state = stateList.get(i);
 			

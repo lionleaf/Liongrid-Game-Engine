@@ -19,6 +19,11 @@ import com.liongrid.infectosaurus.components.ISpriteComponent;
 import com.liongrid.infectosaurus.effects.IDOTEffect;
 
 public class ISpawnPool extends LBaseObject{
+	
+	public static final String WALK_EAST = "WalkEast";
+	public static final String WALK_WEST = "WalkWest";
+	public static final String WALK_NORTH = "WalkNorth";
+	public static final String WALK_SOUTH = "WalkSouth";
 		
 	public IGameObject spawnMinion(float x, float y){
 		IGameObject object = new IGameObject();
@@ -71,8 +76,8 @@ public class ISpawnPool extends LBaseObject{
 		
 		
 		
-		object.pos.x = x;
-		object.pos.y = y;
+		object.mPos.x = x;
+		object.mPos.y = y;
 		object.speed = 80;
 		
 		object.team = ITeam.Alien;
@@ -125,14 +130,14 @@ public class ISpawnPool extends LBaseObject{
 		LAnimation standAnimation = new LAnimation(stand, 1f, true);
 		
 		ISpriteComponent sprite = new ISpriteComponent();
-		sprite.addAnimation("IWalk", moveAnimation);
+		sprite.addAnimation(WALK_NORTH, moveAnimation);
 		sprite.addAnimation("IStand", standAnimation);
 		
 		int mapWidth = LGamePointers.map.getWidth();
 		int mapHeight = LGamePointers.map.getHeight();
 		
-		object.pos.x = posX == -1? rand.nextInt(mapWidth) : posX;
-		object.pos.y = posY == -1? rand.nextInt(mapHeight): posY;
+		object.mPos.x = posX == -1? rand.nextInt(mapWidth) : posX;
+		object.mPos.y = posY == -1? rand.nextInt(mapHeight): posY;
 		
 		object.collisionObject = 
 			new LCollisionCircle(ITeam.Human.ordinal(), object, (float) (object.mWidth/2.0));

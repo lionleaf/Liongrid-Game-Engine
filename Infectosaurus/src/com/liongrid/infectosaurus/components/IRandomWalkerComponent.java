@@ -35,7 +35,7 @@ public class IRandomWalkerComponent extends LComponent<IGameObject>{
 		
 
 		vel = parent.mVel;
-		pos = parent.pos;
+		pos = parent.mPos;
 		
 		float newDistance = 0f;
 		if(!findFirstGoal){

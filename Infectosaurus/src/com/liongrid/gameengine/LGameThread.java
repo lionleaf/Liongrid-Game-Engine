@@ -137,7 +137,7 @@ public class LGameThread extends Thread {
 
 		float y = (LGamePointers.panel.getHeight() - event.getY()) / LCamera.scale;
 		float x = event.getX() / LCamera.scale;
-		LGamePointers.currentSaurus.pos.set(x + LCamera.pos.x, 
+		LGamePointers.currentSaurus.mPos.set(x + LCamera.pos.x, 
 				y + LCamera.pos.y);
 	}
 

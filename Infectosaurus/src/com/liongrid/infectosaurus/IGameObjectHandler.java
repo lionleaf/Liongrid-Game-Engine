@@ -92,7 +92,7 @@ public class IGameObjectHandler extends LObjectHandler<IGameObject> {
 	public void addToCorrectCollisionHandler(IGameObject gameObject) {
 		LCollisionObject collisionObject = gameObject.collisionObject;
 		if(collisionObject == null) return;
-		LVector2 pos = gameObject.pos;
+		LVector2 pos = gameObject.mPos;
 		float halfWidth = (float) (gameObject.mWidth/2.0);
 		float halfHeight = (float) (gameObject.mHeigth/2.0);
 		
@@ -134,7 +134,7 @@ public class IGameObjectHandler extends LObjectHandler<IGameObject> {
 		for(i = 0; i < length; i++){
 			curObject = (IGameObject) array[i];
 			if(curObject.team != team || curObject == self) continue;
-			float distance = pos.distance2(curObject.pos);
+			float distance = pos.distance2(curObject.mPos);
 			if(distance < closestDistance) {
 				closestDistance = distance;
 				closest = curObject;
@@ -153,7 +153,7 @@ public class IGameObjectHandler extends LObjectHandler<IGameObject> {
 			IGameObject gObject = (IGameObject) gArray[i];
 			if(gObject.team != team || gObject == self) continue;
 			if(count >= array.length) return array;
-			dis2 = pos.distance2(gObject.pos);
+			dis2 = pos.distance2(gObject.mPos);
 			if(dis2 < within * within){
 				array[count] = gObject;
 				count ++;

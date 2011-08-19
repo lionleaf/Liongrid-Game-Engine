@@ -57,6 +57,7 @@ public abstract class IAction {
 			 mDefaultProbs[cIndex++] = 1 - Math.pow(1-prob,dt);
 		}
 		return mDefaultProbs;
+		
 	}
 	
 	public LFixedSizeArray<IState> getAllNextStates
