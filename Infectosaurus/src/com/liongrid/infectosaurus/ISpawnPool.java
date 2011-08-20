@@ -2,6 +2,7 @@ package com.liongrid.infectosaurus;
 
 import java.util.Random;
 
+import com.liongrid.gameengine.LAnimationCodes;
 import com.liongrid.gameengine.LBaseObject;
 import com.liongrid.gameengine.LCollisionCircle;
 import com.liongrid.gameengine.LDrawableBitmap;
@@ -20,15 +21,6 @@ import com.liongrid.infectosaurus.effects.IDOTEffect;
 
 public class ISpawnPool extends LBaseObject{
 	
-	public static final String WALK_EAST = "WalkEast";
-	public static final String WALK_WEST = "WalkWest";
-	public static final String WALK_NORTH = "WalkNorth";
-	public static final String WALK_SOUTH = "WalkSouth";
-	public static final String WALK_NORTH_EAST = "WalkNorthEast";
-	public static final String WALK_NORTH_WEST = "WalkNorthWest";
-	public static final String WALK_SOUTH_EAST = "WalkSouthEast";
-	public static final String WALK_SOUTH_WEST = "WalkSouthWest";
-		
 	public IGameObject spawnMinion(float x, float y){
 		IGameObject object = new IGameObject();
 		
@@ -134,7 +126,7 @@ public class ISpawnPool extends LBaseObject{
 		LAnimation standAnimation = new LAnimation(stand, 1f, true);
 		
 		ISpriteComponent sprite = new ISpriteComponent();
-		sprite.addAnimation(WALK_SOUTH, moveAnimation);
+		sprite.addAnimation(LAnimationCodes.WALK_SOUTH, moveAnimation);
 		sprite.addAnimation("IStand", standAnimation);
 		
 		int mapWidth = LGamePointers.map.getWidth();

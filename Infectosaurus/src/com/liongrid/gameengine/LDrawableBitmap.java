@@ -15,7 +15,6 @@ public class LDrawableBitmap extends LBaseObject implements LDrawableObject {
 	private int mHeight;
 	private int mCrop[];
 	private float mOpacity;
-	private int[] mCropWorkspace;
 	private boolean croppedImage;
 
 	/**
@@ -44,7 +43,7 @@ public class LDrawableBitmap extends LBaseObject implements LDrawableObject {
 		mOpacity = 1.0f;
 		croppedImage = true;
 		setDimensions(0, height, width, height);
-		mCropWorkspace = cropWorkspace;
+		mCrop = cropWorkspace;
 	}
 
 	@Override
@@ -117,7 +116,7 @@ public class LDrawableBitmap extends LBaseObject implements LDrawableObject {
 			
 			if(croppedImage){
 				((GL11) gl).glTexParameteriv(GL10.GL_TEXTURE_2D, GL11Ext.GL_TEXTURE_CROP_RECT_OES,
-						mCropWorkspace, 0);
+						mCrop, 0);
 			}
 			
 			// This is necessary because we could be drawing the same texture with different
@@ -142,7 +141,7 @@ public class LDrawableBitmap extends LBaseObject implements LDrawableObject {
         return mTexture;
     }
     
-    protected final void setFlip(boolean horzFlip, boolean vertFlip) {
+    public final void setFlip(boolean horzFlip, boolean vertFlip) {
         setDimensions(horzFlip ? mWidth : 0,
                 vertFlip ? 0 : mHeight,
                 horzFlip ? -mWidth : mWidth,

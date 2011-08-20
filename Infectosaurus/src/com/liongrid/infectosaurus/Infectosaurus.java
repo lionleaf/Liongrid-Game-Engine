@@ -1,14 +1,18 @@
 package com.liongrid.infectosaurus;
 
+import com.liongrid.gameengine.LAnimationCodes;
 import com.liongrid.gameengine.LBaseObject;
+import com.liongrid.gameengine.LCamera;
 import com.liongrid.gameengine.LCollisionCircle;
 import com.liongrid.gameengine.LDrawableBitmap;
 import com.liongrid.gameengine.LAnimation;
+import com.liongrid.gameengine.LEasyBitmapCropper;
 import com.liongrid.gameengine.LGamePointers;
 import com.liongrid.gameengine.LTexture;
 import com.liongrid.gameengine.LTextureLibrary;
 import com.liongrid.infectosaurus.R;
 import com.liongrid.infectosaurus.components.IAggressivMoveComponent;
+import com.liongrid.infectosaurus.components.IAnimationChangeComponent;
 import com.liongrid.infectosaurus.components.ICollisionComponent;
 import com.liongrid.infectosaurus.components.IHpBarComponent;
 import com.liongrid.infectosaurus.components.IMeleeAttackComponent;
@@ -27,19 +31,20 @@ public class Infectosaurus extends IGameObject {
 	private int mSize;
 	private ISpriteComponent sprite;
 	private boolean addedAttack = false;
+	private int unit;
 	IMeleeAttackComponent mAttackComponent;
 
 	public Infectosaurus() {
-		
+		unit = LCamera.unit;
 		mSize = 16*3;
 		float radius = (float) (mSize/2.0);
 		collisionObject = new LCollisionCircle(ITeam.Alien.ordinal(), this, radius);
 		
 		LTextureLibrary texLib = LGamePointers.textureLib;
 		LTexture tex = texLib.allocateTexture(R.drawable.spheremonster01);
-		sprite = loadAnimations(tex);
-//		sprite = loadNewAnimations(texLib);
-		sprite.setOverlayAnimation("Spawning");
+//		sprite = loadAnimations(tex);
+		sprite = loadNewAnimations(texLib);
+//		sprite.setOverlayAnimation("Spawning");
 		mAttackComponent = new IMeleeAttackComponent();
 		mAttackComponent.setEnabled(false);
 		addComponent(new ICollisionComponent());
@@ -48,6 +53,7 @@ public class Infectosaurus extends IGameObject {
 		addComponent(sprite);
 		addComponent(new IMoveComponent());
 		addComponent(new IHpBarComponent());
+		addComponent(new IAnimationChangeComponent());
 		speed = 80;
 		
 		team = ITeam.Alien;
@@ -65,7 +71,33 @@ public class Infectosaurus extends IGameObject {
 	}
 	
 	private ISpriteComponent loadNewAnimations(LTextureLibrary texLib) {
-		return null;
+		LTexture tex = texLib.allocateTexture(R.drawable.reaper);
+		ISpriteComponent sprite = new ISpriteComponent();
+		LDrawableBitmap[] moveEastBmps = new LDrawableBitmap[3];
+		LDrawableBitmap[] moveWestBmps = new LDrawableBitmap[3];
+		
+		
+		int[] frame1 = LEasyBitmapCropper.cropFromPos(3, 10, 36, 41);
+		int[] frame2 = LEasyBitmapCropper.moveCrop(frame1, 1, 0, 7, 0);
+		int[] frame3 = LEasyBitmapCropper.moveCrop(frame1, 2, 0, 7, 0);
+		moveEastBmps[0] = new LDrawableBitmap(tex, mSize, mSize, frame1);
+		moveEastBmps[1] = new LDrawableBitmap(tex, mSize, mSize, frame2);
+		moveEastBmps[2] = new LDrawableBitmap(tex, mSize, mSize, frame3);
+		
+		frame1 = LEasyBitmapCropper.cropFromPos(5, 53, 38, 84);
+		frame2 = LEasyBitmapCropper.moveCrop(frame1, 1, 0, 7, 0);
+		frame3 = LEasyBitmapCropper.moveCrop(frame1, 2, 0, 7, 0);
+		moveWestBmps[0] = new LDrawableBitmap(tex, mSize, mSize, frame1);
+		moveWestBmps[1] = new LDrawableBitmap(tex, mSize, mSize, frame2);
+		moveWestBmps[2] = new LDrawableBitmap(tex, mSize, mSize, frame3);
+		
+		LAnimation moveEast = new LAnimation(moveEastBmps, 0.2f, true);
+		LAnimation moveWest = new LAnimation(moveWestBmps, 0.2f, true);
+		
+		sprite.addAnimation(LAnimationCodes.WALK_EAST, moveEast);
+		sprite.addAnimation(LAnimationCodes.WALK_WEST, moveWest);
+		
+		return sprite;
 	}
 
 	@Override

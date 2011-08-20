@@ -61,7 +61,7 @@ public class IGameLoader extends LGameLoader{
 		tLib.allocateTexture(R.drawable.squaremonster);
 		tLib.allocateTexture(R.drawable.spheremonster01);
 		tLib.allocateTexture(R.drawable.mann1);
-		tLib.allocateTexture(R.drawable.ants);
+		tLib.allocateTexture(R.drawable.reaper);
 	}
 	
 	private void startGame(){

@@ -1,5 +1,8 @@
 package com.liongrid.infectosaurus.components;
 
+import android.util.Log;
+
+import com.liongrid.gameengine.LAnimationCodes;
 import com.liongrid.gameengine.LComponent;
 import com.liongrid.infectosaurus.IGameObject;
 
