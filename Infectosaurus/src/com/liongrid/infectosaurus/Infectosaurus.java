@@ -36,13 +36,12 @@ public class Infectosaurus extends IGameObject {
 
 	public Infectosaurus() {
 		unit = LCamera.unit;
-		mSize = 16*3;
+		mSize = (int) (1.5 * unit); //16*3;
 		float radius = (float) (mSize/2.0);
 		collisionObject = new LCollisionCircle(ITeam.Alien.ordinal(), this, radius);
 		
 		LTextureLibrary texLib = LGamePointers.textureLib;
 		LTexture tex = texLib.allocateTexture(R.drawable.spheremonster01);
-//		sprite = loadAnimations(tex);
 		sprite = loadNewAnimations(texLib);
 //		sprite.setOverlayAnimation("Spawning");
 		mAttackComponent = new IMeleeAttackComponent();
@@ -77,22 +76,24 @@ public class Infectosaurus extends IGameObject {
 		LDrawableBitmap[] moveWestBmps = new LDrawableBitmap[3];
 		
 		
-		int[] frame1 = LEasyBitmapCropper.cropFromPos(3, 10, 36, 41);
+		int[] frame1 = LEasyBitmapCropper.cropWithPos(3, 10, 36, 41);
 		int[] frame2 = LEasyBitmapCropper.moveCrop(frame1, 1, 0, 7, 0);
 		int[] frame3 = LEasyBitmapCropper.moveCrop(frame1, 2, 0, 7, 0);
 		moveEastBmps[0] = new LDrawableBitmap(tex, mSize, mSize, frame1);
 		moveEastBmps[1] = new LDrawableBitmap(tex, mSize, mSize, frame2);
 		moveEastBmps[2] = new LDrawableBitmap(tex, mSize, mSize, frame3);
 		
-		frame1 = LEasyBitmapCropper.cropFromPos(5, 53, 38, 84);
+		frame1 = LEasyBitmapCropper.cropWithPos(5, 53, 38, 84);
 		frame2 = LEasyBitmapCropper.moveCrop(frame1, 1, 0, 7, 0);
 		frame3 = LEasyBitmapCropper.moveCrop(frame1, 2, 0, 7, 0);
 		moveWestBmps[0] = new LDrawableBitmap(tex, mSize, mSize, frame1);
 		moveWestBmps[1] = new LDrawableBitmap(tex, mSize, mSize, frame2);
 		moveWestBmps[2] = new LDrawableBitmap(tex, mSize, mSize, frame3);
 		
-		LAnimation moveEast = new LAnimation(moveEastBmps, 0.2f, true);
-		LAnimation moveWest = new LAnimation(moveWestBmps, 0.2f, true);
+		frame1 = LEasyBitmapCropper.cropWithPos(topLeftX, topLeftY, botRightX, botRightY)
+		
+		LAnimation moveEast = new LAnimation(moveEastBmps, 0.1f, true);
+		LAnimation moveWest = new LAnimation(moveWestBmps, 0.1f, true);
 		
 		sprite.addAnimation(LAnimationCodes.WALK_EAST, moveEast);
 		sprite.addAnimation(LAnimationCodes.WALK_WEST, moveWest);
@@ -111,38 +112,6 @@ public class Infectosaurus extends IGameObject {
 		
 	}
 	
-	private ISpriteComponent loadAnimations(LTexture tex) {
-		ISpriteComponent sprite = new ISpriteComponent();
-		LDrawableBitmap[] dbs = new LDrawableBitmap[4];
-		LDrawableBitmap[] attackBmps = new LDrawableBitmap[1];
-		LDrawableBitmap[] spawnBmps = new LDrawableBitmap[5];
-		
-		
-		dbs[0] = new LDrawableBitmap(tex, mSize,   mSize);
-		dbs[1] = new LDrawableBitmap(tex, mSize+3, mSize+3);
-		dbs[2] = new LDrawableBitmap(tex, mSize+6, mSize+6);
-		dbs[3] = new LDrawableBitmap(tex, mSize+3, mSize+3);
-		
-		
-		spawnBmps[0] = new LDrawableBitmap(tex, mSize/6, mSize/6);
-		spawnBmps[1] = new LDrawableBitmap(tex, 2*mSize/6, 2*mSize/6);
-		spawnBmps[2] = new LDrawableBitmap(tex, 3*mSize/6, 3*mSize/6);
-		spawnBmps[3] = new LDrawableBitmap(tex, 4*mSize/6, 4*mSize/6);
-		spawnBmps[4] = new LDrawableBitmap(tex, 5*mSize/6, 5*mSize/6);
-		
-		
-		attackBmps[0] = new LDrawableBitmap(tex, mSize+25, mSize+25);
-		
-		LAnimation moveAnimation = new LAnimation(dbs, 0.1f, true);
-		LAnimation attackAnimation = new LAnimation(attackBmps, 0.1f, false);
-		LAnimation spawnAnimation = new LAnimation(spawnBmps, 0.06f, false);
-		
-		sprite.addAnimation("Move", moveAnimation);
-		sprite.addAnimation("Attack", attackAnimation);
-		sprite.addAnimation("Spawning", spawnAnimation);
-		return sprite;
-	}
-
 	private void applyUpgrades() {
 		IUpgrade[] us = IUpgrade.values();
 		

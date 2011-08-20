@@ -14,6 +14,8 @@ public class LDrawableBitmap extends LBaseObject implements LDrawableObject {
 	private int mWidth;
 	private int mHeight;
 	private int mCrop[];
+	private int mOffsetX;
+	private int mOffsetY;
 	private float mOpacity;
 	private boolean croppedImage;
 
@@ -28,10 +30,21 @@ public class LDrawableBitmap extends LBaseObject implements LDrawableObject {
 		mTexture = texture;
 		mWidth = width;
 		mHeight = height;
-		mCrop = new int[4];
 		mOpacity = 1.0f;
 		croppedImage = false;
-		setDimensions(0, height, width, height);
+		mOffsetX = 0;
+		mOffsetY = 0;
+	}
+	
+	public LDrawableBitmap(LTexture texture, int width, int height, 
+			int offsetX, int offsetY){
+		mTexture = texture;
+		mWidth = width;
+		mHeight = height;
+		mOpacity = 1.0f;
+		croppedImage = false;
+		mOffsetX = offsetX;
+		mOffsetY = offsetY;
 	}
 	
 	public LDrawableBitmap(LTexture texture, int width, int height, int[] cropWorkspace) {
@@ -39,11 +52,23 @@ public class LDrawableBitmap extends LBaseObject implements LDrawableObject {
 		mTexture = texture;
 		mWidth = width;
 		mHeight = height;
-		mCrop = new int[4];
 		mOpacity = 1.0f;
 		croppedImage = true;
-		setDimensions(0, height, width, height);
 		mCrop = cropWorkspace;
+		mOffsetX = 0;
+		mOffsetY = 0;
+	}
+	
+	public LDrawableBitmap(LTexture texture, int width, int height, int[] cropWorkspace,
+			int offsetX, int offsetY){
+		mTexture = texture;
+		mWidth = width;
+		mHeight = height;
+		mOpacity = 1.0f;
+		croppedImage = true;
+		mCrop = cropWorkspace;
+		mOffsetX = 0;
+		mOffsetY = 0;
 	}
 
 	@Override
@@ -123,8 +148,8 @@ public class LDrawableBitmap extends LBaseObject implements LDrawableObject {
             // crop (say, flipped horizontally) on the same frame.
             //LOpenGLSystem.setTextureCrop(mCrop);
 			
-			((GL11Ext) gl).glDrawTexfOES(Math.round(x*scaleX), 
-					Math.round(y*scaleY), 
+			((GL11Ext) gl).glDrawTexfOES(Math.round(x*scaleX) + mOffsetX * scaleX, 
+					Math.round(y*scaleY) + mOffsetY * scaleY, 
 					0, 
 					mWidth *scaleX, 
 					mHeight*scaleY); 

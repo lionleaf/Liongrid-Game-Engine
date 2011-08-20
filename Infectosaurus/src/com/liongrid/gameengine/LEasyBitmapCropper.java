@@ -2,7 +2,7 @@ package com.liongrid.gameengine;
 
 public class LEasyBitmapCropper {
 	
-	public static int[] cropFromWidth(int x, int y, int width, int height){
+	public static int[] cropWithWidth(int x, int y, int width, int height){
 		int[] cropWorkspace = new int[4];
 		cropWorkspace[0] = x;
 		cropWorkspace[1] = y + height;
@@ -11,10 +11,10 @@ public class LEasyBitmapCropper {
 		return cropWorkspace;
 	}
 	
-	public static int[] cropFromPos(int topLeftX, int topLeftY, int botRightX, int botRightY){
+	public static int[] cropWithPos(int topLeftX, int topLeftY, int botRightX, int botRightY){
 		int width = botRightX - topLeftX;
 		int height = botRightY - topLeftY;
-		return cropFromWidth(topLeftX, topLeftY, width, height);
+		return cropWithWidth(topLeftX, topLeftY, width, height);
 	}
 	
 	public static int[]	moveCrop(int[] cropWorkspace, int horisontalCnt, int verticalCnt){
