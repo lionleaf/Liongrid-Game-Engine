@@ -83,7 +83,7 @@ public class IMeleeAttackComponent extends LComponent<IGameObject> {
 			return;
 		}
 		
-		spr.setOverlayAnimation("IAttacking");
+		spr.setOverlayAnimation("Attack");
 		
 	}
 

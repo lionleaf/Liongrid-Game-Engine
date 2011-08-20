@@ -38,6 +38,7 @@ public class Infectosaurus extends IGameObject {
 		LTextureLibrary texLib = LGamePointers.textureLib;
 		LTexture tex = texLib.allocateTexture(R.drawable.spheremonster01);
 		sprite = loadAnimations(tex);
+//		sprite = loadNewAnimations(texLib);
 		sprite.setOverlayAnimation("Spawning");
 		mAttackComponent = new IMeleeAttackComponent();
 		mAttackComponent.setEnabled(false);
@@ -63,6 +64,10 @@ public class Infectosaurus extends IGameObject {
 		
 	}
 	
+	private ISpriteComponent loadNewAnimations(LTextureLibrary texLib) {
+		return null;
+	}
+
 	@Override
 	public void update(float dt, LBaseObject parent) {
 		//Make it not attack until spawning is done!

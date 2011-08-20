@@ -88,6 +88,8 @@ public abstract class IAction {
 	public String getName() {
 		return mName;
 	}
+	
+	public abstract String getAnimationCode(IState state);
 
 
 }

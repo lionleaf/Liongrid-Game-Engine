@@ -150,7 +150,8 @@ public class IBehaviorComponent extends LComponent<IGameObject>{
 		parent.mPos.set(curState.pos);
 		parent.mVel.set(curState.vel);
 		if(parent.spriteComponent != null){
-			parent.spriteComponent.setUnderlyingAnimation(curState.action.toString());
+			parent.spriteComponent.
+			 setUnderlyingAnimation(curState.action.getAnimationCode(curState));
 		}
 	}
 

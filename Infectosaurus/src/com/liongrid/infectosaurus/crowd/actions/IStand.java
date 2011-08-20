@@ -24,4 +24,9 @@ public class IStand extends IAction {
 		return 1;
 	}
 
+	@Override
+	public String getAnimationCode(IState state) {
+		return mName;
+	}
+
 }
