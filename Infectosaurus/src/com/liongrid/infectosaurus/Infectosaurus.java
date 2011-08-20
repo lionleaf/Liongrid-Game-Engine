@@ -90,8 +90,6 @@ public class Infectosaurus extends IGameObject {
 		moveWestBmps[1] = new LDrawableBitmap(tex, mSize, mSize, frame2);
 		moveWestBmps[2] = new LDrawableBitmap(tex, mSize, mSize, frame3);
 		
-		frame1 = LEasyBitmapCropper.cropWithPos(topLeftX, topLeftY, botRightX, botRightY)
-		
 		LAnimation moveEast = new LAnimation(moveEastBmps, 0.1f, true);
 		LAnimation moveWest = new LAnimation(moveWestBmps, 0.1f, true);
 		
