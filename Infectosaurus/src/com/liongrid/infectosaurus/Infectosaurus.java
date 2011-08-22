@@ -74,7 +74,7 @@ public class Infectosaurus extends IGameObject {
 		ISpriteComponent sprite = new ISpriteComponent();
 		LDrawableBitmap[] moveEastBmps = new LDrawableBitmap[3];
 		LDrawableBitmap[] moveWestBmps = new LDrawableBitmap[3];
-		
+		LDrawableBitmap[] attackEastBmps = new LDrawableBitmap[3];
 		
 		int[] frame1 = LEasyBitmapCropper.cropWithPos(3, 10, 36, 41);
 		int[] frame2 = LEasyBitmapCropper.moveCrop(frame1, 1, 0, 7, 0);
@@ -90,11 +90,20 @@ public class Infectosaurus extends IGameObject {
 		moveWestBmps[1] = new LDrawableBitmap(tex, mSize, mSize, frame2);
 		moveWestBmps[2] = new LDrawableBitmap(tex, mSize, mSize, frame3);
 		
+		frame1 = LEasyBitmapCropper.cropWithPos(6, 282, 47, 321);
+		frame2 = LEasyBitmapCropper.cropWithPos(67, 279, 122, 326);
+		frame3 = LEasyBitmapCropper.cropWithPos(146, 279, 180, 324);
+		attackEastBmps[0] = new LDrawableBitmap(tex, mSize+10, mSize+10, frame1);
+		attackEastBmps[1] = new LDrawableBitmap(tex, mSize+10, mSize+10, frame2);
+		attackEastBmps[2] = new LDrawableBitmap(tex, mSize+10, mSize+10, frame3);
+		
 		LAnimation moveEast = new LAnimation(moveEastBmps, 0.1f, true);
 		LAnimation moveWest = new LAnimation(moveWestBmps, 0.1f, true);
+		LAnimation attackEast = new LAnimation(attackEastBmps, 0.1f, false);
 		
 		sprite.addAnimation(LAnimationCodes.WALK_EAST, moveEast);
 		sprite.addAnimation(LAnimationCodes.WALK_WEST, moveWest);
+		sprite.addAnimation(LAnimationCodes.ATTACK_EAST, attackEast);
 		
 		return sprite;
 	}

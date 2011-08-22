@@ -11,6 +11,7 @@ public class LAnimationCodes {
 	public static final String WALK_SOUTH_EAST = "WalkSouthEast";
 	public static final String WALK_SOUTH_WEST = "WalkSouthWest";
 	public static final String SPAWNING = "Spawning";
+	public static final String ATTACK_EAST = "AttackEast";
 	
 	public static String getWalk8Directions(float dx, float dy){
 		

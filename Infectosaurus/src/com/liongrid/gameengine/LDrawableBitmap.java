@@ -14,8 +14,8 @@ public class LDrawableBitmap extends LBaseObject implements LDrawableObject {
 	private int mWidth;
 	private int mHeight;
 	private int mCrop[];
-	private int mOffsetX;
-	private int mOffsetY;
+	private int mOffsetX = 0;
+	private int mOffsetY = 0;
 	private float mOpacity;
 	private boolean croppedImage;
 
@@ -32,19 +32,6 @@ public class LDrawableBitmap extends LBaseObject implements LDrawableObject {
 		mHeight = height;
 		mOpacity = 1.0f;
 		croppedImage = false;
-		mOffsetX = 0;
-		mOffsetY = 0;
-	}
-	
-	public LDrawableBitmap(LTexture texture, int width, int height, 
-			int offsetX, int offsetY){
-		mTexture = texture;
-		mWidth = width;
-		mHeight = height;
-		mOpacity = 1.0f;
-		croppedImage = false;
-		mOffsetX = offsetX;
-		mOffsetY = offsetY;
 	}
 	
 	public LDrawableBitmap(LTexture texture, int width, int height, int[] cropWorkspace) {
@@ -55,22 +42,8 @@ public class LDrawableBitmap extends LBaseObject implements LDrawableObject {
 		mOpacity = 1.0f;
 		croppedImage = true;
 		mCrop = cropWorkspace;
-		mOffsetX = 0;
-		mOffsetY = 0;
 	}
 	
-	public LDrawableBitmap(LTexture texture, int width, int height, int[] cropWorkspace,
-			int offsetX, int offsetY){
-		mTexture = texture;
-		mWidth = width;
-		mHeight = height;
-		mOpacity = 1.0f;
-		croppedImage = true;
-		mCrop = cropWorkspace;
-		mOffsetX = 0;
-		mOffsetY = 0;
-	}
-
 	@Override
 	public void reset() {
 		mTexture = null;
@@ -202,6 +175,10 @@ public class LDrawableBitmap extends LBaseObject implements LDrawableObject {
 		mCrop[3] = -height;
 	}
 	
+	public void setOffset(int x, int y){
+		mOffsetX = x;
+		mOffsetY = y;
+	}
 	/**
 	 * Set`s the width of the drawable bitmap. Rescales it.
 	 * @param width - the new width

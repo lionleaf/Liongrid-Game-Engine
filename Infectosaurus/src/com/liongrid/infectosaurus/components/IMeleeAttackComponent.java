@@ -2,6 +2,7 @@ package com.liongrid.infectosaurus.components;
 
 import android.util.Log;
 
+import com.liongrid.gameengine.LAnimationCodes;
 import com.liongrid.gameengine.LComponent;
 import com.liongrid.gameengine.tools.LFixedSizeArray;
 import com.liongrid.infectosaurus.IGameObjectHandler;
@@ -83,7 +84,7 @@ public class IMeleeAttackComponent extends LComponent<IGameObject> {
 			return;
 		}
 		
-		spr.setOverlayAnimation("Attack");
+		spr.setOverlayAnimation(LAnimationCodes.ATTACK_EAST);
 		
 	}
 
