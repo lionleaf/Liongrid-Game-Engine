@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TileSet block_dimension="2" nr_of_movetypes="3" nr_of_tiles="8">
+  <Tile id="0" resource="GressBusk1">
+    <state name="Walk">1111</state>
+    <state name="Fly">1111</state>
+    <state name="Swim">1111</state>
+  </Tile>
+  <Tile id="1" resource="GressBusk2">
+    <state name="Walk">1111</state>
+    <state name="Fly">1111</state>
+    <state name="Swim">1111</state>
+  </Tile>
+  <Tile id="2" resource="GressRent">
+    <state name="Walk">0000</state>
+    <state name="Fly">0000</state>
+    <state name="Swim">0000</state>
+  </Tile>
+  <Tile id="3" resource="MidtMedStripe">
+    <state name="Walk">0000</state>
+    <state name="Fly">0000</state>
+    <state name="Swim">0000</state>
+  </Tile>
+  <Tile id="4" resource="MidtUtenStripe">
+    <state name="Walk">0000</state>
+    <state name="Fly">0000</state>
+    <state name="Swim">0000</state>
+  </Tile>
+  <Tile id="5" resource="Sand">
+    <state name="Walk">0000</state>
+    <state name="Fly">0000</state>
+    <state name="Swim">0000</state>
+  </Tile>
+  <Tile id="6" resource="Stripe">
+    <state name="Walk">0000</state>
+    <state name="Fly">0000</state>
+    <state name="Swim">0000</state>
+  </Tile>
+  <Tile id="7" resource="VeiFarge">
+    <state name="Walk">1111</state>
+    <state name="Fly">0000</state>
+    <state name="Swim">0000</state>
+  </Tile>
+</TileSet>

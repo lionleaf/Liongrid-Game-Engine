@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:infecto="http://schemas.android.com/apk/res/com.liongrid.infectomancer"
+  android:orientation="horizontal"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+    <ScrollView android:layout_height="fill_parent" android:layout_width="wrap_content" android:id="@+id/scrollView1">
+        <LinearLayout 
+        	android:id="@+id/linearLayout1" 
+        	android:layout_width="fill_parent" 
+        	android:layout_height="fill_parent">
+        	
+            <com.liongrid.gameengine.LTalentTree
+            	android:id="@+id/talentTree1" 
+            	android:layout_width="wrap_content" 
+            	android:layout_height="wrap_content"
+            	infecto:ranks_per_tier="5" >
+            	
+                <com.liongrid.gameengine.LTalentTier android:id="@+id/talentTier1">
+                    
+                    <com.liongrid.gameengine.LTalentIcon 
+                    	android:text="Health" 
+                    	android:id="@+id/hpIcon" 
+                    	infecto:upgrade = "HealthUpgrade"></com.liongrid.gameengine.LTalentIcon>
+                    
+                    <com.liongrid.gameengine.LTalentIcon 
+                    	android:text="Speed" 
+                    	android:id="@+id/speedIcon" 
+                    	infecto:upgrade = "SpeedUpgrade"></com.liongrid.gameengine.LTalentIcon>
+                    	
+                </com.liongrid.gameengine.LTalentTier>
+				
+				<com.liongrid.gameengine.LTalentTier android:id="@+id/talentTier2">
+					
+					<com.liongrid.gameengine.LTalentIcon 
+						android:id="@+id/dmgIcon" 
+						infecto:upgrade="MeleeDamageUpgrade"
+						infecto:icon="@drawable/sand"
+						android:text="Damage"></com.liongrid.gameengine.LTalentIcon>
+					
+					<com.liongrid.gameengine.LTalentIcon 
+						android:text="Reach" 
+						android:id="@+id/reachIcon"
+						infecto:upgrade="ReachUpgrade"></com.liongrid.gameengine.LTalentIcon>
+					
+					
+                </com.liongrid.gameengine.LTalentTier>
+                
+                <com.liongrid.gameengine.LTalentTier 
+                	android:id="@+id/talentTier3">
+                	
+                    
+                    	
+                    <com.liongrid.gameengine.LTalentIcon 
+                    	android:text="Attackspeed" 
+                    	android:id="@+id/attackSpeedIcon"
+                    	infecto:upgrade="MeleeSpeedUpgrade"></com.liongrid.gameengine.LTalentIcon>
+                
+                </com.liongrid.gameengine.LTalentTier>
+                
+                <com.liongrid.gameengine.LTalentTier 
+                	android:id="@+id/talentTier4">
+                	<com.liongrid.gameengine.LTalentIcon 
+                    	android:text="Infect" 
+                    	android:id="@+id/infectIcon"
+                    	infecto:icon="@drawable/midtutenstripe"
+                    	infecto:upgrade="InfectUpgrade"></com.liongrid.gameengine.LTalentIcon>
+                </com.liongrid.gameengine.LTalentTier>
+                
+            </com.liongrid.gameengine.LTalentTree>
+            
+            </LinearLayout>
+    </ScrollView>
+    
+    
+    <RelativeLayout 
+    	android:layout_alignBaseline="@+id/RelativeLayout1" 
+    	android:layout_height="fill_parent" 
+    	android:layout_width="fill_parent" 
+    	android:id="@+id/RelativeLayout1" >
+        
+        <TextView 
+        	android:id="@+id/upgradeDescriptionText" 
+        	android:text="@string/upgradeDefaultDescription"
+        	android:layout_alignParentLeft="true" 
+        	android:layout_alignParentTop="true" 
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"></TextView>
+        <TextView android:layout_below="@+id/upgradeDescriptionText" android:layout_width="wrap_content" android:text="" android:layout_height="wrap_content" android:layout_alignLeft="@+id/upgradeDescriptionText" android:id="@+id/currentUpgradeStateText"></TextView>
+        
+        <TextView 
+        	android:id="@+id/upgradeInfoText" 
+        	android:text="" 
+        	android:layout_alignParentLeft="true"
+        	android:layout_alignParentBottom="true"
+        	android:layout_width="wrap_content" 
+        	android:layout_height="wrap_content"></TextView>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="" android:layout_above="@+id/upgradeInfoText" android:layout_alignLeft="@+id/upgradeInfoText" android:layout_alignRight="@+id/upgradeInfoText" android:id="@+id/coinText"></TextView>
+        
+        <Button 
+        	android:id="@+id/purchaseUpgradeButton" 
+        	android:text="@string/upgrade"
+        	android:layout_alignParentRight="true"
+        	android:layout_alignParentBottom="true" 
+        	android:layout_width="wrap_content" 
+        	android:layout_height="wrap_content" ></Button>
+        <CheckBox 
+        	android:text="Cheat" 
+        	android:id="@+id/cheatCheck" 
+        	android:layout_height="wrap_content" 
+        	android:layout_width="wrap_content" 
+        	android:layout_above="@+id/purchaseUpgradeButton" 
+        	android:layout_alignRight="@+id/upgradeDescriptionText"></CheckBox>
+    
+    </RelativeLayout>
+
+    
+</LinearLayout>
