@@ -44,13 +44,13 @@ public abstract class LView extends LBaseObject
 	
 	private boolean mPressed;
 	private boolean mSelected;
-	private boolean mFocused;
+	protected boolean mFocused;
 	private boolean mVisible = true;
 	private boolean mEnabled = true;
 	
 	private boolean mOpaque;
 	private boolean mSoundEffectsEnabled;
-	private LViewParent mParent;
+	protected LViewParent mParent;
 	
 	private OnClickListener mOnClickListener;
 	private OnLongClickListener mOnLongClickListener;
@@ -378,5 +378,12 @@ public abstract class LView extends LBaseObject
 	
 	public float getWidth() {
 		return mWidth;
+	}
+
+	public void unFocus() {
+		if(mFocused){
+			mFocused = false;
+			onFocusChange(false, 0);
+		}
 	}
 }
