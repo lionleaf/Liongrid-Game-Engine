@@ -7,6 +7,7 @@ import java.util.HashMap;
 import javax.swing.JScrollPane;
 
 import mapeditor.panels.MapPanel;
+import mapeditor.panels.MapScetchPanel;
 import mapeditor.panels.TileChoosePanel;
 import mapeditor.panels.TileTypePanel;
 
@@ -18,41 +19,36 @@ public class CData {
 	
 	public static Tile curTile;
 	public volatile static int tileSize = 64;
-	public volatile static int TILE_BLOCKS = 2;
+	public volatile static int mapHeight = 0;
+	public volatile static int mapWidth = 0;
+	
 	public volatile static String[] moveTypes = {"Walk", "Fly", "Swim"};
 	public volatile static HashMap<Integer,Tile> tiles = new HashMap<Integer,Tile>();
 	public volatile static Square[][] level = new Square[MAX_SIZE][MAX_SIZE];
 	
-	public volatile static TileChoosePanel leftPanel;
-	public volatile static TileTypePanel rightPanel;
-	public volatile static MapPanel centerPanel;
+	public volatile static TileChoosePanel tileChoosePanel;
+	public volatile static TileTypePanel propertiesPanel;
+	public volatile static MapPanel mapPanel;
+	public volatile static MapScetchPanel mapScetch;
 	
 	public volatile static MFrame mainFrame;
 	
 	public static JScrollPane mapScroller;
 	
-	private volatile static int levelSizeX = 5;
-	private volatile static int levelSizeY = 5;
-
-	
 	public static int getLevelSizeX() {
-		return levelSizeX;
+		return MapData.getTilesX();
 	}
 	
-	public static void setLevelSizeX(int levelSizeX) {
-		CData.levelSizeX = levelSizeX;
-		leftPanel.xField.setText(""+levelSizeX);
-		mainFrame.repaint();
-		mapScroller.updateUI();
-	}
 	public static int getLevelSizeY() {
-		return levelSizeY;
+		return MapData.getTilesY();
 	}
-	public static void setLevelSizeY(int levelSizeY) {
-		CData.levelSizeY = levelSizeY;
-		leftPanel.yField.setText(""+levelSizeY);
+	
+	public static void updateLevelSize() {
+		MapData.changeMap(mapWidth, mapWidth);
+		tileChoosePanel.xField.setText(""+mapWidth);
+		tileChoosePanel.yField.setText(""+mapHeight);
 		mainFrame.repaint();
 		mapScroller.updateUI();
 	}
-
+	
 }

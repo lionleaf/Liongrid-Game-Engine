@@ -19,7 +19,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import mapeditor.CData;
 import mapeditor.Tile;
-import mapeditor.TileManager;
+import mapeditor.MapManager;
 
 public class TileChoosePanel extends JPanel  {
 	public JTextField xField;
@@ -125,7 +125,8 @@ public class TileChoosePanel extends JPanel  {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				try{
-					CData.setLevelSizeX(Integer.parseInt(xField.getText()));
+					CData.mapWidth = Integer.parseInt(xField.getText());
+					CData.updateLevelSize();
 				}catch (Exception e) {
 					xField.setText(""+CData.getLevelSizeX());
 				}
@@ -138,7 +139,8 @@ public class TileChoosePanel extends JPanel  {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				try{
-					CData.setLevelSizeY(Integer.parseInt(yField.getText()));
+					CData.mapHeight = Integer.parseInt(yField.getText());
+					CData.updateLevelSize();
 				}catch (Exception e) {
 					yField.setText(""+CData.getLevelSizeX());
 				}
@@ -164,7 +166,7 @@ public class TileChoosePanel extends JPanel  {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				TileManager.writeTileSet("tileset.xml");
+				MapManager.writeTileSet("tileset.xml");
 
 			}
 		});
@@ -172,7 +174,7 @@ public class TileChoosePanel extends JPanel  {
 		loadTileSet.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				TileManager.loadTileSet(new File("tileset.xml"));
+//				MapManager.loadTileSet(new File("tileset.xml"));
 
 			}
 		});
@@ -199,28 +201,28 @@ public class TileChoosePanel extends JPanel  {
 	}
 
 	private void loadMapFile(){
-		
-		JFileChooser fileChooser = new JFileChooser();
-		fileChooser.setDialogType(JFileChooser.OPEN_DIALOG);
-		fileChooser.setCurrentDirectory(new File("."));
-		FileNameExtensionFilter filter = 
-			new FileNameExtensionFilter("Infectosaurus map file *.ism","ism");
-		fileChooser.setFileFilter(filter);
-		fileChooser.setApproveButtonText("Load");
-		fileChooser.setDialogTitle("Load map");
-
-
-		int returnVal = fileChooser.showOpenDialog(CData.mainFrame);
-		if(returnVal == JFileChooser.APPROVE_OPTION){
-			File file = fileChooser.getSelectedFile();
-
-			TileManager.loadMap(file);
-		}
+		MapManager.loadTestMap();
+//		JFileChooser fileChooser = new JFileChooser();
+//		fileChooser.setDialogType(JFileChooser.OPEN_DIALOG);
+//		fileChooser.setCurrentDirectory(new File("."));
+//		FileNameExtensionFilter filter = 
+//			new FileNameExtensionFilter("Infectosaurus map file *.ism","ism");
+//		fileChooser.setFileFilter(filter);
+//		fileChooser.setApproveButtonText("Load");
+//		fileChooser.setDialogTitle("Load map");
+//
+//
+//		int returnVal = fileChooser.showOpenDialog(CData.mainFrame);
+//		if(returnVal == JFileChooser.APPROVE_OPTION){
+//			File file = fileChooser.getSelectedFile();
+//
+//			MapManager.loadMap(file);
+//		}
 	}
 	
 	private void removeTile() {
 		Tile tile = (Tile) list.getSelectedValue();
-		TileManager.removeTile(tile);
+		MapManager.removeTile(tile);
 		
 	}
 	
@@ -247,7 +249,7 @@ public class TileChoosePanel extends JPanel  {
 				file = new File(file.getParentFile(),fName);
 			}
 
-			TileManager.writeMap(file);
+			MapManager.writeMap(file);
 		}
 	}
 
@@ -263,7 +265,7 @@ public class TileChoosePanel extends JPanel  {
 		if(returnVal == JFileChooser.APPROVE_OPTION){
 			File[] files = fileChooser.getSelectedFiles();
 
-			TileManager.addTiles(files);
+			MapManager.addTiles(files);
 		}
 
 	}
@@ -274,7 +276,7 @@ public class TileChoosePanel extends JPanel  {
 			int i = list.getSelectedIndex();
 			if(i == -1) return;
 			//ObjectPointers.centerPanel.setCurTile(i);
-			CData.rightPanel.setCurTile(i);
+			CData.propertiesPanel.setCurTile(i);
 		}
 	}
 

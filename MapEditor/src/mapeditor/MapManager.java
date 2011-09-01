@@ -41,7 +41,7 @@ import org.xml.sax.SAXException;
  * @author Lionleaf
  *	A class to handle tilesets and tiles. TODO make it non-static, really bad code.
  */
-public class TileManager {
+public class MapManager {
 	private static int currentID = 0;
 
 	public static void writeMap(File file){
@@ -71,6 +71,16 @@ public class TileManager {
 			e.printStackTrace();
 		} 
 	}
+	
+	public static void loadTestMap(){
+		CData.mapWidth = CData.tileSize*10;
+		CData.mapHeight = CData.tileSize*10;
+		MapData.setUp(CData.mapWidth, CData.mapHeight, CData.tileSize, CData.tileSize/2);
+		CData.updateLevelSize();
+		
+		CData.mapPanel.loadMap();
+		CData.mainFrame.repaint();
+	}
 
 	public static void loadMap(File file) {
 		FileInputStream input = null;
@@ -91,8 +101,8 @@ public class TileManager {
 					CData.level[x][y] = new Square((byte) input.read());
 				}
 			}
-			CData.setLevelSizeX(width);
-			CData.setLevelSizeY(height);
+//			CData.setLevelSizeX(width);
+//			CData.setLevelSizeY(height);
 
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(CData.mainFrame, "Map file corrupt!");
@@ -114,7 +124,6 @@ public class TileManager {
 			Document doc = docBuilder.newDocument();
 			Element rootElement = doc.createElement("TileSet");
 			rootElement.setAttribute("nr_of_tiles", CData.tiles.size()+"");
-			rootElement.setAttribute("block_dimension", CData.TILE_BLOCKS + "");
 			rootElement.setAttribute("nr_of_movetypes", CData.moveTypes.length + "");
 			
 			
@@ -135,10 +144,10 @@ public class TileManager {
 					//Set the name of the state
 					state.setAttribute("name", CData.moveTypes[i]);
 					//Calculate the value
-					String value = generateTileStatesString(tile.getTileStates(), i);
-					Text stateVal = doc.createTextNode(value);
-					//Append value
-					state.appendChild(stateVal);
+//					String value = generateTileStatesString(tile.getTileStates(), i);
+//					Text stateVal = doc.createTextNode(value);
+//					//Append value
+//					state.appendChild(stateVal);
 				}
 
 			}
@@ -189,111 +198,111 @@ public class TileManager {
 		}
 	}
 
-	private static String generateTileStatesString(boolean[][][] tileStates, int k) {
-		StringBuffer sb = new StringBuffer();
-		int val;
-		for (int i = 0; i < CData.TILE_BLOCKS; i++) {
-			for (int j = 0; j < CData.TILE_BLOCKS; j++) {
-				val = tileStates[i][j][k] ? 1 : 0; 
-				sb.append(val + "");
-			}
-		}
-		return sb.toString();
-	}
+//	private static String generateTileStatesString(boolean[][][] tileStates, int k) {
+//		StringBuffer sb = new StringBuffer();
+//		int val;
+//		for (int i = 0; i < CData.TILE_BLOCKS; i++) {
+//			for (int j = 0; j < CData.TILE_BLOCKS; j++) {
+//				val = tileStates[i][j][k] ? 1 : 0; 
+//				sb.append(val + "");
+//			}
+//		}
+//		return sb.toString();
+//	}
 
-	public static void loadTileSet(File file){
-		try {
-			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder docBuilder;
+//	public static void loadTileSet(File file){
+//		try {
+//			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+//			DocumentBuilder docBuilder;
+//
+//			docBuilder = docFactory.newDocumentBuilder();
+//
+//			Document doc = docBuilder.parse(file);
+//
+//			doc.getDocumentElement().normalize();
+//
+//			NodeList nodeList = doc.getElementsByTagName("Tile");
+//
+//			CData.tiles.clear();
+//
+//			for (int i = 0; i < nodeList.getLength(); i++) {
+//				Node node = nodeList.item(i);
+//				NamedNodeMap attMap = node.getAttributes();
+//				int id = Integer.parseInt(
+//						attMap.getNamedItem("id").getTextContent());
+//				String resource = attMap.
+//					getNamedItem("resource").getTextContent();
+//
+//				String imgstr = resource + ".png";
+//
+//				Image img = new ImageIcon(imgstr).getImage();
+//
+//				Tile tile = new Tile(img, (byte)id, imgstr);
+//
+//				//Parse children
+//				NodeList childList = node.getChildNodes();
+//				for(int j = 0; j < childList.getLength(); j++){
+//					Node n = childList.item(j);
+//					if(n.getNodeName() == "state"){
+//						NamedNodeMap stateMap = n.getAttributes();
+//						
+//						String stateType = stateMap.
+//							getNamedItem("name").getTextContent();
+//						
+//						//Find the movetype
+//						for (int k = 0; k < CData.moveTypes.length; k++) {
+//							if(CData.moveTypes[k].equals(stateType)){
+//								addMoveTypes(tile, k, n.getTextContent());
+//								break;
+//							}
+//						}
+//						
+//					}
+//				}
+//				
+//				
+//				CData.tiles.put(id,tile);
+//			}
+//
+//		} catch (ParserConfigurationException e) {
+//
+//			e.printStackTrace();
+//		} catch (SAXException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//
+//			e.printStackTrace();
+//		}
+//		
+//		if(CData.tileChoosePanel != null){
+//			CData.tileChoosePanel.updateList();
+//		}
+//		if(CData.mainFrame != null){
+//			CData.mainFrame.repaint();
+//		}
+//
+//	}
 
-			docBuilder = docFactory.newDocumentBuilder();
-
-			Document doc = docBuilder.parse(file);
-
-			doc.getDocumentElement().normalize();
-
-			NodeList nodeList = doc.getElementsByTagName("Tile");
-
-			CData.tiles.clear();
-
-			for (int i = 0; i < nodeList.getLength(); i++) {
-				Node node = nodeList.item(i);
-				NamedNodeMap attMap = node.getAttributes();
-				int id = Integer.parseInt(
-						attMap.getNamedItem("id").getTextContent());
-				String resource = attMap.
-					getNamedItem("resource").getTextContent();
-
-				String imgstr = resource + ".png";
-
-				Image img = new ImageIcon(imgstr).getImage();
-
-				Tile tile = new Tile(img, (byte)id, imgstr);
-
-				//Parse children
-				NodeList childList = node.getChildNodes();
-				for(int j = 0; j < childList.getLength(); j++){
-					Node n = childList.item(j);
-					if(n.getNodeName() == "state"){
-						NamedNodeMap stateMap = n.getAttributes();
-						
-						String stateType = stateMap.
-							getNamedItem("name").getTextContent();
-						
-						//Find the movetype
-						for (int k = 0; k < CData.moveTypes.length; k++) {
-							if(CData.moveTypes[k].equals(stateType)){
-								addMoveTypes(tile, k, n.getTextContent());
-								break;
-							}
-						}
-						
-					}
-				}
-				
-				
-				CData.tiles.put(id,tile);
-			}
-
-		} catch (ParserConfigurationException e) {
-
-			e.printStackTrace();
-		} catch (SAXException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-
-			e.printStackTrace();
-		}
-		
-		if(CData.leftPanel != null){
-			CData.leftPanel.updateList();
-		}
-		if(CData.mainFrame != null){
-			CData.mainFrame.repaint();
-		}
-
-	}
-
-	/**
-	 * @param tile
-	 * @param dim
-	 * @param str - 01011101  
-	 */
-	private static void addMoveTypes(Tile tile, int dim, String str) {
-		char[] arr = str.toCharArray();
-		int dimensions = CData.TILE_BLOCKS;
-		for (int i = 0; i < dimensions*dimensions; i++) {
-			tile.setTileState(i%dimensions, 
-					i/dimensions, dim, arr[i] == '1' ? true : false);
-		}
-		
-	}
+//	/**
+//	 * @param tile
+//	 * @param dim
+//	 * @param str - 01011101  
+//	 */
+//	private static void addMoveTypes(Tile tile, int dim, String str) {
+//		char[] arr = str.toCharArray();
+//		int dimensions = CData.TILE_BLOCKS;
+//		for (int i = 0; i < dimensions*dimensions; i++) {
+//			tile.setTileState(i%dimensions, 
+//					i/dimensions, dim, arr[i] == '1' ? true : false);
+//		}
+//		
+//	}
 
 	public static void removeTile(Tile tile) {
 		CData.tiles.remove(tile.getID());
 
-		if(CData.leftPanel != null){
-			CData.leftPanel.updateList();
+		if(CData.tileChoosePanel != null){
+			CData.tileChoosePanel.updateList();
 		}
 		if(CData.mainFrame != null){
 			CData.mainFrame.repaint();
@@ -307,8 +316,8 @@ public class TileManager {
 			CData.tiles.put(currentID, new Tile(image, (byte)currentID, file.getName()));
 			currentID++;
 		}
-		if(CData.leftPanel != null){
-			CData.leftPanel.updateList();
+		if(CData.tileChoosePanel != null){
+			CData.tileChoosePanel.updateList();
 		}
 		if(CData.mainFrame != null){
 			CData.mainFrame.repaint();

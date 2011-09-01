@@ -19,7 +19,7 @@ import mapeditor.panels.TileTypePanel;
 
 public class MFrame extends JFrame{
 	private TileChoosePanel leftPanel;
-	private MapPanel centerPanel;
+	private MapPanel mapPanel;
 	private TileTypePanel rightPanel;
 
 	MFrame(){
@@ -30,21 +30,20 @@ public class MFrame extends JFrame{
 
 	private void initPanels() {
 		leftPanel = new TileChoosePanel();
-		CData.leftPanel = leftPanel;
-		centerPanel = new MapPanel();
-		CData.centerPanel = centerPanel;
+		CData.tileChoosePanel = leftPanel;
+		mapPanel = new MapPanel();
+		CData.mapPanel = mapPanel;
 		rightPanel = new TileTypePanel();
-		CData.rightPanel = rightPanel;
-		
-		CData.mapScroller = new JScrollPane(centerPanel);
+		CData.propertiesPanel = rightPanel;
+		CData.mapScroller = new JScrollPane(mapPanel);
 		
 		setPreferredSize(new Dimension(100,400));
 		leftPanel.setPreferredSize(new Dimension(100,400));
-		centerPanel.setPreferredSize(new Dimension(500,500));
+		mapPanel.setPreferredSize(new Dimension(500,500));
 		rightPanel.setPreferredSize(new Dimension(100,400));
 		
         leftPanel.setMinimumSize(new Dimension(100,400));
-        centerPanel.setMinimumSize(new Dimension(200,400));
+        mapPanel.setMinimumSize(new Dimension(200,400));
         rightPanel.setMinimumSize(new Dimension(210, 400));
 	}
 

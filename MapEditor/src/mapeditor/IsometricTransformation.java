@@ -1,6 +1,6 @@
 package mapeditor;
 
-public class IsometricProjection {
+public class IsometricTransformation {
 	
 	private static float[][] matrix = {{1 , 0},
 									   {0 , 1}};

@@ -7,6 +7,9 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
 public class MapScetchPanel extends JPanel{
+	float Scale = 10;
+	
+	
 	JCheckBox showCoordinates = new JCheckBox();
 	
 	public MapScetchPanel() {

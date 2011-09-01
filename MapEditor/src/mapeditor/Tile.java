@@ -10,16 +10,16 @@ import java.awt.Image;
 public class Tile {
 	private boolean[][][] tileStates;
 	private Image image;
-	private static final String[] states = CData.moveTypes;
-	private static final int TILE_BLOCKS = CData.TILE_BLOCKS;
-	private static final int STATES = states.length;
+//	private static final String[] states = CData.moveTypes;
+//	private static final int TILE_BLOCKS = CData.TILE_BLOCKS;
+//	private static final int STATES = states.length;
 	
 	byte id = -1;
 	private String resource;
 	private String fileName;
 	
 	public Tile(Image image, byte id, String resource){
-		tileStates = new boolean[TILE_BLOCKS][TILE_BLOCKS][STATES];
+//		tileStates = new boolean[TILE_BLOCKS][TILE_BLOCKS][STATES];
 		this.image = image;
 		this.id = id;
 		
