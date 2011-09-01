@@ -6,16 +6,30 @@ package mapeditor;
  *	coordinate system. And vice versa.
  */
 public class MapData {
+	/**
+	 * Be careful only read
+	 */
+	public static int arrayHeight;
+	/**
+	 * Be careful only read
+	 */
+	public static int arrayWidth;
+	/**
+	 * Be careful only read
+	 */
+	public static int mapHeight;
+	/**
+	 * Be careful only read
+	 */
+	public static int mapWidth;
 	
+	private static final int BOTTOM = 0;
+	private static final int TOP = 1;
 	private static int offsetX;
 	private static int offsetY;
-	private static int offsetCarthY;
-	private static int offsetCarthX;
-	
-	private static int arrayHeight;
-	private static int arrayWidth;
-	private static int mapHeight;
-	private static int mapWidth;
+	private static float offsetCarthY;
+	private static float offsetCarthX;
+	private static int mapIndices[][]; //mapIndices[xIndex][TOP or BOT] = yIndex; 
 	
 	public static void setUp(int mapWidth, int mapHeight, int a, int b){
 		IsometricTransformation.setMatrix(a, b);
@@ -23,65 +37,84 @@ public class MapData {
 		changeMap(mapWidth, mapHeight);
 	}
 	
+	public static int[][] getMapIndices(){
+		return mapIndices;
+	}
+	
 	public static void changeMap(int mapWidth, int mapHeight){
-		int left = IsometricTransformation.getInversX(0, 0);
-		int bot = IsometricTransformation.getInversY(mapWidth, 0);
-		int top = IsometricTransformation.getInversY(0, mapHeight);
-		int right = IsometricTransformation.getInversX(mapWidth, mapHeight);
-		
-		arrayHeight = top - bot;
-		arrayWidth = right - left;
 		MapData.mapHeight = mapHeight;
 		MapData.mapWidth = mapWidth;
-
-		offsetX = 0; 
+		float top = IsometricTransformation.getInversY(0, mapHeight);
+		float bot = IsometricTransformation.getInversY(mapWidth, 0);
+		float left = IsometricTransformation.getInversX(0, 0);
+		float right = IsometricTransformation.getInversX(mapWidth, mapHeight);
+		offsetX = 0;
 		offsetY = mapHeight;
-		offsetCarthX = 0 - left; 
-		offsetCarthY = 0 - bot; 
+		offsetCarthX = left; 
+		offsetCarthY = - bot;
+		
+		arrayHeight = (int) (Math.ceil(top) - Math.ceil(bot)) + 1;
+		arrayWidth = (int) (Math.ceil(right) - Math.ceil(left)) + 1;
+		
+		calculateMapIndices();
 	}
 	
-	public static void calculateMapIndices(){
+	private static void calculateMapIndices(){
+		// these variables are in the Cartesian system
+		float x1 = MapData.transformFromWindowX(0, 0);
+		float y1 = MapData.transformFromWindowY(0, 0);
+		float x2 = MapData.transformFromWindowX(mapWidth, 0);
+		float y2 = MapData.transformFromWindowY(mapWidth, 0);
+		float x3 = MapData.transformFromWindowX(mapWidth, mapHeight);
+		float y3 = MapData.transformFromWindowY(mapWidth, mapHeight);
+		float x4 = MapData.transformFromWindowX(0, mapHeight);
+		float y4 = MapData.transformFromWindowY(0, mapHeight);
+		
+		mapIndices = new int[arrayWidth][2];
 		// Gather indices from the 4 lines that limit the square view.
-		
-		for(int y = 0; y < arrayHeight; y++){
-			int x = (y-offsetCarthY)/a;
-		}
+		squaresInLine(x1, y1, x2, y2, BOTTOM);
+		squaresInLine(x2, y2, x3, y3, BOTTOM);
+		squaresInLine(x3, y3, x4, y4, TOP);
+		squaresInLine(x4, y4, x1, y1, TOP);
 	}
 	
-	private static int[] squaresInLine(float a, float x1, float y1, float x2, float y2){
+	private static void squaresInLine(float x1, float y1, float x2, float y2, int limit){
 		if(x1 > x2){
-			float tmpX = x1;
+			float tmp = x1;
 			x1 = x2;
-			x2 = tmpX;
+			x2 = tmp;
+			
+			tmp = y1;
+			y1 = y2;
+			y2 = y1;
 		}
-		float b = offsetY;
+		float dx = x2 - x1;
+		float dy = y2 - y1;
+		float a = dy/dx;
+		// Set indices for the start and end positions
+		mapIndices[(int) x1][limit] = (int) y1;
+		mapIndices[(int) x2][limit] = (int) y2;
 		
+		int xStart = (int) Math.ceil(x1) + 1;
 		
-		// Check in what squares the end points are
-		float y = a*x1 + b;
-		
-		int[] result = new int[arrayWidth];
-		
-		int xStart = (int) Math.ceil(x1);
-		int xEnd   = (int) Math.floor(x2);
-		int yStart = (int) (y1 < y2 ? Math.ceil(y1) : Math.floor(y1));
-		int yEnd   = (int) (y1 < y2 ? Math.floor(y2) : Math.ceil(y2));
-		
-		for(int x = (int) Math.ceil(xStart); x < (int) Math.floor(xEnd); x++){
-			float y = a*(x - xStart) + b;
-			int yIndex = (int) Math.floor(y);
-			result[x] = yIndex;
+		for(int x = xStart; x < x2; x++){
+			mapIndices[x][limit] = (int) (a*(x - x1) + y1);
 		}
 		
-		return null;
-	}
-	
-	public static int getTilesX(){
-		return arrayWidth;
-	}
-	
-	public static int getTilesY(){
-		return arrayHeight;
+		if(a >= 0){ // this implies that y1 is less or equal to y2 
+			int yStart = (int) Math.ceil(y1);
+			for(int y = yStart; y < y2; y++){
+				int x =  (int) ((y - y1)/a + x1);
+				mapIndices[x][limit] = y;
+			}
+		}
+		else{ // a is less than zero, implies that y1 is greater than y2
+			int yStart = (int) Math.ceil(y1);
+			for(int y = yStart; y > y2; y--){
+				int x =  (int) ((y - y1)/a + x1);
+				mapIndices[x][limit] = y - 1;
+			} 
+		}
 	}
 	
 	/**
@@ -92,12 +125,10 @@ public class MapData {
 	 * @param y
 	 * @return the x coordinate in the top left oriented coordinate system.
 	 */
-	public static int transformX(int x, int y) {
-		return IsometricTransformation.getX(x- offsetCarthX, y- offsetCarthY) + offsetX;
+	public static int transformToWindowX(float x, float y) {
+		return (int) (IsometricTransformation.getX(x - offsetCarthX, y - offsetCarthY) 
+				+ offsetX);
 	}
-
-
-
 
 	/**
 	 * Transforms x and y Cartesian coordinates first into an isometric positive rotated
@@ -107,8 +138,9 @@ public class MapData {
 	 * @param y
 	 * @return the y coordinate in the top left oriented coordinate system.
 	 */
-	public static int transformY(int x, int y) {
-		return - IsometricTransformation.getY(x- offsetCarthX, y- offsetCarthY) + offsetY;
+	public static int transformToWindowY(float x, float y) {
+		return (int) (- IsometricTransformation.getY(x - offsetCarthX, y - offsetCarthY) 
+				+ offsetY);
 	}
 
 	/**
@@ -120,7 +152,7 @@ public class MapData {
 	 * @param y
 	 * @return the x coordinate in the Cartesian coordinate system
 	 */
-	public static int inverseTransformX(int x, int y) {
+	public static float transformFromWindowX(int x, int y) {
 		return IsometricTransformation.getInversX(x - offsetX, -y + offsetY) + offsetCarthX;
 	}
 	
@@ -133,7 +165,7 @@ public class MapData {
 	 * @param y
 	 * @return the y coordinate in the Cartesian coordinate system
 	 */
-	public static int inverseTransformY(int x, int y) {
+	public static float transformFromWindowY(int x, int y) {
 		return IsometricTransformation.getInversY(x - offsetX, - y + offsetY) + offsetCarthY;
 	}
 }

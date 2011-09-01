@@ -17,7 +17,6 @@ import mapeditor.Square;
 import mapeditor.Tile;
 
 public class TileTypePanel extends JPanel {
-	private boolean[][][] tileStates;
 	private int selectedState = 0;
 	private Tile selectedTile;
 	private static final int OFFSET_Y = 100;
@@ -64,18 +63,8 @@ public class TileTypePanel extends JPanel {
 		if(CData.curTile == null) return;
 		selectedTile = CData.curTile;
 		if(selectedTile == null) return;
-		tileStates = selectedTile.getTileStates();
-	
-		int tileSize = CData.tileSize;
 		
-		
-		g2d.setStroke(new BasicStroke(1));
-		g2d.setColor(new Color(0f,0f,0f));
-		
-		g2d.drawImage(selectedTile.getImage(),0,OFFSET_Y,tileSize,tileSize,null);
-		
-		g2d.setStroke(new BasicStroke(4));
-		g2d.setColor(new Color(1f, 0f, 0f));
+		g2d.drawImage(selectedTile.getImage(),0,OFFSET_Y, 100, 100, null);
 		
 	}
 	
@@ -88,22 +77,7 @@ public class TileTypePanel extends JPanel {
 	
 	public void setCurTile(int index){
 		this.selectedTile = CData.tiles.get(index);
-		this.tileStates = selectedTile.getTileStates();
 		repaint();
 	}
-	
-//	private int[] getBlock(int x, int y){
-//		int tileBlocks = CData.TILE_BLOCKS;
-//		int tileBlockSize = CData.tileSize/tileBlocks;
-//		
-//		int[] i = new int[2];
-//		i[0] = x/tileBlockSize;
-//		i[1] = y/tileBlockSize;
-//		if(i[0] > tileBlocks - 1) i[0] = tileBlocks - 1;
-//		if(i[1] > tileBlocks - 1) i[1] = tileBlocks - 1;
-//		if(i[0] < 0) i[0] = 0;
-//		if(i[1] < 0) i[1] = 0;
-//		return i;
-//	}
 	
 }

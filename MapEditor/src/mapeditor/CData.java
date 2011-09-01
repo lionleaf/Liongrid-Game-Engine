@@ -18,10 +18,6 @@ public class CData {
 	public static boolean coordinateSnap = true;
 	
 	public static Tile curTile;
-	public volatile static int tileSize = 64;
-	public volatile static int mapHeight = 0;
-	public volatile static int mapWidth = 0;
-	
 	public volatile static String[] moveTypes = {"Walk", "Fly", "Swim"};
 	public volatile static HashMap<Integer,Tile> tiles = new HashMap<Integer,Tile>();
 	public volatile static Square[][] level = new Square[MAX_SIZE][MAX_SIZE];
@@ -30,23 +26,32 @@ public class CData {
 	public volatile static TileTypePanel propertiesPanel;
 	public volatile static MapPanel mapPanel;
 	public volatile static MapScetchPanel mapScetch;
-	
 	public volatile static MFrame mainFrame;
 	
 	public static JScrollPane mapScroller;
 	
-	public static int getLevelSizeX() {
-		return MapData.getTilesX();
+	public static int getArraySizeX() {
+		return MapData.arrayWidth;
 	}
 	
-	public static int getLevelSizeY() {
-		return MapData.getTilesY();
+	public static int getArraySizeY() {
+		return MapData.arrayWidth;
 	}
 	
-	public static void updateLevelSize() {
-		MapData.changeMap(mapWidth, mapWidth);
+	public static void loadLevel(int mapWidth, int mapHeight, int a, int b){
+		MapData.setUp(mapWidth, mapHeight, a, b);
 		tileChoosePanel.xField.setText(""+mapWidth);
 		tileChoosePanel.yField.setText(""+mapHeight);
+		CData.mapPanel.loadMap();
+		mainFrame.repaint();
+		mapScroller.updateUI();
+	}
+	
+	public static void changeLevelSize(int mapWidth, int mapHeight) {
+		MapData.changeMap(mapWidth, mapHeight);
+		tileChoosePanel.xField.setText(""+mapWidth);
+		tileChoosePanel.yField.setText(""+mapHeight);
+		CData.mapPanel.loadMap();
 		mainFrame.repaint();
 		mapScroller.updateUI();
 	}

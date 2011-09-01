@@ -26,14 +26,15 @@ import mapeditor.Tile;
 public class MapPanel extends JPanel {
 	JCheckBox showCoordinates = new JCheckBox();
 	JCheckBox snapToGrid;
-	private int tilesY;
-	private int tilesX;
-	private int tileSize;
+	private int arraySizeY;
+	private int arraySizeX;
+	private int tileSize = 64;
 	private boolean mapReady = false;
 	
 	private MapScetchPanel mapScetch;
 	private HashMap<Integer, Tile> tiles;
 	private Square[][] level;
+	private int[][] mapIndices;
 	
 	
 	public MapPanel(){
@@ -52,8 +53,8 @@ public class MapPanel extends JPanel {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				MapPanel panel = (MapPanel) e.getSource();
-				int x = MapData.inverseTransformX(e.getX(), e.getY());
-				int y = MapData.inverseTransformY(e.getX(), e.getY());
+				int x = (int) MapData.transformFromWindowX(e.getX(), e.getY());
+				int y = (int) MapData.transformFromWindowY(e.getX(), e.getY());
 				CData.level[x][y].setTileID(CData.curTile.getIDbyte());
 				panel.repaint();
 				
@@ -65,8 +66,8 @@ public class MapPanel extends JPanel {
 			private int[] lastTile = {-1,-1};
 			@Override
 			public void mouseDragged(MouseEvent e) {
-				int x = MapData.inverseTransformX(e.getX(), e.getY());
-				int y = MapData.inverseTransformY(e.getX(), e.getY());
+				int x = (int) MapData.transformFromWindowX(e.getX(), e.getY());
+				int y = (int) MapData.transformFromWindowY(e.getX(), e.getY());
 				int[] tile  = {x, y};
 				if(lastTile[0] != tile[0] || lastTile[1] != tile[1]){
 					MapPanel panel = (MapPanel) e.getSource();
@@ -84,12 +85,11 @@ public class MapPanel extends JPanel {
 
 	@Override
 	public Dimension getPreferredSize() {
-		//Overide this to make the scrolling appear as we want it
+		//Override this to make the scrolling appear as we want it
 		
 		Dimension d = super.getPreferredSize();
-		d.height = IsometricTransformation.getY(tilesX, tilesY);
-		d.width = - IsometricTransformation.getX(0, tilesY) 
-				  + IsometricTransformation.getX(tilesX, 0);
+		d.height = MapData.mapHeight;
+		d.width = MapData.mapWidth;
 		return d;
 	}
 
@@ -121,22 +121,43 @@ public class MapPanel extends JPanel {
 
 		if(showCoordinates.isSelected()){
 			paintGrid(g2d, tileSize);
-			int x = MapData.transformX(0, 0);
-			int y = MapData.transformY(0, 0);
+			int x = MapData.transformToWindowX(0, 0);
+			int y = MapData.transformToWindowY(0, 0);
 			g2d.drawOval(x - 10, y - 10, 20, 20);
 		}
 	}
 
 	private void paintGrid(Graphics2D g2d, int tileSize) {
-		int lengthX = MapData.getTilesX();
+		for(int x = 0; x < arraySizeX; x++){
+			drawSquare(g2d, x, mapIndices[x][1]);
+			drawSquare(g2d, x, mapIndices[x][0]);
+		}
+	}
+	
+	private void drawSquare(Graphics2D g2d, int x, int y){
+		int x1 = MapData.transformToWindowX(x, y);
+		int y1 = MapData.transformToWindowY(x, y);
+		g2d.drawString("("+x+","+y+")", x1, y1);
+		int x2 = MapData.transformToWindowX(x + 1, y);
+		int y2 = MapData.transformToWindowY(x + 1, y);
+		g2d.drawLine(x1, y1, x2, y2);
+		x1 = MapData.transformToWindowX(x + 1, y + 1);
+		y1 = MapData.transformToWindowY(x + 1, y + 1);
+		g2d.drawLine(x2, y2, x1, y1);
+		x2 = MapData.transformToWindowX(x, y + 1);
+		y2 = MapData.transformToWindowY(x, y + 1);
+		g2d.drawLine(x1, y1, x2, y2);
+		x1 = MapData.transformToWindowX(x, y);
+		y1 = MapData.transformToWindowY(x, y);
+		g2d.drawLine(x2, y2, x1, y1);
 	}
 
 	public void loadMap() {
-		tileSize = CData.tileSize;
 		tiles = CData.tiles;
 		level = CData.level;
-		tilesX = CData.getLevelSizeX();
-		tilesY = CData.getLevelSizeY();
+		arraySizeX = CData.getArraySizeX();
+		arraySizeY = CData.getArraySizeY();
+		mapIndices = MapData.getMapIndices();
 		mapReady = true;
 	}
 

@@ -18,6 +18,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import mapeditor.CData;
+import mapeditor.MapData;
 import mapeditor.Tile;
 import mapeditor.MapManager;
 
@@ -26,7 +27,6 @@ public class TileChoosePanel extends JPanel  {
 	public JTextField yField;
 	
 	private JList list;
-	private JTextField tileSizeField;
 	private JButton save;
 	private JButton load;
 	private JButton saveTileSet;
@@ -38,9 +38,8 @@ public class TileChoosePanel extends JPanel  {
 
 		//Initialize objects
 		list = new JList();	
-		xField = new JTextField(""+CData.getLevelSizeX());
-		yField = new JTextField(""+CData.getLevelSizeX());
-		tileSizeField = new JTextField(""+CData.tileSize);
+		xField = new JTextField(""+CData.getArraySizeX());
+		yField = new JTextField(""+CData.getArraySizeX());
 		save = new JButton("Save Map");
 		load = new JButton("Load Map");
 		saveTileSet = new JButton("Save Tileset");
@@ -53,7 +52,6 @@ public class TileChoosePanel extends JPanel  {
 		yField.setColumns(3);
 		list.setPreferredSize(new Dimension(80, 20));
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tileSizeField.setColumns(3);
 
 		addActionListeners();
 
@@ -76,8 +74,6 @@ public class TileChoosePanel extends JPanel  {
 		add(listScrollPane);
 		
 		add(new JLabel("Tile size:"));
-		
-		add(tileSizeField);
 		
 		add(load);
 		
@@ -105,30 +101,15 @@ public class TileChoosePanel extends JPanel  {
 		});
 
 
-		tileSizeField.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				try{
-					CData.tileSize = Integer.parseInt(tileSizeField.getText());
-					CData.mainFrame.repaint();
-				}catch(Exception e){
-					tileSizeField.setText(""+CData.tileSize);
-				}
-
-			}
-
-		});
-
 		xField.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				try{
-					CData.mapWidth = Integer.parseInt(xField.getText());
-					CData.updateLevelSize();
+					CData.changeLevelSize(Integer.parseInt(xField.getText()), 
+										  MapData.mapHeight);
 				}catch (Exception e) {
-					xField.setText(""+CData.getLevelSizeX());
+					xField.setText(""+CData.getArraySizeX());
 				}
 
 			}
@@ -139,10 +120,10 @@ public class TileChoosePanel extends JPanel  {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				try{
-					CData.mapHeight = Integer.parseInt(yField.getText());
-					CData.updateLevelSize();
+					CData.changeLevelSize(MapData.mapWidth, 
+										  Integer.parseInt(yField.getText()));
 				}catch (Exception e) {
-					yField.setText(""+CData.getLevelSizeX());
+					yField.setText(""+CData.getArraySizeX());
 				}
 
 			}

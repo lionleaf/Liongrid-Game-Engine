@@ -12,51 +12,51 @@ public class IsometricTransformation {
 		int result;
 		boolean verified = false;
 		
-		result = getX(inverseMatrix[0][0], inverseMatrix[1][0]);
+		result = Math.round(getX(inverseMatrix[0][0], inverseMatrix[1][0]));
 		verified |= result == 1;
 		assert result == 1;
 		
-		result = getY(inverseMatrix[0][0], inverseMatrix[1][0]);
+		result = Math.round(getY(inverseMatrix[0][0], inverseMatrix[1][0]));
 		verified |= result == 0;
 		assert  result == 0;
 		
-		result = getX(inverseMatrix[0][1], inverseMatrix[1][1]);
+		result = Math.round(getX(inverseMatrix[0][1], inverseMatrix[1][1]));
 		verified |= result == 0;
 		assert  result == 0;
 		
-		result = getY(inverseMatrix[0][1], inverseMatrix[1][1]);
+		result = Math.round(getY(inverseMatrix[0][1], inverseMatrix[1][1]));
 		verified |= result == 1;
 		assert  result == 1;
 		
 		return verified;
 	}
 
-	public static int getX(float x, float y){
+	public static float getX(float x, float y){
 		float result;
 		result = x * matrix[0][0];
 		result += y * matrix[0][1];
-		return (int) result;
+		return result;
 	}
 	
-	public static int getInversX(float x, float y){
+	public static float getInversX(float x, float y){
 		float result;
 		result = x * inverseMatrix[0][0];
 		result += y * inverseMatrix[0][1];
-		return (int) result;
+		return result;
 	}
 	
-	public static int getY(float x, float y){
+	public static float getY(float x, float y){
 		float result;
 		result = x * matrix[1][0];
 		result += y * matrix[1][1];
-		return (int) result;
+		return result;
 	}
 	
-	public static int getInversY(float x, float y){
+	public static float getInversY(float x, float y){
 		float result;
 		result = x * inverseMatrix[1][0];
 		result += y * inverseMatrix[1][1];
-		return (int) result;
+		return result;
 	}
 	
 	public static void setMatrix(float a, float b){

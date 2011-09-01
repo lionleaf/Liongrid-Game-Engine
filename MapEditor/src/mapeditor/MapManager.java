@@ -58,10 +58,10 @@ public class MapManager {
 		byte id = 1;
 		try {
 			os.write(id);
-			os.write(CData.getLevelSizeX());
-			os.write(CData.getLevelSizeY());
-			for(int y = 0; y < CData.getLevelSizeY(); y++){
-				for(int x = 0; x < CData.getLevelSizeX(); x++){
+			os.write(CData.getArraySizeX());
+			os.write(CData.getArraySizeY());
+			for(int y = 0; y < CData.getArraySizeY(); y++){
+				for(int x = 0; x < CData.getArraySizeX(); x++){
 					os.write(CData.level[x][y].getTileID());
 				}
 			}
@@ -73,12 +73,7 @@ public class MapManager {
 	}
 	
 	public static void loadTestMap(){
-		CData.mapWidth = CData.tileSize*10;
-		CData.mapHeight = CData.tileSize*10;
-		MapData.setUp(CData.mapWidth, CData.mapHeight, CData.tileSize, CData.tileSize/2);
-		CData.updateLevelSize();
-		
-		CData.mapPanel.loadMap();
+		CData.loadLevel(64*10, 64*10, 64, 64/2);
 		CData.mainFrame.repaint();
 	}
 
