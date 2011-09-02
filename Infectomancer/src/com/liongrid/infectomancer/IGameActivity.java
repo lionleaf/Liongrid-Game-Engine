@@ -91,7 +91,9 @@ public class IGameActivity extends Activity implements LGameActivityInterface{
 	private void setUpInputHandler(){
 		IGameScreenInput gameInput = new IGameScreenInput();
 		LView hudInput = new LButton();
+		LView notherInput = new LButton();
 		LGamePointers.panel.addToRoot(hudInput);
+		LGamePointers.panel.addToRoot(notherInput);
 		
 		setGestureDetector(new LGestureDetector
 				(this, new LInputDeligator(hudInput,gameInput)));

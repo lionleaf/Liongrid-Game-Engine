@@ -226,9 +226,11 @@ public class IGameObjectHandler extends LObjectHandler<IGameObject> {
 			if(!(resX < 0 || resY < 0 || resX >= mCollisionAreasLengthX 
 					|| resY >= mCollisionAreasLengthY)) {
 				//TODO Make it LGameObject, and more generic?
-				tempClosest = (IGameObject) mCollisionAreas[resX][resY].getClosest(pos, team.ordinal()).owner;
-
+				LCollisionObject closestColOb = mCollisionAreas[resX][resY].getClosest(pos, team.ordinal());
+				if(closestColOb == null) continue;
+				tempClosest = (IGameObject) closestColOb.owner;
 				if(tempClosest != null && tempClosest.team == team){
+					
 					tempDist2 = tempClosest.mPos.distance2(pos);
 					if(tempDist2 < closestDist2){
 						closest = tempClosest;

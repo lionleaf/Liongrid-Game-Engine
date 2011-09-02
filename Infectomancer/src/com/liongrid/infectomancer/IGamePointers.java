@@ -6,6 +6,9 @@ public class IGamePointers {
 	//Persistent variables:
 	public static int coins = 0; 
 	
+	private static int mXP = 0;
+	private static int mLevel = 0;
+	
 	//Per game variables:
 	public static int NumberOfHumans = 15;
 	public static IGameObjectHandler gameObjectHandler;
@@ -27,4 +30,10 @@ public class IGamePointers {
 		situationHandler = null;
 		
 	}
+	
+	public static int getLevel(){
+		return mLevel;
+	}
+	
+	
 }
