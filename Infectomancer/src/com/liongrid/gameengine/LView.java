@@ -44,7 +44,7 @@ public abstract class LView extends LBaseObject
 	
 	private boolean mPressed;
 	private boolean mSelected;
-	protected boolean mFocused;
+	private boolean mFocused;
 	private boolean mVisible = true;
 	private boolean mEnabled = true;
 	
@@ -118,7 +118,7 @@ public abstract class LView extends LBaseObject
 		}
 		return result;
 	}
-	
+	/*
 	public LView focusSearch(int direction){
 		if(mParent != null){
 			return mParent.focusSearch(this, direction);
@@ -126,7 +126,7 @@ public abstract class LView extends LBaseObject
 		else{
 			return null;
 		}
-	}
+	}*/
 
 	public LVector2 getPos() {
 		return mPos;
@@ -137,7 +137,7 @@ public abstract class LView extends LBaseObject
 	}
 
 	protected void handleFocusGainInternal(int direction) {
-		if(!findFocus()){
+		if(!isFocused()){
 			setFocused(true);
 			if(mParent != null){
 				mParent.requestChildFocus(this, this);
@@ -163,9 +163,13 @@ public abstract class LView extends LBaseObject
 		return mFocusable;
 	}
 
-	public boolean findFocus() {
-		return mFocused;
+	public LView findFocus() {
+		return mFocused ? this : null;
 	}
+	public boolean isFocused() {
+		return mFocused;
+    }
+
 
 	public boolean isLongClickable() {
 		return mLongClickable;
@@ -386,4 +390,15 @@ public abstract class LView extends LBaseObject
 			onFocusChange(false, 0);
 		}
 	}
+	
+	/**
+     * Gets the parent of this view. Note that the parent is a
+     * ViewParent and not necessarily a View.
+     *
+     * @return Parent of this view.
+     */
+    public final LViewParent getParent() {
+        return mParent;
+    }
+	
 }
