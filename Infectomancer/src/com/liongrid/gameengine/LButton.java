@@ -1,5 +1,6 @@
 package com.liongrid.gameengine;
 
+import com.liongrid.gameengine.view.LView;
 import com.liongrid.infectomancer.R;
 
 

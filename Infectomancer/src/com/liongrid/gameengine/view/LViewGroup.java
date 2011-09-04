@@ -1,4 +1,4 @@
-package com.liongrid.gameengine;
+package com.liongrid.gameengine.view;
 
 public abstract class LViewGroup extends LView implements LViewParent {
 	private LView mFocused;

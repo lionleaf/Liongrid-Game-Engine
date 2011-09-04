@@ -1,4 +1,4 @@
-package com.liongrid.gameengine;
+package com.liongrid.gameengine.view;
 
 public interface LViewParent {
 	void bringChildToFront(LView view);

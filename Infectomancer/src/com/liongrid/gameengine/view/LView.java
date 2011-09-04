@@ -1,9 +1,16 @@
-package com.liongrid.gameengine;
+package com.liongrid.gameengine.view;
 
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.liongrid.gameengine.LBaseObject;
+import com.liongrid.gameengine.LGamePointers;
+import com.liongrid.gameengine.LInputDispatchInterface;
+import com.liongrid.gameengine.LRenderSystem;
+import com.liongrid.gameengine.LShape;
+import com.liongrid.gameengine.LShape.Square;
 import com.liongrid.gameengine.tools.LVector2;
 import com.liongrid.infectomancer.IMainMenuActivity;
 
@@ -41,6 +48,17 @@ public abstract class LView extends LBaseObject
 	private boolean mLongClickable;
 	private boolean mFocusable;
 	private boolean mScrollable;
+	
+	protected int mMeasuredHeight;
+	protected int mMeasuredWidth;
+	
+	 /**
+     * The minimum height of the view. We'll try our best to have the height
+     * of this view to at least this amount.
+     */
+    private int mMinHeight;
+    
+    
 	
 	private boolean mPressed;
 	private boolean mSelected;
@@ -399,6 +417,106 @@ public abstract class LView extends LBaseObject
      */
     public final LViewParent getParent() {
         return mParent;
+    }
+    
+    /**
+     * <p>
+     * Measure the view and its content to determine the measured width and the
+     * measured height. This method is invoked by {@link #measure(int, int)} and
+     * should be overriden by subclasses to provide accurate and efficient
+     * measurement of their contents.
+     * </p>
+     *
+     * <p>
+     * <strong>CONTRACT:</strong> When overriding this method, you
+     * <em>must</em> call {@link #setMeasuredDimension(int, int)} to store the
+     * measured width and height of this view. Failure to do so will trigger an
+     * <code>IllegalStateException</code>, thrown by
+     * {@link #measure(int, int)}. Calling the superclass'
+     * {@link #onMeasure(int, int)} is a valid use.
+     * </p>
+     *
+     * <p>
+     * The base class implementation of measure defaults to the background size,
+     * unless a larger size is allowed by the MeasureSpec. Subclasses should
+     * override {@link #onMeasure(int, int)} to provide better measurements of
+     * their content.
+     * </p>
+     *
+     * <p>
+     * If this method is overridden, it is the subclass's responsibility to make
+     * sure the measured height and width are at least the view's minimum height
+     * and width ({@link #getSuggestedMinimumHeight()} and
+     * {@link #getSuggestedMinimumWidth()}).
+     * </p>
+     *
+     * @param widthMeasureSpec horizontal space requirements as imposed by the parent.
+     *                         The requirements are encoded with
+     *                         {@link android.view.View.MeasureSpec}.
+     * @param heightMeasureSpec vertical space requirements as imposed by the parent.
+     *                         The requirements are encoded with
+     *                         {@link android.view.View.MeasureSpec}.
+     *
+     * @see #getMeasuredWidth()
+     * @see #getMeasuredHeight()
+     * @see #setMeasuredDimension(int, int)
+     * @see #getSuggestedMinimumHeight()
+     * @see #getSuggestedMinimumWidth()
+     * @see android.view.View.MeasureSpec#getMode(int)
+     * @see android.view.View.MeasureSpec#getSize(int)
+     */
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        setMeasuredDimension(getDefaultSize(getSuggestedMinimumWidth(),
+                widthMeasureSpec), getDefaultSize(
+                getSuggestedMinimumHeight(), heightMeasureSpec));
+    }
+    
+    /**
+     * Returns the suggested minimum width that the view should use. This
+     * returns the maximum of the view's minimum width)
+     * and the background's minimum width
+     *  ({@link android.graphics.drawable.Drawable#getMinimumWidth()}).
+     * <p>
+     * When being used in {@link #onMeasure(int, int)}, the caller should still
+     * ensure the returned width is within the requirements of the parent.
+     *
+     * @return The suggested minimum width of the view.
+     */
+    protected int getSuggestedMinimumWidth() {
+        int suggestedMinWidth = mMinWidth;
+
+        if (mBGDrawable != null) {
+            final int bgMinWidth = mBGDrawable.getMinimumWidth();
+            if (suggestedMinWidth < bgMinWidth) {
+                suggestedMinWidth = bgMinWidth;
+            }
+        }
+
+        return suggestedMinWidth;
+    }
+    
+    /**
+     * Returns the suggested minimum height that the view should use. This
+     * returns the maximum of the view's minimum height
+     * and the background's minimum height
+     * ({@link android.graphics.drawable.Drawable#getMinimumHeight()}).
+     * <p>
+     * When being used in {@link #onMeasure(int, int)}, the caller should still
+     * ensure the returned height is within the requirements of the parent.
+     *
+     * @return The suggested minimum height of the view.
+     */
+    protected int getSuggestedMinimumHeight() {
+        int suggestedMinHeight = mMinHeight;
+
+        if (mBGDrawable != null) {
+            final int bgMinHeight = mBGDrawable.getMinimumHeight();
+            if (suggestedMinHeight < bgMinHeight) {
+                suggestedMinHeight = bgMinHeight;
+            }
+        }
+
+        return suggestedMinHeight;
     }
 	
 }
