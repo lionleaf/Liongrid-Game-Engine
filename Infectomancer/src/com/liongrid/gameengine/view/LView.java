@@ -466,9 +466,9 @@ public abstract class LView extends LBaseObject
      * @see android.view.View.MeasureSpec#getSize(int)
      */
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(getDefaultSize(getSuggestedMinimumWidth(),
+       /* setMeasuredDimension(getDefaultSize(getSuggestedMinimumWidth(),
                 widthMeasureSpec), getDefaultSize(
-                getSuggestedMinimumHeight(), heightMeasureSpec));
+                getSuggestedMinimumHeight(), heightMeasureSpec));*/
     }
     
     /**
@@ -482,7 +482,7 @@ public abstract class LView extends LBaseObject
      *
      * @return The suggested minimum width of the view.
      */
-    protected int getSuggestedMinimumWidth() {
+   /* protected int getSuggestedMinimumWidth() {
         int suggestedMinWidth = mMinWidth;
 
         if (mBGDrawable != null) {
@@ -493,7 +493,7 @@ public abstract class LView extends LBaseObject
         }
 
         return suggestedMinWidth;
-    }
+    }*/
     
     /**
      * Returns the suggested minimum height that the view should use. This
@@ -509,13 +509,13 @@ public abstract class LView extends LBaseObject
     protected int getSuggestedMinimumHeight() {
         int suggestedMinHeight = mMinHeight;
 
-        if (mBGDrawable != null) {
+        /*if (mBGDrawable != null) {
             final int bgMinHeight = mBGDrawable.getMinimumHeight();
             if (suggestedMinHeight < bgMinHeight) {
                 suggestedMinHeight = bgMinHeight;
             }
         }
-
+*/
         return suggestedMinHeight;
     }
 	

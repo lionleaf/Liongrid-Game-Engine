@@ -13,7 +13,7 @@ public class LAbsoluteLayout extends LViewGroup {
 	
 	 @Override
      protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-         int count = getChildCount();
+        /* int count = getChildCount();
 
          int maxHeight = 0;
          int maxWidth = 0;
@@ -48,7 +48,7 @@ public class LAbsoluteLayout extends LViewGroup {
          maxWidth = Math.max(maxWidth, getSuggestedMinimumWidth());
 
          setMeasuredDimension(resolveSize(maxWidth, widthMeasureSpec),
-                 resolveSize(maxHeight, heightMeasureSpec));
+                 resolveSize(maxHeight, heightMeasureSpec));*/
      }
 
 }
