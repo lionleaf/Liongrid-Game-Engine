@@ -2,14 +2,15 @@ package com.liongrid.infectomancer;
 
 import com.liongrid.gameengine.LCamera;
 import com.liongrid.gameengine.LGameActivityInterface;
+import com.liongrid.gameengine.LGameLoader.LGameLoadedCallback;
 import com.liongrid.gameengine.LGamePointers;
 import com.liongrid.gameengine.LGestureDetector;
 import com.liongrid.gameengine.LInputDeligator;
 import com.liongrid.gameengine.LButton;
-import com.liongrid.gameengine.LView;
 import com.liongrid.gameengine.LSurfaceViewPanel;
 import com.liongrid.gameengine.LUpgrade;
 import com.liongrid.gameengine.LMap;
+import com.liongrid.gameengine.view.LView;
 import com.liongrid.infectomancer.upgrades.IUpgrade;
 import com.liongrid.infectomancer.R;
 
@@ -36,7 +37,8 @@ import android.widget.TextView;
  * @author Lastis
  *		This activity is the upper class for the whole game play
  */
-public class IGameActivity extends Activity implements LGameActivityInterface{
+public class IGameActivity extends Activity implements LGameActivityInterface, 
+		LGameLoadedCallback{
 
 	private static final String SAVE_PREF_NAME = "infectoSave";
 
@@ -82,7 +84,7 @@ public class IGameActivity extends Activity implements LGameActivityInterface{
 		
 	}
 
-	public void onFinishGameLoad(){
+	public void onGameLoaded(){
 		setUpInputHandler();
 		Log.d("Infectosaurus", "Game loaded");
 		setContentView(LGamePointers.panel);

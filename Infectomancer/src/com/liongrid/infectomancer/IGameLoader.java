@@ -17,17 +17,16 @@ public class IGameLoader extends LGameLoader{
 	
 	public IGameLoader(LSurfaceViewPanel panel, IGameActivity gameActivity, 
 			Handler handler, ProgressBar progressBar) {
-		super(panel, handler, progressBar);
+		super(panel,gameActivity, handler, progressBar);
 		mGameActivity = gameActivity;
 		
 	}
 
+
+	
 	@Override
-	protected void init() {
-		super.init();
-		Log.d("Infectosaurus", "Game Engine loaded");
+	protected void instantiateGameClasses() {
 		IGamePointers.resetGameVars();
-		
 		IGamePointers.gameObjectHandler = new IGameObjectHandler();
 		postProgress(50);
 		IGamePointers.gameStatus = new IGameStatus();
@@ -37,17 +36,18 @@ public class IGameLoader extends LGameLoader{
 		postProgress(70);
 		LGamePointers.panel.addToRoot(IGamePointers.gameObjectHandler);
 		LGamePointers.panel.addToRoot(IGamePointers.gameStatus);
-		
-		
-		
-		preLoadTextures();
-		postProgress(90);
-		spawnMobs();
-		postProgress(100);
-		startGame();
 	}
 
-	private void spawnMobs(){
+	protected void preLoadTextures(){
+		LTextureLibrary tLib = LGamePointers.textureLib;
+		tLib.allocateTexture(R.drawable.squaremonster);
+		tLib.allocateTexture(R.drawable.spheremonster01);
+		tLib.allocateTexture(R.drawable.mann1);
+		tLib.allocateTexture(R.drawable.reaper);
+		postProgress(80);
+	}
+	
+	protected void setupGame(){
 		Bundle extras = IGamePointers.curGameActivity.getIntent().getExtras();
 		//TODO try catch and alert!!!!! on getint
 		int difficulty = extras.getInt("com.liongrid.infectomancer.difficulty");
@@ -55,27 +55,7 @@ public class IGameLoader extends LGameLoader{
 		IGamePointers.difficulty = difficulty;
 		IGamePointers.NumberOfHumans = pop;
 		LGamePointers.map.spawnNPCs(pop,  difficulty);
+		postProgress(100);
 	}
-	
-	private void preLoadTextures(){
-		LTextureLibrary tLib = LGamePointers.textureLib;
-		tLib.allocateTexture(R.drawable.squaremonster);
-		tLib.allocateTexture(R.drawable.spheremonster01);
-		tLib.allocateTexture(R.drawable.mann1);
-		tLib.allocateTexture(R.drawable.reaper);
-	}
-	
-	private void startGame(){
-		LGamePointers.panel.startGame();
-		LGamePointers.panel.setRender();
-		
-		mHandler.post(new Runnable(){
-			public void run(){
-				IGamePointers.curGameActivity.onFinishGameLoad();
-			}
-		});
-		
-	}
-	
 	
 }

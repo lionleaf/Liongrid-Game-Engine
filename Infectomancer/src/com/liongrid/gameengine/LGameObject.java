@@ -10,7 +10,7 @@ import com.liongrid.infectomancer.IMainMenuActivity;
  * @author Lionleaf
  * 
  */
-public abstract class LGameObject<T extends LGameObject<?>> extends LBaseObject {
+public class LGameObject<T extends LGameObject<?>> extends LBaseObject {
 
 	public LVector2 mPos = new LVector2(0,0);
 	
@@ -22,7 +22,7 @@ public abstract class LGameObject<T extends LGameObject<?>> extends LBaseObject 
 
 	private int Counter = 0;
 
-	protected LGameObject() {
+	public LGameObject() {
 		Log.d(IMainMenuActivity.TAG, "In LBaseObject");
 		components = new LFixedSizeArray<LComponent<T>>(DEFAULT_COMPONENT_SIZE);
 		effects = new LFixedSizeArray<LEffect<T>>(DEFAULT_EFFECT_SIZE);
