@@ -2,6 +2,7 @@ package com.liongrid.infectomancer.crowd.behaviorfunctions;
 
 import com.liongrid.gameengine.LGamePointers;
 import com.liongrid.gameengine.tools.LVector2;
+import com.liongrid.infectomancer.IGamePointers;
 import com.liongrid.infectomancer.Infectosaurus;
 import com.liongrid.infectomancer.crowd.*;
 import com.liongrid.infectomancer.crowd.actions.*;
@@ -13,7 +14,7 @@ public class IFrightBehavior extends IBehaviorFunction {
 	
 	@Override
 	protected double evaluate(IState s, IStateList lastStates) {
-		inf = LGamePointers.currentSaurus;
+		inf = IGamePointers.currentSaurus;
 		if(inf == null) return INDIFFERENT;
 		//if(s.action instanceof IStand) return Double.NaN;
 		if(inf.mPos.distance2(s.pos) > 150*150) return INDIFFERENT;

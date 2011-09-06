@@ -137,6 +137,6 @@ public class Infectosaurus extends IGameObject {
 	@Override
 	protected void die() {
 		super.die();
-		LGamePointers.currentSaurus = null;
+		IGamePointers.currentSaurus = null;
 	}
 }

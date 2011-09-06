@@ -5,7 +5,7 @@ import com.liongrid.gameengine.LGameActivityInterface;
 import com.liongrid.gameengine.LGameLoader.LGameLoadedCallback;
 import com.liongrid.gameengine.LGamePointers;
 import com.liongrid.gameengine.LGestureDetector;
-import com.liongrid.gameengine.LInputDeligator;
+import com.liongrid.gameengine.LInputDelegator;
 import com.liongrid.gameengine.LButton;
 import com.liongrid.gameengine.LSurfaceViewPanel;
 import com.liongrid.gameengine.LUpgrade;
@@ -98,7 +98,7 @@ public class IGameActivity extends Activity implements LGameActivityInterface,
 		LGamePointers.panel.addToRoot(notherInput);
 		
 		setGestureDetector(new LGestureDetector
-				(this, new LInputDeligator(hudInput,gameInput)));
+				(this, new LInputDelegator(hudInput,gameInput)));
 	}
 
 

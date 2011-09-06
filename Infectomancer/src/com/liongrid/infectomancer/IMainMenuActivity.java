@@ -82,9 +82,9 @@ public class IMainMenuActivity extends Activity {
         upgradeButton.setOnClickListener(new OnClickListener(){
 
 			public void onClick(View v) {
-				Intent i;
-		        i = new Intent(v.getContext(), IUpgradeActivity.class);
-		        startActivity(i);
+//				Intent i;
+//		        i = new Intent(v.getContext(), IUpgradeActivity.class);
+//		        startActivity(i);
 			}
         });
         

@@ -3,6 +3,8 @@ package com.liongrid.infectomancer;
 import com.liongrid.infectomancer.crowd.situations.ISituationHandler;
 
 public class IGamePointers {
+	public static Infectosaurus currentSaurus = null;
+
 	//Persistent variables:
 	public static int coins = 0; 
 	
@@ -28,6 +30,7 @@ public class IGamePointers {
 		coins = 0;
 		spawnPool = null;
 		situationHandler = null;
+		currentSaurus = null;
 		
 	}
 	

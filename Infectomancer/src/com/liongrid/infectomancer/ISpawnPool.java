@@ -162,6 +162,16 @@ public class ISpawnPool extends LBaseObject{
 		// TODO Auto-generated method stub
 		
 	}
+
+
+	public void spawnNPCs(int pop, int difficulty) {
+		IGameObjectHandler handler = IGamePointers.gameObjectHandler;
+		for (int i = 0; i < pop; i++){
+			IGameObject newHuman = spawnHuman(-1,-1,2*difficulty);
+			handler.add(newHuman);
+		}
+		
+	}
 	
 	
 	
