@@ -73,7 +73,7 @@ public class MapManager {
 	}
 	
 	public static void loadTestMap(){
-		CData.loadLevel(64*10, 64*10, 64, 64/2);
+		CData.loadLevel(64*8, 32*8, 64, 64/2);
 		CData.mainFrame.repaint();
 	}
 

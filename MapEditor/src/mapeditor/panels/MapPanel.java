@@ -102,28 +102,11 @@ public class MapPanel extends JPanel {
 		
 		Graphics2D g2d = (Graphics2D) g;
 		
-//		if(tiles == null || tiles.size() == 0) return;
-//		
-//		for(int tileY = 0; tileY < tilesY; tileY++){
-//			for(int tileX = 0; tileX < tilesX; tileX++){
-//				Integer in = new Integer(level[tileX][tileY].getTileID());
-//				Tile tile = tiles.get(in);
-//				if(tile == null){
-//					continue;
-//				}
-//				
-//				int x = MapAffineTrans.transformX(tileX, tileY);
-//				int y = MapAffineTrans.transformY(tileX, tileY);
-//				
-//				g2d.drawImage(tiles.get(in).getImage(), x, y - tileSize, tileSize, tileSize, null);
-//			}
-//		}
-
 		if(showCoordinates.isSelected()){
 			paintGrid(g2d, tileSize);
-			int x = MapData.transformToWindowX(0, 0);
-			int y = MapData.transformToWindowY(0, 0);
-			g2d.drawOval(x - 10, y - 10, 20, 20);
+//			int x = MapData.transformToWindowX(0, 0);
+//			int y = MapData.transformToWindowY(0, 0);
+//			g2d.drawOval(x - 10, y - 10, 20, 20);
 		}
 	}
 
@@ -135,21 +118,7 @@ public class MapPanel extends JPanel {
 	}
 	
 	private void drawSquare(Graphics2D g2d, int x, int y){
-		int x1 = MapData.transformToWindowX(x, y);
-		int y1 = MapData.transformToWindowY(x, y);
-		g2d.drawString("("+x+","+y+")", x1, y1);
-		int x2 = MapData.transformToWindowX(x + 1, y);
-		int y2 = MapData.transformToWindowY(x + 1, y);
-		g2d.drawLine(x1, y1, x2, y2);
-		x1 = MapData.transformToWindowX(x + 1, y + 1);
-		y1 = MapData.transformToWindowY(x + 1, y + 1);
-		g2d.drawLine(x2, y2, x1, y1);
-		x2 = MapData.transformToWindowX(x, y + 1);
-		y2 = MapData.transformToWindowY(x, y + 1);
-		g2d.drawLine(x1, y1, x2, y2);
-		x1 = MapData.transformToWindowX(x, y);
-		y1 = MapData.transformToWindowY(x, y);
-		g2d.drawLine(x2, y2, x1, y1);
+
 	}
 
 	public void loadMap() {

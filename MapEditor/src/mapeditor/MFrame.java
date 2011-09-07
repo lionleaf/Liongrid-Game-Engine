@@ -14,6 +14,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
 import mapeditor.panels.MapPanel;
+import mapeditor.panels.MapScetchPanel;
 import mapeditor.panels.TileChoosePanel;
 import mapeditor.panels.TileTypePanel;
 
@@ -21,6 +22,7 @@ public class MFrame extends JFrame{
 	private TileChoosePanel leftPanel;
 	private MapPanel mapPanel;
 	private TileTypePanel rightPanel;
+	private MapScetchPanel mapScetchPanel;
 
 	MFrame(){
 		initPanels();
@@ -31,19 +33,28 @@ public class MFrame extends JFrame{
 	private void initPanels() {
 		leftPanel = new TileChoosePanel();
 		CData.tileChoosePanel = leftPanel;
+		
 		mapPanel = new MapPanel();
 		CData.mapPanel = mapPanel;
+		CData.mapScroller = new JScrollPane(mapPanel);
+		
+		mapScetchPanel = new MapScetchPanel();
+		CData.mapScetchPanel = mapScetchPanel;
+		CData.mapScetchScroller = new JScrollPane(mapScetchPanel);
+		
 		rightPanel = new TileTypePanel();
 		CData.propertiesPanel = rightPanel;
-		CData.mapScroller = new JScrollPane(mapPanel);
+		
 		
 		setPreferredSize(new Dimension(100,400));
 		leftPanel.setPreferredSize(new Dimension(100,400));
-		mapPanel.setPreferredSize(new Dimension(500,500));
+		mapPanel.setPreferredSize(new Dimension(100,500));
+		mapScetchPanel.setPreferredSize(new Dimension(500,500));
 		rightPanel.setPreferredSize(new Dimension(100,400));
 		
         leftPanel.setMinimumSize(new Dimension(100,400));
-        mapPanel.setMinimumSize(new Dimension(200,400));
+        mapPanel.setMinimumSize(new Dimension(100,400));
+        mapScetchPanel.setMinimumSize(new Dimension(200, 400));
         rightPanel.setMinimumSize(new Dimension(210, 400));
 	}
 
@@ -71,7 +82,9 @@ public class MFrame extends JFrame{
         
         add(leftPanel, BorderLayout.WEST);
         
-        add(CData.mapScroller, BorderLayout.CENTER);
+//        add(CData.mapScroller, BorderLayout.CENTER);
+        
+        add(CData.mapScetchScroller, BorderLayout.CENTER);
         
         add(rightPanel, BorderLayout.EAST);
         

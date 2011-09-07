@@ -8,7 +8,7 @@ public class IsometricTransformation {
 	private static float[][] inverseMatrix = {{1 , 0},
 											  {0 , 1}};
 	
-	public static boolean verify(){
+	public static void verify(){
 		int result;
 		boolean verified = false;
 		
@@ -28,7 +28,15 @@ public class IsometricTransformation {
 		verified |= result == 1;
 		assert  result == 1;
 		
-		return verified;
+		if(!verified){
+			try {
+				throw new Exception();
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Matrix varifaction was false!");
+			}
+		}
+		
 	}
 
 	public static float getX(float x, float y){

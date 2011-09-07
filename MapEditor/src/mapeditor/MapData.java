@@ -25,11 +25,18 @@ public class MapData {
 	
 	private static final int BOTTOM = 0;
 	private static final int TOP = 1;
-	private static int offsetX;
-	private static int offsetY;
 	private static float offsetCarthY;
 	private static float offsetCarthX;
 	private static int mapIndices[][]; //mapIndices[xIndex][TOP or BOT] = yIndex; 
+	
+	public static float x1;
+	public static float y1;
+	public static float x2;
+	public static float y2;
+	public static float x3;
+	public static float y3;
+	public static float x4;
+	public static float y4;
 	
 	public static void setUp(int mapWidth, int mapHeight, int a, int b){
 		IsometricTransformation.setMatrix(a, b);
@@ -48,27 +55,25 @@ public class MapData {
 		float bot = IsometricTransformation.getInversY(mapWidth, 0);
 		float left = IsometricTransformation.getInversX(0, 0);
 		float right = IsometricTransformation.getInversX(mapWidth, mapHeight);
-		offsetX = 0;
-		offsetY = mapHeight;
 		offsetCarthX = left; 
 		offsetCarthY = - bot;
 		
-		arrayHeight = (int) (Math.ceil(top) - Math.ceil(bot)) + 1;
-		arrayWidth = (int) (Math.ceil(right) - Math.ceil(left)) + 1;
+		arrayHeight = (int) top - (int) bot + 1;
+		arrayWidth = (int) right - (int) left + 1;
 		
 		calculateMapIndices();
 	}
 	
 	private static void calculateMapIndices(){
 		// these variables are in the Cartesian system
-		float x1 = MapData.transformFromWindowX(0, 0);
-		float y1 = MapData.transformFromWindowY(0, 0);
-		float x2 = MapData.transformFromWindowX(mapWidth, 0);
-		float y2 = MapData.transformFromWindowY(mapWidth, 0);
-		float x3 = MapData.transformFromWindowX(mapWidth, mapHeight);
-		float y3 = MapData.transformFromWindowY(mapWidth, mapHeight);
-		float x4 = MapData.transformFromWindowX(0, mapHeight);
-		float y4 = MapData.transformFromWindowY(0, mapHeight);
+		x1 = MapData.transformFromWindowX(0, 0);
+		y1 = MapData.transformFromWindowY(0, 0);
+		x2 = MapData.transformFromWindowX(mapWidth, 0);
+		y2 = MapData.transformFromWindowY(mapWidth, 0);
+		x3 = MapData.transformFromWindowX(mapWidth, mapHeight);
+		y3 = MapData.transformFromWindowY(mapWidth, mapHeight);
+		x4 = MapData.transformFromWindowX(0, mapHeight);
+		y4 = MapData.transformFromWindowY(0, mapHeight);
 		
 		mapIndices = new int[arrayWidth][2];
 		// Gather indices from the 4 lines that limit the square view.
@@ -86,8 +91,14 @@ public class MapData {
 			
 			tmp = y1;
 			y1 = y2;
-			y2 = y1;
+			y2 = tmp;
 		}
+		
+		System.out.println("x1 = " + x1);
+		System.out.println("y1 = " + y1);
+		System.out.println("x2 = " + x2);
+		System.out.println("y2 = " + y2);
+		
 		float dx = x2 - x1;
 		float dy = y2 - y1;
 		float a = dy/dx;
@@ -95,7 +106,7 @@ public class MapData {
 		mapIndices[(int) x1][limit] = (int) y1;
 		mapIndices[(int) x2][limit] = (int) y2;
 		
-		int xStart = (int) Math.ceil(x1) + 1;
+		int xStart = (int) Math.ceil(x1);
 		
 		for(int x = xStart; x < x2; x++){
 			mapIndices[x][limit] = (int) (a*(x - x1) + y1);
@@ -109,7 +120,7 @@ public class MapData {
 			}
 		}
 		else{ // a is less than zero, implies that y1 is greater than y2
-			int yStart = (int) Math.ceil(y1);
+			int yStart = (int) Math.floor(y1);
 			for(int y = yStart; y > y2; y--){
 				int x =  (int) ((y - y1)/a + x1);
 				mapIndices[x][limit] = y - 1;
@@ -125,9 +136,11 @@ public class MapData {
 	 * @param y
 	 * @return the x coordinate in the top left oriented coordinate system.
 	 */
-	public static int transformToWindowX(float x, float y) {
-		return (int) (IsometricTransformation.getX(x - offsetCarthX, y - offsetCarthY) 
-				+ offsetX);
+	public static float transformToWindowX(float x, float y) {
+		System.out.println("MapData x = " + (x - offsetCarthX));
+		float result = IsometricTransformation.getX(x - offsetCarthX, y - offsetCarthY);
+		System.out.println("MapData return x = " + result);
+		return result;
 	}
 
 	/**
@@ -138,34 +151,34 @@ public class MapData {
 	 * @param y
 	 * @return the y coordinate in the top left oriented coordinate system.
 	 */
-	public static int transformToWindowY(float x, float y) {
-		return (int) (- IsometricTransformation.getY(x - offsetCarthX, y - offsetCarthY) 
-				+ offsetY);
+	public static float transformToWindowY(float x, float y) {
+		System.out.println("MapData y = " + (y - offsetCarthY));
+		float result = IsometricTransformation.getY(x - offsetCarthX, y - offsetCarthY);
+		System.out.println("MapData return y = " + result);
+		return result;
 	}
 
 	/**
-	 * Transforms the x and y window coordinates by first negating the offset of the 
-	 * window, changing the coordinates into a bottom left oriented isometric 
-	 * coordinate system. Then transforming these coordinates into a Cartesian 
-	 * coordinate system by multiplying with the inverse projection.
+	 * Transforms the x and y isometric coordinates by transforming 
+	 * the coordinates into a Cartesian coordinate system by multiplying 
+	 * with the inverse projection.
 	 * @param x
 	 * @param y
 	 * @return the x coordinate in the Cartesian coordinate system
 	 */
 	public static float transformFromWindowX(int x, int y) {
-		return IsometricTransformation.getInversX(x - offsetX, -y + offsetY) + offsetCarthX;
+		return IsometricTransformation.getInversX(x, y) + offsetCarthX;
 	}
 	
 	/**
-	 * Transforms the x and y window coordinates by first negating the offset of the 
-	 * window, changing the coordinates into a bottom left oriented isometric 
-	 * coordinate system. Then transforming these coordinates into a Cartesian 
-	 * coordinate system by multiplying with the inverse projection.
+	 * Transforms the x and y isometric coordinates by transforming 
+	 * the coordinates into a Cartesian coordinate system by multiplying 
+	 * with the inverse projection.
 	 * @param x
 	 * @param y
 	 * @return the y coordinate in the Cartesian coordinate system
 	 */
 	public static float transformFromWindowY(int x, int y) {
-		return IsometricTransformation.getInversY(x - offsetX, - y + offsetY) + offsetCarthY;
+		return IsometricTransformation.getInversY(x, y) + offsetCarthY;
 	}
 }
