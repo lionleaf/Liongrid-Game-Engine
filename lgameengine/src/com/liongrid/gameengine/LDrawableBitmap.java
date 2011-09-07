@@ -19,7 +19,6 @@ public class LDrawableBitmap extends LBaseObject implements LDrawableObject {
 	private int mOffsetX = 0;
 	private int mOffsetY = 0;
 	private float mOpacity;
-	private boolean croppedImage;
 
 	/**
 	 * @param texture - texture of the bitmap
@@ -33,7 +32,7 @@ public class LDrawableBitmap extends LBaseObject implements LDrawableObject {
 		mWidth = width;
 		mHeight = height;
 		mOpacity = 1.0f;
-		croppedImage = false;
+		mCrop = texture.defaultCrop;
 	}
 	
 	public LDrawableBitmap(LTexture texture, int width, int height, int[] cropWorkspace) {
@@ -42,7 +41,6 @@ public class LDrawableBitmap extends LBaseObject implements LDrawableObject {
 		mWidth = width;
 		mHeight = height;
 		mOpacity = 1.0f;
-		croppedImage = true;
 		mCrop = cropWorkspace;
 	}
 	
@@ -113,10 +111,9 @@ public class LDrawableBitmap extends LBaseObject implements LDrawableObject {
 			// the bitmap is drawn.
 			gl.glBindTexture(GL10.GL_TEXTURE_2D, mTexture.id);
 			
-			if(croppedImage){
-				((GL11) gl).glTexParameteriv(GL10.GL_TEXTURE_2D, GL11Ext.GL_TEXTURE_CROP_RECT_OES,
+
+			((GL11) gl).glTexParameteriv(GL10.GL_TEXTURE_2D, GL11Ext.GL_TEXTURE_CROP_RECT_OES,
 						mCrop, 0);
-			}
 			
 			// This is necessary because we could be drawing the same texture with different
             // crop (say, flipped horizontally) on the same frame.
@@ -140,10 +137,10 @@ public class LDrawableBitmap extends LBaseObject implements LDrawableObject {
     }
     
     public final void setFlip(boolean horzFlip, boolean vertFlip) {
-        setDimensions(horzFlip ? mWidth : 0,
-                vertFlip ? 0 : mHeight,
-                horzFlip ? -mWidth : mWidth,
-                vertFlip ? -mHeight : mHeight);
+    	setDimensions(horzFlip ? mTexture.width : 0,
+                vertFlip ? 0 : mTexture.height,
+                horzFlip ? -mTexture.width : mTexture.width,
+                vertFlip ? -mTexture.height : mTexture.height);
     }
     
 

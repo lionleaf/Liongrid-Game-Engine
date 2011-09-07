@@ -25,7 +25,7 @@ public abstract class LCollisionObject implements LShape{
 	 * number of objects it will store in its array.
 	 * 
 	 * @param type - 
-	 * @param mPos - The position of the shape.
+	 * @param pos - The position of the shape.
 	 * @param owner - A pointer to the owner of the shape.
 	 * @param maxCollisions - Number of max collisions the LCollisionObject will store
 	 * in its array.
@@ -44,11 +44,11 @@ public abstract class LCollisionObject implements LShape{
 	 * 
 	 * @param type - LCollisionObject are divided into different arrays in LCollisionHandler
 	 * according to their types.
-	 * @param mPos - The position of the shape.
+	 * @param pos - The position of the shape.
 	 * @param owner - A pointer to the owner of the shape.
 	 * in its array.
 	 */
-	public LCollisionObject(int type, LGameObject<?> owner) {
+	public LCollisionObject(int type, LGameObject owner) {
 		this.type = type;
 		this.owner = owner;
 		collisions = new LCollisionObject[DEFAULT_MAX_COLLISIONS];
@@ -93,6 +93,6 @@ public abstract class LCollisionObject implements LShape{
 	}
 	
 	public LVector2 getPos() {
-		return owner.mPos;
+		return owner.pos;
 	}
 }

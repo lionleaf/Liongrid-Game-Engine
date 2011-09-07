@@ -193,6 +193,7 @@ public class LTextureLibrary extends LBaseObject {
 			texture.id = textureName;
 			texture.width = bitmap.getWidth();
 			texture.height = bitmap.getHeight();
+			texture.defaultCrop = mCropWorkspace.clone();
 
 			bitmap.recycle();
 

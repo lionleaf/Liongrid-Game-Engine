@@ -9,17 +9,17 @@ import com.liongrid.gameengine.tools.LVector2;
  * @author Lionleaf
  * 
  */
-public class LGameObject<T extends LGameObject<?>> extends LBaseObject {
+public class LGameObject extends LBaseObject {
 
-	public LVector2 mPos = new LVector2(0,0);
+	public LVector2 pos = new LVector2(0,0);
 	public int width = 0;
 	public int heigth = 0;
-	public LVector2 mVel = new LVector2(0,0);
+	public LVector2 vel = new LVector2(0,0);
 	public float speed = 0;
 
 	
-	private LFixedSizeArray<LComponent<T>> components;
-	private LFixedSizeArray<LEffect<T>> effects;
+	private LFixedSizeArray<LComponent> components;
+	private LFixedSizeArray<LEffect<LGameObject>> effects;
 
 	private static final int DEFAULT_COMPONENT_SIZE = 64;
 	private static final int DEFAULT_EFFECT_SIZE = 64;
@@ -28,13 +28,13 @@ public class LGameObject<T extends LGameObject<?>> extends LBaseObject {
 
 	public LGameObject() {
 		Log.d(LConst.TAG, "In LBaseObject");
-		components = new LFixedSizeArray<LComponent<T>>(DEFAULT_COMPONENT_SIZE);
-		effects = new LFixedSizeArray<LEffect<T>>(DEFAULT_EFFECT_SIZE);
+		components = new LFixedSizeArray<LComponent>(DEFAULT_COMPONENT_SIZE);
+		effects = new LFixedSizeArray<LEffect<LGameObject>>(DEFAULT_EFFECT_SIZE);
 		Log.d(LConst.TAG, "LGameObject construct");
 	}
 
 	LGameObject(int size) {
-		components = new LFixedSizeArray<LComponent<T>>(size);
+		components = new LFixedSizeArray<LComponent>(size);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -44,12 +44,12 @@ public class LGameObject<T extends LGameObject<?>> extends LBaseObject {
 		int size = effects.getCount();
 		Object[] rawArr = effects.getArray();
 		for (int i = 0; i < size; i++) {
-			LEffect<T> e = (LEffect<T>) rawArr[i];
+			LEffect<LGameObject> e = (LEffect<LGameObject>) rawArr[i];
 
 			if (!e.expired()) {
 				e.update(dt, this);
 			} else {
-				e.onRemove((T) this);
+				e.onRemove((LGameObject) this);
 				effects.swapWithLast(i);
 				effects.removeLast();
 				// Since we swapped and removed, adjust counters
@@ -60,7 +60,7 @@ public class LGameObject<T extends LGameObject<?>> extends LBaseObject {
 
 		size = components.getCount();
 		while (Counter < size) {
-			components.get(Counter++).update(dt, (T) this);
+			components.get(Counter++).update(dt, (LGameObject) this);
 		}
 		Counter = 0;
 	}
@@ -71,7 +71,7 @@ public class LGameObject<T extends LGameObject<?>> extends LBaseObject {
 	 * @param component
 	 *            - The component object
 	 */
-	public void addComponent(LComponent<T> component) {
+	public void addComponent(LComponent component) {
 		components.add(component);
 	}
 
@@ -82,12 +82,12 @@ public class LGameObject<T extends LGameObject<?>> extends LBaseObject {
 	 *            The type your looking for. ie. ISpriteComponent.class;
 	 * @return a component of the type, or null if none was found
 	 */
-	public LComponent<?> findComponentOfType(Class<? extends LComponent<?>> type) {
+	public LComponent findComponentOfType(Class<? extends LComponent> type) {
 		Object[] rawArray = components.getArray();
 		int size = components.getCount();
 		for (int i = 0; i < size; i++) {
 			if (type.isAssignableFrom(rawArray[i].getClass())) {
-				return (LComponent<?>) rawArray[i];
+				return (LComponent) rawArray[i];
 			}
 		}
 		return null;
@@ -106,7 +106,7 @@ public class LGameObject<T extends LGameObject<?>> extends LBaseObject {
 	 *            - The effect to be added to the effect list. The effects needs
 	 *            to extend GameEngine.Effect
 	 */
-	public void afflict(LEffect<T> e) {
+	public void afflict(LEffect<LGameObject> e) {
 		effects.add(e);
 	}
 

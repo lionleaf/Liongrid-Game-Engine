@@ -12,6 +12,7 @@ public class LTexture {
     public int width;
     public int height;
     public boolean loaded = false;
+	public int[] defaultCrop;
     
     public LTexture() {
         super();

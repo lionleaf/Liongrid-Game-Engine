@@ -1,13 +1,13 @@
 package com.liongrid.gameengine;
 
 
-public abstract class LComponent<TARGET_OBJECT extends LGameObject<?>> extends LBaseObject{
+public abstract class LComponent extends LBaseObject{
 	
 	public LComponent() {
 		super();
 	}
 	
-	public abstract void update(float dt, TARGET_OBJECT parent);
+	public abstract void update(float dt, LGameObject parent);
 	
 	//Made final to force subclasses to fill in the correct update method
 	@Override

@@ -17,7 +17,7 @@ import com.liongrid.gameengine.LGamePointers;
  *	A quick fix to show Furu that it`s easily done!
  *	
  */
-public class LTiltMovementComponent extends LComponent<LGameObject> {
+public class LTiltMovementComponent extends LComponent {
 	private float[] mLastValues;
 	
 	public LTiltMovementComponent(){
@@ -33,12 +33,12 @@ public class LTiltMovementComponent extends LComponent<LGameObject> {
 	@Override
 	public void update(float dt, LGameObject parent) {
 		if(mLastValues == null) return;
-		parent.mVel.x = mLastValues[1];
-		parent.mVel.y = -mLastValues[0];
-		float speed = parent.mVel.length() * Math.min(2,parent.mVel.length())/2f;
+		parent.vel.x =  -mLastValues[0];
+		parent.vel.y =  -mLastValues[1];
+		float speed = parent.speed * Math.min(2,parent.vel.length())/2f;
 		
-		parent.mVel.normalize();
-		parent.mVel.multiply(speed);
+		parent.vel.normalize();
+		parent.vel.multiply(speed);
 	}
 	
 	private class mListener implements SensorEventListener{

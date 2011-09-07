@@ -7,7 +7,7 @@ import com.liongrid.gameengine.LGameObject;
 import com.liongrid.gameengine.LGamePointers;
 import com.liongrid.gameengine.tools.LVector2;
 
-public class LRandomWalkerComponent extends LComponent<LGameObject>{
+public class LRandomWalkerComponent extends LComponent{
 	Random random;
 	int width; //Screw real data, let`s guess
 	int height;
@@ -34,8 +34,8 @@ public class LRandomWalkerComponent extends LComponent<LGameObject>{
 		if(width <= 0 || height <= 0) return;
 		
 
-		vel = parent.mVel;
-		pos = parent.mPos;
+		vel = parent.vel;
+		pos = parent.pos;
 		
 		float newDistance = 0f;
 		if(!findFirstGoal){

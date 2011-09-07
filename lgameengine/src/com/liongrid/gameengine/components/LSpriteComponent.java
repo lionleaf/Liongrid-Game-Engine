@@ -10,7 +10,7 @@ import com.liongrid.gameengine.LAnimation;
 import com.liongrid.gameengine.LGameObject;
 import com.liongrid.gameengine.LGamePointers;
 
-public class LSpriteComponent extends LComponent<LGameObject> {
+public class LSpriteComponent extends LComponent {
 	 
 	private String currentState = null;
 	private String currentOverlayAnimation = null;
@@ -47,8 +47,8 @@ public class LSpriteComponent extends LComponent<LGameObject> {
 	
 	@Override
 	public void update(float dt, LGameObject parent){
-		float x = parent.mPos.x;
-		float y = parent.mPos.y;
+		float x = parent.pos.x;
+		float y = parent.pos.y;
 		
 		LAnimation animation = null;
 		if(currentOverlayAnimation != null){
