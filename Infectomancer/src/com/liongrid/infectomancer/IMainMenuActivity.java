@@ -82,13 +82,13 @@ public class IMainMenuActivity extends Activity {
         upgradeButton.setOnClickListener(new OnClickListener(){
 
 			public void onClick(View v) {
-//				Intent i;
-//		        i = new Intent(v.getContext(), IUpgradeActivity.class);
-//		        startActivity(i);
+				Intent i;
+		        i = new Intent(v.getContext(), IUpgradeActivity.class);
+		        startActivity(i);
 			}
         });
         
-        /*
+/*
         View statButton = findViewById(R.id.statButton);
         statButton.setOnClickListener(new OnClickListener() {
 			
@@ -98,8 +98,8 @@ public class IMainMenuActivity extends Activity {
 				i = new Intent(v.getContext(), IStatActivity.class);
 				startActivity(i);
 			}
-		});*/
-        
+		});
+        */
         
         View exitButton = findViewById(R.id.exitGameButton);
         exitButton.setOnClickListener(new OnClickListener(){
