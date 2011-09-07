@@ -12,6 +12,11 @@ import com.liongrid.gameengine.tools.LVector2;
 public class LGameObject<T extends LGameObject<?>> extends LBaseObject {
 
 	public LVector2 mPos = new LVector2(0,0);
+	public int width = 0;
+	public int heigth = 0;
+	public LVector2 mVel = new LVector2(0,0);
+	public float speed = 0;
+
 	
 	private LFixedSizeArray<LComponent<T>> components;
 	private LFixedSizeArray<LEffect<T>> effects;
@@ -77,12 +82,12 @@ public class LGameObject<T extends LGameObject<?>> extends LBaseObject {
 	 *            The type your looking for. ie. ISpriteComponent.class;
 	 * @return a component of the type, or null if none was found
 	 */
-	public LComponent<T> findComponentOfType(Class<? extends LComponent<T>> type) {
+	public LComponent<?> findComponentOfType(Class<? extends LComponent<?>> type) {
 		Object[] rawArray = components.getArray();
 		int size = components.getCount();
 		for (int i = 0; i < size; i++) {
 			if (type.isAssignableFrom(rawArray[i].getClass())) {
-				return (LComponent<T>) rawArray[i];
+				return (LComponent<?>) rawArray[i];
 			}
 		}
 		return null;
