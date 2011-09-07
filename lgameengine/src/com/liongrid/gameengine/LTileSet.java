@@ -32,21 +32,6 @@ public class LTileSet {
 	 */
 	public void initTileTypes(int tileset){
 		loadTileSet(tileset);
-		/*LSurfaceViewPanel panel = LBaseObject.gamePointers.panel;
-		int tile1 = R.drawable.tile1;
-		int tile2 = R.drawable.tile2;
-		int tile3 = R.drawable.tile3;
-		int tile4 = R.drawable.tile4;
-		int tile5 = R.drawable.tile5;
-		int tile6 = R.drawable.tile6;
-		
-		
-		int[] bitmaps = {tile1,tile2,tile3,tile4,tile5,tile6};
-		tileTypes = new LTileType[bitmaps.length];
-		for(int i = 0; i < tileTypes.length; i++){
-			tileTypes[i] = 
-				new LTileType(bitmaps[i], new boolean[2][2][LMovementType.values().length]);
-		}*/
 	}
 	
 	public void loadTileSet(int res){
