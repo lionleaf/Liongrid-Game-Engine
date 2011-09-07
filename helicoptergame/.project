@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>HelicopterGame</name>
+	<name>Helicopter</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -32,19 +32,9 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>com</name>
+			<name>Liongrid Game Engine_src</name>
 			<type>2</type>
-			<location>C:/Users/Lionleaf/Infectomancer/Infectomancer/src/com</location>
-		</link>
-		<link>
-			<name>gameengine</name>
-			<type>2</type>
-			<location>C:/Users/Lionleaf/Infectomancer/Infectomancer/src/com/liongrid/gameengine</location>
-		</link>
-		<link>
-			<name>liongrid</name>
-			<type>2</type>
-			<location>C:/Users/Lionleaf/Infectomancer/Infectomancer/src</location>
+			<locationURI>_android_Liongrid_Game_Engine_9eec6092/src</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
