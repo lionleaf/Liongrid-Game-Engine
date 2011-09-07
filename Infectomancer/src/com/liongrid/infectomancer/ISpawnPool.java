@@ -10,13 +10,13 @@ import com.liongrid.gameengine.LAnimation;
 import com.liongrid.gameengine.LGamePointers;
 import com.liongrid.gameengine.LTexture;
 import com.liongrid.gameengine.LTextureLibrary;
+import com.liongrid.gameengine.components.LMoveComponent;
+import com.liongrid.gameengine.components.LSpriteComponent;
 import com.liongrid.infectomancer.components.IAggressivMoveComponent;
 import com.liongrid.infectomancer.components.IBehaviorComponent;
 import com.liongrid.infectomancer.components.ICollisionComponent;
 import com.liongrid.infectomancer.components.IHpBarComponent;
 import com.liongrid.infectomancer.components.IMeleeAttackComponent;
-import com.liongrid.infectomancer.components.IMoveComponent;
-import com.liongrid.infectomancer.components.ISpriteComponent;
 import com.liongrid.infectomancer.effects.IDOTEffect;
 import com.liongrid.infectomancer.R;
 
@@ -32,7 +32,7 @@ public class ISpawnPool extends LBaseObject{
 		LTextureLibrary texLib = LGamePointers.textureLib;
 		LTexture tex = texLib.allocateTexture(R.drawable.squaremonster);
 		
-		ISpriteComponent sprite = new ISpriteComponent();
+		LSpriteComponent sprite = new LSpriteComponent();
 		LDrawableBitmap[] dbs = new LDrawableBitmap[4];
 		LDrawableBitmap[] attackBmps = new LDrawableBitmap[1];
 		LDrawableBitmap[] spawnBmps = new LDrawableBitmap[5];
@@ -68,7 +68,7 @@ public class ISpawnPool extends LBaseObject{
 		object.addComponent(attackComponent);
 		object.addComponent(new IAggressivMoveComponent());
 		object.addComponent(sprite);
-		object.addComponent(new IMoveComponent());
+		object.addComponent(new LMoveComponent());
 		object.addComponent(new IHpBarComponent());
 		
 		
@@ -114,19 +114,19 @@ public class ISpawnPool extends LBaseObject{
 		LTexture f2 = texLib.allocateTexture(R.drawable.manwalk_s_2);
 		LTexture f3 = texLib.allocateTexture(R.drawable.manidle);
 		
-		object.mHeigth = 64;
-		object.mWidth = 64;
-		dbs[0] = new LDrawableBitmap(f1, object.mWidth, object.mHeigth);
-		dbs[1] = new LDrawableBitmap(f2, object.mWidth, object.mHeigth);
+		object.heigth = 64;
+		object.width = 64;
+		dbs[0] = new LDrawableBitmap(f1, object.width, object.heigth);
+		dbs[1] = new LDrawableBitmap(f2, object.width, object.heigth);
 		
 		LDrawableBitmap[] stand = new LDrawableBitmap[]{new LDrawableBitmap
-				(f3, object.mWidth, object.mHeigth)};
+				(f3, object.width, object.heigth)};
 		
 		
 		LAnimation moveAnimation = new LAnimation(dbs, 0.2f,true);
 		LAnimation standAnimation = new LAnimation(stand, 1f, true);
 		
-		ISpriteComponent sprite = new ISpriteComponent();
+		LSpriteComponent sprite = new LSpriteComponent();
 		sprite.addAnimation(LAnimationCodes.WALK_SOUTH, moveAnimation);
 		sprite.addAnimation("IStand", standAnimation);
 		
@@ -137,7 +137,7 @@ public class ISpawnPool extends LBaseObject{
 		object.mPos.y = posY == -1? rand.nextInt(mapHeight): posY;
 		
 		object.collisionObject = 
-			new LCollisionCircle(ITeam.Human.ordinal(), object, (float) (object.mWidth/2.0));
+			new LCollisionCircle(ITeam.Human.ordinal(), object, (float) (object.width/2.0));
 		
 //		object.addComponent(new ICollisionComponent());
 		object.addComponent(sprite); 

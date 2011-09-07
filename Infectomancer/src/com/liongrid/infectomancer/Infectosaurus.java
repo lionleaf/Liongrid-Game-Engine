@@ -10,13 +10,13 @@ import com.liongrid.gameengine.LEasyBitmapCropper;
 import com.liongrid.gameengine.LGamePointers;
 import com.liongrid.gameengine.LTexture;
 import com.liongrid.gameengine.LTextureLibrary;
+import com.liongrid.gameengine.components.LMoveComponent;
+import com.liongrid.gameengine.components.LSpriteComponent;
 import com.liongrid.infectomancer.components.IAggressivMoveComponent;
 import com.liongrid.infectomancer.components.IAnimationChangeComponent;
 import com.liongrid.infectomancer.components.ICollisionComponent;
 import com.liongrid.infectomancer.components.IHpBarComponent;
 import com.liongrid.infectomancer.components.IMeleeAttackComponent;
-import com.liongrid.infectomancer.components.IMoveComponent;
-import com.liongrid.infectomancer.components.ISpriteComponent;
 import com.liongrid.infectomancer.effects.IDOTEffect;
 import com.liongrid.infectomancer.upgrades.IUpgrade;
 import com.liongrid.infectomancer.R;
@@ -29,7 +29,7 @@ import com.liongrid.infectomancer.R;
 public class Infectosaurus extends IGameObject {
 	
 	private int mSize;
-	private ISpriteComponent sprite;
+	private LSpriteComponent sprite;
 	private boolean addedAttack = false;
 	private int unit;
 	IMeleeAttackComponent mAttackComponent;
@@ -50,7 +50,7 @@ public class Infectosaurus extends IGameObject {
 		addComponent(mAttackComponent);
 		addComponent(new IAggressivMoveComponent());
 		addComponent(sprite);
-		addComponent(new IMoveComponent());
+		addComponent(new LMoveComponent());
 		addComponent(new IHpBarComponent());
 		addComponent(new IAnimationChangeComponent());
 		speed = 80;
@@ -69,9 +69,9 @@ public class Infectosaurus extends IGameObject {
 		
 	}
 	
-	private ISpriteComponent loadNewAnimations(LTextureLibrary texLib) {
+	private LSpriteComponent loadNewAnimations(LTextureLibrary texLib) {
 		LTexture tex = texLib.allocateTexture(R.drawable.reaper);
-		ISpriteComponent sprite = new ISpriteComponent();
+		LSpriteComponent sprite = new LSpriteComponent();
 		LDrawableBitmap[] moveEastBmps = new LDrawableBitmap[3];
 		LDrawableBitmap[] moveWestBmps = new LDrawableBitmap[3];
 		LDrawableBitmap[] attackEastBmps = new LDrawableBitmap[3];

@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.liongrid.gameengine.LAnimationCodes;
 import com.liongrid.gameengine.LComponent;
+import com.liongrid.gameengine.components.LSpriteComponent;
 import com.liongrid.gameengine.tools.LFixedSizeArray;
 import com.liongrid.infectomancer.IGameObject;
 import com.liongrid.infectomancer.IGameObjectHandler;
@@ -79,9 +80,9 @@ public class IMeleeAttackComponent extends LComponent<IGameObject> {
 		target.afflict(speed);
 		
 		
-		ISpriteComponent spr = (ISpriteComponent) parent.findComponentOfType(ISpriteComponent.class);
+		LSpriteComponent spr = (LSpriteComponent) parent.findComponentOfType(LSpriteComponent.class);
 		if(spr == null) {
-			Log.d("Infectosaurus", "Could not find ISpriteComponent... that`s odd");
+			Log.d("Infectosaurus", "Could not find LSpriteComponent... that`s odd");
 			return;
 		}
 		

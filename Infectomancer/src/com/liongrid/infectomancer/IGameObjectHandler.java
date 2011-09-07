@@ -95,8 +95,8 @@ public class IGameObjectHandler extends LObjectHandler<IGameObject> {
 		LCollisionObject collisionObject = gameObject.collisionObject;
 		if(collisionObject == null) return;
 		LVector2 pos = gameObject.mPos;
-		float halfWidth = (float) (gameObject.mWidth/2.0);
-		float halfHeight = (float) (gameObject.mHeigth/2.0);
+		float halfWidth = (float) (gameObject.width/2.0);
+		float halfHeight = (float) (gameObject.heigth/2.0);
 
 		int minX = (int) ((pos.x - halfWidth)/UNITS_PER_COLLISION_AREA_X);
 		int maxX = (int) ((pos.x + halfWidth)/UNITS_PER_COLLISION_AREA_X);

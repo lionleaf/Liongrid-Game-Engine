@@ -3,6 +3,7 @@ package com.liongrid.infectomancer.components;
 import com.liongrid.gameengine.LComponent;
 import com.liongrid.gameengine.LDrawableBitmap;
 import com.liongrid.gameengine.LGamePointers;
+import com.liongrid.gameengine.components.LSpriteComponent;
 import com.liongrid.infectomancer.IGameObject;
 import com.liongrid.infectomancer.R;
 
@@ -27,7 +28,7 @@ public class IHpBarComponent extends LComponent<IGameObject> {
 		mBarForeground.setWidth(Math.round(width));
 		
 		 
-		 ISpriteComponent sprite = (ISpriteComponent) parent.findComponentOfType(ISpriteComponent.class);
+		 LSpriteComponent sprite = (LSpriteComponent) parent.findComponentOfType(LSpriteComponent.class);
 		 
 		 if(sprite == null) return;
 		 

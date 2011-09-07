@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.liongrid.gameengine.LAnimationCodes;
 import com.liongrid.gameengine.LComponent;
+import com.liongrid.gameengine.components.LSpriteComponent;
 import com.liongrid.infectomancer.IGameObject;
 
 public class IAnimationChangeComponent extends LComponent<IGameObject>{
@@ -12,10 +13,10 @@ public class IAnimationChangeComponent extends LComponent<IGameObject>{
 	public void update(float dt, IGameObject parent) {
 		float dx = parent.mVel.x;
 		float dy = parent.mVel.y;
-		ISpriteComponent spr = 
-			(ISpriteComponent) parent.findComponentOfType(ISpriteComponent.class);
+		LSpriteComponent spr = 
+			(LSpriteComponent) parent.findComponentOfType(LSpriteComponent.class);
 		if(spr == null) {
-			Log.d("Infectosaurus", "Could not find ISpriteComponent... that`s odd");
+			Log.d("Infectosaurus", "Could not find LSpriteComponent... that`s odd");
 			return;
 		}
 		float absAB = (float) Math.sqrt(dx * dx + dy * dy);
