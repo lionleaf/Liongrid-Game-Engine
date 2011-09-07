@@ -113,12 +113,12 @@ public class MapScetchPanel extends JPanel{
 	}
 	
 	private int toWindowX(float x){
-		int result =  (int) x*scale + offsetX;
+		int result =  (int) (x*scale + offsetX);
 		return result;
 	}
 
 	private int toWindowY(float y){
-		int result = (int) -y*scale + offsetY;
+		int result = (int) (-y*scale + offsetY);
 		return result;
 	}
 	

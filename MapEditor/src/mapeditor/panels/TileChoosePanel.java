@@ -123,7 +123,7 @@ public class TileChoosePanel extends JPanel  {
 					CData.changeLevelSize(MapData.mapWidth, 
 										  Integer.parseInt(yField.getText()));
 				}catch (Exception e) {
-					yField.setText(""+CData.getArraySizeX());
+					yField.setText(""+CData.getArraySizeY());
 				}
 
 			}

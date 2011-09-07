@@ -12,6 +12,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.JTabbedPane;
 
 import mapeditor.panels.MapPanel;
 import mapeditor.panels.MapScetchPanel;
@@ -23,6 +24,7 @@ public class MFrame extends JFrame{
 	private MapPanel mapPanel;
 	private TileTypePanel rightPanel;
 	private MapScetchPanel mapScetchPanel;
+	private JTabbedPane tabPane;
 
 	MFrame(){
 		initPanels();
@@ -45,15 +47,20 @@ public class MFrame extends JFrame{
 		rightPanel = new TileTypePanel();
 		CData.propertiesPanel = rightPanel;
 		
+		tabPane = new JTabbedPane();
+		tabPane.addTab("Map", mapPanel);
+		tabPane.addTab("Map Scetch", mapScetchPanel);
+		CData.tabPane = tabPane;
+		
 		
 		setPreferredSize(new Dimension(100,400));
 		leftPanel.setPreferredSize(new Dimension(100,400));
-		mapPanel.setPreferredSize(new Dimension(100,500));
+		mapPanel.setPreferredSize(new Dimension(500,500));
 		mapScetchPanel.setPreferredSize(new Dimension(500,500));
 		rightPanel.setPreferredSize(new Dimension(100,400));
 		
         leftPanel.setMinimumSize(new Dimension(100,400));
-        mapPanel.setMinimumSize(new Dimension(100,400));
+        mapPanel.setMinimumSize(new Dimension(200,400));
         mapScetchPanel.setMinimumSize(new Dimension(200, 400));
         rightPanel.setMinimumSize(new Dimension(210, 400));
 	}
@@ -82,9 +89,9 @@ public class MFrame extends JFrame{
         
         add(leftPanel, BorderLayout.WEST);
         
-//        add(CData.mapScroller, BorderLayout.CENTER);
         
-        add(CData.mapScetchScroller, BorderLayout.CENTER);
+        add(tabPane, BorderLayout.CENTER);
+//        add(CData.mapScetchScroller, BorderLayout.CENTER);
         
         add(rightPanel, BorderLayout.EAST);
         

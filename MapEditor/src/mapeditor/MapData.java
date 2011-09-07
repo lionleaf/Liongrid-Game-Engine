@@ -94,10 +94,12 @@ public class MapData {
 			y2 = tmp;
 		}
 		
-		System.out.println("x1 = " + x1);
-		System.out.println("y1 = " + y1);
-		System.out.println("x2 = " + x2);
-		System.out.println("y2 = " + y2);
+		// TODO Error at 512 x 100
+		
+//		System.out.println("x1 = " + x1);
+//		System.out.println("y1 = " + y1);
+//		System.out.println("x2 = " + x2);
+//		System.out.println("y2 = " + y2);
 		
 		float dx = x2 - x1;
 		float dy = y2 - y1;
@@ -116,6 +118,8 @@ public class MapData {
 			int yStart = (int) Math.ceil(y1);
 			for(int y = yStart; y < y2; y++){
 				int x =  (int) ((y - y1)/a + x1);
+				if(limit == TOP && mapIndices[x][limit] > y) continue;
+				if(limit == BOTTOM && mapIndices[x][limit] < y) continue;
 				mapIndices[x][limit] = y;
 			}
 		}
@@ -123,6 +127,8 @@ public class MapData {
 			int yStart = (int) Math.floor(y1);
 			for(int y = yStart; y > y2; y--){
 				int x =  (int) ((y - y1)/a + x1);
+				if(limit == TOP && mapIndices[x][limit] > y) continue;
+				if(limit == BOTTOM && mapIndices[x][limit] < y) continue;
 				mapIndices[x][limit] = y - 1;
 			} 
 		}

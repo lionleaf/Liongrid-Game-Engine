@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 
 import mapeditor.panels.MapPanel;
 import mapeditor.panels.MapScetchPanel;
@@ -29,6 +30,7 @@ public class CData {
 	public volatile static MFrame mainFrame;
 	public volatile static JScrollPane mapScroller;
 	public volatile static JScrollPane mapScetchScroller;
+	public static JTabbedPane tabPane;
 	
 	public static int getArraySizeX() {
 		return MapData.arrayWidth;
