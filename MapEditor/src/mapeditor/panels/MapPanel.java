@@ -26,15 +26,16 @@ import mapeditor.Tile;
 public class MapPanel extends JPanel {
 	JCheckBox showCoordinates = new JCheckBox();
 	JCheckBox snapToGrid;
-	private int arraySizeY;
-	private int arraySizeX;
+	private int mapWidth;
+	private int mapHeight;
 	private int tileSize = 64;
 	private boolean mapReady = false;
 	
-	private MapScetchPanel mapScetch;
 	private HashMap<Integer, Tile> tiles;
 	private Square[][] level;
 	private int[][] mapIndices;
+	private int offsetY;
+	private int offsetX;
 	
 	
 	public MapPanel(){
@@ -53,11 +54,10 @@ public class MapPanel extends JPanel {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				MapPanel panel = (MapPanel) e.getSource();
-				int x = (int) MapData.transformFromWindowX(e.getX(), e.getY());
-				int y = (int) MapData.transformFromWindowY(e.getX(), e.getY());
+				int x = (int) MapData.fromIsoToCartX(e.getX(), e.getY());
+				int y = (int) MapData.fromIsoToCartY(e.getX(), e.getY());
 				CData.level[x][y].setTileID(CData.curTile.getIDbyte());
 				panel.repaint();
-				
 			}
 			public void mouseReleased(MouseEvent arg0) {}
 		});
@@ -66,8 +66,8 @@ public class MapPanel extends JPanel {
 			private int[] lastTile = {-1,-1};
 			@Override
 			public void mouseDragged(MouseEvent e) {
-				int x = (int) MapData.transformFromWindowX(e.getX(), e.getY());
-				int y = (int) MapData.transformFromWindowY(e.getX(), e.getY());
+				int x = (int) MapData.fromIsoToCartX(e.getX(), e.getY());
+				int y = (int) MapData.fromIsoToCartY(e.getX(), e.getY());
 				int[] tile  = {x, y};
 				if(lastTile[0] != tile[0] || lastTile[1] != tile[1]){
 					MapPanel panel = (MapPanel) e.getSource();
@@ -88,8 +88,8 @@ public class MapPanel extends JPanel {
 		//Override this to make the scrolling appear as we want it
 		
 		Dimension d = super.getPreferredSize();
-		d.height = MapData.mapHeight;
-		d.width = MapData.mapWidth;
+		d.height = mapHeight;
+		d.width = mapWidth;
 		return d;
 	}
 
@@ -104,36 +104,67 @@ public class MapPanel extends JPanel {
 		
 		if(showCoordinates.isSelected()){
 			paintGrid(g2d, tileSize);
-//			int x = MapData.transformToWindowX(0, 0);
-//			int y = MapData.transformToWindowY(0, 0);
-//			g2d.drawOval(x - 10, y - 10, 20, 20);
 		}
 	}
 
 	private void paintGrid(Graphics2D g2d, int tileSize) {
-		for(int x = 0; x < arraySizeX; x++){
-			drawSquare(g2d, x, mapIndices[x][1]);
-			drawSquare(g2d, x, mapIndices[x][0]);
+		for(int x = 0; x < mapIndices.length; x++){
+			for(int y = mapIndices[x][0]; y <= mapIndices[x][1]; y++){
+				drawSquare(g2d, x, y);
+			}
 		}
+		drawBounds(g2d);
 	}
 	
-	private void drawSquare(Graphics2D g2d, int x, int y){
+	private void drawBounds(Graphics2D g2d) {
+		g2d.drawRect(0 + offsetX, -mapHeight + offsetY, mapWidth, mapHeight);
+	}
 
+
+	private void drawSquare(Graphics2D g2d, int x, int y){
+		int x1 = toWindowX(x, y);
+		int y1 = toWindowY(x, y);
+		int x2 = toWindowX(x+1, y);
+		int y2 = toWindowY(x+1, y);
+		System.out.println("x1 = " + x1);
+		System.out.println("y1 = " + y1);
+		g2d.drawLine(x1, y1, x2, y2);
+		x1 = toWindowX(x+1, y+1);
+		y1 = toWindowY(x+1, y+1);
+		g2d.drawLine(x2, y2, x1, y1);
+		x2 = toWindowX(x, y+1);
+		y2 = toWindowY(x, y+1);
+		g2d.drawLine(x1, y1, x2, y2);
+		x1 = toWindowX(x, y);
+		y1 = toWindowY(x, y);
+		g2d.drawLine(x2, y2, x1, y1);
+	}
+	
+	private int fromWindowX(int x, int y){
+		return (int) MapData.fromIsoToCartX(x + offsetX, -y + offsetY);
+	}
+	
+	private int fromWindowY(int x, int y){
+		return (int) MapData.fromIsoToCartY(x + offsetX, -y + offsetY);
+	}
+	
+	private int toWindowX(float x, float y){
+		return (int) (MapData.fromCartToIsoX(x, y) + offsetX);
+	}
+
+	private int toWindowY(float x, float y){
+		return (int) (-MapData.fromCartToIsoY(x, y) + offsetY);
 	}
 
 	public void loadMap() {
 		tiles = CData.tiles;
 		level = CData.level;
-		arraySizeX = CData.getArraySizeX();
-		arraySizeY = CData.getArraySizeY();
 		mapIndices = MapData.getMapIndices();
+		mapHeight = MapData.mapHeight;
+		mapWidth = MapData.mapWidth;
+		offsetX = 0;
+		offsetY = mapHeight;
 		mapReady = true;
 	}
-
-
-	public void setMapScetch(MapScetchPanel mapScetch) {
-		this.mapScetch = mapScetch;
-	}
-
 
 }

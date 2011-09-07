@@ -60,8 +60,9 @@ public class MapScetchPanel extends JPanel{
 
 	private void paintGrid(Graphics2D g2d) {
 		for(int x = 0; x < mapIndices.length; x++){
-			drawSquare(g2d, x, mapIndices[x][0]);
-			drawSquare(g2d, x, mapIndices[x][1]);
+			for(int y = mapIndices[x][0]; y <= mapIndices[x][1]; y++){
+				drawSquare(g2d, x, y);
+			}
 		}
 		drawMapBounds(g2d);
 	}
@@ -104,7 +105,7 @@ public class MapScetchPanel extends JPanel{
 		g2d.drawLine(x2, y2, x1, y1);
 	}
 	
-	private int fromWindowX(int x, int y){
+	private int fromWindowX(int x){
 		return (offsetX - x)/scale;
 	}
 	

@@ -48,8 +48,8 @@ public class MFrame extends JFrame{
 		CData.propertiesPanel = rightPanel;
 		
 		tabPane = new JTabbedPane();
-		tabPane.addTab("Map", mapPanel);
-		tabPane.addTab("Map Scetch", mapScetchPanel);
+		tabPane.addTab("Map", CData.mapScroller);
+		tabPane.addTab("Map Scetch", CData.mapScetchScroller);
 		CData.tabPane = tabPane;
 		
 		

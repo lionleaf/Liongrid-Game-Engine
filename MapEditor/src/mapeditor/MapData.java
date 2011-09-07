@@ -66,14 +66,14 @@ public class MapData {
 	
 	private static void calculateMapIndices(){
 		// these variables are in the Cartesian system
-		x1 = MapData.transformFromWindowX(0, 0);
-		y1 = MapData.transformFromWindowY(0, 0);
-		x2 = MapData.transformFromWindowX(mapWidth, 0);
-		y2 = MapData.transformFromWindowY(mapWidth, 0);
-		x3 = MapData.transformFromWindowX(mapWidth, mapHeight);
-		y3 = MapData.transformFromWindowY(mapWidth, mapHeight);
-		x4 = MapData.transformFromWindowX(0, mapHeight);
-		y4 = MapData.transformFromWindowY(0, mapHeight);
+		x1 = MapData.fromIsoToCartX(0, 0);
+		y1 = MapData.fromIsoToCartY(0, 0);
+		x2 = MapData.fromIsoToCartX(mapWidth, 0);
+		y2 = MapData.fromIsoToCartY(mapWidth, 0);
+		x3 = MapData.fromIsoToCartX(mapWidth, mapHeight);
+		y3 = MapData.fromIsoToCartY(mapWidth, mapHeight);
+		x4 = MapData.fromIsoToCartX(0, mapHeight);
+		y4 = MapData.fromIsoToCartY(0, mapHeight);
 		
 		mapIndices = new int[arrayWidth][2];
 		// Gather indices from the 4 lines that limit the square view.
@@ -142,10 +142,8 @@ public class MapData {
 	 * @param y
 	 * @return the x coordinate in the top left oriented coordinate system.
 	 */
-	public static float transformToWindowX(float x, float y) {
-		System.out.println("MapData x = " + (x - offsetCarthX));
+	public static float fromCartToIsoX(float x, float y) {
 		float result = IsometricTransformation.getX(x - offsetCarthX, y - offsetCarthY);
-		System.out.println("MapData return x = " + result);
 		return result;
 	}
 
@@ -157,10 +155,8 @@ public class MapData {
 	 * @param y
 	 * @return the y coordinate in the top left oriented coordinate system.
 	 */
-	public static float transformToWindowY(float x, float y) {
-		System.out.println("MapData y = " + (y - offsetCarthY));
+	public static float fromCartToIsoY(float x, float y) {
 		float result = IsometricTransformation.getY(x - offsetCarthX, y - offsetCarthY);
-		System.out.println("MapData return y = " + result);
 		return result;
 	}
 
@@ -172,7 +168,7 @@ public class MapData {
 	 * @param y
 	 * @return the x coordinate in the Cartesian coordinate system
 	 */
-	public static float transformFromWindowX(int x, int y) {
+	public static float fromIsoToCartX(int x, int y) {
 		return IsometricTransformation.getInversX(x, y) + offsetCarthX;
 	}
 	
@@ -184,7 +180,7 @@ public class MapData {
 	 * @param y
 	 * @return the y coordinate in the Cartesian coordinate system
 	 */
-	public static float transformFromWindowY(int x, int y) {
+	public static float fromIsoToCartY(int x, int y) {
 		return IsometricTransformation.getInversY(x, y) + offsetCarthY;
 	}
 }
