@@ -18,11 +18,11 @@ public class IAggressivMoveComponent extends LComponent<IGameObject>{
 	@Override
 	public void update(float dt, IGameObject parent) {
 		//gameObjHandler.getClosest(parent.mPos, ITeam.Human, parent, true);
-		LGameObject target = gameObjHandler.getClosestOld(parent.mPos, ITeam.Human, parent);
+		IGameObject target = gameObjHandler.getClosestOld(parent.pos, ITeam.Human, parent);
 		if(target == null) return;
-		parent.mVel.set(target.mPos);
-		parent.mVel.subtract(parent.mPos);
-		parent.mVel.normalize();
-		parent.mVel.multiply(parent.speed);
+		parent.vel.set(target.pos);
+		parent.vel.subtract(parent.pos);
+		parent.vel.normalize();
+		parent.vel.multiply(parent.speed);
 	}
 }

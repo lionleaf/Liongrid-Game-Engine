@@ -94,7 +94,7 @@ public class IGameObjectHandler extends LObjectHandler<IGameObject> {
 	public void addToCorrectCollisionHandler(IGameObject gameObject) {
 		LCollisionObject collisionObject = gameObject.collisionObject;
 		if(collisionObject == null) return;
-		LVector2 pos = gameObject.mPos;
+		LVector2 pos = gameObject.pos;
 		float halfWidth = (float) (gameObject.width/2.0);
 		float halfHeight = (float) (gameObject.heigth/2.0);
 
@@ -127,7 +127,7 @@ public class IGameObjectHandler extends LObjectHandler<IGameObject> {
 		return count;
 	}
 
-	public IGameObject getClosestOld(LVector2 pos, ITeam team, IGameObject self){
+	public IGameObject getClosestOld(LVector2 pos, ITeam team, LGameObject parent){
 		int i; float closestDistance = Float.MAX_VALUE;
 		int length = objects.getCount();
 		Object[] array = objects.getArray();
@@ -135,8 +135,8 @@ public class IGameObjectHandler extends LObjectHandler<IGameObject> {
 		IGameObject curObject = null;
 		for(i = 0; i < length; i++){
 			curObject = (IGameObject) array[i];
-			if(curObject.team != team || curObject == self) continue;
-			float distance = pos.distance2(curObject.mPos);
+			if(curObject.team != team || curObject == parent) continue;
+			float distance = pos.distance2(curObject.pos);
 			if(distance < closestDistance) {
 				closestDistance = distance;
 				closest = curObject;
@@ -168,7 +168,7 @@ public class IGameObjectHandler extends LObjectHandler<IGameObject> {
 				int maxX = (int) Math.floor(radialSearchFunc(r,y));
 				LGameObject tempClosest = getClosestInXRange(minX, maxX, y, pos, team);
 				if(tempClosest == null) continue;
-				float tempDist2 = tempClosest.mPos.distance2(pos);
+				float tempDist2 = tempClosest.pos.distance2(pos);
 				if(tempDist2 < closestDistance2){
 					closest = tempClosest;
 					closestDistance2 = tempDist2;
@@ -190,7 +190,7 @@ public class IGameObjectHandler extends LObjectHandler<IGameObject> {
 			IGameObject tempClosest = getClosestInXRange(minX, maxX, y, pos, team);
 
 			if(tempClosest != null && tempClosest.team == team){
-				float tempDist2 = tempClosest.mPos.distance2(pos);
+				float tempDist2 = tempClosest.pos.distance2(pos);
 				if(tempDist2 < closestDistance2){
 					closest = tempClosest;
 					closestDistance2 = tempDist2;
@@ -231,7 +231,7 @@ public class IGameObjectHandler extends LObjectHandler<IGameObject> {
 				tempClosest = (IGameObject) closestColOb.owner;
 				if(tempClosest != null && tempClosest.team == team){
 					
-					tempDist2 = tempClosest.mPos.distance2(pos);
+					tempDist2 = tempClosest.pos.distance2(pos);
 					if(tempDist2 < closestDist2){
 						closest = tempClosest;
 						closestDist2 = tempDist2; 
@@ -247,7 +247,7 @@ public class IGameObjectHandler extends LObjectHandler<IGameObject> {
 
 				tempClosest = (IGameObject) mCollisionAreas[resX][resY].getClosest(pos, team.ordinal()).owner;
 				if(tempClosest != null && tempClosest.team == team){
-					tempDist2 = tempClosest.mPos.distance2(pos);
+					tempDist2 = tempClosest.pos.distance2(pos);
 					if(tempDist2 < closestDist2){
 						closest = tempClosest;
 						closestDist2 = tempDist2; 
@@ -275,7 +275,7 @@ public class IGameObjectHandler extends LObjectHandler<IGameObject> {
 			IGameObject gObject = (IGameObject) gArray[i];
 			if(gObject.team != team || gObject == self) continue;
 			if(count >= array.length) return array;
-			dis2 = pos.distance2(gObject.mPos);
+			dis2 = pos.distance2(gObject.pos);
 			if(dis2 < within * within){
 				array[count] = gObject;
 				count ++;

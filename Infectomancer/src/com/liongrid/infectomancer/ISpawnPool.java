@@ -73,8 +73,8 @@ public class ISpawnPool extends LBaseObject{
 		
 		
 		
-		object.mPos.x = x;
-		object.mPos.y = y;
+		object.pos.x = x;
+		object.pos.y = y;
 		object.speed = 80;
 		
 		object.team = ITeam.Alien;
@@ -133,8 +133,8 @@ public class ISpawnPool extends LBaseObject{
 		int mapWidth = LGamePointers.map.getWidth();
 		int mapHeight = LGamePointers.map.getHeight();
 		
-		object.mPos.x = posX == -1? rand.nextInt(mapWidth) : posX;
-		object.mPos.y = posY == -1? rand.nextInt(mapHeight): posY;
+		object.pos.x = posX == -1? rand.nextInt(mapWidth) : posX;
+		object.pos.y = posY == -1? rand.nextInt(mapHeight): posY;
 		
 		object.collisionObject = 
 			new LCollisionCircle(ITeam.Human.ordinal(), object, (float) (object.width/2.0));

@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.liongrid.gameengine.LAnimationCodes;
 import com.liongrid.gameengine.LComponent;
+import com.liongrid.gameengine.LGameObject;
 import com.liongrid.gameengine.components.LSpriteComponent;
 import com.liongrid.infectomancer.IGameObject;
 
@@ -11,8 +12,8 @@ public class IAnimationChangeComponent extends LComponent<IGameObject>{
 
 	@Override
 	public void update(float dt, IGameObject parent) {
-		float dx = parent.mVel.x;
-		float dy = parent.mVel.y;
+		float dx = parent.vel.x;
+		float dy = parent.vel.y;
 		LSpriteComponent spr = 
 			(LSpriteComponent) parent.findComponentOfType(LSpriteComponent.class);
 		if(spr == null) {

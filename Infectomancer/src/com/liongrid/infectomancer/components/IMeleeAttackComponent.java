@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.liongrid.gameengine.LAnimationCodes;
 import com.liongrid.gameengine.LComponent;
+import com.liongrid.gameengine.LGameObject;
 import com.liongrid.gameengine.components.LSpriteComponent;
 import com.liongrid.gameengine.tools.LFixedSizeArray;
 import com.liongrid.infectomancer.IGameObject;
@@ -14,7 +15,7 @@ import com.liongrid.infectomancer.effects.IInfectedDamageEffect;
 import com.liongrid.infectomancer.effects.ISpeedBuffEffect;
 
 
-public class IMeleeAttackComponent extends LComponent<IGameObject> {
+public class IMeleeAttackComponent extends LComponent {
 
 	IGameObjectHandler gameObjHandler;
 	static final int CLOSE_CAPACITY = 20;
@@ -51,14 +52,15 @@ public class IMeleeAttackComponent extends LComponent<IGameObject> {
 	}
 	
 	@Override
-	public void update(float dt, IGameObject parent) {
+	public void update(float dt, LGameObject owner) {
 		if(!mEnabled) return;
+		IGameObject parent = (IGameObject) owner;
 		mDelayCountDown -= dt;
 		if(mDelayCountDown > 0) return;
 		
 		ITeam team = parent.team == ITeam.Human ? ITeam.Alien: ITeam.Human;
-		IGameObject target = (IGameObject) gameObjHandler.getClosest(parent.mPos, team, parent, true);
-		gameObjHandler.getClosestOld(parent.mPos, team, parent);
+		IGameObject target = (IGameObject) gameObjHandler.getClosest(parent.pos, team, parent, true);
+		gameObjHandler.getClosestOld(parent.pos, team, parent);
 		
 		if(target == null || 
 				target.distance2(parent) > mReach){

@@ -66,7 +66,7 @@ public class IGameLoader extends LGameLoader{
 
 				float y = (LGamePointers.panel.getHeight() - event.getY()) / LCamera.scale;
 				float x = event.getX() / LCamera.scale;
-				IGamePointers.currentSaurus.mPos.set(x + LCamera.pos.x, 
+				IGamePointers.currentSaurus.pos.set(x + LCamera.pos.x, 
 						y + LCamera.pos.y);
 				
 			}

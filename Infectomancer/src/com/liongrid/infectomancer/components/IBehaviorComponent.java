@@ -5,6 +5,7 @@ import java.util.Random;
 import android.util.Log;
 
 import com.liongrid.gameengine.LComponent;
+import com.liongrid.gameengine.LGameObject;
 import com.liongrid.gameengine.tools.LFixedSizeArray;
 import com.liongrid.infectomancer.IGameObject;
 import com.liongrid.infectomancer.IGamePointers;
@@ -52,7 +53,7 @@ public class IBehaviorComponent extends LComponent<IGameObject>{
 		prevStates = new IStateList();
 		addDefaultBehaviours();	
 		curState = new IState();
-		curState.pos.set(parent.mPos);
+		curState.pos.set(parent.pos);
 		curState.action = createDefaultActionTree();
 		mLastParent = parent;
 	}
@@ -124,8 +125,8 @@ public class IBehaviorComponent extends LComponent<IGameObject>{
 	public void update(float dt, IGameObject parent) {
 		
 		if(mLastParent != parent){
-			curState.pos.set(parent.mPos);
-			curState.vel.set(parent.mVel);
+			curState.pos.set(parent.pos);
+			curState.vel.set(parent.vel);
 			mLastParent = parent;
 		}
 		
@@ -147,8 +148,8 @@ public class IBehaviorComponent extends LComponent<IGameObject>{
 		curState.copy(pickState(stateChoices, probabilities));
 		
 		if(curState == null) return;
-		parent.mPos.set(curState.pos);
-		parent.mVel.set(curState.vel);
+		parent.pos.set(curState.pos);
+		parent.vel.set(curState.vel);
 		if(parent.spriteComponent != null){
 			parent.spriteComponent.
 			 setUnderlyingAnimation(curState.action.getAnimationCode(curState));

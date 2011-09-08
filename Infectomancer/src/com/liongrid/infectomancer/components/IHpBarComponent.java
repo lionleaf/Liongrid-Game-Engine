@@ -35,9 +35,9 @@ public class IHpBarComponent extends LComponent<IGameObject> {
 		 int spriteHeight = sprite.getLastDrawing().getHeight();
 		 
 		 LGamePointers.renderSystem.scheduleForDraw(
-				 mBarBackground, parent.mPos.x-0.5f*mWidth, parent.mPos.y+0.5f*spriteHeight, false);
+				 mBarBackground, parent.pos.x-0.5f*mWidth, parent.pos.y+0.5f*spriteHeight, false);
 		 LGamePointers.renderSystem.scheduleForDraw(
-				 mBarForeground,  parent.mPos.x-0.5f*mWidth, parent.mPos.y+0.5f*spriteHeight, false);
+				 mBarForeground,  parent.pos.x-0.5f*mWidth, parent.pos.y+0.5f*spriteHeight, false);
 	}
 
 }
