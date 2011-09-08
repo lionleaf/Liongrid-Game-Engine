@@ -37,24 +37,7 @@ public class TGameLoader extends LGameLoader implements Runnable {
 	@Override
 	protected void setupGame() {
 		spawnStuff();		
-		LGamePointers.gameThread.setGameClickListener(new TouchEventListener() {
-
-			@Override
-			public void onTouch(MotionEvent event) {
-				if(!((event.getAction() &  MotionEvent.ACTION_MASK) ==
-					MotionEvent.ACTION_DOWN) || 
-					((event.getAction() &  MotionEvent.ACTION_MASK) == 
-						MotionEvent.ACTION_POINTER_DOWN )) return;
-				TPlayerID pID;
-				if(event.getY() < LGamePointers.panel.getHeight()/2.0){
-					pID = TPlayerID.player2; 
-				}else{
-					pID = TPlayerID.player1;
-				}
-				LGameObject rocket = TGamePointers.spawnPool.spawnRocket(500, event.getX(), pID);
-				LGamePointers.root.add(rocket);
-			}
-		});
+		LGamePointers.gameThread.setGameClickListener(new TTouchEventListener());
 	}
 	
 	private void spawnStuff(){

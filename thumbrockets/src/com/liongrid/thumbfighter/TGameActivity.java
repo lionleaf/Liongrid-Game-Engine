@@ -7,6 +7,7 @@ import com.liongrid.gameengine.LGameLoader.LGameLoadedCallback;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 
 public class TGameActivity extends Activity implements LGameLoadedCallback {
@@ -33,6 +34,7 @@ public class TGameActivity extends Activity implements LGameLoadedCallback {
     	LGamePointers.gameThread.registerScreenTouch(event);
     	return true;
     }
+    
 
 	@Override
 	public void onGameLoaded() {
