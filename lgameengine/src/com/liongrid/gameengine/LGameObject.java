@@ -9,7 +9,7 @@ import com.liongrid.gameengine.tools.LVector2;
  * @author Lionleaf
  * 
  */
-public class LGameObject extends LBaseObject {
+public abstract class LGameObject<T extends LGameObject<T>> extends LBaseObject {
 
 	public LVector2 pos = new LVector2(0,0);
 	public int width = 0;
@@ -19,7 +19,7 @@ public class LGameObject extends LBaseObject {
 
 	
 	private LFixedSizeArray<LComponent> components;
-	private LFixedSizeArray<LEffect<LGameObject>> effects;
+	private LFixedSizeArray<LEffect<T>> effects;
 
 	private static final int DEFAULT_COMPONENT_SIZE = 64;
 	private static final int DEFAULT_EFFECT_SIZE = 64;
@@ -29,7 +29,7 @@ public class LGameObject extends LBaseObject {
 	public LGameObject() {
 		Log.d(LConst.TAG, "In LBaseObject");
 		components = new LFixedSizeArray<LComponent>(DEFAULT_COMPONENT_SIZE);
-		effects = new LFixedSizeArray<LEffect<LGameObject>>(DEFAULT_EFFECT_SIZE);
+		effects = new LFixedSizeArray<LEffect<T>>(DEFAULT_EFFECT_SIZE);
 		Log.d(LConst.TAG, "LGameObject construct");
 	}
 
@@ -44,12 +44,12 @@ public class LGameObject extends LBaseObject {
 		int size = effects.getCount();
 		Object[] rawArr = effects.getArray();
 		for (int i = 0; i < size; i++) {
-			LEffect<LGameObject> e = (LEffect<LGameObject>) rawArr[i];
+			LEffect<T> e = (LEffect<T>) rawArr[i];
 
 			if (!e.expired()) {
 				e.update(dt, this);
 			} else {
-				e.onRemove((LGameObject) this);
+				e.onRemove((T) this);
 				effects.swapWithLast(i);
 				effects.removeLast();
 				// Since we swapped and removed, adjust counters
@@ -60,7 +60,7 @@ public class LGameObject extends LBaseObject {
 
 		size = components.getCount();
 		while (Counter < size) {
-			components.get(Counter++).update(dt, (LGameObject) this);
+			components.get(Counter++).update(dt, (T) this);
 		}
 		Counter = 0;
 	}
@@ -106,7 +106,7 @@ public class LGameObject extends LBaseObject {
 	 *            - The effect to be added to the effect list. The effects needs
 	 *            to extend GameEngine.Effect
 	 */
-	public void afflict(LEffect<LGameObject> e) {
+	public void afflict(LEffect<T> e) {
 		effects.add(e);
 	}
 
