@@ -5,8 +5,17 @@ import android.util.Log;
 import com.liongrid.gameengine.tools.LFixedSizeArray;
 import com.liongrid.gameengine.tools.LVector2;
 
+
 /**
- * @author Lionleaf
+ * 
+ *	
+ * This is the basic game unit. Every game must override it and pass itself
+ * as the T parameter. This is to make sure we send the right type of GameObject to 
+ * all the components. This way, we don`t need unsafe casts.
+ *
+ * @author Liongrid
+ * @param <T> Every overriding class should pass itself as T. ie. 
+ * 	<br>class IGameObject extends LGameObject&ltIGameObject&gt
  * 
  */
 public abstract class LGameObject<T extends LGameObject<T>> extends LBaseObject {
@@ -18,7 +27,7 @@ public abstract class LGameObject<T extends LGameObject<T>> extends LBaseObject 
 	public float speed = 0;
 
 	
-	private LFixedSizeArray<LComponent> components;
+	private LFixedSizeArray<LComponent<LGameObject<?>>> components;
 	private LFixedSizeArray<LEffect<T>> effects;
 
 	private static final int DEFAULT_COMPONENT_SIZE = 64;
@@ -27,16 +36,18 @@ public abstract class LGameObject<T extends LGameObject<T>> extends LBaseObject 
 	private int Counter = 0;
 
 	public LGameObject() {
-		Log.d(LConst.TAG, "In LBaseObject");
-		components = new LFixedSizeArray<LComponent>(DEFAULT_COMPONENT_SIZE);
-		effects = new LFixedSizeArray<LEffect<T>>(DEFAULT_EFFECT_SIZE);
-		Log.d(LConst.TAG, "LGameObject construct");
+		init(DEFAULT_COMPONENT_SIZE, DEFAULT_EFFECT_SIZE);
 	}
 
-	LGameObject(int size) {
-		components = new LFixedSizeArray<LComponent>(size);
+	LGameObject(int compSize, int effSize) {
+		init(compSize, effSize);
 	}
 
+	private void init(int compSize, int effSize){
+		Log.v(LConst.TAG, "In LBaseObject");
+		components = new LFixedSizeArray<LComponent<LGameObject<?>>>(compSize);
+		effects = new LFixedSizeArray<LEffect<T>>(effSize);
+	}
 	@SuppressWarnings("unchecked")
 	@Override
 	public void update(float dt, LBaseObject parent) {
