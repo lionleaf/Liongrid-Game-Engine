@@ -1,7 +1,6 @@
 package com.liongrid.thumbfighter;
 
 import com.liongrid.gameengine.LDrawableBitmap;
-import com.liongrid.gameengine.LGameObject;
 import com.liongrid.gameengine.LGamePointers;
 import com.liongrid.gameengine.components.LDrawableComponent;
 import com.liongrid.gameengine.components.LMoveComponent;
@@ -9,8 +8,8 @@ import com.liongrid.thumbfighter.components.TRemoveOutsideComponent;
 
 public class TSpawnPool {
 	int spriteHeight = 64;
-	public LGameObject spawnRocket(int speed, float posX, TPlayerID player){
-		LGameObject rocket = new LGameObject();
+	public TGameObject spawnRocket(int speed, float posX, TPlayerID player){
+		TGameObject rocket = new TGameObject();
 		int res = (player == TPlayerID.player1) ? R.drawable.redrocket : R.drawable.greenrocket;
 		LDrawableBitmap bitmap = new LDrawableBitmap(LGamePointers.textureLib.allocateTexture(res), 32, 128);
 		
