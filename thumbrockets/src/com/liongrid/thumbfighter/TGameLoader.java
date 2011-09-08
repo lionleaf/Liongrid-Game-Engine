@@ -41,10 +41,10 @@ public class TGameLoader extends LGameLoader implements Runnable {
 
 			@Override
 			public void onTouch(MotionEvent event) {
-				/*if(!((event.getAction() &  MotionEvent.ACTION_MASK) ==
+				if(!((event.getAction() &  MotionEvent.ACTION_MASK) ==
 					MotionEvent.ACTION_DOWN) || 
 					((event.getAction() &  MotionEvent.ACTION_MASK) == 
-						MotionEvent.ACTION_POINTER_DOWN )) return;*/
+						MotionEvent.ACTION_POINTER_DOWN )) return;
 				TPlayerID pID;
 				if(event.getY() < LGamePointers.panel.getHeight()/2.0){
 					pID = TPlayerID.player2; 
