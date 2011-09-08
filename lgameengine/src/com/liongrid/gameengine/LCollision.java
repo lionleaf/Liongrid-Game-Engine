@@ -5,6 +5,7 @@ import com.liongrid.gameengine.tools.LVector2;
 public class LCollision {
 	private static final int CIRCLE = LShape.CIRCLE;
 	private static final int SQUARE = LShape.SQUARE;
+	private static final int NON_ROTATE_SQUARE = LShape.NON_ROTATE_SQUARE;
 	
 	/**
 	 * Checks if a shape collides with a point.
@@ -43,6 +44,28 @@ public class LCollision {
 		if(shape1.getShape() == CIRCLE && shape2.getShape() == CIRCLE){
 			return collides((LShape.Circle) shape1, 
 							(LShape.Circle) shape2);
+		}
+		if(shape1.getShape() == NON_ROTATE_SQUARE && shape2.getShape() == NON_ROTATE_SQUARE){
+			return collides((LShape.NonRotateSquare) shape1, 
+							(LShape.NonRotateSquare) shape2);
+		}
+		return false;
+	}
+	
+	
+	private static boolean collides(LShape.NonRotateSquare square1, 
+			LShape.NonRotateSquare square2){
+		
+		LVector2 pos1 = square1.getPos();
+		LVector2 pos2 = square2.getPos();
+		float width = square1.getWidth() + square2.getWidth();
+		width = width / 2f; //Max distance between centers in y.
+		
+		float height = square1.getHeight() + square2.getHeight();
+		height = height / 2f;
+		
+		if(Math.abs(pos1.x - pos2.x) < width && Math.abs(pos1.y - pos2.y) < height) {
+			return true;
 		}
 		return false;
 	}
