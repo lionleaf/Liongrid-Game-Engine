@@ -24,6 +24,7 @@ public class TGameLoader extends LGameLoader implements Runnable {
 	@Override
 	protected void instantiateGameClasses() {
 		TGamePointers.spawnPool = new TSpawnPool();
+		TGamePointers.gameObjectHandler = new TGameObjectHandler();
 		
 	}
 
@@ -36,6 +37,7 @@ public class TGameLoader extends LGameLoader implements Runnable {
 
 	@Override
 	protected void setupGame() {
+		LGamePointers.root.add(TGamePointers.gameObjectHandler);
 		spawnStuff();		
 		LGamePointers.gameThread.setGameClickListener(new TTouchEventListener());
 	}

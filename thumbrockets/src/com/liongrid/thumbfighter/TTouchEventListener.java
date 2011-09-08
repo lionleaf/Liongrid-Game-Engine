@@ -26,7 +26,7 @@ public class TTouchEventListener implements TouchEventListener {
 			pID = TPlayerID.player1;
 		}
 		TGameObject rocket = TGamePointers.spawnPool.spawnRocket(500, x, pID);
-		LGamePointers.root.add(rocket);
+		TGamePointers.gameObjectHandler.add(rocket);
 
 	}
 
