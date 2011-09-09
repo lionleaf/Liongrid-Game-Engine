@@ -32,6 +32,8 @@ public class TSpawnPool {
 		rocket.pos.x = posX;
 		rocket.pos.y = (player == TPlayerID.player1) ? -height : LGamePointers.panel.getHeight();
 		
+		rocket.team = player;
+		
 		rocket.hitBox = new LCollisionNonRotateSquare(player.ordinal(),rocket,width, height);		
 		return rocket; 
 	}

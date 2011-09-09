@@ -18,6 +18,7 @@ public class TGameActivity extends Activity implements LGameLoadedCallback {
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
         LSurfaceViewPanel panel = new LSurfaceViewPanel(this);
+        TGamePointers.gameActivity = this;
         
         if(savedInstanceState == null){
 			mHandler = new Handler();
