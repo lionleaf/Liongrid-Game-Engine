@@ -111,10 +111,10 @@ public class LDrawableBitmap extends LBaseObject implements LDrawableObject {
 			// the bitmap is drawn.
 			gl.glBindTexture(GL10.GL_TEXTURE_2D, mTexture.id);
 			
-
-			((GL11) gl).glTexParameteriv(GL10.GL_TEXTURE_2D, GL11Ext.GL_TEXTURE_CROP_RECT_OES,
+			if(mCrop != null){
+				((GL11) gl).glTexParameteriv(GL10.GL_TEXTURE_2D, GL11Ext.GL_TEXTURE_CROP_RECT_OES,
 						mCrop, 0);
-			
+			}
 			// This is necessary because we could be drawing the same texture with different
             // crop (say, flipped horizontally) on the same frame.
             //LOpenGLSystem.setTextureCrop(mCrop);
