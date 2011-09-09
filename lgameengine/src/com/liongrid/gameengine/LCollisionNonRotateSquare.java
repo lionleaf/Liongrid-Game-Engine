@@ -18,7 +18,7 @@ public class LCollisionNonRotateSquare extends LCollisionObject implements LShap
 
 	@Override
 	public int getShape() {
-		return LShape.SQUARE;
+		return LShape.NON_ROTATE_SQUARE;
 	}
 	
 	public float getWidth(){
