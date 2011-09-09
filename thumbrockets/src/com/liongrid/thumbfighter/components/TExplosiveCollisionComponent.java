@@ -34,6 +34,7 @@ public class TExplosiveCollisionComponent extends LComponent<TGameObject> {
 
 	private void explode(TGameObject parent) {
 		TGamePointers.gameObjectHandler.remove(parent);
+		TGamePointers.gameStatus.explosion(parent.pos.y);
 		mVibrator.vibrate(200);
 	}
 

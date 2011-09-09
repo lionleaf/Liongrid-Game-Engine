@@ -26,18 +26,22 @@ public class TGameLoader extends LGameLoader implements Runnable {
 		TGamePointers.spawnPool = new TSpawnPool();
 		TGamePointers.gameObjectHandler = new TGameObjectHandler();
 		
+		
 	}
 
 	@Override
 	protected void preLoadTextures() {
 		LGamePointers.textureLib.allocateTexture(R.drawable.redrocket);
 		LGamePointers.textureLib.allocateTexture(R.drawable.greenrocket);
+		LGamePointers.textureLib.allocateTexture(R.drawable.green);
 		
 	}
 
 	@Override
 	protected void setupGame() {
 		LGamePointers.root.add(TGamePointers.gameObjectHandler);
+		TGamePointers.gameStatus = new TGameStatus();
+		LGamePointers.root.add(TGamePointers.gameStatus);
 		spawnStuff();		
 		LGamePointers.gameThread.setGameClickListener(new TTouchEventListener());
 	}

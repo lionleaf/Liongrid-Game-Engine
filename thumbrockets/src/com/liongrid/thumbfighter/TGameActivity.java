@@ -5,6 +5,7 @@ import com.liongrid.gameengine.LSurfaceViewPanel;
 import com.liongrid.gameengine.LGameLoader.LGameLoadedCallback;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -20,13 +21,13 @@ public class TGameActivity extends Activity implements LGameLoadedCallback {
         LSurfaceViewPanel panel = new LSurfaceViewPanel(this);
         TGamePointers.gameActivity = this;
         
-        if(savedInstanceState == null){
+       // if(savedInstanceState == null){
 			mHandler = new Handler();
 			(new Thread(new TGameLoader(panel, this, mHandler, null))).start();
-		}else{
+		/*}else{
 			LGamePointers.panel = panel;
 			setContentView(LGamePointers.panel);
-		}
+		}*/
     	setContentView(R.layout.main);
     }
     
@@ -40,5 +41,12 @@ public class TGameActivity extends Activity implements LGameLoadedCallback {
 	@Override
 	public void onGameLoaded() {
 		setContentView(LGamePointers.panel);
+	}
+
+	public void gameOver(TPlayerID player) {
+		Intent i = new Intent(this, TGameOverActivity.class);
+		i.putExtra("com.liongrid.thumbfighter.winner", player.ordinal()+1);
+		startActivity(i);
+		finish();		
 	}
 }
