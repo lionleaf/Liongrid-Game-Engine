@@ -21,7 +21,7 @@ import javax.swing.JPanel;
 import mapeditor.CData;
 import mapeditor.IsometricTransformation;
 import mapeditor.MapData;
-import mapeditor.Square;
+import mapeditor.Tile;
 import mapeditor.LImage;
 
 public class MapPanel extends JPanel {
@@ -33,7 +33,7 @@ public class MapPanel extends JPanel {
 	private boolean mapReady = false;
 	
 	private HashMap<Integer, LImage> tiles;
-	private Square[][] level;
+	private Tile[][] level;
 	private int[][] mapIndices;
 	private int offsetY;
 	private int offsetX;
@@ -58,7 +58,6 @@ public class MapPanel extends JPanel {
 				int x = (int) MapData.fromIsoToCartX(e.getX(), e.getY());
 				int y = (int) MapData.fromIsoToCartY(e.getX(), e.getY());
 				System.out.println("pressed tile x = " + x + " y = " + y);
-				CData.level[x][y].setTileID(CData.curTile.getIDbyte());
 				panel.repaint();
 			}
 			public void mouseReleased(MouseEvent arg0) {}
@@ -73,9 +72,6 @@ public class MapPanel extends JPanel {
 				int[] tile  = {x, y};
 				if(lastTile[0] != tile[0] || lastTile[1] != tile[1]){
 					MapPanel panel = (MapPanel) e.getSource();
-					byte tileID;
-					tileID = CData.curTile.getIDbyte();
-					CData.level[tile[0]][tile[1]].setTileID(tileID);
 					panel.repaint();
 					lastTile = tile;
 				}
@@ -116,7 +112,7 @@ public class MapPanel extends JPanel {
 	private void drawTiles(Graphics2D g2d) {
 		for(int x = 0; x < mapIndices.length; x++){
 			for(int y = mapIndices[x][0]; y <= mapIndices[x][1]; y++){
-				LImage tile = CData.level[x][y].getTile();
+				LImage tile = CData.level[x][y].getLImage();
 				if(tile == null) return;
 				Image img = tile.getImage();
 				g2d.drawImage(img, x, y, null);
@@ -173,7 +169,7 @@ public class MapPanel extends JPanel {
 	}
 
 	public void loadMap() {
-		tiles = CData.tiles;
+		tiles = CData.images;
 		level = CData.level;
 		mapIndices = MapData.getMapIndices();
 		mapHeight = MapData.mapHeight;

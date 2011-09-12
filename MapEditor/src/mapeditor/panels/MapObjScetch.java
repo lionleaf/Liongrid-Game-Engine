@@ -1,5 +1,5 @@
 package mapeditor.panels;
 
-public class TileScetch {
+public class MapObjScetch {
 
 }

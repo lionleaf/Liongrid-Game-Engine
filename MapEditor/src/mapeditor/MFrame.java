@@ -16,13 +16,13 @@ import javax.swing.JTabbedPane;
 
 import mapeditor.panels.MapPanel;
 import mapeditor.panels.MapScetchPanel;
-import mapeditor.panels.TileChoosePanel;
-import mapeditor.panels.TilePropertiesPanel;
+import mapeditor.panels.ImageChoosePanel;
+import mapeditor.panels.MapObjectPanel;
 
 public class MFrame extends JFrame{
-	private TileChoosePanel leftPanel;
+	private ImageChoosePanel leftPanel;
 	private MapPanel mapPanel;
-	private TilePropertiesPanel rightPanel;
+	private MapObjectPanel rightPanel;
 	private MapScetchPanel mapScetchPanel;
 	private JTabbedPane tabPane;
 
@@ -33,8 +33,8 @@ public class MFrame extends JFrame{
 	}
 
 	private void initPanels() {
-		leftPanel = new TileChoosePanel();
-		CData.tileChoosePanel = leftPanel;
+		leftPanel = new ImageChoosePanel();
+		CData.imgChoosePanel = leftPanel;
 		
 		mapPanel = new MapPanel();
 		CData.mapPanel = mapPanel;
@@ -44,8 +44,8 @@ public class MFrame extends JFrame{
 		CData.mapScetchPanel = mapScetchPanel;
 		CData.mapScetchScroller = new JScrollPane(mapScetchPanel);
 		
-		rightPanel = new TilePropertiesPanel();
-		CData.propertiesPanel = rightPanel;
+		rightPanel = new MapObjectPanel();
+		CData.mapObjPanel = rightPanel;
 		
 		tabPane = new JTabbedPane();
 		tabPane.addTab("Map", CData.mapScroller);

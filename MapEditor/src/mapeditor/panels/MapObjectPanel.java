@@ -13,15 +13,15 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
 import mapeditor.CData;
-import mapeditor.Square;
+import mapeditor.Tile;
 import mapeditor.LImage;
 
-public class TilePropertiesPanel extends JPanel {
+public class MapObjectPanel extends JPanel {
 	private LImage selectedTile;
 	private static final int OFFSET_Y = 100;
 
 	
-	public TilePropertiesPanel(){
+	public MapObjectPanel(){
 		
 		
 		
@@ -56,16 +56,10 @@ public class TilePropertiesPanel extends JPanel {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		
-		if(CData.curTile == null) return;
-		selectedTile = CData.curTile;
-		if(selectedTile == null) return;
-		
-		g2d.drawImage(selectedTile.getImage(),0,OFFSET_Y, 100, 100, null);
-		
 	}
 	
 	public void setCurTile(int index){
-		this.selectedTile = CData.tiles.get(index);
+		this.selectedTile = CData.images.get(index);
 		repaint();
 	}
 	

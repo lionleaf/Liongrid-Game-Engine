@@ -9,23 +9,24 @@ import javax.swing.JTabbedPane;
 
 import mapeditor.panels.MapPanel;
 import mapeditor.panels.MapScetchPanel;
-import mapeditor.panels.TileChoosePanel;
-import mapeditor.panels.TilePropertiesPanel;
+import mapeditor.panels.ImageChoosePanel;
+import mapeditor.panels.MapObjectPanel;
 
 public class CData {
 
 	private static final int MAX_SIZE = 500;
 	
-	public static boolean coordinateSnap = true;
-	
-	public static LImage curTile;
 	public static MapObject curMapObj;
-	public volatile static String[] tileTypes = {"Background Tile", "Static Object"};
-	public volatile static HashMap<Integer,LImage> tiles = new HashMap<Integer,LImage>();
-	public volatile static Square[][] level = new Square[MAX_SIZE][MAX_SIZE];
 	
-	public volatile static TileChoosePanel tileChoosePanel;
-	public volatile static TilePropertiesPanel propertiesPanel;
+	public volatile static String[] tileTypes = {"Background Tile", "Static Object"};
+	public volatile static HashMap<Integer,LImage> images = new HashMap<Integer,LImage>();
+	public volatile static Tile[][] level = new Tile[MAX_SIZE][MAX_SIZE];
+	
+	public volatile static MapObject[] backgroundObjects;
+	public volatile static MapObject[] staticObjects;
+	
+	public volatile static ImageChoosePanel imgChoosePanel;
+	public volatile static MapObjectPanel mapObjPanel;
 	public volatile static MapPanel mapPanel;
 	public volatile static MapScetchPanel mapScetchPanel;
 	public volatile static MFrame mainFrame;
@@ -48,8 +49,8 @@ public class CData {
 	
 	public static void changeLevelSize(int mapWidth, int mapHeight) {
 		MapData.changeMap(mapWidth, mapHeight);
-		tileChoosePanel.xField.setText(""+mapWidth);
-		tileChoosePanel.yField.setText(""+mapHeight);
+		imgChoosePanel.xField.setText(""+mapWidth);
+		imgChoosePanel.yField.setText(""+mapHeight);
 		CData.mapPanel.loadMap();
 		CData.mapScetchPanel.loadMap();
 		mainFrame.repaint();

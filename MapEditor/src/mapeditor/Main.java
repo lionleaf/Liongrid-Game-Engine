@@ -20,7 +20,7 @@ public class Main {
 		
 		for (int i = 0; i < CData.level.length; i++) {
 			for (int j = 0; j < CData.level[0].length; j++) {
-				CData.level[i][j] = new Square();
+				CData.level[i][j] = new Tile();
 			}
 		}
 		/*

@@ -62,7 +62,7 @@ public class MapManager {
 			os.write(CData.getArraySizeY());
 			for(int y = 0; y < CData.getArraySizeY(); y++){
 				for(int x = 0; x < CData.getArraySizeX(); x++){
-					os.write(CData.level[x][y].getTileID());
+					os.write(CData.level[x][y].getLImageID());
 				}
 			}
 			os.close();
@@ -93,7 +93,7 @@ public class MapManager {
 
 			for (int y = 0; y < width; y++) {
 				for (int x = 0; x < height; x++) {
-					CData.level[x][y] = new Square((byte) input.read());
+					CData.level[x][y] = new Tile((byte) input.read());
 				}
 			}
 //			CData.setLevelSizeX(width);
@@ -118,13 +118,13 @@ public class MapManager {
 			//root elements
 			Document doc = docBuilder.newDocument();
 			Element rootElement = doc.createElement("TileSet");
-			rootElement.setAttribute("nr_of_tiles", CData.tiles.size()+"");
+			rootElement.setAttribute("nr_of_tiles", CData.images.size()+"");
 			rootElement.setAttribute("nr_of_movetypes", CData.tileTypes.length + "");
 			
 			
 			doc.appendChild(rootElement);
 
-			for(LImage tile : CData.tiles.values()){
+			for(LImage tile : CData.images.values()){
 				Element tileElem = doc.createElement("Tile");
 				rootElement.appendChild(tileElem);
 
@@ -294,10 +294,10 @@ public class MapManager {
 //	}
 
 	public static void removeTile(LImage tile) {
-		CData.tiles.remove(tile.getID());
+		CData.images.remove(tile.getID());
 
-		if(CData.tileChoosePanel != null){
-			CData.tileChoosePanel.updateList();
+		if(CData.imgChoosePanel != null){
+			CData.imgChoosePanel.updateList();
 		}
 		if(CData.mainFrame != null){
 			CData.mainFrame.repaint();
@@ -308,11 +308,11 @@ public class MapManager {
 	public static void addTiles(File[] tileFiles){
 		for(File file : tileFiles){
 			Image image = new ImageIcon(file.toString()).getImage();
-			CData.tiles.put(currentID, new LImage(image, (byte)currentID, file.getName()));
+			CData.images.put(currentID, new LImage(image, (byte)currentID, file.getName()));
 			currentID++;
 		}
-		if(CData.tileChoosePanel != null){
-			CData.tileChoosePanel.updateList();
+		if(CData.imgChoosePanel != null){
+			CData.imgChoosePanel.updateList();
 		}
 		if(CData.mainFrame != null){
 			CData.mainFrame.repaint();

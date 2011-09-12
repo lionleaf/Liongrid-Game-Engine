@@ -22,7 +22,7 @@ import mapeditor.MapData;
 import mapeditor.LImage;
 import mapeditor.MapManager;
 
-public class TileChoosePanel extends JPanel  {
+public class ImageChoosePanel extends JPanel  {
 	public JTextField xField;
 	public JTextField yField;
 	
@@ -34,7 +34,7 @@ public class TileChoosePanel extends JPanel  {
 	private JButton addTile;
 	private JButton removeTile;
 
-	public TileChoosePanel(){
+	public ImageChoosePanel(){
 
 		//Initialize objects
 		list = new JList();	
@@ -89,13 +89,12 @@ public class TileChoosePanel extends JPanel  {
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				if(e.getValueIsAdjusting() == false){
-					JList list = (JList)e.getSource();
-					LImage tile = (LImage) list.getSelectedValue();
-					if(tile == null) return;
-					CData.curTile = tile;
-					CData.mainFrame.repaint();
-				}
+//				if(e.getValueIsAdjusting() == false){
+//					JList list = (JList)e.getSource();
+//					LImage tile = (LImage) list.getSelectedValue();
+//					if(tile == null) return;
+//					CData.mainFrame.repaint();
+//				}
 
 			}
 		});
@@ -257,12 +256,12 @@ public class TileChoosePanel extends JPanel  {
 			int i = list.getSelectedIndex();
 			if(i == -1) return;
 			//ObjectPointers.centerPanel.setCurTile(i);
-			CData.propertiesPanel.setCurTile(i);
+			CData.mapObjPanel.setCurTile(i);
 		}
 	}
 
 	public void updateList(){
-		list.setListData(CData.tiles.values().toArray());
+		list.setListData(CData.images.values().toArray());
 		repaint();
 	}
 }

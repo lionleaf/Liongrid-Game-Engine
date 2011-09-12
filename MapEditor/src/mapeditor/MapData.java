@@ -140,7 +140,7 @@ public class MapData {
 	 * coordinate system of the window.
 	 * @param x
 	 * @param y
-	 * @return the x coordinate in the top left oriented coordinate system.
+	 * @return the x coordinate in the bottom left oriented coordinate system.
 	 */
 	public static float fromCartToIsoX(float x, float y) {
 		float result = IsometricTransformation.getX(x - offsetCarthX, y - offsetCarthY);
@@ -153,7 +153,7 @@ public class MapData {
 	 * coordinate system of the window. 
 	 * @param x
 	 * @param y
-	 * @return the y coordinate in the top left oriented coordinate system.
+	 * @return the y coordinate in the bottom left oriented coordinate system.
 	 */
 	public static float fromCartToIsoY(float x, float y) {
 		float result = IsometricTransformation.getY(x - offsetCarthX, y - offsetCarthY);
