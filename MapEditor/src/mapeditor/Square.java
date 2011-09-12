@@ -3,7 +3,9 @@ package mapeditor;
 import java.awt.Image;
 
 public class Square {
+	private static final int DEFAULT_SIZE = 10;
 	byte currentTileID = 0;
+	private CollisionObject[] collideables = new CollisionObject[DEFAULT_SIZE];
 	
 	//Situations etc goes here
 	
@@ -12,10 +14,9 @@ public class Square {
 	}
 
 	public Square() {
-		// TODO Auto-generated constructor stub
 	}
 
-	public Tile getTile(){
+	public LImage getTile(){
 		return CData.tiles.get(currentTileID);
 	}
 

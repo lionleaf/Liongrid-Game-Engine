@@ -3,6 +3,7 @@ package mapeditor.panels;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -21,17 +22,17 @@ import mapeditor.CData;
 import mapeditor.IsometricTransformation;
 import mapeditor.MapData;
 import mapeditor.Square;
-import mapeditor.Tile;
+import mapeditor.LImage;
 
 public class MapPanel extends JPanel {
-	JCheckBox showCoordinates = new JCheckBox();
+	JCheckBox grid = new JCheckBox();
 	JCheckBox snapToGrid;
 	private int mapWidth;
 	private int mapHeight;
 	private int tileSize = 64;
 	private boolean mapReady = false;
 	
-	private HashMap<Integer, Tile> tiles;
+	private HashMap<Integer, LImage> tiles;
 	private Square[][] level;
 	private int[][] mapIndices;
 	private int offsetY;
@@ -39,8 +40,8 @@ public class MapPanel extends JPanel {
 	
 	
 	public MapPanel(){
-		add(showCoordinates);
-		showCoordinates.addActionListener(new ActionListener() {
+		add(grid);
+		grid.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				repaint();
 			}
@@ -56,6 +57,7 @@ public class MapPanel extends JPanel {
 				MapPanel panel = (MapPanel) e.getSource();
 				int x = (int) MapData.fromIsoToCartX(e.getX(), e.getY());
 				int y = (int) MapData.fromIsoToCartY(e.getX(), e.getY());
+				System.out.println("pressed tile x = " + x + " y = " + y);
 				CData.level[x][y].setTileID(CData.curTile.getIDbyte());
 				panel.repaint();
 			}
@@ -71,7 +73,9 @@ public class MapPanel extends JPanel {
 				int[] tile  = {x, y};
 				if(lastTile[0] != tile[0] || lastTile[1] != tile[1]){
 					MapPanel panel = (MapPanel) e.getSource();
-					CData.level[tile[0]][tile[1]].setTileID(CData.curTile.getIDbyte());
+					byte tileID;
+					tileID = CData.curTile.getIDbyte();
+					CData.level[tile[0]][tile[1]].setTileID(tileID);
 					panel.repaint();
 					lastTile = tile;
 				}
@@ -102,10 +106,24 @@ public class MapPanel extends JPanel {
 		
 		Graphics2D g2d = (Graphics2D) g;
 		
-		if(showCoordinates.isSelected()){
+		drawTiles(g2d);
+		
+		if(grid.isSelected()){
 			paintGrid(g2d, tileSize);
 		}
 	}
+
+	private void drawTiles(Graphics2D g2d) {
+		for(int x = 0; x < mapIndices.length; x++){
+			for(int y = mapIndices[x][0]; y <= mapIndices[x][1]; y++){
+				LImage tile = CData.level[x][y].getTile();
+				if(tile == null) return;
+				Image img = tile.getImage();
+				g2d.drawImage(img, x, y, null);
+			}
+		}
+	}
+
 
 	private void paintGrid(Graphics2D g2d, int tileSize) {
 		for(int x = 0; x < mapIndices.length; x++){
@@ -126,8 +144,6 @@ public class MapPanel extends JPanel {
 		int y1 = toWindowY(x, y);
 		int x2 = toWindowX(x+1, y);
 		int y2 = toWindowY(x+1, y);
-		System.out.println("x1 = " + x1);
-		System.out.println("y1 = " + y1);
 		g2d.drawLine(x1, y1, x2, y2);
 		x1 = toWindowX(x+1, y+1);
 		y1 = toWindowY(x+1, y+1);

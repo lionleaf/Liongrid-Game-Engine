@@ -86,7 +86,9 @@ public class MapScetchPanel extends JPanel{
 	private void drawSquare(Graphics2D g2d, int x, int y){
 		int x1 = toWindowX(x);
 		int y1 = toWindowY(y);
-		g2d.drawString("("+x+","+y+")", x1, y1);
+		
+		if(showCoordinates.isSelected())
+				g2d.drawString("("+x+","+y+")", x1, y1);
 		
 		int x2 = toWindowX(x+1);
 		int y2 = toWindowY(y);

@@ -17,12 +17,12 @@ import javax.swing.JTabbedPane;
 import mapeditor.panels.MapPanel;
 import mapeditor.panels.MapScetchPanel;
 import mapeditor.panels.TileChoosePanel;
-import mapeditor.panels.TileTypePanel;
+import mapeditor.panels.TilePropertiesPanel;
 
 public class MFrame extends JFrame{
 	private TileChoosePanel leftPanel;
 	private MapPanel mapPanel;
-	private TileTypePanel rightPanel;
+	private TilePropertiesPanel rightPanel;
 	private MapScetchPanel mapScetchPanel;
 	private JTabbedPane tabPane;
 
@@ -44,7 +44,7 @@ public class MFrame extends JFrame{
 		CData.mapScetchPanel = mapScetchPanel;
 		CData.mapScetchScroller = new JScrollPane(mapScetchPanel);
 		
-		rightPanel = new TileTypePanel();
+		rightPanel = new TilePropertiesPanel();
 		CData.propertiesPanel = rightPanel;
 		
 		tabPane = new JTabbedPane();
@@ -57,12 +57,12 @@ public class MFrame extends JFrame{
 		leftPanel.setPreferredSize(new Dimension(100,400));
 		mapPanel.setPreferredSize(new Dimension(500,500));
 		mapScetchPanel.setPreferredSize(new Dimension(500,500));
-		rightPanel.setPreferredSize(new Dimension(100,400));
+		rightPanel.setPreferredSize(new Dimension(200,400));
 		
         leftPanel.setMinimumSize(new Dimension(100,400));
         mapPanel.setMinimumSize(new Dimension(200,400));
         mapScetchPanel.setMinimumSize(new Dimension(200, 400));
-        rightPanel.setMinimumSize(new Dimension(210, 400));
+        rightPanel.setMinimumSize(new Dimension(200, 400));
 	}
 
 	private void initUI() {
@@ -97,7 +97,7 @@ public class MFrame extends JFrame{
         
 
         setTitle("Map Editor");
-        setSize(600, 300);
+        setSize(700, 300);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}

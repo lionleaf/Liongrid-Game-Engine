@@ -119,12 +119,12 @@ public class MapManager {
 			Document doc = docBuilder.newDocument();
 			Element rootElement = doc.createElement("TileSet");
 			rootElement.setAttribute("nr_of_tiles", CData.tiles.size()+"");
-			rootElement.setAttribute("nr_of_movetypes", CData.moveTypes.length + "");
+			rootElement.setAttribute("nr_of_movetypes", CData.tileTypes.length + "");
 			
 			
 			doc.appendChild(rootElement);
 
-			for(Tile tile : CData.tiles.values()){
+			for(LImage tile : CData.tiles.values()){
 				Element tileElem = doc.createElement("Tile");
 				rootElement.appendChild(tileElem);
 
@@ -132,12 +132,12 @@ public class MapManager {
 
 				tileElem.setAttribute("resource",tile.getResource());
 
-				for (int i = 0; i < CData.moveTypes.length; i++) {
+				for (int i = 0; i < CData.tileTypes.length; i++) {
 					//Create the element
 					Element state = doc.createElement("state");
 					tileElem.appendChild(state);
 					//Set the name of the state
-					state.setAttribute("name", CData.moveTypes[i]);
+					state.setAttribute("name", CData.tileTypes[i]);
 					//Calculate the value
 //					String value = generateTileStatesString(tile.getTileStates(), i);
 //					Text stateVal = doc.createTextNode(value);
@@ -293,7 +293,7 @@ public class MapManager {
 //		
 //	}
 
-	public static void removeTile(Tile tile) {
+	public static void removeTile(LImage tile) {
 		CData.tiles.remove(tile.getID());
 
 		if(CData.tileChoosePanel != null){
@@ -308,7 +308,7 @@ public class MapManager {
 	public static void addTiles(File[] tileFiles){
 		for(File file : tileFiles){
 			Image image = new ImageIcon(file.toString()).getImage();
-			CData.tiles.put(currentID, new Tile(image, (byte)currentID, file.getName()));
+			CData.tiles.put(currentID, new LImage(image, (byte)currentID, file.getName()));
 			currentID++;
 		}
 		if(CData.tileChoosePanel != null){

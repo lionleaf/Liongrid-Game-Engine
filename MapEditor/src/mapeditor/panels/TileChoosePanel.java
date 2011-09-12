@@ -19,7 +19,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import mapeditor.CData;
 import mapeditor.MapData;
-import mapeditor.Tile;
+import mapeditor.LImage;
 import mapeditor.MapManager;
 
 public class TileChoosePanel extends JPanel  {
@@ -91,7 +91,7 @@ public class TileChoosePanel extends JPanel  {
 			public void valueChanged(ListSelectionEvent e) {
 				if(e.getValueIsAdjusting() == false){
 					JList list = (JList)e.getSource();
-					Tile tile = (Tile) list.getSelectedValue();
+					LImage tile = (LImage) list.getSelectedValue();
 					if(tile == null) return;
 					CData.curTile = tile;
 					CData.mainFrame.repaint();
@@ -202,7 +202,7 @@ public class TileChoosePanel extends JPanel  {
 	}
 	
 	private void removeTile() {
-		Tile tile = (Tile) list.getSelectedValue();
+		LImage tile = (LImage) list.getSelectedValue();
 		MapManager.removeTile(tile);
 		
 	}

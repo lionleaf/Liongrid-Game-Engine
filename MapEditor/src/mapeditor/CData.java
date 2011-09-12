@@ -10,7 +10,7 @@ import javax.swing.JTabbedPane;
 import mapeditor.panels.MapPanel;
 import mapeditor.panels.MapScetchPanel;
 import mapeditor.panels.TileChoosePanel;
-import mapeditor.panels.TileTypePanel;
+import mapeditor.panels.TilePropertiesPanel;
 
 public class CData {
 
@@ -18,19 +18,20 @@ public class CData {
 	
 	public static boolean coordinateSnap = true;
 	
-	public static Tile curTile;
-	public volatile static String[] moveTypes = {"Walk", "Fly", "Swim"};
-	public volatile static HashMap<Integer,Tile> tiles = new HashMap<Integer,Tile>();
+	public static LImage curTile;
+	public static MapObject curMapObj;
+	public volatile static String[] tileTypes = {"Background Tile", "Static Object"};
+	public volatile static HashMap<Integer,LImage> tiles = new HashMap<Integer,LImage>();
 	public volatile static Square[][] level = new Square[MAX_SIZE][MAX_SIZE];
 	
 	public volatile static TileChoosePanel tileChoosePanel;
-	public volatile static TileTypePanel propertiesPanel;
+	public volatile static TilePropertiesPanel propertiesPanel;
 	public volatile static MapPanel mapPanel;
 	public volatile static MapScetchPanel mapScetchPanel;
 	public volatile static MFrame mainFrame;
 	public volatile static JScrollPane mapScroller;
 	public volatile static JScrollPane mapScetchScroller;
-	public static JTabbedPane tabPane;
+	public volatile static JTabbedPane tabPane;
 	
 	public static int getArraySizeX() {
 		return MapData.arrayWidth;

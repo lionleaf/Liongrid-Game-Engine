@@ -14,28 +14,24 @@ import javax.swing.JPanel;
 
 import mapeditor.CData;
 import mapeditor.Square;
-import mapeditor.Tile;
+import mapeditor.LImage;
 
-public class TileTypePanel extends JPanel {
-	private int selectedState = 0;
-	private Tile selectedTile;
+public class TilePropertiesPanel extends JPanel {
+	private LImage selectedTile;
 	private static final int OFFSET_Y = 100;
 
 	
-	public TileTypePanel(){
+	public TilePropertiesPanel(){
 		
 		
 		
-		JComboBox curState = new JComboBox(CData.moveTypes);
+		JComboBox curState = new JComboBox(CData.tileTypes);
 		curState.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JComboBox cb = (JComboBox)e.getSource();
-				setState(cb.getSelectedIndex());
 				repaint();
 			}
-
-			
 		});
 		add(curState);
 		
@@ -66,13 +62,6 @@ public class TileTypePanel extends JPanel {
 		
 		g2d.drawImage(selectedTile.getImage(),0,OFFSET_Y, 100, 100, null);
 		
-	}
-	
-	
-	
-	private void setState(int state) {
-		selectedState = state;
-
 	}
 	
 	public void setCurTile(int index){
