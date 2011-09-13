@@ -1,12 +1,11 @@
 package mapeditor;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
+import mapeditor.MapObject.StaticObject;
 import mapeditor.panels.MapPanel;
 import mapeditor.panels.MapScetchPanel;
 import mapeditor.panels.ImageChoosePanel;
@@ -15,13 +14,16 @@ import mapeditor.panels.MapObjectPanel;
 public class CData {
 
 	private static final int MAX_SIZE = 500;
+	private static final int MAX_MAP_OBJECTS = 500;
 	
 	public static MapObject curMapObj;
 	
 	public volatile static String[] tileTypes = {"Background Tile", "Static Object"};
 	public volatile static HashMap<Integer,LImage> images = new HashMap<Integer,LImage>();
 	public volatile static HashMap<Integer,MapObject> mapObjects = new HashMap<Integer,MapObject>();
-	public volatile static Tile[][] level = new Tile[MAX_SIZE][MAX_SIZE];
+	
+	public volatile static byte[][] backgroundObjectsIDs = new byte[MAX_SIZE][MAX_SIZE];
+	public volatile static StaticObject[] staticObjects = new StaticObject[MAX_MAP_OBJECTS];
 	
 	public volatile static ImageChoosePanel imgChoosePanel;
 	public volatile static MapObjectPanel mapObjPanel;

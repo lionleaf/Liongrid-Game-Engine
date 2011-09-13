@@ -17,23 +17,6 @@ public class Main {
 			}
 			
 		});
-		
-		for (int i = 0; i < CData.level.length; i++) {
-			for (int j = 0; j < CData.level[0].length; j++) {
-				CData.level[i][j] = new Tile();
-			}
-		}
-		/*
-		
-		while(CData.leftPanel == null){
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-			}
-			
-		}
-		TileManager.loadTiles();
-		//CData.leftPanel.updateList();*/
 	}
 
 }

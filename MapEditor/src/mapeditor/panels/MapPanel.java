@@ -21,7 +21,6 @@ import javax.swing.JPanel;
 import mapeditor.CData;
 import mapeditor.IsometricTransformation;
 import mapeditor.MapData;
-import mapeditor.Tile;
 import mapeditor.LImage;
 
 public class MapPanel extends JPanel {
@@ -29,14 +28,13 @@ public class MapPanel extends JPanel {
 	JCheckBox snapToGrid;
 	private int mapWidth;
 	private int mapHeight;
-	private int tileSize = 64;
+	private int offsetY;
+	private int offsetX;
 	private boolean mapReady = false;
 	
 	private HashMap<Integer, LImage> tiles;
-	private Tile[][] level;
+	private byte[][] background;
 	private int[][] mapIndices;
-	private int offsetY;
-	private int offsetX;
 	
 	
 	public MapPanel(){
@@ -105,23 +103,19 @@ public class MapPanel extends JPanel {
 		drawTiles(g2d);
 		
 		if(grid.isSelected()){
-			paintGrid(g2d, tileSize);
+			paintGrid(g2d);
 		}
 	}
 
 	private void drawTiles(Graphics2D g2d) {
 		for(int x = 0; x < mapIndices.length; x++){
 			for(int y = mapIndices[x][0]; y <= mapIndices[x][1]; y++){
-				LImage tile = CData.level[x][y].getLImage();
-				if(tile == null) return;
-				Image img = tile.getImage();
-				g2d.drawImage(img, x, y, null);
 			}
 		}
 	}
 
 
-	private void paintGrid(Graphics2D g2d, int tileSize) {
+	private void paintGrid(Graphics2D g2d) {
 		for(int x = 0; x < mapIndices.length; x++){
 			for(int y = mapIndices[x][0]; y <= mapIndices[x][1]; y++){
 				drawSquare(g2d, x, y);
@@ -170,7 +164,7 @@ public class MapPanel extends JPanel {
 
 	public void loadMap() {
 		tiles = CData.images;
-		level = CData.level;
+		background = CData.backgroundObjectsIDs;
 		mapIndices = MapData.getMapIndices();
 		mapHeight = MapData.mapHeight;
 		mapWidth = MapData.mapWidth;

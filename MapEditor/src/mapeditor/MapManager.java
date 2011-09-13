@@ -45,31 +45,31 @@ public class MapManager {
 	private static int currentID = 0;
 
 	public static void writeMap(File file){
-		DataOutputStream os = null;
-		try {
-			os = new DataOutputStream(new FileOutputStream(file));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return;
-		}
-
-
-		byte id = 1;
-		try {
-			os.write(id);
-			os.write(CData.getArraySizeX());
-			os.write(CData.getArraySizeY());
-			for(int y = 0; y < CData.getArraySizeY(); y++){
-				for(int x = 0; x < CData.getArraySizeX(); x++){
-					os.write(CData.level[x][y].getLImageID());
-				}
-			}
-			os.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
+//		DataOutputStream os = null;
+//		try {
+//			os = new DataOutputStream(new FileOutputStream(file));
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			return;
+//		}
+//
+//
+//		byte id = 1;
+//		try {
+//			os.write(id);
+//			os.write(CData.getArraySizeX());
+//			os.write(CData.getArraySizeY());
+//			for(int y = 0; y < CData.getArraySizeY(); y++){
+//				for(int x = 0; x < CData.getArraySizeX(); x++){
+//					os.write(CData.level[x][y].getLImageID());
+//				}
+//			}
+//			os.close();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} 
 	}
 	
 	public static void loadTestMap(){
@@ -78,35 +78,32 @@ public class MapManager {
 	}
 
 	public static void loadMap(File file) {
-		FileInputStream input = null;
-		try {
-			input = new FileInputStream(file);
-		} catch (FileNotFoundException e) {
-			JOptionPane.showMessageDialog(CData.mainFrame, "Failed to open map file!");
-			return;
-		}
-
-		try {
-			int id = input.read();
-			int height = input.read();
-			int width = input.read();
-
-			for (int y = 0; y < width; y++) {
-				for (int x = 0; x < height; x++) {
-					CData.level[x][y] = new Tile((byte) input.read());
-				}
-			}
+//		FileInputStream input = null;
+//		try {
+//			input = new FileInputStream(file);
+//		} catch (FileNotFoundException e) {
+//			JOptionPane.showMessageDialog(CData.mainFrame, "Failed to open map file!");
+//			return;
+//		}
+//
+//		try {
+//			int id = input.read();
+//			int height = input.read();
+//			int width = input.read();
+//
+//			for (int y = 0; y < width; y++) {
+//				for (int x = 0; x < height; x++) {
+//					CData.level[x][y] = new Tile((byte) input.read());
+//				}
+//			}
 //			CData.setLevelSizeX(width);
 //			CData.setLevelSizeY(height);
-
-		} catch (IOException e) {
-			JOptionPane.showMessageDialog(CData.mainFrame, "Map file corrupt!");
-			return;
-		}
-
-
-
-		CData.mainFrame.repaint();
+//
+//		} catch (IOException e) {
+//			JOptionPane.showMessageDialog(CData.mainFrame, "Map file corrupt!");
+//			return;
+//		}
+//		CData.mainFrame.repaint();
 
 	}
 

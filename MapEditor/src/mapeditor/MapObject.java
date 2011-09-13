@@ -4,44 +4,19 @@ import java.util.ArrayList;
 
 import com.liongrid.gameengine.tools.LVector2;
 
-public class MapObject implements LShape.Square{
-	private static final float MIN_WIDTH = 20;
-	private static final float MIN_HEIGHT = 20;
-	private byte LImageID = -1;
+public class MapObject{
+	private byte lImageID = -1;
 	private ArrayList<CollisionObject> collideables = new ArrayList<CollisionObject>();
-	private LVector2 pos;
+	private LVector2 centerPos;
 	
 	public MapObject(){
-		
+		centerPos = new LVector2();
 	}
 	
-	public MapObject(LImage image) {
-		setLImage(image);
-	}
-	
-	public void setLImage(LImage lImage) {
-		this.lImage = lImage;
+	public MapObject(LVector2 centerPos){
+		this.centerPos = centerPos;
 	}
 
-	@Override
-	public int getShape() {
-		return LShape.SQUARE;
-	}
-
-	@Override
-	public float getWidth() {
-		int result = lImage.getWidth();
-		if(result < MIN_WIDTH) return MIN_WIDTH;
-		return result;
-	}
-
-	@Override
-	public float getHeight() {
-		int result = lImage.getHeigth();
-		if(result < MIN_HEIGHT) return MIN_HEIGHT;
-		return result;
-	}
-	
 	public void removeCollideable(CollisionObject collideable){
 		collideables.remove(collideable);
 	}
@@ -50,22 +25,64 @@ public class MapObject implements LShape.Square{
 		collideables.add(collideable);
 	}
 	
-	public void changePosition(LVector2 pos){
-		removeFromMap();
-		copyToMap(pos);
+	public StaticObject createStaticObject(){
+		return new StaticObject(this);
 	}
 	
-	public void copyToMap(LVector2 pos){
-		
+	public void setCenter(float x, float y){
+		centerPos.x = x;
+		centerPos.y = y;
 	}
 	
-	public void removeFromMap(){
+	public LVector2 getCenter(){
+		return centerPos;
+	}
+	
+	public LImage getImage(){
+		return CData.images.get(lImageID);
+	}
+	
+	
+	class StaticObject implements LShape.Square{
+		private static final float MIN_WIDTH = 20;
+		private static final float MIN_HEIGHT = 20;
+		private LVector2 pos;
+		private MapObject parent;
 		
-	}
+		public StaticObject(MapObject owner) {
+			parent = owner;
+		}
+		
+		public void changeParent(MapObject newParent){
+			parent = newParent;
+		}
 
-	@Override
-	public LVector2 getPos() {
-		return null;
-	}
+		@Override
+		public LVector2 getPos() {
+			return pos;
+		}
 
+		@Override
+		public int getShape() {
+			return LShape.SQUARE;
+		}
+		
+		@Override
+		public float getWidth() {
+			LImage img = parent.getImage();
+			if(img == null) return MIN_WIDTH;
+			int result = img.getWidth();
+			if(result < MIN_WIDTH) return MIN_WIDTH;
+			return result;
+		}
+
+		@Override
+		public float getHeight() {
+			LImage img = parent.getImage();
+			if(img == null) return MIN_HEIGHT;
+			int result = img.getWidth();
+			if(result < MIN_HEIGHT) return MIN_HEIGHT;
+			return result;
+		}
+	}
 }

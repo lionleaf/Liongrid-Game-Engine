@@ -13,7 +13,6 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
 import mapeditor.CData;
-import mapeditor.Tile;
 import mapeditor.LImage;
 
 public class MapObjectPanel extends JPanel {
@@ -22,8 +21,6 @@ public class MapObjectPanel extends JPanel {
 
 	
 	public MapObjectPanel(){
-		
-		
 		
 		JComboBox curState = new JComboBox(CData.tileTypes);
 		curState.addActionListener(new ActionListener(){
