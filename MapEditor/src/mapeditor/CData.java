@@ -20,10 +20,8 @@ public class CData {
 	
 	public volatile static String[] tileTypes = {"Background Tile", "Static Object"};
 	public volatile static HashMap<Integer,LImage> images = new HashMap<Integer,LImage>();
+	public volatile static HashMap<Integer,MapObject> mapObjects = new HashMap<Integer,MapObject>();
 	public volatile static Tile[][] level = new Tile[MAX_SIZE][MAX_SIZE];
-	
-	public volatile static MapObject[] backgroundObjects;
-	public volatile static MapObject[] staticObjects;
 	
 	public volatile static ImageChoosePanel imgChoosePanel;
 	public volatile static MapObjectPanel mapObjPanel;
