@@ -8,6 +8,7 @@ import com.liongrid.gameengine.LDrawableBitmap;
 import com.liongrid.gameengine.LAnimation;
 import com.liongrid.gameengine.LEasyBitmapCropper;
 import com.liongrid.gameengine.LGamePointers;
+import com.liongrid.gameengine.LSoundSystem;
 import com.liongrid.gameengine.LTexture;
 import com.liongrid.gameengine.LTextureLibrary;
 import com.liongrid.gameengine.components.LMoveComponent;
@@ -46,6 +47,9 @@ public class Infectosaurus extends IGameObject {
 //		sprite.setOverlayAnimation("Spawning");
 		mAttackComponent = new IMeleeAttackComponent();
 		mAttackComponent.setEnabled(false);
+		LSoundSystem sound = LGamePointers.soundSystem;
+		mAttackComponent.setHitSound(sound.load(R.raw.swordswing));
+		
 		addComponent(new ICollisionComponent());
 		addComponent(mAttackComponent);
 		addComponent(new IAggressivMoveComponent());
@@ -54,6 +58,8 @@ public class Infectosaurus extends IGameObject {
 		addComponent(new IHpBarComponent());
 		addComponent(new IAnimationChangeComponent());
 		speed = 80;
+		
+		
 		
 		team = ITeam.Alien;
 		

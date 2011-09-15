@@ -6,11 +6,11 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.ProgressBar;
 
-import com.liongrid.gameengine.LAudio;
 import com.liongrid.gameengine.LCamera;
 import com.liongrid.gameengine.LGameLoader;
 import com.liongrid.gameengine.LGamePointers;
 import com.liongrid.gameengine.LGameThread.TouchEventListener;
+import com.liongrid.gameengine.LSoundSystem;
 import com.liongrid.gameengine.LSurfaceViewPanel;
 import com.liongrid.gameengine.LTextureLibrary;
 import com.liongrid.infectomancer.crowd.situations.ISituationHandler;
@@ -21,7 +21,7 @@ public class IGameLoader extends LGameLoader{
 	
 	public IGameLoader(LSurfaceViewPanel panel, IGameActivity gameActivity, 
 			Handler handler, ProgressBar progressBar) {
-		super(panel,gameActivity, handler, progressBar);
+		super(panel,gameActivity, handler, progressBar, gameActivity);
 		mGameActivity = gameActivity;
 		
 	}
@@ -42,7 +42,7 @@ public class IGameLoader extends LGameLoader{
 		postProgress(70);
 		LGamePointers.panel.addToRoot(IGamePointers.gameObjectHandler);
 		LGamePointers.panel.addToRoot(IGamePointers.gameStatus);
-		LGamePointers.audio = new LAudio(mGameActivity, 20);
+		LGamePointers.soundSystem = new LSoundSystem();
 	}
 
 	protected void preLoadTextures(){
@@ -51,12 +51,7 @@ public class IGameLoader extends LGameLoader{
 		tLib.allocateTexture(R.drawable.spheremonster01);
 		tLib.allocateTexture(R.drawable.mann1);
 		tLib.allocateTexture(R.drawable.reaper);
-		preLoadSounds();
 		postProgress(80);
-	}
-	
-	protected void preLoadSounds(){
-		LGamePointers.audio.loadSound("swordswing", "swordswing.mp3");
 	}
 	
 	protected void setupGame(){

@@ -7,6 +7,7 @@ import com.liongrid.gameengine.LGamePointers;
 import com.liongrid.gameengine.LGestureDetector;
 import com.liongrid.gameengine.LInputDelegator;
 import com.liongrid.gameengine.LButton;
+import com.liongrid.gameengine.LSoundSystem;
 import com.liongrid.gameengine.LSurfaceViewPanel;
 import com.liongrid.gameengine.LUpgrade;
 import com.liongrid.gameengine.LMap;
@@ -88,6 +89,8 @@ public class IGameActivity extends Activity implements LGameActivityInterface,
 		setUpInputHandler();
 		Log.d("Infectosaurus", "Game loaded");
 		setContentView(LGamePointers.panel);
+		LSoundSystem sound = LGamePointers.soundSystem;
+		
 	}
 	
 	private void setUpInputHandler(){
@@ -145,7 +148,7 @@ public class IGameActivity extends Activity implements LGameActivityInterface,
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		// Gesture detection
+		if(mGestureDetector == null) return false;
 		if (mGestureDetector.onTouchEvent(event)) {
 			return true;
 		}

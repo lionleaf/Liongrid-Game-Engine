@@ -6,6 +6,7 @@ import com.liongrid.gameengine.LAnimationCodes;
 import com.liongrid.gameengine.LComponent;
 import com.liongrid.gameengine.LGameObject;
 import com.liongrid.gameengine.LGamePointers;
+import com.liongrid.gameengine.LSoundSystem;
 import com.liongrid.gameengine.components.LSpriteComponent;
 import com.liongrid.gameengine.tools.LFixedSizeArray;
 import com.liongrid.infectomancer.IGameObject;
@@ -28,12 +29,17 @@ public class IMeleeAttackComponent extends LComponent {
 	private float mInfectChance = 0f;
 	private boolean mEnabled = true;
 	private boolean mInfect = true;
+	private LSoundSystem.Sound mHitSound;
 	
 	public IMeleeAttackComponent(){
 		super();
 		close = new LFixedSizeArray<IGameObject>(CLOSE_CAPACITY);
 		set();
 		
+	}
+	
+	public void setHitSound(LSoundSystem.Sound hitSound){
+		mHitSound = hitSound;
 	}
 	
 	public void set(){
@@ -68,6 +74,7 @@ public class IMeleeAttackComponent extends LComponent {
 			return;
 		}
 			
+		playHitSound();
 		
 		mDelayCountDown = mDelay;
 		
@@ -83,18 +90,23 @@ public class IMeleeAttackComponent extends LComponent {
 		target.afflict(speed);
 		
 		
-		//TODO move this:
-		LGamePointers.audio.playSound("swordswing", 1);
 		
 		LSpriteComponent spr = (LSpriteComponent) parent.findComponentOfType(LSpriteComponent.class);
 		if(spr == null) {
-			Log.d("Infectosaurus", "Could not find LSpriteComponent... that`s odd");
+			Log.e("Infectosaurus", "Could not find LSpriteComponent... that`s odd");
 			return;
 		}
 		
 		spr.setOverlayAnimation(LAnimationCodes.ATTACK_EAST);
 		
 	}
+	
+	private void playHitSound(){
+		if(mHitSound == null) return;
+		LSoundSystem sSystem = LGamePointers.soundSystem;
+		sSystem.play(mHitSound, false, LSoundSystem.PRIORITY_NORMAL);
+	}
+	
 
 	/**
 	 * Sets the infect chance

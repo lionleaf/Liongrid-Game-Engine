@@ -1,6 +1,9 @@
 package com.liongrid.infectomancer;
 
 import com.liongrid.gameengine.LBaseObject;
+import com.liongrid.gameengine.LGamePointers;
+import com.liongrid.gameengine.LSoundSystem;
+import com.liongrid.gameengine.LSoundSystem.Sound;
 
 public class IGameStatus extends LBaseObject{
 
@@ -10,12 +13,12 @@ public class IGameStatus extends LBaseObject{
 	private IGameActivity gameActivity;
 	private int mLastHumanCount = -1;
 
-
 	@Override
 	public void update(float dt, LBaseObject parent) {
 		gObjectHandler = IGamePointers.gameObjectHandler;
 		gameActivity = IGamePointers.curGameActivity;
-
+		
+		
 		checkGameStarted();
 		checkHumansLeft();
 		checkAliensLeft();

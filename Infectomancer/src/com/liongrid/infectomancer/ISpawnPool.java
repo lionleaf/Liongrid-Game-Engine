@@ -8,6 +8,7 @@ import com.liongrid.gameengine.LCollisionCircle;
 import com.liongrid.gameengine.LDrawableBitmap;
 import com.liongrid.gameengine.LAnimation;
 import com.liongrid.gameengine.LGamePointers;
+import com.liongrid.gameengine.LSoundSystem;
 import com.liongrid.gameengine.LTexture;
 import com.liongrid.gameengine.LTextureLibrary;
 import com.liongrid.gameengine.components.LMoveComponent;
@@ -30,7 +31,7 @@ public class ISpawnPool extends LBaseObject{
 		object.collisionObject = new LCollisionCircle(ITeam.Alien.ordinal(), object, radius);
 		
 		LTextureLibrary texLib = LGamePointers.textureLib;
-		LTexture tex = texLib.allocateTexture(R.drawable.squaremonster);
+		LTexture tex = texLib.allocateTexture(R.drawable.spheremonster01);
 		
 		LSpriteComponent sprite = new LSpriteComponent();
 		LDrawableBitmap[] dbs = new LDrawableBitmap[4];
@@ -63,6 +64,8 @@ public class ISpawnPool extends LBaseObject{
 		
 		sprite.setOverlayAnimation("Spawning");
 		IMeleeAttackComponent attackComponent = new IMeleeAttackComponent();
+		LSoundSystem sound = LGamePointers.soundSystem;
+		attackComponent.setHitSound(sound.load(R.raw.blub));
 		attackComponent.setInfect(false);
 		object.addComponent(new ICollisionComponent());
 		object.addComponent(attackComponent);
