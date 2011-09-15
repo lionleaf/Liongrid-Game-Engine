@@ -5,16 +5,51 @@ import java.util.ArrayList;
 import com.liongrid.gameengine.tools.LVector2;
 
 public class MapObject{
-	private byte lImageID = -1;
+	private short lImageID = 0;
+	private short id = 0;
 	private ArrayList<CollisionObject> collideables = new ArrayList<CollisionObject>();
 	private LVector2 centerPos;
+	private String name;
 	
-	public MapObject(){
-		centerPos = new LVector2();
+	public MapObject(short id){
+		this(id, null, new LVector2());
 	}
 	
-	public MapObject(LVector2 centerPos){
+	public MapObject(short id, LVector2 centerPos){
+		this(id, null, centerPos);
+	}
+
+	public MapObject(short id, String name){
+		this(id, name, new LVector2());
+	}
+	
+	public MapObject(short id, String name, LVector2 centerPos){
+		this.id = id;
 		this.centerPos = centerPos;
+		this.name = name;
+	}
+	
+	public void setName(String name){
+		this.name = new String(name);
+	}
+	
+	public String getName(){
+		return name;
+	}
+	
+	public String toString() {
+		if(name != null){
+			return name;
+		}
+		else return super.toString();
+	}
+	
+	public Integer getID() {
+		return new Integer((int)id);
+	}
+	
+	public short getIDbyte() {
+		return id;
 	}
 
 	public void removeCollideable(CollisionObject collideable){
@@ -38,7 +73,7 @@ public class MapObject{
 		return centerPos;
 	}
 	
-	public LImage getImage(){
+	public LImage getLImage(){
 		return CData.images.get(lImageID);
 	}
 	
@@ -69,7 +104,7 @@ public class MapObject{
 		
 		@Override
 		public float getWidth() {
-			LImage img = parent.getImage();
+			LImage img = parent.getLImage();
 			if(img == null) return MIN_WIDTH;
 			int result = img.getWidth();
 			if(result < MIN_WIDTH) return MIN_WIDTH;
@@ -78,7 +113,7 @@ public class MapObject{
 
 		@Override
 		public float getHeight() {
-			LImage img = parent.getImage();
+			LImage img = parent.getLImage();
 			if(img == null) return MIN_HEIGHT;
 			int result = img.getWidth();
 			if(result < MIN_HEIGHT) return MIN_HEIGHT;

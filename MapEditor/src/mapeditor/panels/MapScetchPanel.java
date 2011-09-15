@@ -1,6 +1,7 @@
 package mapeditor.panels;
 
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -133,4 +134,5 @@ public class MapScetchPanel extends JPanel{
 		mapReady = true;
 		mapIndices = MapData.getMapIndices();
 	}
+
 }

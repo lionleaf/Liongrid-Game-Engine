@@ -3,23 +3,17 @@ package mapeditor.panels;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.PathIterator;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
 import mapeditor.CData;
-import mapeditor.IsometricTransformation;
 import mapeditor.MapData;
 import mapeditor.LImage;
 
@@ -32,7 +26,6 @@ public class MapPanel extends JPanel {
 	private int offsetX;
 	private boolean mapReady = false;
 	
-	private HashMap<Integer, LImage> tiles;
 	private byte[][] background;
 	private int[][] mapIndices;
 	
@@ -163,7 +156,6 @@ public class MapPanel extends JPanel {
 	}
 
 	public void loadMap() {
-		tiles = CData.images;
 		background = CData.backgroundObjectsIDs;
 		mapIndices = MapData.getMapIndices();
 		mapHeight = MapData.mapHeight;

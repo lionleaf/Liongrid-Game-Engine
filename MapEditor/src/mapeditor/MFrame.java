@@ -16,15 +16,15 @@ import javax.swing.JTabbedPane;
 
 import mapeditor.panels.MapPanel;
 import mapeditor.panels.MapScetchPanel;
-import mapeditor.panels.ImageChoosePanel;
-import mapeditor.panels.MapObjectPanel;
+import mapeditor.panels.MapOChoosePanel;
+import mapeditor.panels.MapOPanel;
 
 public class MFrame extends JFrame{
-	private ImageChoosePanel leftPanel;
+	private MapOChoosePanel leftPanel;
 	private MapPanel mapPanel;
-	private MapObjectPanel rightPanel;
+	private MapOPanel rightPanel;
 	private MapScetchPanel mapScetchPanel;
-	private JTabbedPane tabPane;
+	private JTabbedPane mapTabPane;
 
 	MFrame(){
 		initPanels();
@@ -33,7 +33,7 @@ public class MFrame extends JFrame{
 	}
 
 	private void initPanels() {
-		leftPanel = new ImageChoosePanel();
+		leftPanel = new MapOChoosePanel();
 		CData.imgChoosePanel = leftPanel;
 		
 		mapPanel = new MapPanel();
@@ -44,13 +44,13 @@ public class MFrame extends JFrame{
 		CData.mapScetchPanel = mapScetchPanel;
 		CData.mapScetchScroller = new JScrollPane(mapScetchPanel);
 		
-		rightPanel = new MapObjectPanel();
+		rightPanel = new MapOPanel();
 		CData.mapObjPanel = rightPanel;
 		
-		tabPane = new JTabbedPane();
-		tabPane.addTab("Map", CData.mapScroller);
-		tabPane.addTab("Map Scetch", CData.mapScetchScroller);
-		CData.tabPane = tabPane;
+		mapTabPane = new JTabbedPane();
+		mapTabPane.addTab("Map", CData.mapScroller);
+		mapTabPane.addTab("Map Scetch", CData.mapScetchScroller);
+		CData.mapTabPane = mapTabPane;
 		
 		
 		setPreferredSize(new Dimension(100,400));
@@ -62,7 +62,6 @@ public class MFrame extends JFrame{
         leftPanel.setMinimumSize(new Dimension(100,400));
         mapPanel.setMinimumSize(new Dimension(200,400));
         mapScetchPanel.setMinimumSize(new Dimension(200, 400));
-        rightPanel.setMinimumSize(new Dimension(200, 400));
 	}
 
 	private void initUI() {
@@ -90,8 +89,7 @@ public class MFrame extends JFrame{
         add(leftPanel, BorderLayout.WEST);
         
         
-        add(tabPane, BorderLayout.CENTER);
-//        add(CData.mapScetchScroller, BorderLayout.CENTER);
+        add(mapTabPane, BorderLayout.CENTER);
         
         add(rightPanel, BorderLayout.EAST);
         

@@ -8,8 +8,8 @@ import javax.swing.JTabbedPane;
 import mapeditor.MapObject.StaticObject;
 import mapeditor.panels.MapPanel;
 import mapeditor.panels.MapScetchPanel;
-import mapeditor.panels.ImageChoosePanel;
-import mapeditor.panels.MapObjectPanel;
+import mapeditor.panels.MapOChoosePanel;
+import mapeditor.panels.MapOPanel;
 
 public class CData {
 
@@ -25,14 +25,14 @@ public class CData {
 	public volatile static byte[][] backgroundObjectsIDs = new byte[MAX_SIZE][MAX_SIZE];
 	public volatile static StaticObject[] staticObjects = new StaticObject[MAX_MAP_OBJECTS];
 	
-	public volatile static ImageChoosePanel imgChoosePanel;
-	public volatile static MapObjectPanel mapObjPanel;
+	public volatile static MapOChoosePanel imgChoosePanel;
+	public volatile static MapOPanel mapObjPanel;
 	public volatile static MapPanel mapPanel;
 	public volatile static MapScetchPanel mapScetchPanel;
 	public volatile static MFrame mainFrame;
 	public volatile static JScrollPane mapScroller;
 	public volatile static JScrollPane mapScetchScroller;
-	public volatile static JTabbedPane tabPane;
+	public volatile static JTabbedPane mapTabPane;
 	
 	public static int getArraySizeX() {
 		return MapData.arrayWidth;

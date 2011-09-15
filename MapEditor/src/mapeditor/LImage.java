@@ -9,17 +9,15 @@ import java.awt.Image;
  */
 public class LImage {
 	private Image image;
-	byte id = 0;
+	short id = 0;
 	private String resource;
 	private String fileName;
 	private float scale;
 	
-	public LImage(Image image, byte id, String resource){
+	public LImage(Image image, short id, String resource){
 		this.image = image;
 		this.id = id;
-		
 		this.fileName = resource;
-		
 		//Make it match resource mapping for android
 		this.resource = resource.replaceAll(".png", "");
 	}
@@ -40,7 +38,7 @@ public class LImage {
 		return fileName.substring(0, fileName.indexOf('.'));
 	}
 
-	public byte getIDbyte() {
+	public short getIDbyte() {
 		return id;
 	}
 	

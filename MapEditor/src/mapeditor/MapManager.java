@@ -43,6 +43,7 @@ import org.xml.sax.SAXException;
  */
 public class MapManager {
 	private static int currentID = 0;
+	private static int currentMapOID = 1;
 
 	public static void writeMap(File file){
 //		DataOutputStream os = null;
@@ -274,43 +275,44 @@ public class MapManager {
 //		}
 //
 //	}
+	public static void removeImage(LImage image) {
+		CData.images.remove(image.getID());
 
-//	/**
-//	 * @param tile
-//	 * @param dim
-//	 * @param str - 01011101  
-//	 */
-//	private static void addMoveTypes(Tile tile, int dim, String str) {
-//		char[] arr = str.toCharArray();
-//		int dimensions = CData.TILE_BLOCKS;
-//		for (int i = 0; i < dimensions*dimensions; i++) {
-//			tile.setTileState(i%dimensions, 
-//					i/dimensions, dim, arr[i] == '1' ? true : false);
-//		}
-//		
-//	}
-
-	public static void removeTile(LImage tile) {
-		CData.images.remove(tile.getID());
-
-		if(CData.imgChoosePanel != null){
-			CData.imgChoosePanel.updateList();
-		}
 		if(CData.mainFrame != null){
 			CData.mainFrame.repaint();
 		}
 
 	}
 
-	public static void addTiles(File[] tileFiles){
-		for(File file : tileFiles){
+	public static void addImages(File[] imgFiles){
+		for(File file : imgFiles){
 			Image image = new ImageIcon(file.toString()).getImage();
 			CData.images.put(currentID, new LImage(image, (byte)currentID, file.getName()));
 			currentID++;
 		}
+		if(CData.mainFrame != null){
+			CData.mainFrame.repaint();
+		}
+	}
+	
+	public static void addMapO(){
+		addMapO(new MapObject((short) currentMapOID));
+	}
+	
+	public static void addMapO(MapObject mapO){
+		CData.mapObjects.put(mapO.getID(), mapO);
+		if(mapO.getName() == null){
+			mapO.setName("MapO " + currentMapOID);
+		}
+		currentMapOID++;
 		if(CData.imgChoosePanel != null){
 			CData.imgChoosePanel.updateList();
+			CData.imgChoosePanel.repaint();
 		}
+	}
+	
+	public static void removeMapO(MapObject mapO){
+		CData.mapObjects.remove(mapO.getID());
 		if(CData.mainFrame != null){
 			CData.mainFrame.repaint();
 		}

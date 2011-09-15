@@ -21,20 +21,22 @@ import mapeditor.CData;
 import mapeditor.MapData;
 import mapeditor.LImage;
 import mapeditor.MapManager;
+import mapeditor.MapObject;
 
-public class ImageChoosePanel extends JPanel  {
+public class MapOChoosePanel extends JPanel  {
 	public JTextField xField;
 	public JTextField yField;
 	
 	private JList list;
 	private JButton save;
 	private JButton load;
-	private JButton saveTileSet;
-	private JButton loadTileSet;
-	private JButton addTile;
-	private JButton removeTile;
+	private JButton saveMapOSet;
+	private JButton loadMapOSet;
+	private JButton addMapObject;
+	private JButton removeMapObject;
+	private JButton imageView;
 
-	public ImageChoosePanel(){
+	public MapOChoosePanel(){
 
 		//Initialize objects
 		list = new JList();	
@@ -42,10 +44,11 @@ public class ImageChoosePanel extends JPanel  {
 		yField = new JTextField(""+CData.getArraySizeX());
 		save = new JButton("Save Map");
 		load = new JButton("Load Map");
-		saveTileSet = new JButton("Save Tileset");
-		loadTileSet = new JButton("Load Tileset");
-		addTile = new JButton("Add Tile");
-		removeTile = new JButton("Remove Tile");
+		addMapObject = new JButton("Add MapO");
+		removeMapObject = new JButton("Remove MapO");
+		imageView = new JButton("View images");
+		saveMapOSet = new JButton("Save Tileset");
+		loadMapOSet = new JButton("Load Tileset");
 		
 		
 		xField.setColumns(3);
@@ -54,9 +57,14 @@ public class ImageChoosePanel extends JPanel  {
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		addActionListeners();
-
 		addComponents();
+		createFirstMapO();
 
+	}
+
+	private void createFirstMapO() {
+		MapObject clearMapO = new MapObject((short)0, "Clear"); 
+		CData.mapObjects.put(0, clearMapO);
 	}
 
 	private void addComponents(){
@@ -66,36 +74,51 @@ public class ImageChoosePanel extends JPanel  {
 		
 		add(yField);
 		
-		add(addTile);
+		add(addMapObject);
 		
-		add(removeTile);
+		add(removeMapObject);
 		
 		JScrollPane listScrollPane = new JScrollPane(list);
 		add(listScrollPane);
 		
-		add(new JLabel("Tile size:"));
+		add(imageView);
 		
 		add(load);
 		
 		add(save);
 		
-		add(saveTileSet);
+		add(saveMapOSet);
 		
-		add(loadTileSet);
+		add(loadMapOSet);
 	}
 
 	private void addActionListeners(){
 		list.addListSelectionListener(new ListSelectionListener() {
-
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-//				if(e.getValueIsAdjusting() == false){
-//					JList list = (JList)e.getSource();
-//					LImage tile = (LImage) list.getSelectedValue();
-//					if(tile == null) return;
-//					CData.mainFrame.repaint();
-//				}
-
+				if(e.getValueIsAdjusting() == false){
+					JList list = (JList)e.getSource();
+					MapObject mapO = (MapObject) list.getSelectedValue();
+					if(mapO == mapO) return;
+					CData.curMapObj = mapO;
+					CData.mainFrame.repaint();
+				}
+			}
+		});
+		
+		addMapObject.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MapManager.addMapO();
+			}
+		});
+		
+		removeMapObject.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MapObject mapO = (MapObject) list.getSelectedValue();
+				MapManager.removeMapO(mapO);
 			}
 		});
 
@@ -127,6 +150,21 @@ public class ImageChoosePanel extends JPanel  {
 
 			}
 		});
+		
+		imageView.addActionListener(new ActionListener() {
+			
+			private ImagePopupViewer imageViewWindow;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(imageViewWindow == null){
+					imageViewWindow = new ImagePopupViewer();
+				}
+				imageViewWindow.pack();
+				imageViewWindow.setVisible(true);
+				imageViewWindow.requestFocus();
+			}
+		});
 
 		save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -142,7 +180,7 @@ public class ImageChoosePanel extends JPanel  {
 			}
 		});
 
-		saveTileSet.addActionListener(new ActionListener() {
+		saveMapOSet.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -151,32 +189,12 @@ public class ImageChoosePanel extends JPanel  {
 			}
 		});
 
-		loadTileSet.addActionListener(new ActionListener() {
+		loadMapOSet.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 //				MapManager.loadTileSet(new File("tileset.xml"));
 
 			}
-		});
-		
-		addTile.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				addTiles();
-				
-			}
-		});
-		
-		removeTile.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				removeTile();
-				
-			}
-
-			
 		});
 	}
 
@@ -198,12 +216,6 @@ public class ImageChoosePanel extends JPanel  {
 //
 //			MapManager.loadMap(file);
 //		}
-	}
-	
-	private void removeTile() {
-		LImage tile = (LImage) list.getSelectedValue();
-		MapManager.removeTile(tile);
-		
 	}
 	
 	private void saveMapFile(){
@@ -232,36 +244,9 @@ public class ImageChoosePanel extends JPanel  {
 			MapManager.writeMap(file);
 		}
 	}
-
-	private void addTiles(){
-		JFileChooser fileChooser = new JFileChooser();
-		fileChooser.setCurrentDirectory(new File("."));
-		fileChooser.setDialogType(JFileChooser.OPEN_DIALOG);
-		fileChooser.setApproveButtonText("Add");
-		fileChooser.setDialogTitle("Add tile");
-		fileChooser.setMultiSelectionEnabled(true);
-		
-		int returnVal = fileChooser.showOpenDialog(CData.mainFrame);
-		if(returnVal == JFileChooser.APPROVE_OPTION){
-			File[] files = fileChooser.getSelectedFiles();
-
-			MapManager.addTiles(files);
-		}
-
-	}
 	
-	public void valueChanged(ListSelectionEvent e) {
-		if(e.getValueIsAdjusting() == false){
-			JList list = (JList)e.getSource();
-			int i = list.getSelectedIndex();
-			if(i == -1) return;
-			//ObjectPointers.centerPanel.setCurTile(i);
-			CData.mapObjPanel.setCurTile(i);
-		}
-	}
-
 	public void updateList(){
-		list.setListData(CData.images.values().toArray());
-		repaint();
+		list.setListData(CData.mapObjects.values().toArray());
+		updateUI();
 	}
 }
