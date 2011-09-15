@@ -5,6 +5,7 @@ import android.util.Log;
 import com.liongrid.gameengine.LAnimationCodes;
 import com.liongrid.gameengine.LComponent;
 import com.liongrid.gameengine.LGameObject;
+import com.liongrid.gameengine.LGamePointers;
 import com.liongrid.gameengine.components.LSpriteComponent;
 import com.liongrid.gameengine.tools.LFixedSizeArray;
 import com.liongrid.infectomancer.IGameObject;
@@ -81,6 +82,9 @@ public class IMeleeAttackComponent extends LComponent {
 		speed.set(1f, 1, 100);
 		target.afflict(speed);
 		
+		
+		//TODO move this:
+		LGamePointers.audio.playSound("swordswing", 1);
 		
 		LSpriteComponent spr = (LSpriteComponent) parent.findComponentOfType(LSpriteComponent.class);
 		if(spr == null) {
