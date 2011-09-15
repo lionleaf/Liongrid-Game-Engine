@@ -45,9 +45,9 @@ public class TGameStatus extends LBaseObject{
 
 	private void lookForWinner() {
 		if(scoreBalance < -mHeight/2f){
-			TGamePointers.gameActivity.gameOver(TPlayerID.player2);	
+			TGamePointers.gameActivity.gameOver(TPlayerID.player1);	
 		}else if(scoreBalance > mHeight/2f){
-			TGamePointers.gameActivity.gameOver(TPlayerID.player1);
+			TGamePointers.gameActivity.gameOver(TPlayerID.player2);
 		}
 		
 	}

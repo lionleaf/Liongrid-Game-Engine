@@ -44,9 +44,9 @@ public class TGameActivity extends Activity implements LGameLoadedCallback {
 	}
 
 	public void gameOver(TPlayerID player) {
+		LGamePointers.gameThread.stopRunning();
 		Intent i = new Intent(this, TGameOverActivity.class);
 		i.putExtra("com.liongrid.thumbfighter.winner", player.ordinal()+1);
-		startActivity(i);
-		finish();		
+		startActivity(i);		
 	}
 }

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout android:id="@+id/LinearLayout1"
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:orientation="vertical"
   android:layout_width="match_parent"
   android:layout_height="match_parent">
-    <TextView android:textAppearance="?android:attr/textAppearanceLarge" android:id="@+id/gameOverText" android:layout_height="wrap_content" android:text="TextView" android:layout_width="wrap_content"></TextView>
+    <TextView android:textAppearance="?android:attr/textAppearanceLarge" android:layout_width="wrap_content" android:id="@+id/gameOverText" android:text="TextView" android:layout_height="wrap_content" android:layout_alignParentTop="true" android:layout_centerHorizontal="true"></TextView>
+    <Button android:layout_width="wrap_content" android:text="Play again" android:id="@+id/playAgainButt" android:layout_height="wrap_content" android:layout_below="@+id/mainMenuButt" android:layout_centerHorizontal="true" android:layout_marginTop="64dp"></Button>
+    <Button android:layout_width="wrap_content" android:text="Main menu" android:id="@+id/mainMenuButt" android:layout_height="wrap_content" android:layout_below="@+id/gameOverText" android:layout_alignLeft="@+id/playAgainButt" android:layout_marginTop="82dp"></Button>
     
-</LinearLayout>
+</RelativeLayout>
