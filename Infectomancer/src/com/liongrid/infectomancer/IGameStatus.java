@@ -2,6 +2,7 @@ package com.liongrid.infectomancer;
 
 import com.liongrid.gameengine.LBaseObject;
 import com.liongrid.gameengine.LGamePointers;
+import com.liongrid.gameengine.LMusic;
 import com.liongrid.gameengine.LSoundSystem;
 import com.liongrid.gameengine.LSoundSystem.Sound;
 
@@ -18,6 +19,13 @@ public class IGameStatus extends LBaseObject{
 		gObjectHandler = IGamePointers.gameObjectHandler;
 		gameActivity = IGamePointers.curGameActivity;
 		
+		if (IGamePointers.music == null) {
+			LMusic music = new LMusic("keygenmusic01.mp3");
+			IGamePointers.music = music;
+		}
+		
+		
+		IGamePointers.music.play();
 		
 		checkGameStarted();
 		checkHumansLeft();

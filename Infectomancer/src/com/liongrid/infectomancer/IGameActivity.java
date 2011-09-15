@@ -7,6 +7,7 @@ import com.liongrid.gameengine.LGamePointers;
 import com.liongrid.gameengine.LGestureDetector;
 import com.liongrid.gameengine.LInputDelegator;
 import com.liongrid.gameengine.LButton;
+import com.liongrid.gameengine.LMusic;
 import com.liongrid.gameengine.LSoundSystem;
 import com.liongrid.gameengine.LSurfaceViewPanel;
 import com.liongrid.gameengine.LUpgrade;
@@ -89,7 +90,7 @@ public class IGameActivity extends Activity implements LGameActivityInterface,
 		setUpInputHandler();
 		Log.d("Infectosaurus", "Game loaded");
 		setContentView(LGamePointers.panel);
-		LSoundSystem sound = LGamePointers.soundSystem;
+		
 		
 	}
 	
@@ -175,6 +176,11 @@ public class IGameActivity extends Activity implements LGameActivityInterface,
 		super.onPause();
 		Log.d("Infectosaurus", "onPause()");
 		wl.release();
+		
+		if(IGamePointers.music != null){
+			IGamePointers.music.pause();
+		}
+		
 		if(LGamePointers.panel != null){
 			LGamePointers.panel.onPause();
 		}
@@ -185,6 +191,11 @@ public class IGameActivity extends Activity implements LGameActivityInterface,
 	protected void onResume(){
 		super.onResume();
 		Log.d("Infectosaurus", "onResume()"); 
+		
+		if(IGamePointers.music != null){
+			IGamePointers.music.resume();
+		}
+		
 		wl.acquire();
 		if(LGamePointers.panel != null){
 			LGamePointers.panel.onResume();
