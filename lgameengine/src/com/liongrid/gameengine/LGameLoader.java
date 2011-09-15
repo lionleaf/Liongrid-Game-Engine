@@ -1,5 +1,6 @@
 package com.liongrid.gameengine;
 
+import android.content.Context;
 import android.os.Handler;
 import android.widget.ProgressBar;
 
@@ -14,12 +15,15 @@ public abstract class LGameLoader implements Runnable {
 	protected Handler mHandler;
 	protected ProgressBar mProgressBar;
 	protected LGameLoadedCallback mCallback;
+	protected Context mContext;
 	
-	public LGameLoader(LSurfaceViewPanel panel,LGameLoadedCallback callback, Handler handler, ProgressBar progressBar){
+	public LGameLoader(LSurfaceViewPanel panel,LGameLoadedCallback callback, 
+			Handler handler, ProgressBar progressBar, Context context){
 		this.panel = panel;
 		mProgressBar = progressBar;
 		mHandler = handler;
 		mCallback = callback;
+		mContext = context;
 	}
 	
 	public synchronized void run() {
@@ -44,6 +48,9 @@ public abstract class LGameLoader implements Runnable {
 	
 
 	protected final void instantiateEngineClasses(){
+		//No prerequisites
+		LGamePointers.context = mContext;
+		
 		LGamePointers.textureLib = new LTextureLibrary();
 	    LGamePointers.renderSystem = new LRenderSystem();
 	    postProgress(5);

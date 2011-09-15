@@ -2,6 +2,8 @@ package com.liongrid.gameengine;
 
 import java.io.Serializable;
 
+import android.content.Context;
+
 
 /**
  * @author Lionleaf
@@ -19,7 +21,8 @@ public class LGamePointers implements Serializable {
 	public static LMap map;
 	public static LTileSet tileSet;
 	public static LTextureLibrary textureLib;
-	public static LAudio audio;
+	public static Context context;
+	public static LSoundSystem soundSystem;
 	
 	public static void resetAll(){
 		gameThread = null;
