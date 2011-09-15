@@ -39,16 +39,17 @@ public class LSoundSystem extends LBaseObject {
     private LFixedSizeArray<Sound> mSounds;
     private Sound mSearchDummy;
     private boolean mSoundEnabled = true;
-    private int[] mLoopingStreams;
+    private int[] mLoopingSounds;
+    
     
     public LSoundSystem() {
         super();
         mSoundPool = new SoundPool(MAX_STREAMS, AudioManager.STREAM_MUSIC, 0);
         mSounds = new LFixedSizeArray<Sound>(MAX_SOUNDS, sSoundComparator);
         mSearchDummy = new Sound();
-        mLoopingStreams = new int[MAX_STREAMS];
-        for (int x = 0; x < mLoopingStreams.length; x++) {
-                mLoopingStreams[x] = -1;
+        mLoopingSounds = new int[MAX_STREAMS];
+        for (int x = 0; x < mLoopingSounds.length; x++) {
+                mLoopingSounds[x] = -1;
         }
     }
     
@@ -57,8 +58,8 @@ public class LSoundSystem extends LBaseObject {
         mSoundPool.release();
         mSounds.clear();
         mSoundEnabled = true;
-        for (int x = 0; x < mLoopingStreams.length; x++) {
-                mLoopingStreams[x] = -1;
+        for (int x = 0; x < mLoopingSounds.length; x++) {
+                mLoopingSounds[x] = -1;
         }
     }
 
@@ -120,10 +121,10 @@ public class LSoundSystem extends LBaseObject {
     }
     
     public final void stopAll() {
-        final int count = mLoopingStreams.length;
+        final int count = mLoopingSounds.length;
         for (int x = count - 1; x >= 0; x--) {
-                if (mLoopingStreams[x] >= 0) {
-                        stop(mLoopingStreams[x]);
+                if (mLoopingSounds[x] >= 0) {
+                        stop(mLoopingSounds[x]);
                 }
         }
     }
@@ -134,29 +135,29 @@ public class LSoundSystem extends LBaseObject {
     // that SoundPool does internally here, I've opted to just pause looping
     // sounds when the Activity is paused.
     public void pauseAll() {
-        final int count = mLoopingStreams.length;
+        final int count = mLoopingSounds.length;
         for (int x = 0; x < count; x++) {
-                if (mLoopingStreams[x] >= 0) {
-                        pause(mLoopingStreams[x]);
+                if (mLoopingSounds[x] >= 0) {
+                        pause(mLoopingSounds[x]);
                 }
         }
     }
     
     private void addLoopingStream(int stream) {
-        final int count = mLoopingStreams.length;
+        final int count = mLoopingSounds.length;
         for (int x = 0; x < count; x++) {
-                if (mLoopingStreams[x] < 0) {
-                        mLoopingStreams[x] = stream;
+                if (mLoopingSounds[x] < 0) {
+                        mLoopingSounds[x] = stream;
                         break;
                 }
         }
     }
     
     private void removeLoopingStream(int stream) {
-        final int count = mLoopingStreams.length;
+        final int count = mLoopingSounds.length;
         for (int x = 0; x < count; x++) {
-                if (mLoopingStreams[x] == stream) {
-                        mLoopingStreams[x] = -1;
+                if (mLoopingSounds[x] == stream) {
+                        mLoopingSounds[x] = -1;
                         break;
                 }
         }
@@ -174,6 +175,8 @@ public class LSoundSystem extends LBaseObject {
         public final boolean getSoundEnabled() {
                 return mSoundEnabled;
         }
+        
+        
         
     public class Sound {
         public int resource;
@@ -197,4 +200,7 @@ public class LSoundSystem extends LBaseObject {
 
 	@Override
 	public void update(float dt, LBaseObject parent) {}
+
+
+	
 }
