@@ -110,6 +110,8 @@ public class MapOChoosePanel extends JPanel  {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				MapManager.addMapO();
+				updateList();
+				updateUI();
 			}
 		});
 		
@@ -118,7 +120,11 @@ public class MapOChoosePanel extends JPanel  {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				MapObject mapO = (MapObject) list.getSelectedValue();
+				if(mapO.getID() == 0) return; // this is the clear object. Should not
+				//remove this.
 				MapManager.removeMapO(mapO);
+				updateList();
+				updateUI();
 			}
 		});
 

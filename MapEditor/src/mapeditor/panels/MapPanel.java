@@ -46,8 +46,8 @@ public class MapPanel extends JPanel {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				MapPanel panel = (MapPanel) e.getSource();
-				int x = (int) MapData.fromIsoToCartX(e.getX(), e.getY());
-				int y = (int) MapData.fromIsoToCartY(e.getX(), e.getY());
+				int x = (int) fromWindowX(e.getX(), e.getY());
+				int y = (int) fromWindowY(e.getX(), e.getY());
 				System.out.println("pressed tile x = " + x + " y = " + y);
 				panel.repaint();
 			}

@@ -305,10 +305,6 @@ public class MapManager {
 			mapO.setName("MapO " + currentMapOID);
 		}
 		currentMapOID++;
-		if(CData.imgChoosePanel != null){
-			CData.imgChoosePanel.updateList();
-			CData.imgChoosePanel.repaint();
-		}
 	}
 	
 	public static void removeMapO(MapObject mapO){
