@@ -1,26 +1,18 @@
 package mapeditor.panels;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.Iterator;
-
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 
 import mapeditor.CData;
-import mapeditor.CollisionObject;
 import mapeditor.LImage;
 import mapeditor.MapData;
 import mapeditor.MapObject;
@@ -29,7 +21,8 @@ public class PropertiesPanel extends JPanel {
 	private MapObjectView mapObjView = new MapObjectView();
 	private JComboBox mapOType;
 	private JComboBox imageChooser;
-
+	private JTextField centerX;
+	private JTextField centerY;
 	
 	public PropertiesPanel(){
 		setMinimumSize(new Dimension(200, 400));
@@ -43,28 +36,46 @@ public class PropertiesPanel extends JPanel {
 	private void addComponents() {
 		JScrollPane scrollPane = new JScrollPane(mapObjView);
 		scrollPane.setPreferredSize(new Dimension(200, 200));
+		mapOType = new JComboBox(CData.tileTypes);
+		imageChooser = new JComboBox(CData.images.values().toArray());
+		centerX = new JTextField("" + 0);
+		centerY = new JTextField("" + 0);
+		
+		
 		add(scrollPane);
 		
-		mapOType = new JComboBox(CData.tileTypes);
+		add(centerX);
+		
+		add(centerY);
+		
 		add(mapOType);
 		
-		imageChooser = new JComboBox(CData.images.values().toArray());
 		add(imageChooser);
 		
 		Insets insets = getInsets();
 		Dimension size;
 		//From top to bottom.
 		size = scrollPane.getPreferredSize();
-		scrollPane.setBounds(0 + insets.left, 10 + insets.top,
+		scrollPane.setBounds(0 + insets.left, 20 + insets.top,
+	             size.width, size.height);
+		
+		centerX.setColumns(3);
+		size = centerX.getPreferredSize();
+		centerX.setBounds(50 + insets.left, 230 + insets.top,
+	             size.width, size.height);
+		
+		centerY.setColumns(3);
+		size = centerX.getPreferredSize();
+		centerY.setBounds(90 + insets.left, 230 + insets.top,
 	             size.width, size.height);
 		
 		size = mapOType.getPreferredSize();
-		mapOType.setBounds(30 + insets.left, 220 + insets.top,
-				size.width, size.height);
+		mapOType.setBounds(30 + insets.left, 260 + insets.top,
+				150, size.height);
 		
 		size = imageChooser.getPreferredSize();
-		imageChooser.setBounds(30 + insets.left, 250 + insets.top,
-	             size.width, size.height);
+		imageChooser.setBounds(30 + insets.left, 290 + insets.top,
+	            150, size.height);
 	}
 	
 
@@ -86,6 +97,34 @@ public class PropertiesPanel extends JPanel {
 				CData.curMapO.setLImageID(img.getIDbyte());
 				System.out.println("Set new image. ID = " + img.getIDbyte());
 				repaint();
+			}
+		});
+		
+		centerX.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				try{
+					if(CData.curMapO == null) return;
+					CData.curMapO.setCenter(Integer.parseInt(centerX.getText()), 
+											Integer.parseInt(centerY.getText()));
+				}catch (Exception e) {
+					centerX.setText(""+CData.curMapO.getCenter().x);
+					centerY.setText(""+CData.curMapO.getCenter().y);
+				}
+			}
+		});
+		
+		centerY.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				try{
+					if(CData.curMapO == null) return;
+					CData.curMapO.setCenter(Integer.parseInt(centerX.getText()), 
+											Integer.parseInt(centerY.getText()));
+				}catch (Exception e) {
+					centerX.setText(""+CData.curMapO.getCenter().x);
+					centerY.setText(""+CData.curMapO.getCenter().y);
+				}
 			}
 		});
 		
@@ -111,7 +150,8 @@ public class PropertiesPanel extends JPanel {
 			MapObject mapO = CData.curMapO;
 			if(mapO != null && mapO.getLImage() != null){
 				Image img = mapO.getLImage().getImage();
-				g2d.drawImage(img, 10, 10, null);
+				g2d.drawImage(img, 0, 0, 200, 200, null);
+				g2d.drawOval(mapO.getCenter().x-5, mapO.getCenter().y-5, 10, 10);
 			}
 			
 		}

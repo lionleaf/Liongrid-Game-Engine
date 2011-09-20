@@ -44,6 +44,17 @@ public class MapData {
 		changeMap(mapWidth, mapHeight);
 	}
 	
+	public static void setUp(int mapWidth, int mapHeight, int x1, int x2, int y1, int y2){
+		IsometricTransformation.setMatrixX(x1, x2);
+		IsometricTransformation.setMatrixY(y1, y2);
+		IsometricTransformation.verify();
+		changeMap(mapWidth, mapHeight);
+	}
+	
+	public static float getRotationIndex(int n, int m){
+		return IsometricTransformation.getRotationIndex(n, m);
+	}
+	
 	public static int[][] getMapIndices(){
 		return mapIndices;
 	}

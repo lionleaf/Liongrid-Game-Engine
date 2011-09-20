@@ -92,4 +92,8 @@ public class IsometricTransformation {
 		inverseMatrix[1][0] = - matrix[1][0] / (axby - aybx);
 		inverseMatrix[1][1] = matrix[0][0] / (axby - aybx);
 	}
+	
+	public static float getRotationIndex(int n, int m){
+		return matrix[n][m];
+	}
 }

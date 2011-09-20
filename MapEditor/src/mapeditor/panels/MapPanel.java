@@ -8,14 +8,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.util.HashMap;
-
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
 import mapeditor.CData;
 import mapeditor.MapData;
-import mapeditor.LImage;
 
 public class MapPanel extends JPanel {
 	JCheckBox grid = new JCheckBox();
@@ -33,24 +30,29 @@ public class MapPanel extends JPanel {
 	public MapPanel(){
 		add(grid);
 		grid.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				repaint();
 			}
 		});
 		
 		addMouseListener(new MouseListener() {
+			@Override
 			public void mouseClicked(MouseEvent arg0) {}
 			
+			@Override
 			public void mouseEntered(MouseEvent arg0) {}
+			@Override
 			public void mouseExited(MouseEvent arg0) {}
 			@Override
 			public void mousePressed(MouseEvent e) {
 				MapPanel panel = (MapPanel) e.getSource();
-				int x = (int) fromWindowX(e.getX(), e.getY());
-				int y = (int) fromWindowY(e.getX(), e.getY());
+				int x = fromWindowX(e.getX(), e.getY());
+				int y = fromWindowY(e.getX(), e.getY());
 				System.out.println("pressed tile x = " + x + " y = " + y);
 				panel.repaint();
 			}
+			@Override
 			public void mouseReleased(MouseEvent arg0) {}
 		});
 		
@@ -68,6 +70,7 @@ public class MapPanel extends JPanel {
 				}
 				
 			}
+			@Override
 			public void mouseMoved(MouseEvent arg0) {}
 			
 		});

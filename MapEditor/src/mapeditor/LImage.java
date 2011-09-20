@@ -27,13 +27,14 @@ public class LImage {
 	}
 
 	public Integer getID() {
-		return new Integer((int)id);
+		return new Integer(id);
 	}
 
 	public String getResource() {
 		return resource;
 	}
 	
+	@Override
 	public String toString(){
 		return fileName.substring(0, fileName.indexOf('.'));
 	}

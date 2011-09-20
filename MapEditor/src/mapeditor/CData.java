@@ -8,7 +8,7 @@ import javax.swing.JTabbedPane;
 import mapeditor.MapObject.StaticObject;
 import mapeditor.panels.MapPanel;
 import mapeditor.panels.MapScetchPanel;
-import mapeditor.panels.MapOChoosePanel;
+import mapeditor.panels.MapSetupPanel;
 import mapeditor.panels.PropertiesPanel;
 
 public class CData {
@@ -25,7 +25,6 @@ public class CData {
 	public volatile static byte[][] backgroundObjectsIDs = new byte[MAX_SIZE][MAX_SIZE];
 	public volatile static StaticObject[] staticObjects = new StaticObject[MAX_MAP_OBJECTS];
 	
-	public volatile static MapOChoosePanel imgChoosePanel;
 	public volatile static PropertiesPanel propertiesPanel;
 	public volatile static MapPanel mapPanel;
 	public volatile static MapScetchPanel mapScetchPanel;
@@ -33,6 +32,7 @@ public class CData {
 	public volatile static JScrollPane mapScroller;
 	public volatile static JScrollPane mapScetchScroller;
 	public volatile static JTabbedPane mapTabPane;
+	public volatile static MapSetupPanel mapSetupPanel;
 	
 	public static int getArraySizeX() {
 		return MapData.arrayWidth;
@@ -44,13 +44,20 @@ public class CData {
 	
 	public static void loadLevel(int mapWidth, int mapHeight, int a, int b){
 		MapData.setUp(mapWidth, mapHeight, a, b);
+		mapSetupPanel.updateAxes();
 		changeLevelSize(mapWidth, mapHeight);
 	}
 	
+	public static void loadLevel(int mapWidth, int mapHeight, int x1, int x2, int y1, int y2){
+		MapData.setUp(mapWidth, mapHeight, x1, x2, y1, y2);
+		mapSetupPanel.updateAxes();
+		changeLevelSize(mapWidth, mapHeight);
+	}
+
 	public static void changeLevelSize(int mapWidth, int mapHeight) {
 		MapData.changeMap(mapWidth, mapHeight);
-		imgChoosePanel.xField.setText(""+mapWidth);
-		imgChoosePanel.yField.setText(""+mapHeight);
+		mapSetupPanel.xField.setText(""+mapWidth);
+		mapSetupPanel.yField.setText(""+mapHeight);
 		CData.mapPanel.loadMap();
 		CData.mapScetchPanel.loadMap();
 		mainFrame.repaint();

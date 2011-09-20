@@ -19,11 +19,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import mapeditor.CData;
 import mapeditor.MapData;
-import mapeditor.LImage;
 import mapeditor.MapManager;
 import mapeditor.MapObject;
 
-public class MapOChoosePanel extends JPanel  {
+public class MapSetupPanel extends JPanel  {
 	public JTextField xField;
 	public JTextField yField;
 	
@@ -35,13 +34,23 @@ public class MapOChoosePanel extends JPanel  {
 	private JButton addMapObject;
 	private JButton removeMapObject;
 	private JButton imageView;
+	
+	// Vector components of the isometric coordinate axes. 
+	private JTextField xHorisontal;
+	private JTextField xVertical;
+	private JTextField yHorisontal;
+	private JTextField yVertical;
 
-	public MapOChoosePanel(){
+	public MapSetupPanel(){
 
 		//Initialize objects
 		mapOList = new JList();	
 		xField = new JTextField(""+CData.getArraySizeX());
 		yField = new JTextField(""+CData.getArraySizeX());
+		xHorisontal = new JTextField(""+MapData.getRotationIndex(0, 0));
+		xVertical = new JTextField(""+MapData.getRotationIndex(1, 0));
+		yHorisontal = new JTextField(""+MapData.getRotationIndex(0, 1));
+		yVertical = new JTextField(""+MapData.getRotationIndex(1, 1));
 		save = new JButton("Save Map");
 		load = new JButton("Load Map");
 		addMapObject = new JButton("Add MapO");
@@ -53,6 +62,10 @@ public class MapOChoosePanel extends JPanel  {
 		
 		xField.setColumns(3);
 		yField.setColumns(3);
+		xHorisontal.setColumns(3);
+		xVertical.setColumns(3);
+		yHorisontal.setColumns(3);
+		yVertical.setColumns(3);
 		mapOList.setPreferredSize(new Dimension(80, 20));
 		mapOList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -90,6 +103,20 @@ public class MapOChoosePanel extends JPanel  {
 		add(saveMapOSet);
 		
 		add(loadMapOSet);
+		
+		add(new JLabel("x-axis:          "));
+		
+		
+		
+		add(xVertical);
+		
+		add(xHorisontal);
+
+		add(new JLabel("y-axis:          "));
+		
+		add(yVertical);
+		
+		add(yHorisontal);
 	}
 
 	private void addActionListeners(){
@@ -173,6 +200,7 @@ public class MapOChoosePanel extends JPanel  {
 		});
 
 		save.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				saveMapFile();
 			}
@@ -254,5 +282,12 @@ public class MapOChoosePanel extends JPanel  {
 	public void updateList(){
 		mapOList.setListData(CData.mapObjects.values().toArray());
 		updateUI();
+	}
+
+	public void updateAxes() {
+		xHorisontal.setText(""+MapData.getRotationIndex(0, 0));
+		xVertical.setText(""+MapData.getRotationIndex(1, 0));
+		yHorisontal.setText(""+MapData.getRotationIndex(0, 1));
+		yVertical.setText(""+MapData.getRotationIndex(1, 1));
 	}
 }

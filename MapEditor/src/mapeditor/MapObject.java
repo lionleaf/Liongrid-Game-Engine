@@ -1,30 +1,29 @@
 package mapeditor;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-
 import com.liongrid.gameengine.tools.LVector2;
+import com.liongrid.gameengine.tools.LVector2Int;
 
 public class MapObject{
 	private short lImageID = 0;
 	private short id = 0;
 	private ArrayList<CollisionObject> collideables = new ArrayList<CollisionObject>();
-	private LVector2 centerPos;
+	private LVector2Int centerPos;
 	private String name;
 	
 	public MapObject(short id){
-		this(id, null, new LVector2());
+		this(id, null, new LVector2Int());
 	}
 	
-	public MapObject(short id, LVector2 centerPos){
+	public MapObject(short id, LVector2Int centerPos){
 		this(id, null, centerPos);
 	}
 
 	public MapObject(short id, String name){
-		this(id, name, new LVector2());
+		this(id, name, new LVector2Int());
 	}
 	
-	public MapObject(short id, String name, LVector2 centerPos){
+	public MapObject(short id, String name, LVector2Int centerPos){
 		this.id = id;
 		this.centerPos = centerPos;
 		this.name = name;
@@ -38,6 +37,7 @@ public class MapObject{
 		return name;
 	}
 	
+	@Override
 	public String toString() {
 		if(name != null){
 			return name;
@@ -46,7 +46,7 @@ public class MapObject{
 	}
 	
 	public Integer getID() {
-		return new Integer((int)id);
+		return new Integer(id);
 	}
 	
 	public short getIDbyte() {
@@ -69,12 +69,12 @@ public class MapObject{
 		return new StaticObject(this);
 	}
 	
-	public void setCenter(float x, float y){
+	public void setCenter(int x, int y){
 		centerPos.x = x;
 		centerPos.y = y;
 	}
 	
-	public LVector2 getCenter(){
+	public LVector2Int getCenter(){
 		return centerPos;
 	}
 	
@@ -87,7 +87,7 @@ public class MapObject{
 	}
 	
 	public int getLImageID(){
-		return (int) lImageID;
+		return lImageID;
 	}
 	
 	

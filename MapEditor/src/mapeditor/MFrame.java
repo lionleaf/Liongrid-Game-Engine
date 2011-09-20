@@ -16,11 +16,11 @@ import javax.swing.JTabbedPane;
 
 import mapeditor.panels.MapPanel;
 import mapeditor.panels.MapScetchPanel;
-import mapeditor.panels.MapOChoosePanel;
+import mapeditor.panels.MapSetupPanel;
 import mapeditor.panels.PropertiesPanel;
 
 public class MFrame extends JFrame{
-	private MapOChoosePanel leftPanel;
+	private MapSetupPanel leftPanel;
 	private MapPanel mapPanel;
 	private PropertiesPanel rightPanel;
 	private MapScetchPanel mapScetchPanel;
@@ -33,8 +33,8 @@ public class MFrame extends JFrame{
 	}
 
 	private void initPanels() {
-		leftPanel = new MapOChoosePanel();
-		CData.imgChoosePanel = leftPanel;
+		leftPanel = new MapSetupPanel();
+		CData.mapSetupPanel = leftPanel;
 		
 		mapPanel = new MapPanel();
 		CData.mapPanel = mapPanel;
@@ -73,7 +73,8 @@ public class MFrame extends JFrame{
         eMenuItem.setMnemonic(KeyEvent.VK_C);
         eMenuItem.setToolTipText("Exit application");
         eMenuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
+            @Override
+			public void actionPerformed(ActionEvent event) {
                 System.exit(0);
             }
         });
