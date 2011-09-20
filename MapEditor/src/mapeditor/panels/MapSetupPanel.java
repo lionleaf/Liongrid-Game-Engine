@@ -106,8 +106,6 @@ public class MapSetupPanel extends JPanel  {
 		
 		add(new JLabel("x-axis:          "));
 		
-		
-		
 		add(xVertical);
 		
 		add(xHorisontal);
@@ -180,9 +178,31 @@ public class MapSetupPanel extends JPanel  {
 				}catch (Exception e) {
 					yField.setText(""+CData.getArraySizeY());
 				}
-
 			}
 		});
+		
+		class AxisListener implements ActionListener {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				try{
+					CData.loadLevel(MapData.mapWidth, MapData.mapHeight, 
+							Integer.parseInt(xHorisontal.getText()),
+							Integer.parseInt(xVertical.getText()),
+							Integer.parseInt(yHorisontal.getText()),
+							Integer.parseInt(yVertical.getText()));
+				}catch (Exception e) {
+					xHorisontal.setText(""+MapData.getRotationIndex(0, 0));
+					xVertical.setText(""+MapData.getRotationIndex(1, 0));
+					yHorisontal.setText(""+MapData.getRotationIndex(0, 1));
+					yVertical.setText(""+MapData.getRotationIndex(1, 1));
+				}
+			}
+		}
+		
+		xHorisontal.addActionListener(new AxisListener());
+		xVertical.addActionListener(new AxisListener());
+		yHorisontal.addActionListener(new AxisListener());
+		yVertical.addActionListener(new AxisListener());
 		
 		imageView.addActionListener(new ActionListener() {
 			

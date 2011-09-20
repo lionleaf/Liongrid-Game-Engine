@@ -51,8 +51,8 @@ public class MapData {
 		changeMap(mapWidth, mapHeight);
 	}
 	
-	public static float getRotationIndex(int n, int m){
-		return IsometricTransformation.getRotationIndex(n, m);
+	public static int getRotationIndex(int n, int m){
+		return (int) IsometricTransformation.getRotationIndex(n, m);
 	}
 	
 	public static int[][] getMapIndices(){
