@@ -6,6 +6,7 @@ import android.R.bool;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.util.Log;
@@ -21,11 +22,15 @@ public class LMusic extends LBaseObject implements OnCompletionListener{
 		Context context = LGamePointers.context;
 		//TODO WAT DO IF CONTEXT NULL?!
 		mMediaPlayer = new MediaPlayer();
+		
 		try{
-			//TODO create might stall a bit too long?!
-			AssetManager assets = context.getAssets();
-			AssetFileDescriptor assDescriptor = assets.openFd(filename);
-			mMediaPlayer.setDataSource(assDescriptor.getFileDescriptor());
+			//TODO prepare might stall a bit too long?!
+			AssetFileDescriptor assDescriptor = context.getAssets().openFd(filename);
+			
+			mMediaPlayer.setDataSource(assDescriptor.getFileDescriptor(), 
+					assDescriptor.getStartOffset(),assDescriptor.getLength());
+			
+			mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 			mMediaPlayer.prepare();
 			mIsPrepared = true;
 			mMediaPlayer.setOnCompletionListener(this);
