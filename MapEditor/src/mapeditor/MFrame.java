@@ -17,12 +17,12 @@ import javax.swing.JTabbedPane;
 import mapeditor.panels.MapPanel;
 import mapeditor.panels.MapScetchPanel;
 import mapeditor.panels.MapOChoosePanel;
-import mapeditor.panels.MapOPanel;
+import mapeditor.panels.PropertiesPanel;
 
 public class MFrame extends JFrame{
 	private MapOChoosePanel leftPanel;
 	private MapPanel mapPanel;
-	private MapOPanel rightPanel;
+	private PropertiesPanel rightPanel;
 	private MapScetchPanel mapScetchPanel;
 	private JTabbedPane mapTabPane;
 
@@ -44,8 +44,8 @@ public class MFrame extends JFrame{
 		CData.mapScetchPanel = mapScetchPanel;
 		CData.mapScetchScroller = new JScrollPane(mapScetchPanel);
 		
-		rightPanel = new MapOPanel();
-		CData.mapObjPanel = rightPanel;
+		rightPanel = new PropertiesPanel();
+		CData.propertiesPanel = rightPanel;
 		
 		mapTabPane = new JTabbedPane();
 		mapTabPane.addTab("Map", CData.mapScroller);

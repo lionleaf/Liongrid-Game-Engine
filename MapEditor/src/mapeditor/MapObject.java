@@ -1,6 +1,7 @@
 package mapeditor;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import com.liongrid.gameengine.tools.LVector2;
 
@@ -60,6 +61,10 @@ public class MapObject{
 		collideables.add(collideable);
 	}
 	
+	public  Object[] getCollideables(){
+		return collideables.toArray();
+	}
+	
 	public StaticObject createStaticObject(){
 		return new StaticObject(this);
 	}
@@ -74,7 +79,15 @@ public class MapObject{
 	}
 	
 	public LImage getLImage(){
-		return CData.images.get(lImageID);
+		return CData.images.get((int) lImageID);
+	}
+	
+	public void setLImageID(short id){
+		lImageID = id;
+	}
+	
+	public int getLImageID(){
+		return (int) lImageID;
 	}
 	
 	

@@ -27,7 +27,7 @@ public class MapOChoosePanel extends JPanel  {
 	public JTextField xField;
 	public JTextField yField;
 	
-	private JList list;
+	private JList mapOList;
 	private JButton save;
 	private JButton load;
 	private JButton saveMapOSet;
@@ -39,7 +39,7 @@ public class MapOChoosePanel extends JPanel  {
 	public MapOChoosePanel(){
 
 		//Initialize objects
-		list = new JList();	
+		mapOList = new JList();	
 		xField = new JTextField(""+CData.getArraySizeX());
 		yField = new JTextField(""+CData.getArraySizeX());
 		save = new JButton("Save Map");
@@ -53,8 +53,8 @@ public class MapOChoosePanel extends JPanel  {
 		
 		xField.setColumns(3);
 		yField.setColumns(3);
-		list.setPreferredSize(new Dimension(80, 20));
-		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		mapOList.setPreferredSize(new Dimension(80, 20));
+		mapOList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		addActionListeners();
 		addComponents();
@@ -78,7 +78,7 @@ public class MapOChoosePanel extends JPanel  {
 		
 		add(removeMapObject);
 		
-		JScrollPane listScrollPane = new JScrollPane(list);
+		JScrollPane listScrollPane = new JScrollPane(mapOList);
 		add(listScrollPane);
 		
 		add(imageView);
@@ -93,14 +93,14 @@ public class MapOChoosePanel extends JPanel  {
 	}
 
 	private void addActionListeners(){
-		list.addListSelectionListener(new ListSelectionListener() {
+		mapOList.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				if(e.getValueIsAdjusting() == false){
 					JList list = (JList)e.getSource();
 					MapObject mapO = (MapObject) list.getSelectedValue();
-					if(mapO == mapO) return;
-					CData.curMapObj = mapO;
+					if(mapO == CData.curMapO) return;
+					CData.curMapO = mapO;
 					CData.mainFrame.repaint();
 				}
 			}
@@ -119,7 +119,7 @@ public class MapOChoosePanel extends JPanel  {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				MapObject mapO = (MapObject) list.getSelectedValue();
+				MapObject mapO = (MapObject) mapOList.getSelectedValue();
 				if(mapO.getID() == 0) return; // this is the clear object. Should not
 				//remove this.
 				MapManager.removeMapO(mapO);
@@ -252,7 +252,7 @@ public class MapOChoosePanel extends JPanel  {
 	}
 	
 	public void updateList(){
-		list.setListData(CData.mapObjects.values().toArray());
+		mapOList.setListData(CData.mapObjects.values().toArray());
 		updateUI();
 	}
 }

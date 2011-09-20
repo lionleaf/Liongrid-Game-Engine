@@ -42,7 +42,7 @@ import org.xml.sax.SAXException;
  *	A class to handle tilesets and tiles. TODO make it non-static, really bad code.
  */
 public class MapManager {
-	private static int currentID = 0;
+	private static int currentImgID = 0;
 	private static int currentMapOID = 1;
 
 	public static void writeMap(File file){
@@ -281,14 +281,25 @@ public class MapManager {
 		if(CData.mainFrame != null){
 			CData.mainFrame.repaint();
 		}
+		
+		if(CData.propertiesPanel != null){
+			CData.propertiesPanel.removeImage(image);
+		}
 
+	}
+	
+	public static void removeAllImages(){
+		if(CData.propertiesPanel != null){
+		}
 	}
 
 	public static void addImages(File[] imgFiles){
 		for(File file : imgFiles){
 			Image image = new ImageIcon(file.toString()).getImage();
-			CData.images.put(currentID, new LImage(image, (byte)currentID, file.getName()));
-			currentID++;
+			LImage lImage = new LImage(image, (byte)currentImgID, file.getName());
+			CData.images.put(currentImgID, lImage);
+			CData.propertiesPanel.addImage(lImage);
+			currentImgID++;
 		}
 		if(CData.mainFrame != null){
 			CData.mainFrame.repaint();

@@ -9,14 +9,14 @@ import mapeditor.MapObject.StaticObject;
 import mapeditor.panels.MapPanel;
 import mapeditor.panels.MapScetchPanel;
 import mapeditor.panels.MapOChoosePanel;
-import mapeditor.panels.MapOPanel;
+import mapeditor.panels.PropertiesPanel;
 
 public class CData {
 
 	private static final int MAX_SIZE = 500;
 	private static final int MAX_MAP_OBJECTS = 500;
 	
-	public static MapObject curMapObj;
+	public static MapObject curMapO;
 	
 	public volatile static String[] tileTypes = {"Background Tile", "Static Object"};
 	public volatile static HashMap<Integer,LImage> images = new HashMap<Integer,LImage>();
@@ -26,7 +26,7 @@ public class CData {
 	public volatile static StaticObject[] staticObjects = new StaticObject[MAX_MAP_OBJECTS];
 	
 	public volatile static MapOChoosePanel imgChoosePanel;
-	public volatile static MapOPanel mapObjPanel;
+	public volatile static PropertiesPanel propertiesPanel;
 	public volatile static MapPanel mapPanel;
 	public volatile static MapScetchPanel mapScetchPanel;
 	public volatile static MFrame mainFrame;
