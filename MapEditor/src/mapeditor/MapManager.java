@@ -280,8 +280,11 @@ public class MapManager {
 	}
 
 	public static void addImages(File[] imgFiles){
-		if(!CData.images.containsKey(0)){
+		if(CData.images.get(0) == null || 
+		   !CData.images.get(0).toString().equals("Empty")){
+			
 			createFirstLImage();
+			CData.propertiesPanel.addImage(CData.images.get(0));
 		}
 		for(File file : imgFiles){
 			Image image = new ImageIcon(file.toString()).getImage();

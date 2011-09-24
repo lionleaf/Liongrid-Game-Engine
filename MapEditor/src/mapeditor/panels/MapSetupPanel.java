@@ -121,6 +121,8 @@ public class MapSetupPanel extends JPanel  {
 					if(mapO == CData.curMapO) return;
 					CData.curMapO = mapO;
 					CData.mainFrame.repaint();
+					if(mapO.getID() == 0) CData.propertiesPanel.disableAllProperties();
+					else CData.propertiesPanel.enableAllProperties();
 				}
 			}
 		});

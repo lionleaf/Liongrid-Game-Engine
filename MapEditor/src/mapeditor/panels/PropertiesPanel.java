@@ -7,6 +7,9 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -130,7 +133,19 @@ public class PropertiesPanel extends JPanel {
 		
 	}
 	
+	public boolean contains(ComboBoxModel comboBoxModel, Object o) {
+		int size = comboBoxModel.getSize();
+		for(int i = 0; i < size; i++) {
+			Object obj = comboBoxModel.getElementAt(i);
+			if(obj.equals(o)) {
+					return true;
+			}
+		}
+		return false;
+	}
+	
 	public void addImage(LImage img){
+		if(contains(imageChooser.getModel(), img)) return;
 		imageChooser.addItem(img);
 	}
 	
@@ -183,7 +198,20 @@ public class PropertiesPanel extends JPanel {
 		private int toWindowY(float x, float y){
 			return (int) (-MapData.fromCartToIsoY(x, y) + offsetY);
 		}
-		
+	}
+	
+	public void disableAllProperties(){
+		mapOType.setEnabled(false);
+		imageChooser.setEnabled(false);
+		centerX.setEnabled(false);
+		centerY.setEnabled(false);
+	}
+	
+	public void enableAllProperties(){
+		mapOType.setEnabled(true);
+		imageChooser.setEnabled(true);
+		centerX.setEnabled(true);
+		centerY.setEnabled(true);
 	}
 
 }
