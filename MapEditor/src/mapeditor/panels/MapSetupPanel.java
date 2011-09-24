@@ -100,15 +100,15 @@ public class MapSetupPanel extends JPanel  {
 		
 		add(new JLabel("x-axis:          "));
 		
-		add(xVertical);
-		
 		add(xHorisontal);
+		
+		add(xVertical);
 
 		add(new JLabel("y-axis:          "));
 		
-		add(yVertical);
-		
 		add(yHorisontal);
+
+		add(yVertical);
 	}
 
 	private void addActionListeners(){
