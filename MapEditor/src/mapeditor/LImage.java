@@ -36,7 +36,7 @@ public class LImage {
 	
 	@Override
 	public String toString(){
-		return fileName.substring(0, fileName.indexOf('.'));
+		return resource;
 	}
 
 	public short getIDbyte() {

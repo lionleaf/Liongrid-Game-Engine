@@ -28,8 +28,8 @@ import org.w3c.dom.Element;
  *	A class to handle tilesets and tiles. TODO make it non-static, really bad code.
  */
 public class MapManager {
-	private static int currentImgID = 0;
-	private static int currentMapOID = 1;
+	private static int currentImgID = 1; // start at 1 because 0 should be "Clear" object
+	private static int currentMapOID = 1; // not contain an image
 
 	public static void writeMap(File file){
 //		DataOutputStream os = null;
@@ -280,6 +280,9 @@ public class MapManager {
 	}
 
 	public static void addImages(File[] imgFiles){
+		if(!CData.images.containsKey(0)){
+			createFirstLImage();
+		}
 		for(File file : imgFiles){
 			Image image = new ImageIcon(file.toString()).getImage();
 			LImage lImage = new LImage(image, (byte)currentImgID, file.getName());
@@ -292,11 +295,26 @@ public class MapManager {
 		}
 	}
 	
+	private static void createFirstMapO() {
+		MapObject emptyMapO = new MapObject((short)0, "Empty"); 
+		CData.mapObjects.put(0, emptyMapO);
+	}
+	
+	private static void createFirstLImage() {
+		LImage emptyImg = new LImage(null, (short) 0, "Empty"); 
+		CData.images.put(0, emptyImg);
+	}
+	
 	public static void addMapO(){
 		addMapO(new MapObject((short) currentMapOID));
 	}
 	
 	public static void addMapO(MapObject mapO){
+		if(!CData.mapObjects.containsKey(0)){
+			createFirstMapO();
+		}
+		if(mapO.getID() == 0) return;
+		
 		CData.mapObjects.put(mapO.getID(), mapO);
 		if(mapO.getName() == null){
 			mapO.setName("MapO " + currentMapOID);

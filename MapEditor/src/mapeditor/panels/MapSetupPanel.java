@@ -71,13 +71,7 @@ public class MapSetupPanel extends JPanel  {
 
 		addActionListeners();
 		addComponents();
-		createFirstMapO();
 
-	}
-
-	private void createFirstMapO() {
-		MapObject clearMapO = new MapObject((short)0, "Clear"); 
-		CData.mapObjects.put(0, clearMapO);
 	}
 
 	private void addComponents(){
