@@ -1,5 +1,6 @@
 package mapeditor;
 
+import java.security.acl.Owner;
 import java.util.ArrayList;
 import com.liongrid.gameengine.tools.LVector2;
 import com.liongrid.gameengine.tools.LVector2Int;
@@ -91,7 +92,7 @@ public class MapObject{
 	}
 	
 	
-	class StaticObject implements LShape.Square{
+	public class StaticObject implements LShape.Square{
 		private static final float MIN_WIDTH = 20;
 		private static final float MIN_HEIGHT = 20;
 		private LVector2 pos;
@@ -131,6 +132,14 @@ public class MapObject{
 			int result = img.getWidth();
 			if(result < MIN_HEIGHT) return MIN_HEIGHT;
 			return result;
+		}
+		
+		public int getLImageID(){
+			return parent.getLImageID();
+		}
+		
+		public LImage getLImage(){
+			return parent.getLImage();
 		}
 	}
 }

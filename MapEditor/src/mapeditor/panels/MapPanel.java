@@ -12,11 +12,14 @@ import java.awt.event.MouseMotionListener;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
+import com.liongrid.gameengine.tools.LVector2;
+
 import mapeditor.CData;
 import mapeditor.LImage;
 import mapeditor.MapData;
 import mapeditor.MapManager;
 import mapeditor.MapObject;
+import mapeditor.MapObject.StaticObject;
 
 public class MapPanel extends JPanel {
 	JCheckBox grid = new JCheckBox();
@@ -63,7 +66,7 @@ public class MapPanel extends JPanel {
 					MapManager.insertBackgroundMapO((int) x, (int) y, CData.curMapO);
 				}
 				else{
-					MapManager.addStaticObject(x, y, CData.curMapO.createStaticObject());
+					MapManager.insertStaticObject(x, y, CData.curMapO.createStaticObject());
 				}
 				System.out.println("pressed tile x = " + x + " y = " + y);
 				panel.repaint();
@@ -114,11 +117,23 @@ public class MapPanel extends JPanel {
 		Graphics2D g2d = (Graphics2D) g;
 		
 		drawTiles(g2d);
+		drawStaticObjects(g2d);
 		
 		if(grid.isSelected()){
 			paintGrid(g2d);
 		}
 	}
+
+	private void drawStaticObjects(Graphics2D g2d) {
+		for(int i = 0; i < CData.staticObjects.size(); i++){
+			StaticObject o = CData.staticObjects.get(i);
+			LVector2 pos = o.getPos();
+			int x = toWindowX(pos.x, pos.y);
+			int y = toWindowY(pos.x, pos.y);
+			g2d.drawImage(o.getLImage().getImage(), x, y, null);
+		}
+	}
+
 
 	private void drawTiles(Graphics2D g2d) {
 		for(int x = 0; x < MapData.arrayWidth; x++){
