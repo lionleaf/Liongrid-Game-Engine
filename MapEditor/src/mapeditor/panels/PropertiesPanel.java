@@ -87,6 +87,10 @@ public class PropertiesPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JComboBox cb = (JComboBox)e.getSource();
+				if(cb.getSelectedItem() == CData.tileTypes[0])
+					CData.staticObject = false;
+				else if(cb.getSelectedItem() == CData.tileTypes[1])
+					CData.staticObject = true;
 				repaint();
 			}
 		});

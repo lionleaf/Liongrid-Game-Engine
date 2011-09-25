@@ -3,6 +3,7 @@ package mapeditor.panels;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -12,7 +13,10 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
 import mapeditor.CData;
+import mapeditor.LImage;
 import mapeditor.MapData;
+import mapeditor.MapManager;
+import mapeditor.MapObject;
 
 public class MapPanel extends JPanel {
 	JCheckBox grid = new JCheckBox();
@@ -23,7 +27,7 @@ public class MapPanel extends JPanel {
 	private int offsetX;
 	private boolean mapReady = false;
 	
-	private byte[][] background;
+	private short[][] background;
 	private int[][] mapIndices;
 	
 	
@@ -47,11 +51,24 @@ public class MapPanel extends JPanel {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				MapPanel panel = (MapPanel) e.getSource();
-				int x = fromWindowX(e.getX(), e.getY());
-				int y = fromWindowY(e.getX(), e.getY());
+				float x = fromWindowX(e.getX(), e.getY());
+				float y = fromWindowY(e.getX(), e.getY());
+				
+				if(x < 0) x = 0;
+				if(y < 0) y = 0;
+				if(x > MapData.arrayWidth) x = MapData.arrayWidth - 1;
+				if(y > MapData.arrayHeight) x = MapData.arrayHeight - 1;
+				
+				if(CData.staticObject == false){
+					MapManager.insertBackgroundMapO((int) x, (int) y, CData.curMapO);
+				}
+				else{
+					MapManager.addStaticObject(x, y, CData.curMapO.createStaticObject());
+				}
 				System.out.println("pressed tile x = " + x + " y = " + y);
 				panel.repaint();
 			}
+
 			@Override
 			public void mouseReleased(MouseEvent arg0) {}
 		});
@@ -104,8 +121,17 @@ public class MapPanel extends JPanel {
 	}
 
 	private void drawTiles(Graphics2D g2d) {
-		for(int x = 0; x < mapIndices.length; x++){
-			for(int y = mapIndices[x][0]; y <= mapIndices[x][1]; y++){
+		for(int x = 0; x < MapData.arrayWidth; x++){
+			for(int y = 0; y < MapData.arrayHeight; y++){
+				int isoX = toWindowX(x, y);
+				int isoY = toWindowY(x, y);
+				MapObject mapO = CData.mapObjects.get((int)CData.backgroundObjectsIDs[x][y]);
+				if(mapO == null) continue;
+				LImage lImg = mapO.getLImage();
+				if(lImg == null) continue;
+				Image image = lImg.getImage();
+				if(image == null) continue;
+				g2d.drawImage(image, isoX, isoY, null);
 			}
 		}
 	}

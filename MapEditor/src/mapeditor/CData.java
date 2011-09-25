@@ -1,5 +1,6 @@
 package mapeditor;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.JScrollPane;
@@ -14,16 +15,16 @@ import mapeditor.panels.PropertiesPanel;
 public class CData {
 
 	private static final int MAX_SIZE = 500;
-	private static final int MAX_MAP_OBJECTS = 500;
 	
-	public static MapObject curMapO;
+	public volatile static MapObject curMapO;
+	public volatile static boolean staticObject = false; 
 	
 	public volatile static String[] tileTypes = {"Background Tile", "Static Object"};
 	public volatile static HashMap<Integer,LImage> images = new HashMap<Integer,LImage>();
 	public volatile static HashMap<Integer,MapObject> mapObjects = new HashMap<Integer,MapObject>();
 	
-	public volatile static byte[][] backgroundObjectsIDs = new byte[MAX_SIZE][MAX_SIZE];
-	public volatile static StaticObject[] staticObjects = new StaticObject[MAX_MAP_OBJECTS];
+	public volatile static short[][] backgroundObjectsIDs = new short[MAX_SIZE][MAX_SIZE];
+	public volatile static ArrayList<StaticObject> staticObjects = new ArrayList<StaticObject>();
 	
 	public volatile static PropertiesPanel propertiesPanel;
 	public volatile static MapPanel mapPanel;

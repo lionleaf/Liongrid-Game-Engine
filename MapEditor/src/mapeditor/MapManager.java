@@ -20,6 +20,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import mapeditor.MapObject.StaticObject;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -301,6 +303,8 @@ public class MapManager {
 	private static void createFirstMapO() {
 		MapObject emptyMapO = new MapObject((short)0, "Empty"); 
 		CData.mapObjects.put(0, emptyMapO);
+		CData.curMapO = emptyMapO;
+		// TODO 
 	}
 	
 	private static void createFirstLImage() {
@@ -330,5 +334,17 @@ public class MapManager {
 		if(CData.mainFrame != null){
 			CData.mainFrame.repaint();
 		}
+	}
+	
+	public static void insertBackgroundMapO(int x, int y, MapObject mapO){
+		CData.backgroundObjectsIDs[x][y] = mapO.getIDbyte();
+	}
+	
+	public static void addStaticObject(float x, float y, StaticObject staticO){
+		CData.staticObjects.add(staticO);
+	}
+	
+	public static void removeStaticObject(StaticObject staticO){
+		CData.staticObjects.remove(staticO);
 	}
 }
