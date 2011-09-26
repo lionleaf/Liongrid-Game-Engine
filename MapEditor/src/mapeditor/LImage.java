@@ -12,7 +12,6 @@ public class LImage {
 	short id = 0;
 	private String resource;
 	private String fileName;
-	private float scale;
 	
 	public LImage(Image image, short id, String resource){
 		this.image = image;
@@ -44,15 +43,11 @@ public class LImage {
 	}
 	
 	public int getWidth(){
-		int result = (int) (image.getWidth(null)*scale);
-		if(result < 0) return -1;
-		return result;
+		return image.getWidth(null);
 	}
 	
 	public int getHeigth(){
-		int result = (int) (image.getHeight(null)*scale);
-		if(result < 0) return -1;
-		return result;
+		return image.getHeight(null);
 	}
 	
 }

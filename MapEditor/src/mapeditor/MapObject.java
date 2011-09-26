@@ -6,8 +6,11 @@ import com.liongrid.gameengine.tools.LVector2;
 import com.liongrid.gameengine.tools.LVector2Int;
 
 public class MapObject{
+	private static final int MIN_WIDTH = 20;
+	private static final int MIN_HEIGHT = 20;
 	private short lImageID = 0;
 	private short id = 0;
+	private float scale = 1;
 	private ArrayList<CollisionObject> collideables = new ArrayList<CollisionObject>();
 	private LVector2Int centerPos;
 	private String name;
@@ -91,14 +94,32 @@ public class MapObject{
 		return lImageID;
 	}
 	
+	public int getWidth() {
+		LImage img = getLImage();
+		if(img == null) return MIN_WIDTH;
+		int result = (int) (img.getWidth() * scale);
+		if(result < MIN_WIDTH) return MIN_WIDTH;
+		return result;
+	}
+	
+	public int getHeight() {
+		LImage img = getLImage();
+		if(img == null) return MIN_HEIGHT;
+		int result = (int) (img.getWidth() * scale);
+		if(result < MIN_HEIGHT) return MIN_HEIGHT;
+		return result;
+	}
+	
 	
 	public class StaticObject implements LShape.Square{
-		private static final float MIN_WIDTH = 20;
-		private static final float MIN_HEIGHT = 20;
+
 		private LVector2 pos;
+		private LVector2 isoPos;
 		private MapObject parent;
 		
 		public StaticObject(MapObject owner) {
+			pos = new LVector2();
+			isoPos = new LVector2();
 			parent = owner;
 		}
 		
@@ -118,20 +139,12 @@ public class MapObject{
 		
 		@Override
 		public float getWidth() {
-			LImage img = parent.getLImage();
-			if(img == null) return MIN_WIDTH;
-			int result = img.getWidth();
-			if(result < MIN_WIDTH) return MIN_WIDTH;
-			return result;
+			return parent.getWidth();
 		}
 
 		@Override
 		public float getHeight() {
-			LImage img = parent.getLImage();
-			if(img == null) return MIN_HEIGHT;
-			int result = img.getWidth();
-			if(result < MIN_HEIGHT) return MIN_HEIGHT;
-			return result;
+			return parent.getHeight();
 		}
 		
 		public int getLImageID(){

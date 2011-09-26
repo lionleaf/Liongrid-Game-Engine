@@ -13,6 +13,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
 import com.liongrid.gameengine.tools.LVector2;
+import com.liongrid.gameengine.tools.LVector2Int;
 
 import mapeditor.CData;
 import mapeditor.LImage;
@@ -136,17 +137,19 @@ public class MapPanel extends JPanel {
 
 
 	private void drawTiles(Graphics2D g2d) {
+		LVector2Int center;
 		for(int x = 0; x < MapData.arrayWidth; x++){
 			for(int y = 0; y < MapData.arrayHeight; y++){
-				int isoX = toWindowX(x, y);
-				int isoY = toWindowY(x, y);
 				MapObject mapO = CData.mapObjects.get((int)CData.backgroundObjectsIDs[x][y]);
-				if(mapO == null) continue;
+				if(mapO == null || 
+				   mapO.getLImage() == null || 
+				   mapO.getLImage().getImage() == null) 
+					continue;
+				center = mapO.getCenter();
+				int isoX = toWindowX(x, y) - center.x;
+				int isoY = toWindowY(x, y) + center.y;
 				LImage lImg = mapO.getLImage();
-				if(lImg == null) continue;
-				Image image = lImg.getImage();
-				if(image == null) continue;
-				g2d.drawImage(image, isoX, isoY, null);
+				g2d.drawImage(lImg.getImage(), isoX, isoY - mapO.getHeight(), null);
 			}
 		}
 	}
