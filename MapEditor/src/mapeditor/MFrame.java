@@ -14,13 +14,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 
+import mapeditor.panels.MapOCartesianPanel;
+import mapeditor.panels.MapOIsometricPanel;
 import mapeditor.panels.MapPanel;
 import mapeditor.panels.MapScetchPanel;
 import mapeditor.panels.MapSetupPanel;
 import mapeditor.panels.PropertiesPanel;
 
 public class MFrame extends JFrame{
-	private MapSetupPanel leftPanel;
+	private MapSetupPanel mapSetupPanel;
 	private MapPanel mapPanel;
 	private PropertiesPanel rightPanel;
 	private MapScetchPanel mapScetchPanel;
@@ -33,33 +35,47 @@ public class MFrame extends JFrame{
 	}
 
 	private void initPanels() {
-		leftPanel = new MapSetupPanel();
-		CData.mapSetupPanel = leftPanel;
 		
+		//Left panel
+		mapSetupPanel = new MapSetupPanel();
+		CData.mapSetupPanel = mapSetupPanel;
+		
+		
+		//Center panel
 		mapPanel = new MapPanel();
 		CData.mapPanel = mapPanel;
-		CData.mapScroller = new JScrollPane(mapPanel);
+		JScrollPane mapScroller = new JScrollPane(mapPanel);
 		
 		mapScetchPanel = new MapScetchPanel();
 		CData.mapScetchPanel = mapScetchPanel;
-		CData.mapScetchScroller = new JScrollPane(mapScetchPanel);
+		JScrollPane mapScetchScroller = new JScrollPane(mapScetchPanel);
 		
+		CData.mapOCartPanel = new MapOCartesianPanel();
+		CData.mapOIsoPanel = new MapOIsometricPanel();
+		JScrollPane mapOCartScroller = new JScrollPane(CData.mapOCartPanel);
+		JScrollPane mapOIsoScroller = new JScrollPane(CData.mapOIsoPanel);
+		JSplitPane mapOView = new JSplitPane(JSplitPane.VERTICAL_SPLIT, 
+											 mapOIsoScroller,
+											 mapOCartScroller);
+		CData.mapOSplitView = mapOView;
+		
+		mapTabPane = new JTabbedPane();
+		mapTabPane.addTab("Map View", mapScroller);
+		mapTabPane.addTab("Map Scetch View", mapScetchScroller);
+		mapTabPane.addTab("MapO View", mapOView);
+		
+		
+		//Right panel
 		rightPanel = new PropertiesPanel();
 		CData.propertiesPanel = rightPanel;
 		
-		mapTabPane = new JTabbedPane();
-		mapTabPane.addTab("Map", CData.mapScroller);
-		mapTabPane.addTab("Map Scetch", CData.mapScetchScroller);
-		CData.mapTabPane = mapTabPane;
-		
-		
 		setPreferredSize(new Dimension(100,400));
-		leftPanel.setPreferredSize(new Dimension(100,400));
+		mapSetupPanel.setPreferredSize(new Dimension(100,400));
 		mapPanel.setPreferredSize(new Dimension(500,500));
 		mapScetchPanel.setPreferredSize(new Dimension(500,500));
 		rightPanel.setPreferredSize(new Dimension(200,400));
 		
-        leftPanel.setMinimumSize(new Dimension(100,400));
+        mapSetupPanel.setMinimumSize(new Dimension(100,400));
         mapPanel.setMinimumSize(new Dimension(200,400));
         mapScetchPanel.setMinimumSize(new Dimension(200, 400));
 	}
@@ -87,8 +103,7 @@ public class MFrame extends JFrame{
         
                 
         
-        add(leftPanel, BorderLayout.WEST);
-        
+        add(mapSetupPanel, BorderLayout.WEST);
         
         add(mapTabPane, BorderLayout.CENTER);
         

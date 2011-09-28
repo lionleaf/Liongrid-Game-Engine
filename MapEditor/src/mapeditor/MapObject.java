@@ -6,6 +6,8 @@ import com.liongrid.gameengine.tools.LVector2;
 import com.liongrid.gameengine.tools.LVector2Int;
 
 public class MapObject{
+	public int arraySizeX = 0;
+	public int arraySizeY = 0;
 	private static final int MIN_WIDTH = 20;
 	private static final int MIN_HEIGHT = 20;
 	private short lImageID = 0;
@@ -74,8 +76,8 @@ public class MapObject{
 	}
 	
 	public void setCenter(int x, int y){
-		centerPos.x = x;
-		centerPos.y = y;
+		centerPos.x = (int) (x*scale);
+		centerPos.y = (int) (y*scale);
 	}
 	
 	public LVector2Int getCenter(){

@@ -133,6 +133,7 @@ public class MapScetchPanel extends JPanel{
 		offsetY = mapHeight;
 		mapReady = true;
 		mapIndices = MapData.getMapIndices();
+		updateUI();
 	}
 
 }

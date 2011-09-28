@@ -5,7 +5,11 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
-public class MapOPanel extends JPanel{
+public class MapOIsometricPanel extends JPanel{
+	
+	public MapOIsometricPanel() {
+	
+	}
 
 	@Override
 	public void paintComponent(Graphics g) {
@@ -16,5 +20,9 @@ public class MapOPanel extends JPanel{
 	public Dimension getPreferredSize() {
 		Dimension d = super.getPreferredSize();
 		return d;
+	}
+
+	public void load() {
+		
 	}
 }

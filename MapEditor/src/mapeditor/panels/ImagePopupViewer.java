@@ -27,7 +27,7 @@ public class ImagePopupViewer extends JFrame{
 		removeImage = new JButton("Remove image");
 		
 		setLayout(new FlowLayout());
-		setResizable(false);	
+		setResizable(false);
 		
 		addComponents();
 		addActionListeners();
