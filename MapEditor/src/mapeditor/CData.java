@@ -74,12 +74,15 @@ public class CData {
 	}
 	
 	public static void updateMapOPanels(){
-		if(CData.mapOSplitView != null) CData.mapOSplitView.repaint();
+		if(CData.propertiesPanel != null) CData.propertiesPanel.update();
 		if(CData.mapOCartPanel != null) CData.mapOCartPanel.load();
 		if(CData.mapOIsoPanel != null) CData.mapOIsoPanel.load();
+		//The splitpane must be repainted instead of the two panels inside it
+		if(CData.mapOSplitView != null) CData.mapOSplitView.repaint();
 	}
 	
 	public static void updateEverything(){
-		
+		updateMapOPanels();
+		updateMaps();
 	}
 }

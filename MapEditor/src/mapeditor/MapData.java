@@ -107,11 +107,6 @@ public class MapData {
 		
 		// TODO Error at 512 x 100
 		
-//		System.out.println("x1 = " + x1);
-//		System.out.println("y1 = " + y1);
-//		System.out.println("x2 = " + x2);
-//		System.out.println("y2 = " + y2);
-		
 		float dx = x2 - x1;
 		float dy = y2 - y1;
 		float a = dy/dx;
@@ -147,8 +142,7 @@ public class MapData {
 	
 	/**
 	 * Transforms x and y Cartesian coordinates first into an isometric positive rotated
-	 * view, and then changes the offset so it can be viewed in the top left oriented 
-	 * coordinate system of the window.
+	 * view, and then changes the offset to a bottom left oriented system.
 	 * @param x
 	 * @param y
 	 * @return the x coordinate in the bottom left oriented coordinate system.
@@ -160,8 +154,7 @@ public class MapData {
 
 	/**
 	 * Transforms x and y Cartesian coordinates first into an isometric positive rotated
-	 * view, and then changes the offset so it can be viewed in the top left oriented 
-	 * coordinate system of the window. 
+	 * view, and then changes the offset to a bottom left oriented system. 
 	 * @param x
 	 * @param y
 	 * @return the y coordinate in the bottom left oriented coordinate system.

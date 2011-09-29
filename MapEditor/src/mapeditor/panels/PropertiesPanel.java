@@ -95,6 +95,7 @@ public class PropertiesPanel extends JPanel {
 				JComboBox cb = (JComboBox)e.getSource();
 				if(CData.curMapO == null) return;
 				LImage img = (LImage) cb.getSelectedItem();
+				if(img == null) return;
 				CData.curMapO.setLImageID(img.getIDbyte());
 				System.out.println("Set new image. ID = " + img.getIDbyte());
 				repaint();
@@ -109,7 +110,7 @@ public class PropertiesPanel extends JPanel {
 					CData.curMapO.arraySizeX = Integer.parseInt(mapOSizeX.getText());
 					CData.updateMapOPanels();
 				}catch (Exception e) {
-					mapOSizeX.setText(""+CData.curMapO.arraySizeX);
+					updateComponents();
 				}
 			}
 		});
@@ -122,7 +123,7 @@ public class PropertiesPanel extends JPanel {
 					CData.curMapO.arraySizeY = Integer.parseInt(mapOSizeY.getText());
 					CData.updateMapOPanels();
 				}catch (Exception e) {
-					mapOSizeX.setText(""+CData.curMapO.arraySizeY);
+					updateComponents();
 				}
 			}
 		});
@@ -134,10 +135,9 @@ public class PropertiesPanel extends JPanel {
 					if(CData.curMapO == null) return;
 					CData.curMapO.setCenter(Integer.parseInt(centerX.getText()), 
 											Integer.parseInt(centerY.getText()));
-					CData.updateEverything();
+					CData.updateMapOPanels();
 				}catch (Exception e) {
-					centerX.setText(""+CData.curMapO.getCenter().x);
-					centerY.setText(""+CData.curMapO.getCenter().y);
+					updateComponents();
 				}
 			}
 		});
@@ -151,8 +151,7 @@ public class PropertiesPanel extends JPanel {
 											Integer.parseInt(centerY.getText()));
 					CData.updateEverything();
 				}catch (Exception e) {
-					centerX.setText(""+CData.curMapO.getCenter().x);
-					centerY.setText(""+CData.curMapO.getCenter().y);
+					updateComponents();
 				}
 			}
 		});
@@ -191,6 +190,22 @@ public class PropertiesPanel extends JPanel {
 		imageChooser.setEnabled(true);
 		centerX.setEnabled(true);
 		centerY.setEnabled(true);
+	}
+
+	public void update() {
+		updateComponents();
+	}
+
+	public void updateComponents() {
+		if(CData.curMapO == null) return;
+		centerX.setText(""+CData.curMapO.getCenter().x);
+		centerY.setText(""+CData.curMapO.getCenter().y);
+		mapOSizeY.setText(""+CData.curMapO.arraySizeY);
+		mapOSizeX.setText(""+CData.curMapO.arraySizeX);
+		imageChooser.setSelectedItem(CData.curMapO.getLImage());
+		if(CData.staticObject) mapOType.setSelectedItem(CData.tileTypes[1]);
+		else				   mapOType.setSelectedItem(CData.tileTypes[0]);
+		repaint();
 	}
 
 }

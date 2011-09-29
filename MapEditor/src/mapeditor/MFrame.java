@@ -24,7 +24,7 @@ import mapeditor.panels.PropertiesPanel;
 public class MFrame extends JFrame{
 	private MapSetupPanel mapSetupPanel;
 	private MapPanel mapPanel;
-	private PropertiesPanel rightPanel;
+	private PropertiesPanel propertiesPanel;
 	private MapScetchPanel mapScetchPanel;
 	private JTabbedPane mapTabPane;
 
@@ -39,26 +39,36 @@ public class MFrame extends JFrame{
 		//Left panel
 		mapSetupPanel = new MapSetupPanel();
 		CData.mapSetupPanel = mapSetupPanel;
-		
+		mapSetupPanel.setMinimumSize(new Dimension(100,400));
+		mapSetupPanel.setPreferredSize(new Dimension(100,400));
 		
 		//Center panel
+			//First tab
 		mapPanel = new MapPanel();
 		CData.mapPanel = mapPanel;
 		JScrollPane mapScroller = new JScrollPane(mapPanel);
+		mapPanel.setMinimumSize(new Dimension(200,400));
+		mapPanel.setPreferredSize(new Dimension(500,500));
 		
+			//Second tab
 		mapScetchPanel = new MapScetchPanel();
 		CData.mapScetchPanel = mapScetchPanel;
 		JScrollPane mapScetchScroller = new JScrollPane(mapScetchPanel);
+		mapScetchPanel.setMinimumSize(new Dimension(200, 400));
+		mapScetchPanel.setPreferredSize(new Dimension(500,500));
 		
+			//Third tab
 		CData.mapOCartPanel = new MapOCartesianPanel();
 		CData.mapOIsoPanel = new MapOIsometricPanel();
-		JScrollPane mapOCartScroller = new JScrollPane(CData.mapOCartPanel);
 		JScrollPane mapOIsoScroller = new JScrollPane(CData.mapOIsoPanel);
+		JScrollPane mapOCartScroller = new JScrollPane(CData.mapOCartPanel);
 		JSplitPane mapOView = new JSplitPane(JSplitPane.VERTICAL_SPLIT, 
 											 mapOIsoScroller,
 											 mapOCartScroller);
+		mapOIsoScroller.setPreferredSize(new Dimension(200, 300));
 		CData.mapOSplitView = mapOView;
 		
+		//Insert all tabs into a tab pane
 		mapTabPane = new JTabbedPane();
 		mapTabPane.addTab("Map View", mapScroller);
 		mapTabPane.addTab("Map Scetch View", mapScetchScroller);
@@ -66,18 +76,11 @@ public class MFrame extends JFrame{
 		
 		
 		//Right panel
-		rightPanel = new PropertiesPanel();
-		CData.propertiesPanel = rightPanel;
+		propertiesPanel = new PropertiesPanel();
+		CData.propertiesPanel = propertiesPanel;
+		propertiesPanel.setPreferredSize(new Dimension(200,400));
 		
 		setPreferredSize(new Dimension(100,400));
-		mapSetupPanel.setPreferredSize(new Dimension(100,400));
-		mapPanel.setPreferredSize(new Dimension(500,500));
-		mapScetchPanel.setPreferredSize(new Dimension(500,500));
-		rightPanel.setPreferredSize(new Dimension(200,400));
-		
-        mapSetupPanel.setMinimumSize(new Dimension(100,400));
-        mapPanel.setMinimumSize(new Dimension(200,400));
-        mapScetchPanel.setMinimumSize(new Dimension(200, 400));
 	}
 
 	private void initUI() {
@@ -107,7 +110,7 @@ public class MFrame extends JFrame{
         
         add(mapTabPane, BorderLayout.CENTER);
         
-        add(rightPanel, BorderLayout.EAST);
+        add(propertiesPanel, BorderLayout.EAST);
         
 
         setTitle("Map Editor");

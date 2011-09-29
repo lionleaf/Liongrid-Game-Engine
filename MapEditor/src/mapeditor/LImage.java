@@ -43,10 +43,12 @@ public class LImage {
 	}
 	
 	public int getWidth(){
+		if(image == null) return -1;
 		return image.getWidth(null);
 	}
 	
 	public int getHeigth(){
+		if(image == null) return -1;
 		return image.getHeight(null);
 	}
 	
