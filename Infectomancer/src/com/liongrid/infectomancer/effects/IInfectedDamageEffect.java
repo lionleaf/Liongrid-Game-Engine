@@ -50,7 +50,7 @@ public class IInfectedDamageEffect extends LEffect<IGameObject> {
 			float check = random.nextFloat();
 			if(check <= mInfectChance){
 				IGameObject minion = 
-					IGamePointers.spawnPool.spawnMinion(target.pos.x,target.pos.y);
+					IGamePointers.spawnPool.spawnBasicMinion(target.pos.x,target.pos.y);
 				IGamePointers.gameObjectHandler.add(minion);
 			}
 		}

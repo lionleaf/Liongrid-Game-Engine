@@ -51,6 +51,9 @@ public class IGameLoader extends LGameLoader{
 		tLib.allocateTexture(R.drawable.spheremonster01);
 		tLib.allocateTexture(R.drawable.mann1);
 		tLib.allocateTexture(R.drawable.reaper);
+		tLib.allocateTexture(R.drawable.lumberinghulklo);
+		tLib.allocateTexture(R.drawable.sheeplo);
+		
 		postProgress(80);
 	}
 	

@@ -22,16 +22,20 @@ import com.liongrid.infectomancer.effects.IDOTEffect;
 import com.liongrid.infectomancer.R;
 
 public class ISpawnPool extends LBaseObject{
-	
-	public IGameObject spawnMinion(float x, float y){
+	static Random rng = new Random();
+	public IGameObject spawnBasicMinion(float x, float y){
 		IGameObject object = new IGameObject();
 		
 		int size = 16*3;
 		float radius = (float) (size/2.0);
 		object.collisionObject = new LCollisionCircle(ITeam.Alien.ordinal(), object, radius);
 		
+		int rand = rng.nextInt(3);
+		int res = rand == 0 ? R.drawable.spheremonster01 : rand == 1 ?
+				R.drawable.sheeplo : R.drawable.lumberinghulklo;
+		
 		LTextureLibrary texLib = LGamePointers.textureLib;
-		LTexture tex = texLib.allocateTexture(R.drawable.spheremonster01);
+		LTexture tex = texLib.allocateTexture(res);
 		
 		LSpriteComponent sprite = new LSpriteComponent();
 		LDrawableBitmap[] dbs = new LDrawableBitmap[4];
@@ -65,7 +69,6 @@ public class ISpawnPool extends LBaseObject{
 		sprite.setOverlayAnimation("Spawning");
 		IMeleeAttackComponent attackComponent = new IMeleeAttackComponent();
 		LSoundSystem sound = LGamePointers.soundSystem;
-		attackComponent.setHitSound(sound.load(R.raw.blub));
 		attackComponent.setInfect(false);
 		object.addComponent(new ICollisionComponent());
 		object.addComponent(attackComponent);
@@ -91,6 +94,18 @@ public class ISpawnPool extends LBaseObject{
 		object.mMaxHp = 15;
 		object.mHp = 15;
 		return object;
+	}
+	
+	
+	public IGameObject spawnShootingMinion(float x, float y){
+		return spawnBasicMinion(x, y);
+	}
+	
+	public IGameObject spawnFightingMinion(float x, float y){
+		return spawnBasicMinion(x, y);
+	}
+	public IGameObject spawnAuraMinion(float x, float y){
+		return spawnBasicMinion(x, y);
 	}
 	
 
