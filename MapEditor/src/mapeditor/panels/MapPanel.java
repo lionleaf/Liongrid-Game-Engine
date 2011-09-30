@@ -30,12 +30,11 @@ public class MapPanel extends JPanel {
 	private int offsetY;
 	private int offsetX;
 	private boolean mapReady = false;
-	
+
 	private short[][] background;
 	private int[][] mapIndices;
-	
-	
-	public MapPanel(){
+
+	public MapPanel() {
 		add(grid);
 		grid.addActionListener(new ActionListener() {
 			@Override
@@ -43,162 +42,172 @@ public class MapPanel extends JPanel {
 				repaint();
 			}
 		});
-		
+
 		addMouseListener(new MouseListener() {
 			@Override
-			public void mouseClicked(MouseEvent arg0) {}
-			
+			public void mouseClicked(MouseEvent arg0) {
+			}
+
 			@Override
-			public void mouseEntered(MouseEvent arg0) {}
+			public void mouseEntered(MouseEvent arg0) {
+			}
+
 			@Override
-			public void mouseExited(MouseEvent arg0) {}
+			public void mouseExited(MouseEvent arg0) {
+			}
+
 			@Override
 			public void mousePressed(MouseEvent e) {
 				MapPanel panel = (MapPanel) e.getSource();
 				float x = fromWindowX(e.getX(), e.getY());
 				float y = fromWindowY(e.getX(), e.getY());
-				
-				if(x < 0) x = 0;
-				if(y < 0) y = 0;
-				if(x > MapData.arrayWidth) x = MapData.arrayWidth - 1;
-				if(y > MapData.arrayHeight) x = MapData.arrayHeight - 1;
-				
-				if(CData.staticObject == false){
-					MapManager.insertBackgroundMapO((int) x, (int) y, CData.curMapO);
-				}
-				else{
-					MapManager.insertStaticObject(x, y, CData.curMapO.createStaticObject());
+
+				if (x < 0)
+					x = 0;
+				if (y < 0)
+					y = 0;
+				if (x > MapData.arrayWidth)
+					x = MapData.arrayWidth - 1;
+				if (y > MapData.arrayHeight)
+					x = MapData.arrayHeight - 1;
+
+				if (CData.staticObject == false) {
+					MapManager.insertBackgroundMapO((int) x, (int) y,
+							CData.curMapO);
+				} else {
+					MapManager.insertStaticObject(x, y,
+							CData.curMapO.createStaticObject());
 				}
 				System.out.println("pressed tile x = " + x + " y = " + y);
 				panel.repaint();
 			}
 
 			@Override
-			public void mouseReleased(MouseEvent arg0) {}
+			public void mouseReleased(MouseEvent arg0) {
+			}
 		});
-		
+
 		addMouseMotionListener(new MouseMotionListener() {
-			private int[] lastTile = {-1,-1};
+			private int[] lastTile = { -1, -1 };
+
 			@Override
 			public void mouseDragged(MouseEvent e) {
 				int x = (int) MapData.fromIsoToCartX(e.getX(), e.getY());
 				int y = (int) MapData.fromIsoToCartY(e.getX(), e.getY());
-				int[] tile  = {x, y};
-				if(lastTile[0] != tile[0] || lastTile[1] != tile[1]){
+				int[] tile = { x, y };
+				if (lastTile[0] != tile[0] || lastTile[1] != tile[1]) {
 					MapPanel panel = (MapPanel) e.getSource();
 					panel.repaint();
 					lastTile = tile;
 				}
-				
+
 			}
+
 			@Override
-			public void mouseMoved(MouseEvent arg0) {}
-			
+			public void mouseMoved(MouseEvent arg0) {
+			}
+
 		});
 	}
 
-
 	@Override
 	public Dimension getPreferredSize() {
-		//Override this to make the scrolling appear as we want it
-		
+		// Override this to make the scrolling appear as we want it
+
 		Dimension d = super.getPreferredSize();
 		d.height = mapHeight;
 		d.width = mapWidth;
 		return d;
 	}
 
-
-	
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		if(!mapReady) return;
-		
+		if (!mapReady)
+			return;
+
 		Graphics2D g2d = (Graphics2D) g;
-		
+
 		drawTiles(g2d);
 		drawStaticObjects(g2d);
-		
-		if(grid.isSelected()){
+
+		if (grid.isSelected()) {
 			paintGrid(g2d);
 		}
 	}
 
 	private void drawStaticObjects(Graphics2D g2d) {
-		for(int i = 0; i < CData.staticObjects.size(); i++){
+		for (int i = 0; i < CData.staticObjects.size(); i++) {
 			StaticObject o = CData.staticObjects.get(i);
 			LVector2 pos = o.getPos();
 			int x = toWindowX(pos.x, pos.y);
 			int y = toWindowY(pos.x, pos.y);
-			g2d.drawImage(o.getLImage().getImage(), x, y, null);
+			g2d.drawImage(o.getLImage().getImage(), x, (int) (y - o.getHeight()), null);
 		}
 	}
 
-
 	private void drawTiles(Graphics2D g2d) {
 		LVector2Int center;
-		for(int x = 0; x < MapData.arrayWidth; x++){
-			for(int y = 0; y < MapData.arrayHeight; y++){
-				MapObject mapO = CData.mapObjects.get((int)CData.backgroundObjectsIDs[x][y]);
-				if(mapO == null || 
-				   mapO.getLImage() == null || 
-				   mapO.getLImage().getImage() == null) 
+		for (int x = 0; x < MapData.arrayWidth; x++) {
+			for (int y = 0; y < MapData.arrayHeight; y++) {
+				MapObject mapO = CData.mapObjects
+						.get((int) CData.backgroundObjectsIDs[x][y]);
+				if (mapO == null || mapO.getLImage() == null
+						|| mapO.getLImage().getImage() == null)
 					continue;
 				center = mapO.getCenter();
 				int isoX = toWindowX(x, y) - center.x;
 				int isoY = toWindowY(x, y) + center.y;
 				LImage lImg = mapO.getLImage();
-				g2d.drawImage(lImg.getImage(), isoX, isoY - mapO.getHeight(), null);
+				g2d.drawImage(lImg.getImage(), isoX, isoY - mapO.getHeight(),
+						null);
 			}
 		}
 	}
 
-
 	private void paintGrid(Graphics2D g2d) {
-		for(int x = 0; x < mapIndices.length; x++){
-			for(int y = mapIndices[x][0]; y <= mapIndices[x][1]; y++){
+		for (int x = 0; x < mapIndices.length; x++) {
+			for (int y = mapIndices[x][0]; y <= mapIndices[x][1]; y++) {
 				drawSquare(g2d, x, y);
 			}
 		}
 		drawBounds(g2d);
 	}
-	
+
 	private void drawBounds(Graphics2D g2d) {
 		g2d.drawRect(0 + offsetX, -mapHeight + offsetY, mapWidth, mapHeight);
 	}
 
-
-	private void drawSquare(Graphics2D g2d, int x, int y){
+	private void drawSquare(Graphics2D g2d, int x, int y) {
 		int x1 = toWindowX(x, y);
 		int y1 = toWindowY(x, y);
-		int x2 = toWindowX(x+1, y);
-		int y2 = toWindowY(x+1, y);
+		int x2 = toWindowX(x + 1, y);
+		int y2 = toWindowY(x + 1, y);
 		g2d.drawLine(x1, y1, x2, y2);
-		x1 = toWindowX(x+1, y+1);
-		y1 = toWindowY(x+1, y+1);
+		x1 = toWindowX(x + 1, y + 1);
+		y1 = toWindowY(x + 1, y + 1);
 		g2d.drawLine(x2, y2, x1, y1);
-		x2 = toWindowX(x, y+1);
-		y2 = toWindowY(x, y+1);
+		x2 = toWindowX(x, y + 1);
+		y2 = toWindowY(x, y + 1);
 		g2d.drawLine(x1, y1, x2, y2);
 		x1 = toWindowX(x, y);
 		y1 = toWindowY(x, y);
 		g2d.drawLine(x2, y2, x1, y1);
 	}
-	
-	private int fromWindowX(int x, int y){
+
+	private int fromWindowX(int x, int y) {
 		return (int) MapData.fromIsoToCartX(x + offsetX, -y + offsetY);
 	}
-	
-	private int fromWindowY(int x, int y){
+
+	private int fromWindowY(int x, int y) {
 		return (int) MapData.fromIsoToCartY(x + offsetX, -y + offsetY);
 	}
-	
-	private int toWindowX(float x, float y){
+
+	private int toWindowX(float x, float y) {
 		return (int) (MapData.fromCartToIsoX(x, y) + offsetX);
 	}
 
-	private int toWindowY(float x, float y){
+	private int toWindowY(float x, float y) {
 		return (int) (-MapData.fromCartToIsoY(x, y) + offsetY);
 	}
 

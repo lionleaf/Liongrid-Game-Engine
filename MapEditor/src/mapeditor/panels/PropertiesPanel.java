@@ -99,6 +99,7 @@ public class PropertiesPanel extends JPanel {
 				CData.curMapO.setLImageID(img.getIDbyte());
 				System.out.println("Set new image. ID = " + img.getIDbyte());
 				repaint();
+				CData.updateMapOPanels();
 			}
 		});
 		
@@ -108,6 +109,7 @@ public class PropertiesPanel extends JPanel {
 				if(CData.curMapO == null) return;
 				try{
 					CData.curMapO.arraySizeX = Integer.parseInt(mapOSizeX.getText());
+					CData.curMapO.arraySizeY = Integer.parseInt(mapOSizeY.getText());
 					CData.updateMapOPanels();
 				}catch (Exception e) {
 					updateComponents();
@@ -120,6 +122,7 @@ public class PropertiesPanel extends JPanel {
 			public void actionPerformed(ActionEvent arg) {
 				if(CData.curMapO == null) return;
 				try{
+					CData.curMapO.arraySizeX = Integer.parseInt(mapOSizeX.getText());
 					CData.curMapO.arraySizeY = Integer.parseInt(mapOSizeY.getText());
 					CData.updateMapOPanels();
 				}catch (Exception e) {

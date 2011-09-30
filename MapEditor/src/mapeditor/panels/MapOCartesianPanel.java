@@ -56,10 +56,6 @@ public class MapOCartesianPanel extends JPanel{
 	private void drawSquare(Graphics2D g2d, int x, int y){
 		int x1 = toWindowX(x);
 		int y1 = toWindowY(y);
-		
-		System.out.println("x1 = " + x1);
-		System.out.println("y1 = " + y1);
-		
 		int x2 = toWindowX(x+1);
 		int y2 = toWindowY(y);
 		g2d.drawLine(x1, y1, x2, y2);
