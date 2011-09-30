@@ -1,10 +1,15 @@
 package mapeditor.panels;
 
+import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -15,6 +20,8 @@ import mapeditor.MapData;
 
 public class MapOCartesianPanel extends JPanel{
 	private final int tileSize = 64;
+	private int mousePosX = 0;
+	private int mousePosY = 0;
 	private int offsetX;
 	private int offsetY;
 	private float scale = 1;
@@ -39,20 +46,61 @@ public class MapOCartesianPanel extends JPanel{
 				}
 			}
 		});
+		
+		addMouseMotionListener(new MouseMotionListener() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				mousePosX = e.getX();
+				mousePosY = e.getY();
+				float x = fromWindowX(e.getX());
+				float y = fromWindowY(e.getY());
+				CData.mapOIsoPanel.setCursorCarth(x, y);
+				CData.mapOSplitView.repaint();
+			}
+			
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				
+			}
+		});
 	}
 
+	/**
+	 * Remember to repaint
+	 * @param x
+	 * @param y
+	 */
+	protected void setCursorCarth(float x, float y) {
+		mousePosX = toWindowX(x);
+		mousePosY = toWindowY(y);
+	}
+	
 	@Override
 	public void paintComponent(Graphics g) {
 		if(CData.curMapO == null) return;
 		
 		Graphics2D g2d = (Graphics2D) g;
+		drawSquares(g2d);
+		drawCursorPosition(g2d);
+	}
+	
+	private void drawCursorPosition(Graphics2D g2d) {
+		int x = mousePosX-3;
+		int y = mousePosY-3;
+		g2d.setColor(new Color(1f, 0f, 0f));
+		g2d.fillOval(x, y, 6, 6);
+		g2d.drawOval(x, y, 6, 6);
+		g2d.setColor(new Color(0,0,0));
+	}
+
+	private void drawSquares(Graphics2D g2d) {
 		for(int x = 0; x < CData.curMapO.arraySizeX; x++){
 			for(int y = 0; y < CData.curMapO.arraySizeY; y++){
 				drawSquare(g2d, x, y);
 			}
 		}
 	}
-	
+
 	private void drawSquare(Graphics2D g2d, int x, int y){
 		int x1 = toWindowX(x);
 		int y1 = toWindowY(y);
@@ -73,12 +121,12 @@ public class MapOCartesianPanel extends JPanel{
 		g2d.drawLine(x2, y2, x1, y1);
 	}
 	
-	private int fromWindowX(int x){
-		return (int) ((offsetX - x)/(scale * tileSize));
+	private float fromWindowX(int x){
+		return (x - offsetX)/(scale * tileSize);
 	}
 	
-	private int fromWindowY(int y){
-		return (int) ((offsetY - y)/(scale * tileSize));
+	private float fromWindowY(int y){
+		return (offsetY - y)/(scale * tileSize);
 	}
 	
 	private int toWindowX(float x){

@@ -1,5 +1,6 @@
 package mapeditor.panels;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -26,6 +27,8 @@ public class MapOIsometricPanel extends JPanel{
 	private int offsetY;
 	private JTextField scaleField;
 	private MapObject curMapO;
+	private int mousePosX;
+	private int mousePosY;
 
 	public MapOIsometricPanel() {
 		JLabel scaleLabel = new JLabel("Scale: ");
@@ -55,6 +58,16 @@ public class MapOIsometricPanel extends JPanel{
 		Graphics2D g2d = (Graphics2D) g;
 		drawImage(g2d);
 		drawSquares(g2d);
+		drawCursorPosition(g2d);
+	}
+	
+	private void drawCursorPosition(Graphics2D g2d) {
+		int x = mousePosX-3;
+		int y = mousePosY-3;
+		g2d.setColor(new Color(1f, 0f, 0f));
+		g2d.fillOval(x, y, 6, 6);
+		g2d.drawOval(x, y, 6, 6);
+		g2d.setColor(new Color(0,0,0));
 	}
 	
 	private void drawSquares(Graphics2D g2d) {
@@ -129,5 +142,15 @@ public class MapOIsometricPanel extends JPanel{
 
 	private int toWindowY(float x, float y){
 		return (int) (-IsometricTransformation.getY(x, y) + offsetY);
+	}
+
+	/**
+	 * Remember to repaint
+	 * @param x
+	 * @param y
+	 */
+	public void setCursorCarth(float x, float y) {
+		mousePosX = toWindowX(x, y);
+		mousePosY = toWindowY(x, y);
 	}
 }

@@ -65,7 +65,7 @@ public class CData {
 		MapData.changeMap(mapWidth, mapHeight);
 		mapSetupPanel.xField.setText(""+mapWidth);
 		mapSetupPanel.yField.setText(""+mapHeight);
-		updateMaps();
+		updateEverything();
 	}
 	
 	public static void updateMaps(){
@@ -82,7 +82,7 @@ public class CData {
 	}
 	
 	public static void updateEverything(){
-		updateMapOPanels();
 		updateMaps();
+		updateMapOPanels();
 	}
 }
