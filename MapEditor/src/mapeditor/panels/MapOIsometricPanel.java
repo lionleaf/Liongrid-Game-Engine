@@ -7,6 +7,8 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -47,6 +49,23 @@ public class MapOIsometricPanel extends JPanel{
 				}catch (Exception e) {
 					scaleField.setText(""+ scale);
 				}
+			}
+		});
+		
+		addMouseMotionListener(new MouseMotionListener() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				mousePosX = e.getX();
+				mousePosY = e.getY();
+				float x = fromWindowX(e.getX(), e.getY());
+				float y = fromWindowY(e.getX(), e.getY());
+				CData.mapOCartPanel.setCursorCarth(x, y);
+				CData.mapOSplitView.repaint();
+			}
+			
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				
 			}
 		});
 	}
@@ -103,8 +122,6 @@ public class MapOIsometricPanel extends JPanel{
 		LVector2Int center = curMapO.getCenter();
 		int x = toWindowX(0, 0) - center.x;
 		int y = toWindowY(0, 0) + center.y;
-		System.out.println("OffsetX = " + offsetX);
-		System.out.println("OffsetY = " + offsetY);
 		g2d.drawImage(img, x, y - curMapO.getHeight(), null);
 	}
 
@@ -122,18 +139,16 @@ public class MapOIsometricPanel extends JPanel{
 		offsetY =(int)((mapO.getHeight() > arrayHeight) ? mapO.getHeight() : arrayHeight);
 		
 		float arrayWidth = -IsometricTransformation.getX(0, mapO.arraySizeY);
-		System.out.println("ArrayWidth = " + arrayWidth);
 		int imgOffsetX = mapO.getCenter().x;
-		System.out.println("ImgOffsetX = " + imgOffsetX);
 		offsetX =(int)((imgOffsetX > arrayWidth) ? imgOffsetX : arrayWidth);
 	}
 	
-	private int fromWindowX(int x, int y){
-		return (int) IsometricTransformation.getInversX(x - offsetX, offsetY - y);
+	private float fromWindowX(int x, int y){
+		return IsometricTransformation.getInversX(x - offsetX, offsetY - y);
 	}
 	
-	private int fromWindowY(int x, int y){
-		return (int) IsometricTransformation.getInversY(x - offsetX, offsetY - y);
+	private float fromWindowY(int x, int y){
+		return IsometricTransformation.getInversY(x - offsetX, offsetY - y);
 	}
 	
 	private int toWindowX(float x, float y){

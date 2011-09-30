@@ -29,6 +29,7 @@ public class PropertiesPanel extends JPanel {
 	private JTextField centerY;
 	private JTextField mapOSizeX;
 	private JTextField mapOSizeY;
+	private JComboBox collisionChooser;
 	
 	public PropertiesPanel(){
 		setMinimumSize(new Dimension(200, 400));
@@ -55,6 +56,8 @@ public class PropertiesPanel extends JPanel {
 		mapOType.setPreferredSize(new Dimension(150, 24));
 		imageChooser.setPreferredSize(new Dimension(150, 24));
 		
+		collisionChooser = new JComboBox(CData.shapes);
+		
 		add(titleLabel);
 		
 		add(centerLabel);
@@ -72,6 +75,8 @@ public class PropertiesPanel extends JPanel {
 		add(mapOSizeY);
 		
 		add(imageChooser);
+		
+		
 		
 	}
 	
