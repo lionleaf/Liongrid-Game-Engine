@@ -140,6 +140,7 @@ public class MapOCartesianPanel extends JPanel{
 	}
 	
 	public void load(){
+		if(CData.curMapO == null) return;
 		offsetX = 30;
 		offsetY = (int) (CData.curMapO.arraySizeY*scale*tileSize) + 30;
 	}

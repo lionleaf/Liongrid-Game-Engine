@@ -30,6 +30,12 @@ public class PropertiesPanel extends JPanel {
 	private JTextField mapOSizeX;
 	private JTextField mapOSizeY;
 	private JComboBox collisionChooser;
+	// Shape relyant components
+	private JLabel circleLabel;
+	private JTextField circleRadius;
+	private JLabel squareLabel;
+	private JTextField squareWidth;
+	private JTextField squareHeight;
 	
 	public PropertiesPanel(){
 		setMinimumSize(new Dimension(200, 400));
@@ -56,7 +62,19 @@ public class PropertiesPanel extends JPanel {
 		mapOType.setPreferredSize(new Dimension(150, 24));
 		imageChooser.setPreferredSize(new Dimension(150, 24));
 		
+		JLabel collisionLabel = new JLabel("Collision Object");
 		collisionChooser = new JComboBox(CData.shapes);
+		collisionChooser.setPreferredSize(new Dimension(150, 24));
+		
+		// Shape relyant components
+		circleLabel = new JLabel("Circle radius:  ");
+		circleRadius = new JTextField("" + 0);
+		squareLabel = new JLabel("Square width and height:     ");
+		squareWidth = new JTextField("" + 0);
+		squareHeight = new JTextField("" + 0);
+		circleRadius.setColumns(3);
+		squareWidth.setColumns(3);
+		squareHeight.setColumns(3);
 		
 		add(titleLabel);
 		
@@ -76,8 +94,9 @@ public class PropertiesPanel extends JPanel {
 		
 		add(imageChooser);
 		
+		add(collisionLabel);
 		
-		
+		add(collisionChooser);
 	}
 	
 
@@ -117,7 +136,7 @@ public class PropertiesPanel extends JPanel {
 					CData.curMapO.arraySizeY = Integer.parseInt(mapOSizeY.getText());
 					CData.updateMapOPanels();
 				}catch (Exception e) {
-					updateComponents();
+					update();
 				}
 			}
 		});
@@ -131,7 +150,7 @@ public class PropertiesPanel extends JPanel {
 					CData.curMapO.arraySizeY = Integer.parseInt(mapOSizeY.getText());
 					CData.updateMapOPanels();
 				}catch (Exception e) {
-					updateComponents();
+					update();
 				}
 			}
 		});
@@ -145,7 +164,7 @@ public class PropertiesPanel extends JPanel {
 											Integer.parseInt(centerY.getText()));
 					CData.updateMapOPanels();
 				}catch (Exception e) {
-					updateComponents();
+					update();
 				}
 			}
 		});
@@ -159,13 +178,50 @@ public class PropertiesPanel extends JPanel {
 											Integer.parseInt(centerY.getText()));
 					CData.updateEverything();
 				}catch (Exception e) {
-					updateComponents();
+					update();
 				}
 			}
 		});
 		
+		collisionChooser.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JComboBox cb = (JComboBox)e.getSource();
+				String shape = (String) cb.getSelectedItem();
+				setCollisionShape(shape);
+				repaint();
+			}
+		});
 	}
 	
+	private void setCollisionShape(String shape){
+		String point = CData.shapes[0];
+		String circle = CData.shapes[1];
+		String square = CData.shapes[2];
+		removeCollisionComponents();
+		if(shape.equals(point)){
+		}
+		else if(shape.equals(circle)){
+			add(circleLabel);
+			add(circleRadius);
+		}
+		else if(shape.equals(square)){
+			add(squareLabel);
+			add(squareWidth);
+			add(squareHeight);
+		}
+		revalidate();
+		update();
+	}
+	
+	private void removeCollisionComponents() {
+		remove(circleLabel);
+		remove(circleRadius);
+		remove(squareLabel);
+		remove(squareWidth);
+		remove(squareHeight);
+	}
+
 	public boolean contains(ComboBoxModel comboBoxModel, Object o) {
 		int size = comboBoxModel.getSize();
 		for(int i = 0; i < size; i++) {
@@ -201,10 +257,6 @@ public class PropertiesPanel extends JPanel {
 	}
 
 	public void update() {
-		updateComponents();
-	}
-
-	public void updateComponents() {
 		if(CData.curMapO == null) return;
 		centerX.setText(""+CData.curMapO.getCenter().x);
 		centerY.setText(""+CData.curMapO.getCenter().y);
