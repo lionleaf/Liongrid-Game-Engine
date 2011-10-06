@@ -43,7 +43,7 @@ import android.widget.TextView;
  *		This activity is the upper class for the whole game play
  */
 public class IGameActivity extends Activity implements LGameActivityInterface, 
-		LGameLoadedCallback{
+LGameLoadedCallback{
 
 	private static final String SAVE_PREF_NAME = "infectoSave";
 
@@ -62,17 +62,17 @@ public class IGameActivity extends Activity implements LGameActivityInterface,
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		
+
+
 		Log.d(IMainMenuActivity.TAG,"In IGameActivity onCreate");
-		
+
 		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 		wl = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
-		
+
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		
+
 		setScreenDimensionsAndScale();
-		
+
 		CONTEXT = this;
 		setContentView(R.layout.loading_game);
 		LSurfaceViewPanel panel = new LSurfaceViewPanel(this);
@@ -80,15 +80,15 @@ public class IGameActivity extends Activity implements LGameActivityInterface,
 			mHandler = new Handler();
 			ProgressBar progress = (ProgressBar) findViewById(R.id.loadingGameBar);
 			progress.setIndeterminate(false);
-			
+
 			(new Thread(new IGameLoader(panel,this,mHandler,progress))).start();
 		}else{
 			LGamePointers.panel = panel;
 			setContentView(LGamePointers.panel);
-			
+
 		}
-		
-		
+
+
 	}
 
 	public void onGameLoaded(){
@@ -99,16 +99,16 @@ public class IGameActivity extends Activity implements LGameActivityInterface,
 		IGamePointers.hudView = inflater.inflate(R.layout.hud,null);
 		getWindow().addContentView(IGamePointers.hudView, new LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
 				ViewGroup.LayoutParams.FILL_PARENT));
-		
+
 	}
-	
+
 	private void setUpInputHandler(){
 		IGameScreenInput gameInput = new IGameScreenInput();
 		LView hudInput = new LButton();
 		LView notherInput = new LButton();
 		LGamePointers.panel.addToRoot(hudInput);
 		LGamePointers.panel.addToRoot(notherInput);
-		
+
 		setGestureDetector(new LGestureDetector
 				(this, new LInputDelegator(hudInput,gameInput)));
 	}
@@ -184,11 +184,11 @@ public class IGameActivity extends Activity implements LGameActivityInterface,
 		super.onPause();
 		Log.d("Infectosaurus", "onPause()");
 		wl.release();
-		
+
 		if(IGamePointers.music != null){
 			IGamePointers.music.pause();
 		}
-		
+
 		if(LGamePointers.panel != null){
 			LGamePointers.panel.onPause();
 		}
@@ -199,16 +199,16 @@ public class IGameActivity extends Activity implements LGameActivityInterface,
 	protected void onResume(){
 		super.onResume();
 		Log.d("Infectosaurus", "onResume()"); 
-		
+
 		if(IGamePointers.music != null){
 			IGamePointers.music.resume();
 		}
-		
+
 		wl.acquire();
 		if(LGamePointers.panel != null){
 			LGamePointers.panel.onResume();
 		}
-		
+
 		loadData(getApplicationContext());
 	}
 
@@ -235,7 +235,7 @@ public class IGameActivity extends Activity implements LGameActivityInterface,
 
 			public void run() {
 				setContentView(R.layout.round_over);
-				
+
 				if(useScreenshot){
 					View mainView = findViewById(R.id.roundOverMainLayout);
 					Bitmap bmp = LGamePointers.renderThread.lastScreenshot;
@@ -243,14 +243,14 @@ public class IGameActivity extends Activity implements LGameActivityInterface,
 						mainView.setBackgroundDrawable(new BitmapDrawable(bmp));
 					}
 				}
-				
+
 				Button backButton = (Button) findViewById(R.id.returnButton);
 				backButton.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
 						finish();
 					}
 				});
-				
+
 				TextView roundOverText = (TextView) findViewById(R.id.roundOverText);
 				int totalCoins =  IGamePointers.coins;
 				roundOverText.setText("Round over! Humans killed: "+humansKilled+
@@ -259,12 +259,31 @@ public class IGameActivity extends Activity implements LGameActivityInterface,
 			}
 		});
 	}
-	
+
 	public void dispatchHudEvent(View v){
+		boolean found = true;
+		IGameObject gobj = null;
+		ISpawnPool spawnPool = IGamePointers.spawnPool;
 		
-		//TODO: Make a runOnGameThread method
-		IGamePointers.gameObjectHandler.add(
-				IGamePointers.spawnPool.spawnBasicMinion(50, 50));
+		switch(v.getId()){
+		
+		case R.id.meleeMinionButton:
+			gobj = spawnPool.spawnFightingMinion(50, 50);
+			break;
+		case R.id.rangedMinionButton:
+			gobj = spawnPool.spawnShootingMinion(50, 50);
+			break;
+		case R.id.auraMinionButton:
+			gobj = spawnPool.spawnAuraMinion(50, 50);
+			break;
+		default:
+			found = false;
+		}
+		if(found){
+			//TODO: Make a runOnGameThread method
+			IGamePointers.gameObjectHandler.add(gobj);
+		}
+		
 	}
 
 	public void setGestureDetector(LGestureDetector lGestureDetector) {

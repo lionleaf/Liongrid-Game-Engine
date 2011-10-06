@@ -175,9 +175,7 @@ IGameObject object = new IGameObject();
 		float radius = (float) (size/2.0);
 		object.collisionObject = new LCollisionCircle(ITeam.Alien.ordinal(), object, radius);
 		
-		int rand = rng.nextInt(3);
-		int res = rand == 0 ? R.drawable.spheremonster01 : rand == 1 ?
-				R.drawable.sheeplo : R.drawable.lumberinghulklo;
+		int res = R.drawable.lumberinghulklo;
 		
 		LTextureLibrary texLib = LGamePointers.textureLib;
 		LTexture tex = texLib.allocateTexture(res);
@@ -247,9 +245,8 @@ IGameObject object = new IGameObject();
 		float radius = (float) (size/2.0);
 		object.collisionObject = new LCollisionCircle(ITeam.Alien.ordinal(), object, radius);
 		
-		int rand = rng.nextInt(3);
-		int res = rand == 0 ? R.drawable.spheremonster01 : rand == 1 ?
-				R.drawable.sheeplo : R.drawable.lumberinghulklo;
+
+		int res =R.drawable.spheremonster01;
 		
 		LTextureLibrary texLib = LGamePointers.textureLib;
 		LTexture tex = texLib.allocateTexture(res);
