@@ -96,8 +96,8 @@ public class IGameActivity extends Activity implements LGameActivityInterface,
 		Log.d("Infectosaurus", "Game loaded");
 		setContentView(LGamePointers.panel);
 		LayoutInflater inflater = getLayoutInflater();
-		LGamePointers.hudView = inflater.inflate(R.layout.hud,null);
-		getWindow().addContentView(LGamePointers.hudView, new LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
+		IGamePointers.hudView = inflater.inflate(R.layout.hud,null);
+		getWindow().addContentView(IGamePointers.hudView, new LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
 				ViewGroup.LayoutParams.FILL_PARENT));
 		
 	}

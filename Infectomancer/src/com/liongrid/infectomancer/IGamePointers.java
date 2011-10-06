@@ -1,5 +1,7 @@
 package com.liongrid.infectomancer;
 
+import android.view.View;
+
 import com.liongrid.gameengine.LMusic;
 import com.liongrid.infectomancer.crowd.situations.ISituationHandler;
 
@@ -21,6 +23,8 @@ public class IGamePointers {
 	public static ISpawnPool spawnPool;
 	public static ISituationHandler situationHandler;
 	public static LMusic music;
+
+	public static View hudView;
 	
 	
 	public static void resetGameVars() {
