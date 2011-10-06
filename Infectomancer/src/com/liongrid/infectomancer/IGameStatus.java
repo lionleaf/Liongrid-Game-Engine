@@ -18,14 +18,14 @@ public class IGameStatus extends LBaseObject{
 	public void update(float dt, LBaseObject parent) {
 		gObjectHandler = IGamePointers.gameObjectHandler;
 		gameActivity = IGamePointers.curGameActivity;
-		
+		/*
 		if (IGamePointers.music == null) {
 			LMusic music = new LMusic("keygenmusic01.mp3");
 			IGamePointers.music = music;
 		}
 		
 		
-		IGamePointers.music.play();
+		IGamePointers.music.play();*/
 		
 		checkGameStarted();
 		checkHumansLeft();

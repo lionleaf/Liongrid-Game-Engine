@@ -27,9 +27,12 @@ import android.os.PowerManager;
 import android.util.Log;
 import android.view.Display;
 import android.view.GestureDetector;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -60,6 +63,7 @@ public class IGameActivity extends Activity implements LGameActivityInterface,
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		
 		Log.d(IMainMenuActivity.TAG,"In IGameActivity onCreate");
 		
 		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
@@ -81,6 +85,7 @@ public class IGameActivity extends Activity implements LGameActivityInterface,
 		}else{
 			LGamePointers.panel = panel;
 			setContentView(LGamePointers.panel);
+			
 		}
 		
 		
@@ -90,7 +95,10 @@ public class IGameActivity extends Activity implements LGameActivityInterface,
 		setUpInputHandler();
 		Log.d("Infectosaurus", "Game loaded");
 		setContentView(LGamePointers.panel);
-		
+		LayoutInflater inflater = getLayoutInflater();
+		LGamePointers.hudView = inflater.inflate(R.layout.hud,null);
+		getWindow().addContentView(LGamePointers.hudView, new LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
+				ViewGroup.LayoutParams.FILL_PARENT));
 		
 	}
 	
@@ -250,6 +258,13 @@ public class IGameActivity extends Activity implements LGameActivityInterface,
 						". Total coins: " + totalCoins+". ");
 			}
 		});
+	}
+	
+	public void dispatchHudEvent(View v){
+		
+		//TODO: Make a runOnGameThread method
+		IGamePointers.gameObjectHandler.add(
+				IGamePointers.spawnPool.spawnBasicMinion(50, 50));
 	}
 
 	public void setGestureDetector(LGestureDetector lGestureDetector) {
