@@ -16,6 +16,9 @@ public class LCollision {
 		if(shape.getShape() == CIRCLE){
 			return collides(point.x, point.y, (LShape.Circle) shape);
 		}
+		if(shape.getShape() == SQUARE){
+			return collides(point.x, point.y, (LShape.Square) shape);
+		}
 		return false;
 	}
 	
@@ -44,6 +47,10 @@ public class LCollision {
 			return collides((LShape.Circle) shape1, 
 							(LShape.Circle) shape2);
 		}
+		else if(shape1.getShape() == SQUARE && shape2.getShape() == SQUARE){
+			return collides((LShape.Square) shape1,
+							(LShape.Square) shape2);
+		}
 		return false;
 	}
 	
@@ -65,6 +72,20 @@ public class LCollision {
 		}
 	}
 	
+	private static boolean collides(LShape.Square square1, LShape.Square square2){
+		LVector2 pos1 = square1.getPos();
+		LVector2 pos2 = square2.getPos();
+		float width1 = square1.getWidth();
+		float width2 = square2.getWidth();
+		float height1 = square1.getHeight();
+		float height2 = square2.getHeight();
+		if (pos1.x < pos2.x + width2 && pos1.x + width1 > pos2.x &&
+			    pos1.y < pos2.y + height2 && pos1.y + height1 > pos2.y){
+			return true;
+		}
+		return false;
+	}
+	
 	private static boolean collides(LShape.Circle circle1, LShape.Circle circle2){
 		LVector2 pos1 = circle1.getPos();
 		LVector2 pos2 = circle2.getPos();
@@ -79,6 +100,17 @@ public class LCollision {
 		float distance2 = pos.distance2(x, y);
 		float radius = circle.getRadius();
 		if(distance2 < radius * radius) return true;
+		return false;
+	}
+	
+	private static boolean collides(float x, float y, LShape.Square square ){
+		LVector2 pos = square.getPos();
+		float width = square.getWidth();
+		float height = square.getHeight();
+		if (x < pos.x + width && x > pos.x &&
+			    y < pos.y + height && y > pos.y){
+			return true;
+		}
 		return false;
 	}
 	

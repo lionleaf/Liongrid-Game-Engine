@@ -340,11 +340,16 @@ public class MapManager {
 		CData.backgroundObjectsIDs[x][y] = mapO.getIDbyte();
 	}
 	
-	public static void insertStaticObject(float x, float y, StaticObject staticO){
+	public static void insertStaticObject(StaticObject staticO){
 		CData.staticObjects.add(staticO);
 	}
 	
-	public static void removeStaticObject(StaticObject staticO){
-		CData.staticObjects.remove(staticO);
+	public static void selectStaticObject(StaticObject object){
+		CData.selectedStaticObject = object;
+	}
+	
+	public static void deleteSelectedStaticObject(){
+		if(CData.selectedStaticObject == null) return;
+		CData.staticObjects.remove(CData.selectedStaticObject);
 	}
 }

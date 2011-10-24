@@ -5,6 +5,9 @@ import com.liongrid.gameengine.tools.LVector2;
 
 public abstract class CollisionObject implements LShape{
 	LVector2 pos;
+	/**
+	 * This corresponds to what movement type that the collision object should block
+	 */
 	private int collisionType = -1;
 	
 	public CollisionObject(float x, float y, LMovementType type) {

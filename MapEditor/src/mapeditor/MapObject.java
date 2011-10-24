@@ -6,6 +6,9 @@ import com.liongrid.gameengine.tools.LVector2;
 import com.liongrid.gameengine.tools.LVector2Int;
 
 public class MapObject{
+	/**
+	 * How big matrix the map object shows in the MapO panel.
+	 */
 	public int arraySizeX = 0;
 	public int arraySizeY = 0;
 	private static final int MIN_WIDTH = 20;
@@ -71,8 +74,8 @@ public class MapObject{
 		return collideables.toArray();
 	}
 	
-	public StaticObject createStaticObject(){
-		return new StaticObject(this);
+	public StaticObject createStaticObject(float x, float y){
+		return new StaticObject(this, x, y);
 	}
 	
 	public void setCenter(int x, int y){
@@ -116,12 +119,10 @@ public class MapObject{
 	public class StaticObject implements LShape.Square{
 
 		private LVector2 pos;
-		private LVector2 isoPos;
 		private MapObject parent;
 		
-		public StaticObject(MapObject owner) {
-			pos = new LVector2();
-			isoPos = new LVector2();
+		public StaticObject(MapObject owner, float x, float y) {
+			pos = new LVector2(x, y);
 			parent = owner;
 		}
 		

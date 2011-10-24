@@ -20,7 +20,8 @@ public class CData {
 	private static final int MAX_SIZE = 500;
 	
 	public volatile static MapObject curMapO;
-	public volatile static boolean staticObject = false; 
+	public volatile static boolean staticObject = false;
+	public volatile static StaticObject selectedStaticObject;
 	
 	public volatile static String[] tileTypes = {"Background Tile", "Static Object"};
 	public volatile static String[] shapes = {"Point", "Circle", "Square"};
@@ -35,12 +36,12 @@ public class CData {
 	public volatile static MapSetupPanel mapSetupPanel;
 	//Center panel
 	public volatile static MapPanel mapPanel;
-	//Right panel
-	public volatile static PropertiesPanel propertiesPanel;
-	public volatile static MapScetchPanel mapScetchPanel;
 	public volatile static MapOCartesianPanel mapOCartPanel;
 	public volatile static MapOIsometricPanel mapOIsoPanel;
+	public volatile static MapScetchPanel mapScetchPanel;
 	public volatile static JSplitPane mapOSplitView;
+	//Right panel
+	public volatile static PropertiesPanel propertiesPanel;
 	
 	public static int getArraySizeX() {
 		return MapData.arrayWidth;
@@ -86,4 +87,5 @@ public class CData {
 		updateMaps();
 		updateMapOPanels();
 	}
+
 }

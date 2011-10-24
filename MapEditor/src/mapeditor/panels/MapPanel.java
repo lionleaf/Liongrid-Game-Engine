@@ -16,6 +16,7 @@ import com.liongrid.gameengine.tools.LVector2;
 import com.liongrid.gameengine.tools.LVector2Int;
 
 import mapeditor.CData;
+import mapeditor.LCollision;
 import mapeditor.LImage;
 import mapeditor.MapData;
 import mapeditor.MapManager;
@@ -62,23 +63,20 @@ public class MapPanel extends JPanel {
 				float x = fromWindowX(e.getX(), e.getY());
 				float y = fromWindowY(e.getX(), e.getY());
 
-				if (x < 0)
-					x = 0;
-				if (y < 0)
-					y = 0;
-				if (x > MapData.arrayWidth)
-					x = MapData.arrayWidth - 1;
-				if (y > MapData.arrayHeight)
-					x = MapData.arrayHeight - 1;
+				if (x < 0) x = 0;
+				if (y < 0) y = 0;
+				if (x > MapData.arrayWidth) x = MapData.arrayWidth - 1;
+				if (y > MapData.arrayHeight) y = MapData.arrayHeight - 1;
 
 				if (CData.staticObject == false) {
 					MapManager.insertBackgroundMapO((int) x, (int) y,
 							CData.curMapO);
+					System.out.println("pressed tile x = " + x + " y = " + y);
 				} else {
-					MapManager.insertStaticObject(x, y,
-							CData.curMapO.createStaticObject());
+					insertStaticObject(e.getX(), e.getY());
+					System.out.println("StaticO x = " + x + " y = " + y);
 				}
-				System.out.println("pressed tile x = " + x + " y = " + y);
+				
 				panel.repaint();
 			}
 
@@ -88,18 +86,11 @@ public class MapPanel extends JPanel {
 		});
 
 		addMouseMotionListener(new MouseMotionListener() {
-			private int[] lastTile = { -1, -1 };
 
 			@Override
 			public void mouseDragged(MouseEvent e) {
 				int x = (int) MapData.fromIsoToCartX(e.getX(), e.getY());
 				int y = (int) MapData.fromIsoToCartY(e.getX(), e.getY());
-				int[] tile = { x, y };
-				if (lastTile[0] != tile[0] || lastTile[1] != tile[1]) {
-					MapPanel panel = (MapPanel) e.getSource();
-					panel.repaint();
-					lastTile = tile;
-				}
 
 			}
 
@@ -171,10 +162,10 @@ public class MapPanel extends JPanel {
 				drawSquare(g2d, x, y);
 			}
 		}
-		drawBounds(g2d);
+		drawMapBounds(g2d);
 	}
 
-	private void drawBounds(Graphics2D g2d) {
+	private void drawMapBounds(Graphics2D g2d) {
 		g2d.drawRect(0 + offsetX, -mapHeight + offsetY, mapWidth, mapHeight);
 	}
 
@@ -194,13 +185,35 @@ public class MapPanel extends JPanel {
 		y1 = toWindowY(x, y);
 		g2d.drawLine(x2, y2, x1, y1);
 	}
-
-	private int fromWindowX(int x, int y) {
-		return (int) MapData.fromIsoToCartX(x + offsetX, -y + offsetY);
+	
+	/**
+	 *  x and y coordinates in window coordinates
+	 * @param x
+	 * @param y
+	 */
+	private void selectStaticObject(int x, int y){
+		for (int i = 0; i < CData.staticObjects.size(); i++) {
+			StaticObject o = CData.staticObjects.get(i);
+			if(LCollision.collides(fromWindowX(x, y), fromWindowY(x, y), o)){
+				MapManager.selectStaticObject(o);
+				return;
+			}
+		}
+	}
+	
+	private void insertStaticObject(int x, int y){
+		if(!CData.staticObject || CData.curMapO == null) return;
+		float carthX = fromWindowX(x, y);
+		float carthY = fromWindowY(x, y);
+		MapManager.insertStaticObject(CData.curMapO.createStaticObject(carthX, carthY));
+	}
+	
+	private float fromWindowX(int x, int y) {
+		return MapData.fromIsoToCartX(x + offsetX, -y + offsetY);
 	}
 
-	private int fromWindowY(int x, int y) {
-		return (int) MapData.fromIsoToCartY(x + offsetX, -y + offsetY);
+	private float fromWindowY(int x, int y) {
+		return MapData.fromIsoToCartY(x + offsetX, -y + offsetY);
 	}
 
 	private int toWindowX(float x, float y) {
