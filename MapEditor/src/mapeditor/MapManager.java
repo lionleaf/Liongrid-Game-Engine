@@ -105,7 +105,7 @@ public class MapManager {
 			Document doc = docBuilder.newDocument();
 			Element rootElement = doc.createElement("TileSet");
 			rootElement.setAttribute("nr_of_tiles", CData.images.size()+"");
-			rootElement.setAttribute("nr_of_movetypes", CData.tileTypes.length + "");
+			rootElement.setAttribute("nr_of_movetypes", CData.mapOTypes.length + "");
 			
 			
 			doc.appendChild(rootElement);
@@ -118,12 +118,12 @@ public class MapManager {
 
 				tileElem.setAttribute("resource",tile.getResource());
 
-				for (int i = 0; i < CData.tileTypes.length; i++) {
+				for (int i = 0; i < CData.mapOTypes.length; i++) {
 					//Create the element
 					Element state = doc.createElement("state");
 					tileElem.appendChild(state);
 					//Set the name of the state
-					state.setAttribute("name", CData.tileTypes[i]);
+					state.setAttribute("name", CData.mapOTypes[i]);
 					//Calculate the value
 //					String value = generateTileStatesString(tile.getTileStates(), i);
 //					Text stateVal = doc.createTextNode(value);
@@ -351,5 +351,6 @@ public class MapManager {
 	public static void deleteSelectedStaticObject(){
 		if(CData.selectedStaticObject == null) return;
 		CData.staticObjects.remove(CData.selectedStaticObject);
+		CData.selectedStaticObject = null;
 	}
 }

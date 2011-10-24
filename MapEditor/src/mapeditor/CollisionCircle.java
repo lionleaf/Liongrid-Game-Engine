@@ -6,8 +6,8 @@ public class CollisionCircle extends CollisionObject implements LShape.Circle{
 
 	private float radius;
 
-	public CollisionCircle(float x, float y, LMovementType type, float radius) {
-		super(x, y, type);
+	public CollisionCircle(float x, float y, float radius) {
+		super(x, y);
 		this.radius = radius;
 	}
 

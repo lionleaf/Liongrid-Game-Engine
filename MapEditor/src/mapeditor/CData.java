@@ -20,10 +20,13 @@ public class CData {
 	private static final int MAX_SIZE = 500;
 	
 	public volatile static MapObject curMapO;
+	/**
+	 * If static object is selected
+	 */
 	public volatile static boolean staticObject = false;
 	public volatile static StaticObject selectedStaticObject;
 	
-	public volatile static String[] tileTypes = {"Background Tile", "Static Object"};
+	public volatile static String[] mapOTypes = {"Background Tile", "Static Object"};
 	public volatile static String[] shapes = {"Point", "Circle", "Square"};
 	public volatile static HashMap<Integer,LImage> images = new HashMap<Integer,LImage>();
 	public volatile static HashMap<Integer,MapObject> mapObjects = new HashMap<Integer,MapObject>();

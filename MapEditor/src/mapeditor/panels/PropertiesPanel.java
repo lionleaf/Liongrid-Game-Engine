@@ -18,11 +18,17 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import mapeditor.CData;
+import mapeditor.CollisionCircle;
+import mapeditor.CollisionObject;
+import mapeditor.CollisionSquare;
+import mapeditor.LCollision;
 import mapeditor.LImage;
+import mapeditor.LShape;
 import mapeditor.MapData;
 import mapeditor.MapObject;
 
 public class PropertiesPanel extends JPanel {
+	
 	private JComboBox mapOType;
 	private JComboBox imageChooser;
 	private JTextField centerX;
@@ -30,6 +36,8 @@ public class PropertiesPanel extends JPanel {
 	private JTextField mapOSizeX;
 	private JTextField mapOSizeY;
 	private JComboBox collisionChooser;
+	
+	private String selectedShape;
 	// Shape relyant components
 	private JLabel circleLabel;
 	private JTextField circleRadius;
@@ -44,7 +52,7 @@ public class PropertiesPanel extends JPanel {
 	}
 	
 	private void addComponents() {
-		mapOType = new JComboBox(CData.tileTypes);
+		mapOType = new JComboBox(CData.mapOTypes);
 		imageChooser = new JComboBox(CData.images.values().toArray());
 		JLabel centerLabel = new JLabel("Center: (x,y)");
 		centerX = new JTextField("" + 0);
@@ -105,11 +113,12 @@ public class PropertiesPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JComboBox cb = (JComboBox)e.getSource();
-				if(cb.getSelectedItem() == CData.tileTypes[0])
+				if(cb.getSelectedItem() == CData.mapOTypes[0])
 					CData.staticObject = false;
-				else if(cb.getSelectedItem() == CData.tileTypes[1])
+				else if(cb.getSelectedItem() == CData.mapOTypes[1])
 					CData.staticObject = true;
 				repaint();
+				CData.updateMaps();
 			}
 		});
 		
@@ -187,25 +196,53 @@ public class PropertiesPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JComboBox cb = (JComboBox)e.getSource();
-				String shape = (String) cb.getSelectedItem();
-				setCollisionShape(shape);
+				selectedShape = (String) cb.getSelectedItem();
+				addShapeButtons();
 				repaint();
 			}
 		});
 	}
 	
-	private void setCollisionShape(String shape){
+	public CollisionObject createCollisionObject(){
+		String point = CData.shapes[0];
+		String circle = CData.shapes[1];
+		String square = CData.shapes[2];
+		CollisionObject returnO = null;
+		if(selectedShape.equals(point)){
+		}
+		else if(selectedShape.equals(circle)){
+			try{
+				returnO = new CollisionCircle(0, 0, Float.parseFloat(circleRadius.getText()));
+			}
+			catch (Exception e) {
+				return null;
+			}
+		}
+		else if(selectedShape.equals(square)){
+			try{
+				returnO = new CollisionSquare(0, 0, 
+					Float.parseFloat(squareWidth.getText()), 
+					Float.parseFloat(squareHeight.getText()));
+			}
+			catch (Exception e) {
+				return null;
+			}
+		}
+		return returnO;
+	}
+	
+	private void addShapeButtons(){
 		String point = CData.shapes[0];
 		String circle = CData.shapes[1];
 		String square = CData.shapes[2];
 		removeCollisionComponents();
-		if(shape.equals(point)){
+		if(selectedShape.equals(point)){
 		}
-		else if(shape.equals(circle)){
+		else if(selectedShape.equals(circle)){
 			add(circleLabel);
 			add(circleRadius);
 		}
-		else if(shape.equals(square)){
+		else if(selectedShape.equals(square)){
 			add(squareLabel);
 			add(squareWidth);
 			add(squareHeight);
@@ -263,8 +300,8 @@ public class PropertiesPanel extends JPanel {
 		mapOSizeY.setText(""+CData.curMapO.arraySizeY);
 		mapOSizeX.setText(""+CData.curMapO.arraySizeX);
 		imageChooser.setSelectedItem(CData.curMapO.getLImage());
-		if(CData.staticObject) mapOType.setSelectedItem(CData.tileTypes[1]);
-		else				   mapOType.setSelectedItem(CData.tileTypes[0]);
+		if(CData.staticObject) mapOType.setSelectedItem(CData.mapOTypes[1]);
+		else				   mapOType.setSelectedItem(CData.mapOTypes[0]);
 		repaint();
 	}
 

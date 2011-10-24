@@ -8,8 +8,11 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.Iterator;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -17,8 +20,12 @@ import javax.swing.JTextField;
 import com.liongrid.gameengine.tools.LVector2Int;
 
 import mapeditor.CData;
+import mapeditor.CollisionObject;
 import mapeditor.IsometricTransformation;
+import mapeditor.LCollision;
 import mapeditor.LImage;
+import mapeditor.LShape;
+import mapeditor.LShape.Circle;
 import mapeditor.MapData;
 import mapeditor.MapObject;
 
@@ -31,14 +38,39 @@ public class MapOIsometricPanel extends JPanel{
 	private MapObject curMapO;
 	private int mousePosX;
 	private int mousePosY;
+	private JButton addCollisionObject;
+	private JButton removeCollisionObject;
 
 	public MapOIsometricPanel() {
 		JLabel scaleLabel = new JLabel("Scale: ");
 		scaleField = new JTextField(""+scale);
 		scaleField.setColumns(3);
+		addCollisionObject = new JButton("Add CollisionO");
+		removeCollisionObject = new JButton("Remove CollisionO");
 		
 		add(scaleLabel);
 		add(scaleField);
+		add(addCollisionObject);
+		add(removeCollisionObject);
+		
+		addCollisionObject.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(CData.curMapO == null) return;
+				MapObject mapO = CData.curMapO;
+				CollisionObject o = CData.propertiesPanel.createCollisionObject();
+				if(o == null) return;
+				mapO.addCollideable(o);
+				System.out.println("Added collision object of shape " + o.getShape());
+			}
+		});
+		
+		removeCollisionObject.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				MapOMutualVariables.removeSelectedCollisionObject();
+			}
+		});
 		
 		scaleField.addActionListener(new ActionListener() {
 			@Override
@@ -51,6 +83,7 @@ public class MapOIsometricPanel extends JPanel{
 				}
 			}
 		});
+		
 		
 		addMouseMotionListener(new MouseMotionListener() {
 			@Override
@@ -65,7 +98,6 @@ public class MapOIsometricPanel extends JPanel{
 			
 			@Override
 			public void mouseDragged(MouseEvent e) {
-				
 			}
 		});
 	}
@@ -80,6 +112,7 @@ public class MapOIsometricPanel extends JPanel{
 		drawCursorPosition(g2d);
 	}
 	
+
 	private void drawCursorPosition(Graphics2D g2d) {
 		int x = mousePosX-3;
 		int y = mousePosY-3;
@@ -141,6 +174,8 @@ public class MapOIsometricPanel extends JPanel{
 		float arrayWidth = -IsometricTransformation.getX(0, mapO.arraySizeY);
 		int imgOffsetX = mapO.getCenter().x;
 		offsetX =(int)((imgOffsetX > arrayWidth) ? imgOffsetX : arrayWidth);
+		
+		offsetY += 30;
 	}
 	
 	private float fromWindowX(int x, int y){
@@ -168,4 +203,5 @@ public class MapOIsometricPanel extends JPanel{
 		mousePosX = toWindowX(x, y);
 		mousePosY = toWindowY(x, y);
 	}
+	
 }

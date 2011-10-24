@@ -7,14 +7,24 @@ import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.Iterator;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.liongrid.gameengine.tools.LVector2;
+
 import mapeditor.CData;
+import mapeditor.CollisionObject;
+import mapeditor.LCollision;
+import mapeditor.LShape;
+import mapeditor.LShape.Square;
 import mapeditor.MapData;
+import mapeditor.MapObject;
+import mapeditor.LShape.Circle;
 
 public class MapOCartesianPanel extends JPanel{
 	private final int tileSize = 64;
@@ -45,6 +55,32 @@ public class MapOCartesianPanel extends JPanel{
 			}
 		});
 		
+		addMouseListener(new MouseListener() {
+			public void mouseReleased(MouseEvent arg0) {
+			}
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				MapObject mapO = CData.curMapO;
+				if(mapO == null) return;
+				float x = fromWindowX(arg0.getX());
+				float y = fromWindowY(arg0.getY());
+				Iterator<CollisionObject> iterator = mapO.collideablesIterator();
+				while(iterator.hasNext()){
+					CollisionObject collisionO = iterator.next();
+					if(LCollision.collides(x, y, collisionO)){
+						MapOMutualVariables.selectCollisionObject(collisionO);
+						break;
+					}
+				}
+			}
+			@Override
+			public void mouseExited(MouseEvent arg0) {}
+			@Override
+			public void mouseEntered(MouseEvent arg0) {}
+			@Override
+			public void mouseClicked(MouseEvent arg0) {}
+		});
+		
 		addMouseMotionListener(new MouseMotionListener() {
 			@Override
 			public void mouseMoved(MouseEvent e) {
@@ -58,7 +94,16 @@ public class MapOCartesianPanel extends JPanel{
 			
 			@Override
 			public void mouseDragged(MouseEvent e) {
-				
+				CollisionObject collideable = MapOMutualVariables.selectedCollisionObject;
+				//Move selected collisionObject
+				if(collideable != null){
+					float x = fromWindowX(e.getX());
+					float y = fromWindowY(e.getY());
+					
+					collideable.changePos(x, y);
+					
+					CData.mapOSplitView.repaint();
+				}
 			}
 		});
 	}
@@ -79,7 +124,37 @@ public class MapOCartesianPanel extends JPanel{
 		
 		Graphics2D g2d = (Graphics2D) g;
 		drawSquares(g2d);
+		drawCollisionObjects(g2d);
 		drawCursorPosition(g2d);
+	}
+	
+	private void drawCollisionObjects(Graphics2D g2d) {
+		MapObject mapO = CData.curMapO;
+		Iterator<CollisionObject> iterator = mapO.collideablesIterator();
+		while(iterator.hasNext()){
+			CollisionObject collisionO = iterator.next();
+			int shape = collisionO.getShape();
+			LVector2 pos = collisionO.getPos();
+			int x = toWindowX(pos.x);
+			int y = toWindowX(pos.y);
+			if(collisionO == MapOMutualVariables.selectedCollisionObject){
+				g2d.setColor(new Color(1f, 0f, 0f));
+			}
+			switch (shape) {
+			case LShape.CIRCLE:
+				Circle circle = (Circle) collisionO;
+				int radius = toWindowX(circle.getRadius()) - offsetX;
+				g2d.drawOval(x + radius, y + radius, radius*2, radius*2);
+				g2d.drawOval(x + radius, y + radius, 3, 3);
+				break;
+			case LShape.SQUARE:
+				Square square = (Square) collisionO;
+				int width = toWindowX(square.getWidth()) - offsetX;  // This is equal to
+				int height = toWindowX(square.getHeight()) - offsetX;// scaling
+				g2d.drawRect(x, y - height, width, height);
+			}
+			g2d.setColor(new Color(0,0,0));
+		}
 	}
 	
 	private void drawCursorPosition(Graphics2D g2d) {

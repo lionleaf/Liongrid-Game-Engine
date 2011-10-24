@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
@@ -24,8 +26,7 @@ import mapeditor.MapObject;
 import mapeditor.MapObject.StaticObject;
 
 public class MapPanel extends JPanel {
-	JCheckBox grid = new JCheckBox();
-	JCheckBox snapToGrid;
+	private JCheckBox grid = new JCheckBox();
 	private int mapWidth;
 	private int mapHeight;
 	private int offsetY;
@@ -34,15 +35,27 @@ public class MapPanel extends JPanel {
 
 	private short[][] background;
 	private int[][] mapIndices;
+	private JButton addStaticObject;
+	private JButton removeStaticObject;
 
 	public MapPanel() {
+		addStaticObject = new JButton("Add StaticO");
+		removeStaticObject = new JButton("Remove StaticO");
+		
+		grid.setSelected(true);
+		
 		add(grid);
+		add(addStaticObject);
+		add(removeStaticObject);
+		
+		
 		grid.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				repaint();
 			}
 		});
+		
 
 		addMouseListener(new MouseListener() {
 			@Override
@@ -157,6 +170,7 @@ public class MapPanel extends JPanel {
 	}
 
 	private void paintGrid(Graphics2D g2d) {
+		if(mapIndices == null) return;
 		for (int x = 0; x < mapIndices.length; x++) {
 			for (int y = mapIndices[x][0]; y <= mapIndices[x][1]; y++) {
 				drawSquare(g2d, x, y);
@@ -225,6 +239,7 @@ public class MapPanel extends JPanel {
 	}
 
 	public void loadMap() {
+		updateButtons();
 		background = CData.backgroundObjectsIDs;
 		mapIndices = MapData.getMapIndices();
 		mapHeight = MapData.mapHeight;
@@ -232,6 +247,11 @@ public class MapPanel extends JPanel {
 		offsetX = 0;
 		offsetY = mapHeight;
 		mapReady = true;
+	}
+	
+	public void updateButtons(){
+		addStaticObject.setEnabled(CData.staticObject);
+		removeStaticObject.setEnabled(CData.staticObject);
 	}
 
 }

@@ -8,16 +8,19 @@ public abstract class CollisionObject implements LShape{
 	/**
 	 * This corresponds to what movement type that the collision object should block
 	 */
-	private int collisionType = -1;
 	
-	public CollisionObject(float x, float y, LMovementType type) {
+	public CollisionObject(float x, float y) {
 		pos = new LVector2(x, y);
-		collisionType = type.ordinal();
 	}
 
 	@Override
 	public LVector2 getPos() {
 		return pos;
+	}
+	
+	public void changePos(float x, float y){
+		pos.x = x;
+		pos.y = y;
 	}
 
 }

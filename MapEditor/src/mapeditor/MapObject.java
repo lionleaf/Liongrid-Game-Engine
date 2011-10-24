@@ -2,6 +2,8 @@ package mapeditor;
 
 import java.security.acl.Owner;
 import java.util.ArrayList;
+import java.util.Iterator;
+
 import com.liongrid.gameengine.tools.LVector2;
 import com.liongrid.gameengine.tools.LVector2Int;
 
@@ -72,6 +74,10 @@ public class MapObject{
 	
 	public  Object[] getCollideables(){
 		return collideables.toArray();
+	}
+	
+	public Iterator<CollisionObject> collideablesIterator(){
+		return collideables.iterator();
 	}
 	
 	public StaticObject createStaticObject(float x, float y){
