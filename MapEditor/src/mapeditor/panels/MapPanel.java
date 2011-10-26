@@ -31,15 +31,15 @@ public class MapPanel extends JPanel {
 	private int mapHeight;
 	private int offsetY;
 	private int offsetX;
+	private int pendingAdditions = 0;
 	private boolean mapReady = false;
 
-	private short[][] background;
 	private int[][] mapIndices;
 	private JButton addStaticObject;
 	private JButton removeStaticObject;
 
 	public MapPanel() {
-		addStaticObject = new JButton("Add StaticO");
+		addStaticObject = new JButton("Add StaticO (" + pendingAdditions + ")");
 		removeStaticObject = new JButton("Remove StaticO");
 		
 		grid.setSelected(true);
@@ -53,6 +53,22 @@ public class MapPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				repaint();
+			}
+		});
+		
+		addStaticObject.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				pendingAdditions =+ 1;
+				updateButtons();
+			}
+		});
+		
+		removeStaticObject.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MapManager.deleteSelectedStaticObject();
 			}
 		});
 		
@@ -75,19 +91,27 @@ public class MapPanel extends JPanel {
 				MapPanel panel = (MapPanel) e.getSource();
 				float x = fromWindowX(e.getX(), e.getY());
 				float y = fromWindowY(e.getX(), e.getY());
+				System.out.println("x = " + x + " y = " + y);
 
 				if (x < 0) x = 0;
 				if (y < 0) y = 0;
 				if (x > MapData.arrayWidth) x = MapData.arrayWidth - 1;
 				if (y > MapData.arrayHeight) y = MapData.arrayHeight - 1;
 
-				if (CData.staticObject == false) {
+				if (CData.staticObjectMode == false) {
 					MapManager.insertBackgroundMapO((int) x, (int) y,
 							CData.curMapO);
-					System.out.println("pressed tile x = " + x + " y = " + y);
+					System.out.println("pressed tile x = " + (int) x + " y = " + (int)y);
 				} else {
-					insertStaticObject(e.getX(), e.getY());
-					System.out.println("StaticO x = " + x + " y = " + y);
+					if(pendingAdditions > 0){
+						insertStaticObject(e.getX(), e.getY());
+						System.out.println("Additions = " + pendingAdditions);
+						if(pendingAdditions > 0) pendingAdditions =- 1;
+						updateButtons();
+					}
+					else{
+						selectStaticObject(e.getX(), e.getY());
+					}
 				}
 				
 				panel.repaint();
@@ -102,9 +126,18 @@ public class MapPanel extends JPanel {
 
 			@Override
 			public void mouseDragged(MouseEvent e) {
-				int x = (int) MapData.fromIsoToCartX(e.getX(), e.getY());
-				int y = (int) MapData.fromIsoToCartY(e.getX(), e.getY());
-
+				float x = fromWindowX(e.getX(), e.getY());
+				float y = fromWindowY(e.getX(), e.getY());
+				if(CData.staticObjectMode){
+					StaticObject selected = CData.selectedStaticObject;
+					if(selected == null) return;
+					selected.setArrayPos(x, y);
+				}
+				else{
+					MapManager.insertBackgroundMapO((int)x, (int)y, CData.curMapO);
+				}
+				MapPanel panel = (MapPanel) e.getSource();
+				panel.repaint();
 			}
 
 			@Override
@@ -143,7 +176,7 @@ public class MapPanel extends JPanel {
 	private void drawStaticObjects(Graphics2D g2d) {
 		for (int i = 0; i < CData.staticObjects.size(); i++) {
 			StaticObject o = CData.staticObjects.get(i);
-			LVector2 pos = o.getPos();
+			LVector2 pos = o.getArrayPos();
 			int x = toWindowX(pos.x, pos.y);
 			int y = toWindowY(pos.x, pos.y);
 			g2d.drawImage(o.getLImage().getImage(), x, (int) (y - o.getHeight()), null);
@@ -208,15 +241,16 @@ public class MapPanel extends JPanel {
 	private void selectStaticObject(int x, int y){
 		for (int i = 0; i < CData.staticObjects.size(); i++) {
 			StaticObject o = CData.staticObjects.get(i);
-			if(LCollision.collides(fromWindowX(x, y), fromWindowY(x, y), o)){
+			if(LCollision.collides(x + offsetX, offsetY - y, o)){
 				MapManager.selectStaticObject(o);
 				return;
 			}
+			else MapManager.selectStaticObject(null);
 		}
 	}
 	
 	private void insertStaticObject(int x, int y){
-		if(!CData.staticObject || CData.curMapO == null) return;
+		if(!CData.staticObjectMode || CData.curMapO == null) return;
 		float carthX = fromWindowX(x, y);
 		float carthY = fromWindowY(x, y);
 		MapManager.insertStaticObject(CData.curMapO.createStaticObject(carthX, carthY));
@@ -240,7 +274,6 @@ public class MapPanel extends JPanel {
 
 	public void loadMap() {
 		updateButtons();
-		background = CData.backgroundObjectsIDs;
 		mapIndices = MapData.getMapIndices();
 		mapHeight = MapData.mapHeight;
 		mapWidth = MapData.mapWidth;
@@ -250,8 +283,9 @@ public class MapPanel extends JPanel {
 	}
 	
 	public void updateButtons(){
-		addStaticObject.setEnabled(CData.staticObject);
-		removeStaticObject.setEnabled(CData.staticObject);
+		addStaticObject.setText("Add StaticO (" + pendingAdditions + ")");
+		addStaticObject.setEnabled(CData.staticObjectMode);
+		removeStaticObject.setEnabled(CData.staticObjectMode);
 	}
 
 }

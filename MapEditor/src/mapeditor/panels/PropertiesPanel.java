@@ -114,9 +114,9 @@ public class PropertiesPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				JComboBox cb = (JComboBox)e.getSource();
 				if(cb.getSelectedItem() == CData.mapOTypes[0])
-					CData.staticObject = false;
+					CData.staticObjectMode = false;
 				else if(cb.getSelectedItem() == CData.mapOTypes[1])
-					CData.staticObject = true;
+					CData.staticObjectMode = true;
 				repaint();
 				CData.updateMaps();
 			}
@@ -300,7 +300,7 @@ public class PropertiesPanel extends JPanel {
 		mapOSizeY.setText(""+CData.curMapO.arraySizeY);
 		mapOSizeX.setText(""+CData.curMapO.arraySizeX);
 		imageChooser.setSelectedItem(CData.curMapO.getLImage());
-		if(CData.staticObject) mapOType.setSelectedItem(CData.mapOTypes[1]);
+		if(CData.staticObjectMode) mapOType.setSelectedItem(CData.mapOTypes[1]);
 		else				   mapOType.setSelectedItem(CData.mapOTypes[0]);
 		repaint();
 	}

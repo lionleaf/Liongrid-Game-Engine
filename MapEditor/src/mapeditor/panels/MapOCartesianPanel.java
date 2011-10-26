@@ -71,6 +71,7 @@ public class MapOCartesianPanel extends JPanel{
 						MapOMutualVariables.selectCollisionObject(collisionO);
 						break;
 					}
+					MapOMutualVariables.selectCollisionObject(null);
 				}
 			}
 			@Override
@@ -99,7 +100,6 @@ public class MapOCartesianPanel extends JPanel{
 				if(collideable != null){
 					float x = fromWindowX(e.getX());
 					float y = fromWindowY(e.getY());
-					
 					collideable.changePos(x, y);
 					
 					CData.mapOSplitView.repaint();
@@ -136,7 +136,7 @@ public class MapOCartesianPanel extends JPanel{
 			int shape = collisionO.getShape();
 			LVector2 pos = collisionO.getPos();
 			int x = toWindowX(pos.x);
-			int y = toWindowX(pos.y);
+			int y = toWindowY(pos.y);
 			if(collisionO == MapOMutualVariables.selectedCollisionObject){
 				g2d.setColor(new Color(1f, 0f, 0f));
 			}
@@ -144,8 +144,8 @@ public class MapOCartesianPanel extends JPanel{
 			case LShape.CIRCLE:
 				Circle circle = (Circle) collisionO;
 				int radius = toWindowX(circle.getRadius()) - offsetX;
-				g2d.drawOval(x + radius, y + radius, radius*2, radius*2);
-				g2d.drawOval(x + radius, y + radius, 3, 3);
+				g2d.drawOval(x - radius, y - radius , radius*2, radius*2);
+				g2d.drawOval(x - 2, y - 2, 4, 4);
 				break;
 			case LShape.SQUARE:
 				Square square = (Square) collisionO;

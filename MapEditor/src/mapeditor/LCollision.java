@@ -33,6 +33,9 @@ public class LCollision {
 		if(shape.getShape() == CIRCLE){
 			return collides(x, y, (LShape.Circle) shape);
 		}
+		else if(shape.getShape() == SQUARE){
+			return collides(x,y, (LShape.Square) shape);
+		}
 		return false;
 	}
 	

@@ -72,7 +72,12 @@ public class MapObject{
 		collideables.add(collideable);
 	}
 	
-	public  Object[] getCollideables(){
+	public ArrayList<CollisionObject> getCollideables(){
+		return collideables;
+	}
+	
+	
+	public  Object[] getCollisionArray(){
 		return collideables.toArray();
 	}
 	
@@ -125,20 +130,41 @@ public class MapObject{
 	public class StaticObject implements LShape.Square{
 
 		private LVector2 pos;
+		private LVector2 arrayPos;
 		private MapObject parent;
 		
 		public StaticObject(MapObject owner, float x, float y) {
-			pos = new LVector2(x, y);
+			arrayPos = new LVector2(x, y);
+			pos = new LVector2();
+			updatePos();
 			parent = owner;
 		}
 		
 		public void changeParent(MapObject newParent){
 			parent = newParent;
 		}
+		
+		public LVector2 getArrayPos(){
+			updateArrayPos();
+			return arrayPos;
+		}
 
 		@Override
 		public LVector2 getPos() {
+			updatePos();
 			return pos;
+		}
+		
+		public void setPos(float x, float y){
+			pos.x = x;
+			pos.y = y;
+			updateArrayPos();
+		}
+		
+		public void setArrayPos(float x, float y){
+			arrayPos.x = x;
+			arrayPos.y = y;
+			updatePos();
 		}
 
 		@Override
@@ -162,6 +188,16 @@ public class MapObject{
 		
 		public LImage getLImage(){
 			return parent.getLImage();
+		}
+		
+		private void updateArrayPos(){
+			arrayPos.set(MapData.fromIsoToCartX((int) pos.x, (int) pos.y), 
+					     MapData.fromIsoToCartY((int) pos.x, (int) pos.y));
+		}
+		
+		private void updatePos(){
+			pos.set(MapData.fromCartToIsoX(arrayPos.x, arrayPos.y), 
+					MapData.fromCartToIsoY(arrayPos.x, arrayPos.y));
 		}
 	}
 }

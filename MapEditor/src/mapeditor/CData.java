@@ -23,7 +23,7 @@ public class CData {
 	/**
 	 * If static object is selected
 	 */
-	public volatile static boolean staticObject = false;
+	public volatile static boolean staticObjectMode = false;
 	public volatile static StaticObject selectedStaticObject;
 	
 	public volatile static String[] mapOTypes = {"Background Tile", "Static Object"};
