@@ -134,6 +134,7 @@ public class MapScetchPanel extends JPanel{
 		mapReady = true;
 		mapIndices = MapData.getMapIndices();
 		updateUI();
+		repaint();
 	}
 
 }

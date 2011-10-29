@@ -106,6 +106,10 @@ public class MapObject{
 		lImageID = id;
 	}
 	
+	public boolean hasImage(){
+		return lImageID != 0;
+	}
+	
 	public int getLImageID(){
 		return lImageID;
 	}
@@ -127,7 +131,7 @@ public class MapObject{
 	}
 	
 	
-	public class StaticObject implements LShape.Square{
+	public static class StaticObject implements LShape.Square{
 
 		private LVector2 pos;
 		private LVector2 arrayPos;
@@ -140,8 +144,13 @@ public class MapObject{
 			parent = owner;
 		}
 		
-		public void changeParent(MapObject newParent){
-			parent = newParent;
+		public void changeMapO(MapObject mapO){
+			if(mapO == null) return;
+			parent = mapO;
+		}
+		
+		public MapObject getMapO(){
+			return parent;
 		}
 		
 		public LVector2 getArrayPos(){
@@ -188,6 +197,10 @@ public class MapObject{
 		
 		public LImage getLImage(){
 			return parent.getLImage();
+		}
+		
+		public boolean hasImage(){
+			return parent.hasImage();
 		}
 		
 		private void updateArrayPos(){

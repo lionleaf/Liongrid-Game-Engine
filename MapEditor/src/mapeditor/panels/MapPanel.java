@@ -1,5 +1,6 @@
 package mapeditor.panels;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -69,6 +70,7 @@ public class MapPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				MapManager.deleteSelectedStaticObject();
+				CData.updateMaps();
 			}
 		});
 		
@@ -179,7 +181,13 @@ public class MapPanel extends JPanel {
 			LVector2 pos = o.getArrayPos();
 			int x = toWindowX(pos.x, pos.y);
 			int y = toWindowY(pos.x, pos.y);
-			g2d.drawImage(o.getLImage().getImage(), x, (int) (y - o.getHeight()), null);
+			if(o.hasImage())
+				g2d.drawImage(o.getLImage().getImage(), x, (int) (y - o.getHeight()), null);
+			if(o == CData.selectedStaticObject){
+				g2d.setColor(new Color(1, 0, 0));
+				g2d.drawRect(x, (int) (y - o.getHeight()), o.getMapO().getWidth(), o.getMapO().getHeight());
+				g2d.setColor(new Color(0, 0, 0));
+			}
 		}
 	}
 
@@ -280,6 +288,7 @@ public class MapPanel extends JPanel {
 		offsetX = 0;
 		offsetY = mapHeight;
 		mapReady = true;
+		repaint();
 	}
 	
 	public void updateButtons(){

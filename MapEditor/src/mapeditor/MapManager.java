@@ -337,6 +337,7 @@ public class MapManager {
 	}
 	
 	public static void insertBackgroundMapO(int x, int y, MapObject mapO){
+		if(mapO == null) return;
 		CData.backgroundObjectsIDs[x][y] = mapO.getIDbyte();
 	}
 	
