@@ -93,7 +93,6 @@ public class MapPanel extends JPanel {
 				MapPanel panel = (MapPanel) e.getSource();
 				float x = fromWindowX(e.getX(), e.getY());
 				float y = fromWindowY(e.getX(), e.getY());
-				System.out.println("x = " + x + " y = " + y);
 
 				if (x < 0) x = 0;
 				if (y < 0) y = 0;
@@ -105,6 +104,7 @@ public class MapPanel extends JPanel {
 							CData.curMapO);
 					System.out.println("pressed tile x = " + (int) x + " y = " + (int)y);
 				} else {
+					System.out.println("x = " + x + " y = " + y);
 					if(pendingAdditions > 0){
 						insertStaticObject(e.getX(), e.getY());
 						System.out.println("Additions = " + pendingAdditions);
@@ -285,8 +285,9 @@ public class MapPanel extends JPanel {
 		mapIndices = MapData.getMapIndices();
 		mapHeight = MapData.mapHeight;
 		mapWidth = MapData.mapWidth;
-		offsetX = 0;
+		offsetX = 30;
 		offsetY = mapHeight;
+		offsetY += 50;
 		mapReady = true;
 		repaint();
 	}

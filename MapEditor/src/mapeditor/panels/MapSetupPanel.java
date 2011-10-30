@@ -156,9 +156,10 @@ public class MapSetupPanel extends JPanel  {
 			public void actionPerformed(ActionEvent arg0) {
 				try{
 					CData.changeLevelSize(Integer.parseInt(xField.getText()), 
-										  MapData.mapHeight);
+										  Integer.parseInt(yField.getText()));
 				}catch (Exception e) {
 					xField.setText(""+CData.getArraySizeX());
+					yField.setText(""+CData.getArraySizeY());
 				}
 
 			}
@@ -169,9 +170,10 @@ public class MapSetupPanel extends JPanel  {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				try{
-					CData.changeLevelSize(MapData.mapWidth, 
+					CData.changeLevelSize(Integer.parseInt(xField.getText()), 
 										  Integer.parseInt(yField.getText()));
 				}catch (Exception e) {
+					xField.setText(""+CData.getArraySizeX());
 					yField.setText(""+CData.getArraySizeY());
 				}
 			}
