@@ -1,18 +1,11 @@
 package com.liongrid.gameengine.tmx;
 
+import com.liongrid.gameengine.LDrawableBitmap;
+import com.liongrid.gameengine.LTexture;
+import com.liongrid.gameengine.LTextureLibrary;
 import com.liongrid.gameengine.tmx.util.constants.TMXConstants;
 import com.liongrid.gameengine.tmx.util.exception.TMXParseException;
-import org.anddev.andengine.opengl.texture.TextureManager;
-import org.anddev.andengine.opengl.texture.TextureOptions;
-import org.anddev.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
-import org.anddev.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasFactory;
-import org.anddev.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
-import org.anddev.andengine.opengl.texture.atlas.bitmap.source.AssetBitmapTextureAtlasSource;
-import org.anddev.andengine.opengl.texture.atlas.bitmap.source.decorator.ColorKeyBitmapTextureAtlasSourceDecorator;
-import org.anddev.andengine.opengl.texture.atlas.bitmap.source.decorator.shape.RectangleBitmapTextureAtlasSourceDecoratorShape;
-import org.anddev.andengine.opengl.texture.bitmap.BitmapTexture.BitmapTextureFormat;
-import org.anddev.andengine.opengl.texture.region.TextureRegion;
-import org.anddev.andengine.util.SAXUtils;
+import com.liongrid.gameengine.tools.SAXUtils;
 import org.xml.sax.Attributes;
 
 import android.content.Context;
@@ -41,8 +34,8 @@ public class TMXTileSet implements TMXConstants {
 	private final int mTileHeight;
 
 	private String mImageSource;
-	private BitmapTextureAtlas mBitmapTextureAtlas;
-	private final TextureOptions mTextureOptions;
+	private LTexture mBitmapTextureAtlas;
+	//private final TextureOptions mTextureOptions;
 
 	private int mTilesHorizontal;
 	@SuppressWarnings("unused")
@@ -56,19 +49,17 @@ public class TMXTileSet implements TMXConstants {
 	// Constructors
 	// ===========================================================
 
-	TMXTileSet(final Attributes pAttributes, final TextureOptions pTextureOptions) {
-		this(SAXUtils.getIntAttribute(pAttributes, TAG_TILESET_ATTRIBUTE_FIRSTGID, 1), pAttributes, pTextureOptions);
+	TMXTileSet(final Attributes pAttributes) {
+		this(SAXUtils.getIntAttribute(pAttributes, TAG_TILESET_ATTRIBUTE_FIRSTGID, 1), pAttributes);
 	}
 
-	TMXTileSet(final int pFirstGlobalTileID, final Attributes pAttributes, final TextureOptions pTextureOptions) {
+	TMXTileSet(final int pFirstGlobalTileID, final Attributes pAttributes) {
 		this.mFirstGlobalTileID = pFirstGlobalTileID;
 		this.mName = pAttributes.getValue("", TAG_TILESET_ATTRIBUTE_NAME);
 		this.mTileWidth = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_TILESET_ATTRIBUTE_TILEWIDTH);
 		this.mTileHeight = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_TILESET_ATTRIBUTE_TILEHEIGHT);
 		this.mSpacing = SAXUtils.getIntAttribute(pAttributes, TAG_TILESET_ATTRIBUTE_SPACING, 0);
 		this.mMargin = SAXUtils.getIntAttribute(pAttributes, TAG_TILESET_ATTRIBUTE_MARGIN, 0);
-
-		this.mTextureOptions = pTextureOptions;
 	}
 
 	// ===========================================================
@@ -91,30 +82,30 @@ public class TMXTileSet implements TMXConstants {
 		return this.mTileHeight;
 	}
 
-	public BitmapTextureAtlas getBitmapTextureAtlas() {
+	public LTexture getBitmapTextureAtlas() {
 		return this.mBitmapTextureAtlas;
 	}
 
-	public void setImageSource(final Context pContext, final TextureManager pTextureManager, final Attributes pAttributes) throws TMXParseException {
+	public void setImageSource(final Context pContext, final Attributes pAttributes) throws TMXParseException {
 		this.mImageSource = pAttributes.getValue("", TAG_IMAGE_ATTRIBUTE_SOURCE);
 
-		final AssetBitmapTextureAtlasSource assetBitmapTextureAtlasSource = new AssetBitmapTextureAtlasSource(pContext, this.mImageSource);
-		this.mTilesHorizontal = TMXTileSet.determineCount(assetBitmapTextureAtlasSource.getWidth(), this.mTileWidth, this.mMargin, this.mSpacing);
-		this.mTilesVertical = TMXTileSet.determineCount(assetBitmapTextureAtlasSource.getHeight(), this.mTileHeight, this.mMargin, this.mSpacing);
-		this.mBitmapTextureAtlas = BitmapTextureAtlasFactory.createForTextureAtlasSourceSize(BitmapTextureFormat.RGBA_8888, assetBitmapTextureAtlasSource, this.mTextureOptions); // TODO Make TextureFormat variable
+		//final AssetBitmapTextureAtlasSource assetBitmapTextureAtlasSource = new AssetBitmapTextureAtlasSource(pContext, this.mImageSource);
+		//this.mTilesHorizontal = TMXTileSet.determineCount(assetBitmapTextureAtlasSource.getWidth(), this.mTileWidth, this.mMargin, this.mSpacing);
+		//this.mTilesVertical = TMXTileSet.determineCount(assetBitmapTextureAtlasSource.getHeight(), this.mTileHeight, this.mMargin, this.mSpacing);
+		//this.mBitmapTextureAtlas = BitmapTextureAtlasFactory.createForTextureAtlasSourceSize(BitmapTextureFormat.RGBA_8888, assetBitmapTextureAtlasSource, this.mTextureOptions); // TODO Make TextureFormat variable
 
 		final String transparentColor = SAXUtils.getAttribute(pAttributes, TAG_IMAGE_ATTRIBUTE_TRANS, null);
 		if(transparentColor == null) {
-			BitmapTextureAtlasTextureRegionFactory.createFromSource(this.mBitmapTextureAtlas, assetBitmapTextureAtlasSource, 0, 0);
+			//BitmapTextureAtlasTextureRegionFactory.createFromSource(this.mBitmapTextureAtlas, assetBitmapTextureAtlasSource, 0, 0);
 		} else {
 			try{
 				final int color = Color.parseColor((transparentColor.charAt(0) == '#') ? transparentColor : "#" + transparentColor);
-				BitmapTextureAtlasTextureRegionFactory.createFromSource(this.mBitmapTextureAtlas, new ColorKeyBitmapTextureAtlasSourceDecorator(assetBitmapTextureAtlasSource, RectangleBitmapTextureAtlasSourceDecoratorShape.getDefaultInstance(), color), 0, 0);
+				//BitmapTextureAtlasTextureRegionFactory.createFromSource(this.mBitmapTextureAtlas, new ColorKeyBitmapTextureAtlasSourceDecorator(assetBitmapTextureAtlasSource, RectangleBitmapTextureAtlasSourceDecoratorShape.getDefaultInstance(), color), 0, 0);
 			} catch (final IllegalArgumentException e) {
 				throw new TMXParseException("Illegal value: '" + transparentColor + "' for attribute 'trans' supplied!", e);
 			}
 		}
-		pTextureManager.loadTexture(this.mBitmapTextureAtlas);
+		//pTextureManager.loadTexture(this.mBitmapTextureAtlas);
 	}
 
 	public String getImageSource() {
@@ -149,15 +140,15 @@ public class TMXTileSet implements TMXConstants {
 		}
 	}
 
-	public TextureRegion getTextureRegionFromGlobalTileID(final int pGlobalTileID) {
+	public LDrawableBitmap getTextureRegionFromGlobalTileID(final int pGlobalTileID) {
 		final int localTileID = pGlobalTileID - this.mFirstGlobalTileID;
 		final int tileColumn = localTileID % this.mTilesHorizontal;
 		final int tileRow = localTileID / this.mTilesHorizontal;
 
 		final int texturePositionX = this.mMargin + (this.mSpacing + this.mTileWidth) * tileColumn;
 		final int texturePositionY = this.mMargin + (this.mSpacing + this.mTileHeight) * tileRow;
-
-		return new TextureRegion(this.mBitmapTextureAtlas, texturePositionX, texturePositionY, this.mTileWidth, this.mTileHeight);
+		
+		return new LDrawableBitmap(this.mBitmapTextureAtlas, texturePositionX, texturePositionY, this.mTileWidth, this.mTileHeight);
 	}
 
 	private static int determineCount(final int pTotalExtent, final int pTileExtent, final int pMargin, final int pSpacing) {

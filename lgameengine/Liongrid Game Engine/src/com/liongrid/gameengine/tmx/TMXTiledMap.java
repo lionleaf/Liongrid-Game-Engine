@@ -4,10 +4,9 @@ import java.util.ArrayList;
 
 import javax.microedition.khronos.opengles.GL11;
 
+import com.liongrid.gameengine.LDrawableBitmap;
 import com.liongrid.gameengine.tmx.util.constants.TMXConstants;
-import org.anddev.andengine.opengl.texture.region.TextureRegion;
-import org.anddev.andengine.opengl.vertex.RectangleVertexBuffer;
-import org.anddev.andengine.util.SAXUtils;
+import com.liongrid.gameengine.tools.SAXUtils;
 import org.xml.sax.Attributes;
 
 import android.util.SparseArray;
@@ -38,9 +37,9 @@ public class TMXTiledMap implements TMXConstants {
 	private final ArrayList<TMXLayer> mTMXLayers = new ArrayList<TMXLayer>();
 	private final ArrayList<TMXObjectGroup> mTMXObjectGroups = new ArrayList<TMXObjectGroup>();
 
-	private final RectangleVertexBuffer mSharedVertexBuffer;
+	//private final RectangleVertexBuffer mSharedVertexBuffer;
 
-	private final SparseArray<TextureRegion> mGlobalTileIDToTextureRegionCache = new SparseArray<TextureRegion>();
+	private final SparseArray<LDrawableBitmap> mGlobalTileIDToTextureRegionCache = new SparseArray<LDrawableBitmap>();
 	private final SparseArray<TMXProperties<TMXTileProperty>> mGlobalTileIDToTMXTilePropertiesCache = new SparseArray<TMXProperties<TMXTileProperty>>();
 
 	private final TMXProperties<TMXTiledMapProperty> mTMXTiledMapProperties = new TMXProperties<TMXTiledMapProperty>();
@@ -59,8 +58,8 @@ public class TMXTiledMap implements TMXConstants {
 		this.mTileWidth = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_MAP_ATTRIBUTE_TILEWIDTH);
 		this.mTileHeight = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_MAP_ATTRIBUTE_TILEHEIGHT);
 
-		this.mSharedVertexBuffer = new RectangleVertexBuffer(GL11.GL_STATIC_DRAW, true);
-		this.mSharedVertexBuffer.update(this.mTileWidth, this.mTileHeight);
+		//this.mSharedVertexBuffer = new RectangleVertexBuffer(GL11.GL_STATIC_DRAW, true); TODO we remvd
+		//this.mSharedVertexBuffer.update(this.mTileWidth, this.mTileHeight);
 	}
 
 	// ===========================================================
@@ -104,9 +103,11 @@ public class TMXTiledMap implements TMXConstants {
 		return this.mTileHeight;
 	}
 
+	
+	/* TODO we rmvd
 	public RectangleVertexBuffer getSharedVertexBuffer() {
 		return this.mSharedVertexBuffer;
-	}
+	}*/
 
 	void addTMXTileSet(final TMXTileSet pTMXTileSet) {
 		this.mTMXTileSets.add(pTMXTileSet);
@@ -147,14 +148,14 @@ public class TMXTiledMap implements TMXConstants {
 	// ===========================================================
 	// Methods for/from SuperClass/Interfaces
 	// ===========================================================
-	
+	/* TODO we removed
 	@Override
 	protected void finalize() throws Throwable {
 		if(this.mSharedVertexBuffer.isManaged()) {
 			this.mSharedVertexBuffer.unloadFromActiveBufferObjectManager();
 		}
 	}
-
+*/
 	// ===========================================================
 	// Methods
 	// ===========================================================
@@ -178,10 +179,10 @@ public class TMXTiledMap implements TMXConstants {
 		}
 	}
 
-	public TextureRegion getTextureRegionFromGlobalTileID(final int pGlobalTileID) {
-		final SparseArray<TextureRegion> globalTileIDToTextureRegionCache = this.mGlobalTileIDToTextureRegionCache;
+	public LDrawableBitmap getTextureRegionFromGlobalTileID(final int pGlobalTileID) {
+		final SparseArray<LDrawableBitmap> globalTileIDToTextureRegionCache = this.mGlobalTileIDToTextureRegionCache;
 
-		final TextureRegion cachedTextureRegion = globalTileIDToTextureRegionCache.get(pGlobalTileID);
+		final LDrawableBitmap cachedTextureRegion = globalTileIDToTextureRegionCache.get(pGlobalTileID);
 		if(cachedTextureRegion != null) {
 			return cachedTextureRegion;
 		} else {
@@ -190,7 +191,7 @@ public class TMXTiledMap implements TMXConstants {
 			for(int i = tmxTileSets.size() - 1; i >= 0; i--) {
 				final TMXTileSet tmxTileSet = tmxTileSets.get(i);
 				if(pGlobalTileID >= tmxTileSet.getFirstGlobalTileID()) {
-					final TextureRegion textureRegion = tmxTileSet.getTextureRegionFromGlobalTileID(pGlobalTileID);
+					final LDrawableBitmap textureRegion = tmxTileSet.getTextureRegionFromGlobalTileID(pGlobalTileID);
 					/* Add to cache for the all future pGlobalTileIDs with the same value. */
 					globalTileIDToTextureRegionCache.put(pGlobalTileID, textureRegion);
 					return textureRegion;

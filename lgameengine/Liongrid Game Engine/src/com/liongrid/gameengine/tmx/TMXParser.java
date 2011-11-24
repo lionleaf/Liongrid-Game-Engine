@@ -7,15 +7,13 @@ import com.liongrid.gameengine.tmx.TMXLoader.ITMXTilePropertiesListener;
 import com.liongrid.gameengine.tmx.util.constants.TMXConstants;
 import com.liongrid.gameengine.tmx.util.exception.TMXParseException;
 import com.liongrid.gameengine.tmx.util.exception.TSXLoadException;
-import org.anddev.andengine.opengl.texture.TextureManager;
-import org.anddev.andengine.opengl.texture.TextureOptions;
-import org.anddev.andengine.util.Debug;
-import org.anddev.andengine.util.SAXUtils;
+import com.liongrid.gameengine.tools.SAXUtils;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import android.content.Context;
+import android.util.Log;
 
 /**
  * (c) 2010 Nicolas Gramlich 
@@ -34,9 +32,7 @@ public class TMXParser extends DefaultHandler implements TMXConstants {
 	// ===========================================================
 
 	private final Context mContext;
-	private final TextureManager mTextureManager;
 	private final ITMXTilePropertiesListener mTMXTilePropertyListener;
-	private final TextureOptions mTextureOptions;
 
 	private TMXTiledMap mTMXTiledMap;
 
@@ -64,10 +60,8 @@ public class TMXParser extends DefaultHandler implements TMXConstants {
 	// Constructors
 	// ===========================================================
 
-	public TMXParser(final Context pContext, final TextureManager pTextureManager, final TextureOptions pTextureOptions, final ITMXTilePropertiesListener pTMXTilePropertyListener) {
+	public TMXParser(final Context pContext, final ITMXTilePropertiesListener pTMXTilePropertyListener) {
 		this.mContext = pContext;
-		this.mTextureManager = pTextureManager;
-		this.mTextureOptions = pTextureOptions;
 		this.mTMXTilePropertyListener = pTMXTilePropertyListener;
 	}
 
@@ -93,11 +87,11 @@ public class TMXParser extends DefaultHandler implements TMXConstants {
 			final TMXTileSet tmxTileSet;
 			final String tsxTileSetSource = pAttributes.getValue("", TAG_TILESET_ATTRIBUTE_SOURCE);
 			if(tsxTileSetSource == null) {
-				tmxTileSet = new TMXTileSet(pAttributes, this.mTextureOptions);
+				tmxTileSet = new TMXTileSet(pAttributes);
 			} else {
 				try {
 					final int firstGlobalTileID = SAXUtils.getIntAttribute(pAttributes, TAG_TILESET_ATTRIBUTE_FIRSTGID, 1);
-					tmxTileSet = new TSXLoader(this.mContext, this.mTextureManager, this.mTextureOptions).loadFromAsset(this.mContext, firstGlobalTileID, tsxTileSetSource);
+					tmxTileSet = new TSXLoader(this.mContext).loadFromAsset(this.mContext, firstGlobalTileID, tsxTileSetSource);
 				} catch (final TSXLoadException e) {
 					throw new TMXParseException("Failed to load TMXTileSet from source: " + tsxTileSetSource, e);
 				}
@@ -106,7 +100,7 @@ public class TMXParser extends DefaultHandler implements TMXConstants {
 		} else if(pLocalName.equals(TAG_IMAGE)){
 			this.mInImage = true;
 			final ArrayList<TMXTileSet> tmxTileSets = this.mTMXTiledMap.getTMXTileSets();
-			tmxTileSets.get(tmxTileSets.size() - 1).setImageSource(this.mContext, this.mTextureManager, pAttributes);
+			tmxTileSets.get(tmxTileSets.size() - 1).setImageSource(this.mContext, pAttributes);
 		} else if(pLocalName.equals(TAG_TILE)) {
 			this.mInTile = true;
 			if(this.mInTileset) {
@@ -192,7 +186,7 @@ public class TMXParser extends DefaultHandler implements TMXConstants {
 				try {
 					tmxLayers.get(tmxLayers.size() - 1).initializeTMXTilesFromDataString(this.mStringBuilder.toString().trim(), this.mDataEncoding, this.mDataCompression, this.mTMXTilePropertyListener);
 				} catch (final IOException e) {
-					Debug.e(e);
+					Log.e("Liongrid","Error during TMX parser: "+e.getMessage());
 				}
 				this.mDataCompression = null;
 				this.mDataEncoding = null;

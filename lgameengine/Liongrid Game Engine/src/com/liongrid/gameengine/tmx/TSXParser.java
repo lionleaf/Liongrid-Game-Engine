@@ -2,9 +2,7 @@ package com.liongrid.gameengine.tmx;
 
 import com.liongrid.gameengine.tmx.util.constants.TMXConstants;
 import com.liongrid.gameengine.tmx.util.exception.TMXParseException;
-import org.anddev.andengine.opengl.texture.TextureManager;
-import org.anddev.andengine.opengl.texture.TextureOptions;
-import org.anddev.andengine.util.SAXUtils;
+import com.liongrid.gameengine.tools.SAXUtils;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -28,8 +26,6 @@ public class TSXParser extends DefaultHandler implements TMXConstants {
 	// ===========================================================
 
 	private final Context mContext;
-	private final TextureManager mTextureManager;
-	private final TextureOptions mTextureOptions;
 
 	private TMXTileSet mTMXTileSet;
 
@@ -51,10 +47,8 @@ public class TSXParser extends DefaultHandler implements TMXConstants {
 	// Constructors
 	// ===========================================================
 
-	public TSXParser(final Context pContext, final TextureManager pTextureManager, final TextureOptions pTextureOptions, final int pFirstGlobalTileID) {
+	public TSXParser(final Context pContext, final int pFirstGlobalTileID) {
 		this.mContext = pContext;
-		this.mTextureManager = pTextureManager;
-		this.mTextureOptions = pTextureOptions;
 		this.mFirstGlobalTileID = pFirstGlobalTileID;
 	}
 
@@ -74,10 +68,10 @@ public class TSXParser extends DefaultHandler implements TMXConstants {
 	public void startElement(final String pUri, final String pLocalName, final String pQualifiedName, final Attributes pAttributes) throws SAXException {
 		if(pLocalName.equals(TAG_TILESET)){
 			this.mInTileset = true;
-			this.mTMXTileSet = new TMXTileSet(this.mFirstGlobalTileID, pAttributes, this.mTextureOptions);
+			this.mTMXTileSet = new TMXTileSet(this.mFirstGlobalTileID, pAttributes);
 		} else if(pLocalName.equals(TAG_IMAGE)){
 			this.mInImage = true;
-			this.mTMXTileSet.setImageSource(this.mContext, this.mTextureManager, pAttributes);
+			this.mTMXTileSet.setImageSource(this.mContext, pAttributes);
 		} else if(pLocalName.equals(TAG_TILE)) {
 			this.mInTile = true;
 			this.mLastTileSetTileID = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_TILE_ATTRIBUTE_ID);

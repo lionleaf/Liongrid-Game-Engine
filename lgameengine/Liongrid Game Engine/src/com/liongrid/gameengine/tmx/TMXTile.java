@@ -1,6 +1,9 @@
 package com.liongrid.gameengine.tmx;
 
-import org.anddev.andengine.opengl.texture.region.TextureRegion;
+import javax.microedition.khronos.opengles.GL10;
+
+import com.liongrid.gameengine.LCamera;
+import com.liongrid.gameengine.LDrawableBitmap;
 
 /**
  * (c) 2010 Nicolas Gramlich 
@@ -23,13 +26,13 @@ public class TMXTile {
 	private final int mTileColumn;
 	private final int mTileWidth;
 	private final int mTileHeight;
-	TextureRegion mTextureRegion;
+	LDrawableBitmap mTextureRegion;
 
 	// ===========================================================
 	// Constructors
 	// ===========================================================
 
-	public TMXTile(final int pGlobalTileID, final int pTileColumn, final int pTileRow, final int pTileWidth, final int pTileHeight, final TextureRegion pTextureRegion) {
+	public TMXTile(final int pGlobalTileID, final int pTileColumn, final int pTileRow, final int pTileWidth, final int pTileHeight, final LDrawableBitmap pTextureRegion) {
 		this.mGlobalTileID = pGlobalTileID;
 		this.mTileRow = pTileRow;
 		this.mTileColumn = pTileColumn;
@@ -70,7 +73,7 @@ public class TMXTile {
 		return this.mTileHeight;
 	}
 
-	public TextureRegion getTextureRegion() {
+	public LDrawableBitmap getTextureRegion() {
 		return this.mTextureRegion;
 	}
 
@@ -88,7 +91,7 @@ public class TMXTile {
 	 * You'd probably want to call {@link TMXTile#setGlobalTileID(TMXTiledMap, int)} instead.
 	 * @param pTextureRegion
 	 */
-	public void setTextureRegion(final TextureRegion pTextureRegion) {
+	public void setTextureRegion(final LDrawableBitmap pTextureRegion) {
 		this.mTextureRegion = pTextureRegion;
 	}
 
@@ -96,6 +99,9 @@ public class TMXTile {
 		return pTMXTiledMap.getTMXTileProperties(this.mGlobalTileID);
 	}
 
+	public void draw(GL10 gl) {
+		mTextureRegion.draw(gl, mTileRow*mTileHeight, mTileColumn*mTileWidth,LCamera.scale,LCamera.scale);
+	}
 	// ===========================================================
 	// Methods for/from SuperClass/Interfaces
 	// ===========================================================

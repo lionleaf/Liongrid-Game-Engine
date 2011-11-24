@@ -44,6 +44,11 @@ public class LDrawableBitmap extends LBaseObject implements LDrawableObject {
 		mCrop = cropWorkspace;
 	}
 	
+	public LDrawableBitmap(LTexture texture, int texturePositionX,
+			int texturePositionY, int mTileWidth, int mTileHeight) {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public void reset() {
 		mTexture = null;

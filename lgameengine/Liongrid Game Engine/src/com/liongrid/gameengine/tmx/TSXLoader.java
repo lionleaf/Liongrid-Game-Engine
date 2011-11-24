@@ -9,8 +9,6 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import com.liongrid.gameengine.tmx.util.exception.TSXLoadException;
-import org.anddev.andengine.opengl.texture.TextureManager;
-import org.anddev.andengine.opengl.texture.TextureOptions;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -34,17 +32,14 @@ public class TSXLoader {
 	// ===========================================================
 
 	private final Context mContext;
-	private final TextureManager mTextureManager;
-	private final TextureOptions mTextureOptions;
 
 	// ===========================================================
 	// Constructors
 	// ===========================================================
 
-	public TSXLoader(final Context pContext, final TextureManager pTextureManager, final TextureOptions pTextureOptions) {
+	public TSXLoader(final Context pContext){
 		this.mContext = pContext;
-		this.mTextureManager = pTextureManager;
-		this.mTextureOptions = pTextureOptions;
+
 	}
 
 	// ===========================================================
@@ -73,7 +68,7 @@ public class TSXLoader {
 			final SAXParser sp = spf.newSAXParser();
 
 			final XMLReader xr = sp.getXMLReader();
-			final TSXParser tsxParser = new TSXParser(this.mContext, this.mTextureManager, this.mTextureOptions, pFirstGlobalTileID);
+			final TSXParser tsxParser = new TSXParser(this.mContext, pFirstGlobalTileID);
 			xr.setContentHandler(tsxParser);
 
 			xr.parse(new InputSource(new BufferedInputStream(pInputStream)));
