@@ -1,7 +1,7 @@
 package com.liongrid.gameengine.tmx;
 
 import com.liongrid.gameengine.tmx.util.constants.TMXConstants;
-import org.anddev.andengine.util.SAXUtils;
+import com.liongrid.gameengine.tools.SAXUtils;
 import org.xml.sax.Attributes;
 
 /**
