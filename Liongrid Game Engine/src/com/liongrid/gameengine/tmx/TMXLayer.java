@@ -228,7 +228,7 @@ public class TMXLayer implements TMXConstants, LDrawableObject {
 
 		//TODO
 		/* Determine the area that is visible in the camera. */
-		boolean orthogonal = mTMXTiledMap.orientationIsometric();
+		boolean orthogonal = mTMXTiledMap.orientationOrthogonal();
 
 		for(int row = 0; row < tileRows; row++) {
 			final TMXTile[] tmxTileRow = tmxTiles[row];
