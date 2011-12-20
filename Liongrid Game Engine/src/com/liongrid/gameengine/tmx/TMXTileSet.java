@@ -92,11 +92,11 @@ public class TMXTileSet implements TMXConstants {
 
 	public void setImageSource(final Context pContext, final Attributes pAttributes) throws TMXParseException {
 		this.mImageSource = pAttributes.getValue("", TAG_IMAGE_ATTRIBUTE_SOURCE);
-		String strippedImgSource = mImageSource.substring(0, mImageSource.indexOf("."));
 
 		// Allocate texture, it will be loaded at some point later
 		LTextureLibrary texLib = LGamePointers.textureLib;
-		int resID = ResIdReflector.getResId(mImageSource, R.drawable.class);
+		String strippedImgSource = mImageSource.substring(0, mImageSource.indexOf("."));
+		int resID = ResIdReflector.getResId(strippedImgSource, R.drawable.class);
 		LTexture texture = texLib.allocateTexture(resID);
 		this.mBitmapTexture = texture;
 		
