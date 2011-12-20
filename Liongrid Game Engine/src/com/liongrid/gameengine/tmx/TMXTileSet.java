@@ -5,11 +5,15 @@ import com.liongrid.gameengine.LTexture;
 import com.liongrid.gameengine.LTextureLibrary;
 import com.liongrid.gameengine.tmx.util.constants.TMXConstants;
 import com.liongrid.gameengine.tmx.util.exception.TMXParseException;
+import com.liongrid.gameengine.tools.ResIdReflector;
 import com.liongrid.gameengine.tools.SAXUtils;
+import com.liongrid.gameengine.LGamePointers;
 import org.xml.sax.Attributes;
 
+import android.R;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.util.SparseArray;
 
 /**
@@ -34,7 +38,7 @@ public class TMXTileSet implements TMXConstants {
 	private final int mTileHeight;
 
 	private String mImageSource;
-	private LTexture mBitmapTextureAtlas;
+	private LTexture mBitmapTexture;
 	//private final TextureOptions mTextureOptions;
 
 	private int mTilesHorizontal;
@@ -83,16 +87,23 @@ public class TMXTileSet implements TMXConstants {
 	}
 
 	public LTexture getBitmapTextureAtlas() {
-		return this.mBitmapTextureAtlas;
+		return this.mBitmapTexture;
 	}
 
 	public void setImageSource(final Context pContext, final Attributes pAttributes) throws TMXParseException {
 		this.mImageSource = pAttributes.getValue("", TAG_IMAGE_ATTRIBUTE_SOURCE);
 
-		//final AssetBitmapTextureAtlasSource assetBitmapTextureAtlasSource = new AssetBitmapTextureAtlasSource(pContext, this.mImageSource);
-		//this.mTilesHorizontal = TMXTileSet.determineCount(assetBitmapTextureAtlasSource.getWidth(), this.mTileWidth, this.mMargin, this.mSpacing);
-		//this.mTilesVertical = TMXTileSet.determineCount(assetBitmapTextureAtlasSource.getHeight(), this.mTileHeight, this.mMargin, this.mSpacing);
-		//this.mBitmapTextureAtlas = BitmapTextureAtlasFactory.createForTextureAtlasSourceSize(BitmapTextureFormat.RGBA_8888, assetBitmapTextureAtlasSource, this.mTextureOptions); // TODO Make TextureFormat variable
+		// Allocate texture, it will be loaded at some point later
+		LTextureLibrary texLib = LGamePointers.textureLib;
+		int resID = ResIdReflector.getResId(mImageSource, R.drawable.class);
+		LTexture texture = texLib.allocateTexture(resID);
+		this.mBitmapTexture = texture;
+		
+		BitmapDrawable bd =(BitmapDrawable) LGamePointers.context.getResources().getDrawable(resID);
+		int height = bd.getBitmap().getHeight();
+		int width = bd.getBitmap().getWidth();
+		this.mTilesHorizontal = TMXTileSet.determineCount(width, this.mTileWidth, this.mMargin, this.mSpacing);
+		this.mTilesVertical = TMXTileSet.determineCount(height, this.mTileHeight, this.mMargin, this.mSpacing);
 
 		final String transparentColor = SAXUtils.getAttribute(pAttributes, TAG_IMAGE_ATTRIBUTE_TRANS, null);
 		if(transparentColor == null) {
@@ -148,7 +159,7 @@ public class TMXTileSet implements TMXConstants {
 		final int texturePositionX = this.mMargin + (this.mSpacing + this.mTileWidth) * tileColumn;
 		final int texturePositionY = this.mMargin + (this.mSpacing + this.mTileHeight) * tileRow;
 		
-		return new LDrawableBitmap(this.mBitmapTextureAtlas, texturePositionX, texturePositionY, this.mTileWidth, this.mTileHeight);
+		return new LDrawableBitmap(this.mBitmapTexture, texturePositionX, texturePositionY, this.mTileWidth, this.mTileHeight);
 	}
 
 	private static int determineCount(final int pTotalExtent, final int pTileExtent, final int pMargin, final int pSpacing) {
