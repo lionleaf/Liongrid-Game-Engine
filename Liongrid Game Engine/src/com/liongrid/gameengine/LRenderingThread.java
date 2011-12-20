@@ -70,7 +70,8 @@ public class LRenderingThread implements LSurfaceViewPanel.Renderer {
 			LDrawableBitmap.beginDrawing(gl, mWidth, mHeight);
 			
 			//Draw tiles
-			drawTiles(gl, cameraX, cameraY, cameraWidth, cameraHeight, scale);
+			drawBackground(gl, cameraX, cameraY, cameraWidth, cameraHeight, scale);
+//			drawTiles(gl, cameraX, cameraY, cameraWidth, cameraHeight, scale);
 			
 			if (drawQueue != null && drawQueue.getObjects().getCount() > 0 ){
 				drawObjects(gl, cameraX, cameraY, cameraWidth, cameraHeight, scale);
@@ -84,6 +85,12 @@ public class LRenderingThread implements LSurfaceViewPanel.Renderer {
 		}
 	}
 
+
+	private void drawBackground(GL10 gl, int cameraX, int cameraY, int cameraWidth,
+			int cameraHeight, float scale) {
+		if(LGamePointers.background == null) return;
+		LGamePointers.background.draw(gl, cameraX, cameraY, cameraWidth, cameraHeight, scale);
+	}
 
 	private void drawObjects(GL10 gl, int cameraX, int cameraY, int cameraWidth, float cameraHeight, float scale){
 		LFixedSizeArray<LRenderElement> objects = drawQueue.getObjects();

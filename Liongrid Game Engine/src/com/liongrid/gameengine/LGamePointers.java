@@ -23,6 +23,7 @@ public class LGamePointers implements Serializable {
 	public static LTextureLibrary textureLib;
 	public static Context context;
 	public static LSoundSystem soundSystem;
+	public static LDrawableMap background;
 	
 	public static void resetAll(){
 		gameThread = null;
