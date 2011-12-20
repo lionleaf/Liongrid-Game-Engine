@@ -13,6 +13,9 @@ import com.liongrid.gameengine.LGameThread.TouchEventListener;
 import com.liongrid.gameengine.LSoundSystem;
 import com.liongrid.gameengine.LSurfaceViewPanel;
 import com.liongrid.gameengine.LTextureLibrary;
+import com.liongrid.gameengine.tmx.TMXLoader;
+import com.liongrid.gameengine.tmx.TMXTiledMap;
+import com.liongrid.gameengine.tmx.util.exception.TMXLoadException;
 import com.liongrid.infectomancer.crowd.situations.ISituationHandler;
 import com.liongrid.infectomancer.R;
 
@@ -33,6 +36,14 @@ public class IGameLoader extends LGameLoader{
 		IGamePointers.resetGameVars();
 		LGamePointers.tileSet.loadTileSet(R.raw.tileset);
 		LGamePointers.map.loadTilesFromFile(R.raw.road2);
+		try {
+			TMXLoader loader = new TMXLoader(mGameActivity, null);
+			IGamePointers.TMXMap = loader.loadFromAsset(mGameActivity, "infectomap.tmx");
+		} catch (TMXLoadException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		IGamePointers.gameObjectHandler = new IGameObjectHandler();
 		postProgress(50);
 		IGamePointers.gameStatus = new IGameStatus();

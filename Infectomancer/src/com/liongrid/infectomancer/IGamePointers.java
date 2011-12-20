@@ -3,6 +3,7 @@ package com.liongrid.infectomancer;
 import android.view.View;
 
 import com.liongrid.gameengine.LMusic;
+import com.liongrid.gameengine.tmx.TMXTiledMap;
 import com.liongrid.infectomancer.crowd.situations.ISituationHandler;
 
 public class IGamePointers {
@@ -25,6 +26,8 @@ public class IGamePointers {
 	public static LMusic music;
 
 	public static View hudView;
+
+	public static TMXTiledMap TMXMap;
 	
 	
 	public static void resetGameVars() {
