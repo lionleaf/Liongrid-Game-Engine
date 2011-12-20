@@ -142,33 +142,26 @@ public class TMXLayer implements TMXConstants, LDrawableObject {
 
 	void initializeTMXTilesFromDataString(final String pDataString, final String pDataEncoding, final String pDataCompression, final ITMXTilePropertiesListener pTMXTilePropertyListener) throws IOException, IllegalArgumentException {
 		DataInputStream dataIn = null;
-		try{
-			InputStream in = new ByteArrayInputStream(pDataString.getBytes("UTF-8"));
+		InputStream in = new ByteArrayInputStream(pDataString.getBytes("UTF-8"));
 
-			/* Wrap decoding Streams if necessary. */
-			if(pDataEncoding != null && pDataEncoding.equals(TAG_DATA_ATTRIBUTE_ENCODING_VALUE_BASE64)) {
-				in = new Base64InputStream(in, Base64.DEFAULT);
-			}
-			if(pDataCompression != null){
-				if(pDataCompression.equals(TAG_DATA_ATTRIBUTE_COMPRESSION_VALUE_GZIP)) {
-					in = new GZIPInputStream(in);
-				} else {
-					throw new IllegalArgumentException("Supplied compression '" + pDataCompression + "' is not supported yet.");
-				}
-			}
-			dataIn = new DataInputStream(in);
-
-			while(this.mTilesAdded < this.mGlobalTileIDsExpected) {
-				final int globalTileID = this.readGlobalTileID(dataIn);
-				this.addTileByGlobalTileID(globalTileID, pTMXTilePropertyListener);
-			}
-		} finally {
-			try {
-				dataIn.close();
-			} catch (final IOException e) {
-				e.printStackTrace();
+		/* Wrap decoding Streams if necessary. */
+		if(pDataEncoding != null && pDataEncoding.equals(TAG_DATA_ATTRIBUTE_ENCODING_VALUE_BASE64)) {
+			in = new Base64InputStream(in, Base64.DEFAULT);
+		}
+		if(pDataCompression != null){
+			if(pDataCompression.equals(TAG_DATA_ATTRIBUTE_COMPRESSION_VALUE_GZIP)) {
+				in = new GZIPInputStream(in);
+			} else {
+				throw new IllegalArgumentException("Supplied compression '" + pDataCompression + "' is not supported yet.");
 			}
 		}
+		dataIn = new DataInputStream(in);
+
+		while(this.mTilesAdded < this.mGlobalTileIDsExpected) {
+			final int globalTileID = this.readGlobalTileID(dataIn);
+			this.addTileByGlobalTileID(globalTileID, pTMXTilePropertyListener);
+		}
+		dataIn.close();
 	}
 
 	private void addTileByGlobalTileID(final int pGlobalTileID, final ITMXTilePropertiesListener pTMXTilePropertyListener) {
