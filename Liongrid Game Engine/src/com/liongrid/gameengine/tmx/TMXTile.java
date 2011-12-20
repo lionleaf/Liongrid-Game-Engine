@@ -97,10 +97,15 @@ public class TMXTile {
 
 	public TMXProperties<TMXTileProperty> getTMXTileProperties(final TMXTiledMap pTMXTiledMap) {
 		return pTMXTiledMap.getTMXTileProperties(this.mGlobalTileID);
-	}
-
-	public void draw(GL10 gl) {
-		mTextureRegion.draw(gl, mTileRow*mTileHeight, mTileColumn*mTileWidth,LCamera.scale,LCamera.scale);
+	} 
+	public void draw(GL10 gl, boolean orthogonal) {
+		
+		if(orthogonal) mTextureRegion.draw(gl, mTileRow*mTileHeight, mTileColumn*mTileWidth,LCamera.scale,LCamera.scale);
+		else {
+			int x = (-mTileRow*mTileWidth + mTileColumn*mTileHeight)/2;
+			int y = (mTileRow*mTileHeight + mTileColumn*mTileHeight)/2;
+			mTextureRegion.draw(gl, x, y,LCamera.scale,LCamera.scale); 
+		}
 	}
 	// ===========================================================
 	// Methods for/from SuperClass/Interfaces

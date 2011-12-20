@@ -15,7 +15,7 @@ public class LCamera {
 	private static float UNITS_PER_HEIGHT = 6;
 	
 	/**
-	 * Position of the camera in in-game coordinates. 
+	 * Position of the camera. 
 	 */
 	public static LVector2Int pos = new LVector2Int(0, 0);
 	
@@ -47,7 +47,24 @@ public class LCamera {
 		LCamera.screenWidth = screenWidth;
 		LCamera.unit = unit;
 	}
-	
+    
+	/**
+     * Checks if the square is outside the camera view.
+     * @param x - position x
+     * @param y - position y
+     * @param width - width
+     * @param height - height
+     * @return true if the whole square is outside the camera view
+     */
+    public static boolean cull(float x, float y, float width, float height){
+    	if(x + width < LCamera.pos.x) return true;
+    	if(x > LCamera.pos.x + LCamera.screenWidth/LCamera.scale) return true;
+        if(y + height < LCamera.pos.y) return true;
+    	if(y > LCamera.pos.y + LCamera.screenHeight/LCamera.scale) return true;
+    	
+    	return false;
+    }
+    
 	/**
 	 * This method sets the scale of the camera according to how many units should
 	 * fit in the screen. This sets the scale relative to the width.

@@ -62,7 +62,7 @@ public class LRenderSystem {
     public void scheduleForDraw(LDrawableObject object, float x, float y,
 		 boolean cameraRelative, float scale, int width, int height) {
     	
-    	if(!cameraRelative && cull(object, x, y)) return;
+    	if(!cameraRelative && LCamera.cull(x, y, object.getWidth(), object.getHeight())) return;
     	
     	LRenderElement element = rElementPool.allocate();
         if(element == null) return;
@@ -77,22 +77,6 @@ public class LRenderSystem {
     	renderQueues[queueIndex].add(element);
     }
     
-    
-    /**
-     * Checks if the drawable object is outside the camera view.
-     * @param object - the drawable
-     * @param x - position x
-     * @param y - position y
-     * @return true if the whole drawable is outside the camera view
-     */
-    public boolean cull(LDrawableObject object, float x, float y){
-    	if(x + object.getWidth() < LCamera.pos.x) return true;
-    	if(x > LCamera.pos.x + LCamera.screenWidth/LCamera.scale) return true;
-        if(y + object.getHeight() < LCamera.pos.y) return true;
-    	if(y > LCamera.pos.y + LCamera.screenHeight/LCamera.scale) return true;
-    	
-    	return false;
-    }
     
     public void swap(LRenderingThread renderer) {
         renderQueues[queueIndex].commitUpdates();

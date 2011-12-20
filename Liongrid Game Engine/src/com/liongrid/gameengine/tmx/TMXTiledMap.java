@@ -50,9 +50,9 @@ public class TMXTiledMap implements TMXConstants {
 
 	TMXTiledMap(final Attributes pAttributes) {
 		this.mOrientation = pAttributes.getValue("", TAG_MAP_ATTRIBUTE_ORIENTATION);
-		if(!this.mOrientation.equals(TAG_MAP_ATTRIBUTE_ORIENTATION_VALUE_ORTHOGONAL)) {
-			throw new IllegalArgumentException(TAG_MAP_ATTRIBUTE_ORIENTATION + ": '" + this.mOrientation + "' is not supported.");
-		}
+//		if(!this.mOrientation.equals(TAG_MAP_ATTRIBUTE_ORIENTATION_VALUE_ORTHOGONAL)) {
+//			throw new IllegalArgumentException(TAG_MAP_ATTRIBUTE_ORIENTATION + ": '" + this.mOrientation + "' is not supported.");
+//		}
 		this.mTileColumns = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_MAP_ATTRIBUTE_WIDTH);
 		this.mTilesRows = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_MAP_ATTRIBUTE_HEIGHT);
 		this.mTileWidth = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_MAP_ATTRIBUTE_TILEWIDTH);
@@ -69,6 +69,15 @@ public class TMXTiledMap implements TMXConstants {
 	public final String getOrientation() {
 		return this.mOrientation;
 	}
+	
+	public final boolean orientationOrthogonal(){
+		return this.mOrientation.equals(TAG_MAP_ATTRIBUTE_ORIENTATION_VALUE_ORTHOGONAL);
+	}
+	
+	public final boolean orientationIsometric(){
+		return this.mOrientation.equals(TAG_MAP_ATTRIBUTE_ORIENTATION_VALUE_ISOMETRIC);
+	}
+	
 	/**
 	 * @deprecated Instead use {@link TMXTiledMap#getTileColumns()} * {@link TMXTiledMap#getTileWidth()}.
 	 * @return

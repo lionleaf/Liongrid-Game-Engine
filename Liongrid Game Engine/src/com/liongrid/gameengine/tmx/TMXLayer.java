@@ -21,6 +21,7 @@ import com.liongrid.gameengine.tmx.util.constants.TMXConstants;
 //import org.anddev.andengine.util.MathUtils;
 import com.liongrid.gameengine.tools.Base64;
 import com.liongrid.gameengine.tools.Base64InputStream;
+import com.liongrid.gameengine.tools.LVector2Int;
 import com.liongrid.gameengine.tools.SAXUtils;
 //import org.anddev.andengine.util.StreamUtils;
 import org.xml.sax.Attributes;
@@ -227,13 +228,13 @@ public class TMXLayer implements TMXConstants, LDrawableObject {
 
 		//TODO
 		/* Determine the area that is visible in the camera. */
-		
+		boolean orthogonal = mTMXTiledMap.orientationIsometric();
 
 		for(int row = 0; row < tileRows; row++) {
 			final TMXTile[] tmxTileRow = tmxTiles[row];
 
-			for(int column = 0; column < tileRows; column++) {
-				tmxTileRow[column].draw(gl);
+			for(int column = 0; column < tileColumns; column++) {
+				tmxTileRow[column].draw(gl, orthogonal);
 			}
 		}
 	}
