@@ -211,6 +211,10 @@ public class TMXTiledMap implements TMXConstants {
 			throw new IllegalArgumentException("No TextureRegion found for pGlobalTileID=" + pGlobalTileID);
 		}
 	}
+	
+	public TMXTiledMapDrawable generateMapDrawable(){
+		return new TMXTiledMapDrawable(this);
+	}
 
 	// ===========================================================
 	// Inner and Anonymous Classes
