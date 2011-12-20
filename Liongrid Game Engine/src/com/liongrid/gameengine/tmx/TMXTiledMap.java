@@ -28,6 +28,7 @@ public class TMXTiledMap implements TMXConstants {
 	// ===========================================================
 
 	private final String mOrientation;
+	private final boolean mOrthogonalOrientation;
 	private final int mTileColumns;
 	private final int mTilesRows;
 	private final int mTileWidth;
@@ -50,6 +51,7 @@ public class TMXTiledMap implements TMXConstants {
 
 	TMXTiledMap(final Attributes pAttributes) {
 		this.mOrientation = pAttributes.getValue("", TAG_MAP_ATTRIBUTE_ORIENTATION);
+		this.mOrthogonalOrientation = this.mOrientation.equals(TAG_MAP_ATTRIBUTE_ORIENTATION_VALUE_ORTHOGONAL);
 //		if(!this.mOrientation.equals(TAG_MAP_ATTRIBUTE_ORIENTATION_VALUE_ORTHOGONAL)) {
 //			throw new IllegalArgumentException(TAG_MAP_ATTRIBUTE_ORIENTATION + ": '" + this.mOrientation + "' is not supported.");
 //		}
@@ -71,11 +73,11 @@ public class TMXTiledMap implements TMXConstants {
 	}
 	
 	public final boolean orientationOrthogonal(){
-		return this.mOrientation.equals(TAG_MAP_ATTRIBUTE_ORIENTATION_VALUE_ORTHOGONAL);
+		return mOrthogonalOrientation;
 	}
 	
 	public final boolean orientationIsometric(){
-		return this.mOrientation.equals(TAG_MAP_ATTRIBUTE_ORIENTATION_VALUE_ISOMETRIC);
+		return !mOrthogonalOrientation;
 	}
 	
 	/**

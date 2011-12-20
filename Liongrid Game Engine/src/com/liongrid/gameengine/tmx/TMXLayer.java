@@ -33,7 +33,7 @@ import org.xml.sax.Attributes;
  * @author Nicolas Gramlich
  * @since 20:27:31 - 20.07.2010
  */
-public class TMXLayer implements TMXConstants, LDrawableObject {
+public class TMXLayer implements TMXConstants {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -209,42 +209,21 @@ public class TMXLayer implements TMXConstants, LDrawableObject {
 		return lowestByte | secondLowestByte <<  8 |secondHighestByte << 16 | highestByte << 24;
 	}
 
-	@Override
-	public void draw(GL10 gl, float x, float y, float scaleX, float scaleY) {
+	public void draw(GL10 gl, float scaleX, float scaleY, int offsetX, int offsetY) {
 		final TMXTile[][] tmxTiles = this.mTMXTiles;
 
 		final int tileColumns = this.mTileColumns;
 		final int tileRows = this.mTileRows;
-		final int tileWidth = this.mTMXTiledMap.getTileWidth();
-		final int tileHeight = this.mTMXTiledMap.getTileHeight();
 
-
-		//TODO
-		/* Determine the area that is visible in the camera. */
 		boolean orthogonal = mTMXTiledMap.orientationOrthogonal();
 
 		for(int row = 0; row < tileRows; row++) {
 			final TMXTile[] tmxTileRow = tmxTiles[row];
 
 			for(int column = 0; column < tileColumns; column++) {
-				tmxTileRow[column].draw(gl, orthogonal);
+				tmxTileRow[column].draw(gl, orthogonal, offsetX, offsetY);
 			}
 		}
-	}
-
-	@Override
-	public int getWidth() {
-		return 0;
-	}
-
-	@Override
-	public int getHeight() {
-		return 0;
-	}
-
-	@Override
-	public LTexture getTexture() {
-		return null;
 	}
 
 	// ===========================================================

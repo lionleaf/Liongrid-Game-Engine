@@ -98,13 +98,20 @@ public class TMXTile {
 	public TMXProperties<TMXTileProperty> getTMXTileProperties(final TMXTiledMap pTMXTiledMap) {
 		return pTMXTiledMap.getTMXTileProperties(this.mGlobalTileID);
 	} 
-	public void draw(GL10 gl, boolean orthogonal) {
+	
+	public void draw(GL10 gl, boolean orthogonal, int offsetX, int offsetY) {
 		
-		if(orthogonal) mTextureRegion.draw(gl, mTileRow*mTileHeight, mTileColumn*mTileWidth,LCamera.scale,LCamera.scale);
+		if(orthogonal) {
+			int x = mTileRow*mTileHeight + offsetX;
+			int y = mTileColumn*mTileWidth + offsetY;
+			if(LCamera.cull(x,y,mTileWidth,mTileHeight)) return;
+			mTextureRegion.draw(gl, x, y, LCamera.scale, LCamera.scale);
+		}
 		else {
-			int x = (-mTileRow*mTileWidth + mTileColumn*mTileHeight)/2;
-			int y = (mTileRow*mTileHeight + mTileColumn*mTileHeight)/2;
-			mTextureRegion.draw(gl, x, y,LCamera.scale,LCamera.scale); 
+			int x = (-mTileRow*mTileWidth + mTileColumn*mTileHeight)/2 + offsetX;
+			int y = (mTileRow*mTileHeight + mTileColumn*mTileHeight)/2 + offsetY;
+			if(LCamera.cull(x, y, mTileWidth, mTileHeight)) return;
+			mTextureRegion.draw(gl, x, y, LCamera.scale, LCamera.scale); 
 		}
 	}
 	// ===========================================================
