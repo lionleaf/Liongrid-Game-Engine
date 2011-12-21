@@ -3,6 +3,7 @@ package com.liongrid.gameengine;
 import javax.microedition.khronos.opengles.GL10;
 import javax.microedition.khronos.opengles.GL11;
 import javax.microedition.khronos.opengles.GL11Ext;
+import com.liongrid.gameengine.LEasyBitmapCropper;
 
 import android.util.Log;
 
@@ -45,8 +46,14 @@ public class LDrawableBitmap extends LBaseObject implements LDrawableObject {
 	}
 	
 	public LDrawableBitmap(LTexture texture, int texturePositionX,
-			int texturePositionY, int mTileWidth, int mTileHeight) {
-		// TODO Auto-generated constructor stub
+			int texturePositionY, int width, int height) {
+		super();
+		mTexture = texture;
+		mWidth = width;
+		mHeight = height;
+		mOpacity = 1.0f;
+		mCrop = LEasyBitmapCropper.cropWithWidth(texturePositionX, texturePositionY, mWidth, mHeight);
+		
 	}
 
 	@Override
