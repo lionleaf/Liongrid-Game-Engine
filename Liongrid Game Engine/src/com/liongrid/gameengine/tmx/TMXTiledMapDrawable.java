@@ -12,14 +12,16 @@ public class TMXTiledMapDrawable implements LDrawableMap{
 	private int rows;
 	private int columns;
 	private int offsetX;
+	private int offestY;
 	private Object[] layers;
 
 	public TMXTiledMapDrawable(TMXTiledMap tiledMap) {
 		mTMXTiledMap = tiledMap;
 		rows = mTMXTiledMap.getTileRows();
 		columns = mTMXTiledMap.getTileColumns();
-		offsetX = (mTMXTiledMap.getTileRows() * mTMXTiledMap.getTileWidth())/2;
+		offsetX = (columns * mTMXTiledMap.getTileWidth())/2;
 		layers = mTMXTiledMap.getTMXLayers().toArray();
+		
 	}
 
 	@Override

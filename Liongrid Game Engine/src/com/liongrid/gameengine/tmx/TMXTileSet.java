@@ -10,7 +10,7 @@ import com.liongrid.gameengine.tools.SAXUtils;
 import com.liongrid.gameengine.LGamePointers;
 import org.xml.sax.Attributes;
 
-import android.R;
+import com.liongrid.gameengine.R;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
