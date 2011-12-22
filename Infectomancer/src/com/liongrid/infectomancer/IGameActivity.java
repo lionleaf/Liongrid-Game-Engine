@@ -167,10 +167,8 @@ LGameLoadedCallback{
 	public void setScreenDimensionsAndScale() {
 		Display display = getWindowManager().getDefaultDisplay(); 
 		/* Now we can retrieve all display-related infos */
-		LCamera.init(display.getHeight(), 
-				display.getWidth(), 
-				LMap.TILE_SIZE);
-		LCamera.setUnitsPerHeight(12);
+		LCamera.init(display.getHeight(), display.getWidth());
+		LCamera.setPixelsPerHeight(12*LMap.TILE_SIZE);
 	}
 
 	@Override

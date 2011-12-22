@@ -36,8 +36,7 @@ public class Infectosaurus extends IGameObject {
 	IMeleeAttackComponent mAttackComponent;
 
 	public Infectosaurus() {
-		unit = LCamera.unit;
-		mSize = (int) (1.5 * unit); //16*3;
+		mSize = (int) (32*1.5); //16*3;
 		float radius = (float) (mSize/2.0);
 		collisionObject = new LCollisionCircle(ITeam.Alien.ordinal(), this, radius);
 		

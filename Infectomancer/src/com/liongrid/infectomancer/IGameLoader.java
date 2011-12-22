@@ -39,7 +39,7 @@ public class IGameLoader extends LGameLoader{
 		try {
 			TMXLoader loader = new TMXLoader(mGameActivity, null);
 			IGamePointers.TMXMap = loader.loadFromAsset(mGameActivity, "infectomap.tmx");
-			LGamePointers.background = IGamePointers.TMXMap.generateMapDrawable(); 
+			LGamePointers.drawableMap = IGamePointers.TMXMap.generateMapDrawable(); 
 		} catch (TMXLoadException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
