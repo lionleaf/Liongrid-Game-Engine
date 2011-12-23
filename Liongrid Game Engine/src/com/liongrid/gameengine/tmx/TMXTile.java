@@ -113,14 +113,16 @@ public class TMXTile {
 			int x = mTileRow * mTileHeight + offsetX;
 			int y = mTileColumn * mTileWidth + offsetY;
 			if (LCamera.cull(x, y, mTileWidth, mTileHeight)) return;
-			mTextureRegion.draw(gl, x, y, LCamera.scale, LCamera.scale);
+			mTextureRegion.draw(gl, x - LCamera.pos.x, y - LCamera.pos.y, LCamera.scale,
+					LCamera.scale);
 		} else {
 			int x = (-mTileRow * mTileWidth + mTileColumn * mTileWidth) / 2
 					+ offsetX;
 			int y = (mTileRow * mTileHeight + mTileColumn * mTileHeight) / 2
 					+ offsetY;
 			if (LCamera.cull(x, y, mTileWidth, mTileHeight)) return;
-			mTextureRegion.draw(gl, x, LCamera.screenHeight - y, LCamera.scale, LCamera.scale);
+			mTextureRegion.draw(gl, x - LCamera.pos.x, y - LCamera.pos.y,
+					LCamera.scale, LCamera.scale);
 		}
 	}
 	// ===========================================================

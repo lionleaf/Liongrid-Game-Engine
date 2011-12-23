@@ -68,8 +68,8 @@ public class TMXLayer implements TMXConstants {
 
 		this.mTMXTiledMap = pTMXTiledMap;
 		this.mName = pAttributes.getValue("", TAG_LAYER_ATTRIBUTE_NAME);
-		this.mTileColumns = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_LAYER_ATTRIBUTE_WIDTH);
-		this.mTileRows = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_LAYER_ATTRIBUTE_HEIGHT);
+		this.mTileColumns = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_LAYER_ATTRIBUTE_HEIGHT);
+		this.mTileRows = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_LAYER_ATTRIBUTE_WIDTH);
 		this.mTMXTiles = new TMXTile[this.mTileRows][this.mTileColumns];
 
 		mWidth = pTMXTiledMap.getTileWidth() * this.mTileColumns;
@@ -169,8 +169,8 @@ public class TMXLayer implements TMXConstants {
 
 		final int tilesHorizontal = this.mTileColumns;
 
-		final int column = this.mTilesAdded % tilesHorizontal;
-		final int row = this.mTilesAdded / tilesHorizontal;
+		final int column = mTileColumns - 1 - this.mTilesAdded / tilesHorizontal;
+		final int row = mTileRows-1 - this.mTilesAdded % tilesHorizontal;
 
 		final TMXTile[][] tmxTiles = this.mTMXTiles;
 
