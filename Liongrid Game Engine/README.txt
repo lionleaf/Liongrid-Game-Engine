@@ -1,0 +1,1 @@
+The game engine itself. The architecture is heavily inspired by Replica Island: http://code.google.com/p/replicaisland/ 
