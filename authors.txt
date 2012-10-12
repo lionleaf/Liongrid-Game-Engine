@@ -1,0 +1,8 @@
+Lastis = Daniel Marelius Bjoernstad <neitakkikkebanan@gmail.com>
+liongrid = Andreas Loeve Selvik <andreas.l.selvik@gmail.com>
+lionleaf = Andreas Loeve Selvik <andreas.l.selvik@gmail.com>
+Andreas = Andreas Loeve Selvik <andreas.l.selvik@gmail.com>
+andrelse = Andreas Loeve Selvik <andreas.l.selvik@gmail.com>
+Daniel = Daniel Marelius Bjoernstad <neitakkikkebanan@gmail.com>
+danielmb = Daniel Marelius Bjoernstad <neitakkikkebanan@gmail.com>
+(no author) = Andreas Loeve Selvik <andreas.l.selvik@gmail.com>
